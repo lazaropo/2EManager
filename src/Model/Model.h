@@ -5,20 +5,23 @@
 #include <initializer_list>
 #include <list>
 #include <stdexcept>
-#include <utility>
+#include <utility>  // std::pair, std::forward
+#include <vector>
 
 #include "Invoker.h"
+#include "SimpleEffectBuilder.h"
 
 namespace pf2e_manager {
 class Model {
  public:
   using t_pos_comb = std::list<Combatant>::iterator;
+  using t_pair_comb_with_effect = std::pair<t_pos_comb, Combatant::t_pos_eff>;
 
   void addCombatant(t_pos_comb it, Combatant&& new_body) {
-    _combatants.insert(it, std::forward(new_body));
+    _combatants.insert(it, std::forward<Combatant>(new_body));
   }
-  void addCombatantGroup(t_pos_comb it, Combatant&&... other) {
-    addCombatant(it, std::forward(other))...;
+  void addCombatantGroup(std::vector<Combatant&&>& other) {
+    for (auto it : other) addCombatant(it, std::forward<Combatant>(it));
   }
 
   void moveCombatant(t_pos_comb from, t_pos_comb before) {
@@ -32,18 +35,33 @@ class Model {
     _combatants.splice(--before, _combatants, from);
   }
 
-  void addCommand(CommandBase* cmd) { involer.addCommand(cmd) }
-  void addAndDoCommand(CommandBase* cmd) { involer.addAndDoCommand(cmd); }
-  void removeCommand(Invoker::t_pos_cmd pos) { invoker.undoCommand(pos); }
-  void removeCombotant(t_pos_comb it) { _combatants.erase(it); }
-  void removeCombatantGroup(t_pos_comb... it) { removeCombotant(it)...; }
+  void addCommand(CommandBase* cmd) { _invoker.addCommand(cmd) }
+  void addAndDoCommand(CommandBase* cmd) { _invoker.addAndDoCommand(cmd); }
+  void removeCommand(Invoker::t_pos_cmd pos) { _invoker.undoCommand(pos); }
+  void removeCombatant(t_pos_comb it) { _combatants.erase(it); }
+  void removeCombatantGroup(std::vector<t_pos_comb>& collection) {
+    for (auto it : collection) removeCombatant(it);
+  }
 
-  // void addEffect(t_pos_comb pos, EffectBase* effect) {
-  //     pos.
-  // }
-  // setEffectDuration(t_pos_eff pos, int duration) {
+  void addEffect(SimpleEffectBuilder* builder, t_pos_comb pos) {
+    pos->addEffect(builder->getSimpleEffect());
+  }
 
-  // }
+  void addEffectOnGroup(SimpleEffectBuilder* builder,
+                        std::vector<t_pos_comb>& collection) {
+    SimpleEffect* effect = builder->getSimpleEffect();
+    for (auto it : collection) addEffect(effect->copy(), it);
+    delete[] effect;
+  }
+
+  void setEffectDuration(int duration, t_pair_comb_with_effect pair) {
+    pair.first->setEffectDuration(pair.second, duration);
+  }
+
+  void setEffectDurationOnGroup(
+      int duration, std::vector<t_pair_comb_with_effect>& collection) {
+    for (auto it : collection) setEffectDuration(duration, it);
+  }
 
   void sortByInit() { std::sort(_combatants.rbegin(), _combatants.rend()); }
 
@@ -53,25 +71,28 @@ class Model {
 
     if (++_curr_pos == _combatants.end()) _curr_pos = _combatants.begin();
 
-    for (auto it : _combatants.getEffects())
-      it.getTrigger(EffectBase::Trigger::START_TURN);
+    for (auto it : _combatants)
+      for (auto it_eff : it.getEffects())
+        it_eff->getTrigger(SimpleEffect::Trigger::START_TURN);
   }
 
   void nextTurn() {
     if (_combatants.empty())
       throw std::runtime_error("There are not any combatants!");
 
-    for (auto it : _combatants.getEffects())
-      it.getTrigger(EffectBase::Trigger::END_TURN);
+    for (auto it : _combatants)
+      for (auto it_eff : it.getEffects())
+        it_eff->getTrigger(SimpleEffect::Trigger::END_TURN);
   }
 
   const std::list<Combatant>& getCombatants() const { return _combatants; }
 
-  const std::list<CommandBase*>& getCommands() const { return _commands; }
+  const std::list<CommandBase*>& getCommands() const {
+    return _invoker.getCommands();
+  }
 
  private:
   std::list<Combatant> _combatants;
-  std::list<CommandBase*> _commands;
   Invoker _invoker;
 
   t_pos_comb _curr_pos;

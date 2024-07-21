@@ -1,17 +1,18 @@
-#ifndef _COMBATANT_H_E1381FAB_5D83_4BD1_AFB3_CE0C044AF33E
-#define _COMBATANT_H_E1381FAB_5D83_4BD1_AFB3_CE0C044AF33E
+#ifndef _COMBATANT_H_E1381FAB_5D83_4BD1_AFB3_CE0C044AF33E_
+#define _COMBATANT_H_E1381FAB_5D83_4BD1_AFB3_CE0C044AF33E_
 
 #include <algorithm>  //provides std::includes for effect instantiation in collection
 #include <list>
 #include <stdexcept>
 #include <string>
 
-#include "EffectBase.h"
+#include "SimpleEffect.h"
 
 namespace pf2e_manager {
 class Combatant {
  public:
-  using t_pos_eff = std::list<EffectBase*>::iterator;
+  using t_pos_eff = std::list<SimpleEffect*>::iterator;
+
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
 
@@ -41,9 +42,11 @@ class Combatant {
     return this->_initiative < other._initiative;
   }
 
-  std::list<EffectBase*>& getEffects() { return _effects; }
+  std::list<SimpleEffect*>& getEffects() { return _effects; }
 
-  void addEffect(EffectBase* effect) { _effects.push_back(effect); }
+  const std::string& getName() const { return _name; }
+
+  void addEffect(SimpleEffect* effect) { _effects.push_back(effect); }
 
   void setEffectDuration(t_pos_eff pos, int duration) {
     if (duration < 0) return;
@@ -77,8 +80,7 @@ class Combatant {
   //     }
   // }
 
-  friend class CommandBase;
-  friend class EffectBase;
+  friend class SimpleEffect;
 
  private:
   int _hp_max;
@@ -89,7 +91,7 @@ class Combatant {
   const Vitality _vitality;
   std::string _name;
 
-  std::list<EffectBase*> _effects;
+  std::list<SimpleEffect*> _effects;
   // void(*f_eventDeath)(Combatant* object);
 };
 }  // namespace pf2e_manager

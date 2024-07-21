@@ -66,19 +66,23 @@ class Combatant {
     }
   }
 
-  // void changeHP(int value) {
-  //     if(value > 0 && _hp_curr < _hp_max) {
-  //         _hp_curr += value;
-  //         if(_hp_curr > _hp_max)
-  //             _hp_curr = _hp_max;
-  //     } else if(value < 0) {
-  //         _hp_curr += value;
-  //         if(_hp_curr < 0) {
-  //             _hp_curr = 0;
-  //             f_eventDeath(this);
-  //         }
-  //     }
-  // }
+  int getHPCurr() const { return _hp_curr; }
+
+  void setHPCurr(int value) { _hp_curr = value; }
+
+  int getHPMax() const { return _hp_max; }
+
+  int setHPTmp(int value) { _hp_tmp = value; }
+
+  int getHPTmp() const { return _hp_tmp; }
+
+  Side getSide() const { return _side; }
+
+  Vitality getVitality() const { return _vitality; }
+
+  const std::string& getName() const { return _name; }
+
+  void setName(const std::string& name) { _name = name; }
 
   friend class SimpleEffect;
 

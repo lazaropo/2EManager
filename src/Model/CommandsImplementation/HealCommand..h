@@ -9,10 +9,11 @@ namespace pf2e_manager {
         void execute(int value) override {
             if(value < 0 || _is_active) return;
 
-            if(_combatant->_hp_curr < _hp_max) {
-                __hp_curr += value;
-                if(_combatant->hp_curr > _hp_max)
-                    _hp_curr = _hp_max;
+            if(_combatant->getHPCurr() < _combatant->getHPMax()) {
+                _combatant->setHPCurr(value + _combatant->getHPCurr());
+
+                if(_combatant->getHPCurr() > _combatant->getHPMax())
+                    _combatant->setHPCurr(_combatant->getHPMax());
             }
 
             _is_active = true;
@@ -21,8 +22,12 @@ namespace pf2e_manager {
         void undo() override {
             if(!_is_active) return;
 
-            if(_combatant)
-
+            if(_combatant->getHPCurr() > 0) {
+                _combatant->setHPCurr(_combatant->getHPCurr() - _value);
+                
+                if(_combatant->getHPCurr() < 0)
+                    _combatant->setHPCurr(0);
+            }
             _is_active = false;
         }
     };

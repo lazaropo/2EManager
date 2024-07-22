@@ -7,18 +7,20 @@
 #include <string>
 
 #include "SimpleEffect.h"
+#include "SubjectBase.h"
 
 namespace pf2e_manager {
-class Combatant {
+class Combatant : public SubjectBase {
  public:
   using t_pos_eff = std::list<SimpleEffect*>::iterator;
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
 
-  Combatant(/*void (*eventDeath) (Combatant* obj),*/ int hp, int initiative,
-            Side side, std::string name, Vitality vit = Vitality::ALIVE)
-      : /*f_eventDeath(eventDeath), */ _hp_max(hp),
+  Combatant(int hp, int initiative, Side side, std::string name,
+            Vitality vit = Vitality::ALIVE)
+      : SubjectBase(this),
+        _hp_max(hp),
         _hp_tmp(0),
         _hp_curr(hp),
         _initiative(initiative),

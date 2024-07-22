@@ -4,11 +4,13 @@
 #include <algorithm>  // std::swap
 #include <string>
 
+#include "Mediator.h"
+#include "SubjectBase.h"
 // #include "Combatant.h"
 
 namespace pf2e_manager {
 class Combatant;
-class SimpleEffect {
+class SimpleEffect : public SubjectBase {
  public:
   enum class Trigger { NO_TRIGGER, START_TURN, END_TURN };
   enum Type {
@@ -68,7 +70,7 @@ class SimpleEffect {
 
   virtual void undo() {
     ++_duration;
-    _is_active = true;
+    _is_active = _is_active ? false : true;
   }
 
   void getTrigger(Trigger trigger) {
@@ -97,6 +99,7 @@ class SimpleEffect {
   bool _is_active = false;
   std::string _name = "";
   std::string _descprition = "";
+  Mediator* _mediator;
 };
 }  // namespace pf2e_manager
 #endif

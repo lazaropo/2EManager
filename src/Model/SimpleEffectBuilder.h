@@ -2,6 +2,7 @@
 #define _SIMPLE_EFFECT_BUILDER_H_072812C7_047C_4E92_BEB5_1B9FF10FD818_
 
 #include "SimpleEffect.h"
+#include "SubjectBase.h"
 
 namespace {
 using ns_trigger = pf2e_manager::SimpleEffect::Trigger;
@@ -141,7 +142,16 @@ class SimpleEffectBuilder {
   }
 
   virtual void reset() {
-    if (!_effect) _effect = new SimpleEffect();
+    if (!_effect) {
+      _effect = new SimpleEffect();
+      _effect->_subject = _effect;
+    }
+  }
+
+  virtual void setSubject(SubjectBase* object) {
+    if (_effect) {
+      _effect->_object = object;
+    }
   }
 
   virtual SimpleEffect* getSimpleEffect() {

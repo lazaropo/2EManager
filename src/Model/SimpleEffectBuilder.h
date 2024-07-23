@@ -210,6 +210,11 @@ class SimpleEffectBuilder {
     return this;
   }
 
+  SimpleEffectBuilder* setReciever(SubjectBase* reciever) {
+    _effect->setObject(reciever);
+    return this;
+  }
+
   virtual void reset() {
     if (!_effect) {
       _effect = new SimpleEffect();

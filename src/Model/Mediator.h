@@ -5,31 +5,39 @@
 
 #include "CommandBase.h"
 #include "CommandsImplementation/CommandsImplementation.h"
-#include "ComplexEffect.h"
-#include "SimpleEffect.h"
+#include "EffectDirector.h"
 
 namespace pf2e_manager {
 class Mediator {
  public:
   using t_pos_cmd = std::list<CommandBase*>::iterator;
 
-  // void addCommand(CommandBase* cmd) { _commands.push_back(cmd); }
+  explicit Mediator(std::list<Combatant>* combatant)
+      : _combatants(combatant),
+        _builder(new SimpleEffectBuilder()),
+        _director(new EffectDirector(_builder)) {
+    _builder->reset();
+  }
 
-  // void addAndDoCommand(CommandBase* cmd) {
-  //   addCommand(cmd);
-  //   _commands.back()->execute();
-  // }
-
-  // void undoCommand(t_pos_cmd pos) { (*pos)->undo(); }
-
-  // void heal(int value, Combatant* comb) {
-  //   // HealCommand* hcmd = new HealCommand()
-  // }
-
-  // void harm(int value, Combatant* comb) {}
+  ~Mediator() {
+    delete _director;
+    delete _builder;
+  }
 
   void makeEffect(SubjectBase* sender, SubjectBase* reciever,
-                  const std::string& name);
+                  const std::string& name, const int duration = 0,
+                  const int value = 0) {
+    Combatant* combatant = dynamic_cast<Combatant*>(reciever);
+    if (!combatant)
+      throw std::runtime_error(
+          "Mediator - MakeEffect func: reciever is not COmbatant class.");
+    if (!name.compare("effect:clumsy")) {
+      _director->buildClumsyEffect(value, duration);
+      _builder->setReciever(reciever);
+      SimpleEffect* eff = _builder->getSimpleEffect();
+      if (eff) combatant->addEffect(eff);
+    }
+  }
 
   void makeCommand(SubjectBase* sender, SubjectBase* reciever,
                    const std::string& name);
@@ -45,6 +53,9 @@ class Mediator {
  private:
   std::list<Combatant>* _combatants;
   std::list<CommandBase*> _commands;
+
+  SimpleEffectBuilder* _builder;
+  EffectDirector* _director;
 };
 }  // namespace pf2e_manager
 

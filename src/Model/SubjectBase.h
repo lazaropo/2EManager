@@ -9,6 +9,7 @@ class SubjectBase {
 
   SubjectBase* getSubject() const { return _subject; }
   SubjectBase* getObject() const { return _object; }
+  void setObject(SubjectBase* object) { _object = object; }
 
  protected:
   SubjectBase* _subject;

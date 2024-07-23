@@ -93,6 +93,7 @@ class Combatant : public SubjectBase {
   int _hp_tmp;
   int _hp_curr;
   int _initiative;
+  int _level;
   Side _side;
   const Vitality _vitality;
   std::string _name;

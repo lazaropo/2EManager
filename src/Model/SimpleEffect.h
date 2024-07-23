@@ -47,6 +47,7 @@ class SimpleEffect : public SubjectBase {
     int _atk = 0;
     int _ac = 0;
     int _dc = 0;  // class DC
+    int _init = 0;
   };
 
   SimpleEffect();
@@ -99,6 +100,9 @@ class SimpleEffect : public SubjectBase {
   bool _is_active = false;
   std::string _name = "";
   std::string _descprition = "";
+
+  std::list<std::string> _associated_actions;
+
   Mediator* _mediator;
 };
 }  // namespace pf2e_manager

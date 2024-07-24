@@ -4,9 +4,9 @@
 #include <algorithm>  // std::swap
 #include <string>
 
+#include "EffectExecutor.h"
 #include "Mediator.h"
 #include "SubjectBase.h"
-// #include "Combatant.h"
 
 namespace pf2e_manager {
 class Combatant;
@@ -102,6 +102,8 @@ class SimpleEffect : public SubjectBase {
   std::string _descprition = "";
 
   std::list<std::string> _associated_actions;
+
+  EffectExecutor* _executor;
 
   Mediator* _mediator;
 };

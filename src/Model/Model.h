@@ -35,9 +35,9 @@ class Model {
     _combatants.splice(--before, _combatants, from);
   }
 
-  void addCommand(CommandBase* cmd) { _invoker.addCommand(cmd) }
-  void addAndDoCommand(CommandBase* cmd) { _invoker.addAndDoCommand(cmd); }
-  void removeCommand(Invoker::t_pos_cmd pos) { _invoker.undoCommand(pos); }
+  void addCommand(CommandBase* cmd) { _mediator.addCommand(cmd) }
+  void addAndDoCommand(CommandBase* cmd) { _mediator.addAndDoCommand(cmd); }
+  void removeCommand(Invoker::t_pos_cmd pos) { _mediator.undoCommand(pos); }
   void removeCombatant(t_pos_comb it) { _combatants.erase(it); }
   void removeCombatantGroup(std::vector<t_pos_comb>& collection) {
     for (auto it : collection) removeCombatant(it);
@@ -88,12 +88,12 @@ class Model {
   const std::list<Combatant>& getCombatants() const { return _combatants; }
 
   const std::list<CommandBase*>& getCommands() const {
-    return _invoker.getCommands();
+    return _mediator.getCommands();
   }
 
  private:
   std::list<Combatant> _combatants;
-  Invoker _invoker;
+  Mediator* _;
 
   t_pos_comb _curr_pos;
 };

@@ -30,13 +30,10 @@ class Mediator {
     Combatant* combatant = dynamic_cast<Combatant*>(reciever);
     if (!combatant)
       throw std::runtime_error(
-          "Mediator - MakeEffect func: reciever is not COmbatant class.");
-    if (!name.compare("effect:clumsy")) {
-      _director->buildClumsyEffect(value, duration);
-      _builder->setReciever(reciever);
-      SimpleEffect* eff = _builder->getSimpleEffect();
-      if (eff) combatant->addEffect(eff);
-    }
+          "Mediator - MakeEffect func: reciever is not Combatant class.");
+    _director->buildEffectByName(name, duration, value);
+    _builder->setSubject(sender);
+    combatant->addEffect(_builder->getSimpleEffect());
   }
 
   void makeCommand(SubjectBase* sender, SubjectBase* reciever,

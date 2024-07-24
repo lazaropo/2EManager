@@ -1,6 +1,7 @@
 #ifndef _EFFECT_DIRECTOR_C61F8EA4_4104_405C_8865_237A7CE5BC26_
 #define _EFFECT_DIRECTOR_C61F8EA4_4104_405C_8865_237A7CE5BC26_
 
+#include <any>
 #include <map>
 #include <string>
 
@@ -17,9 +18,22 @@ using ns_value = pf2e_manager::SimpleEffect::Value;
 namespace pf2e_manager {
 class EffectDirector {
  public:
-  EffectDirector(SimpleEffectBuilder* builder) : _builder(builder) {}
+  EffectDirector(SimpleEffectBuilder* builder) : _builder(builder) {
+    // TODO: fill the constructor by all effect names and funcs pointers pairs
+    _effects_dictionary.insert(std::pair("effect:clumsy", &buildClumsyEffect));
+    _effects_dictionary.insert(
+        std::pair("effect:concealed", &buildConcealedEffect));
+    _effects_dictionary.insert(
+        std::pair("effect:confused", &buildConfusedEffect));
+    _effects_dictionary.insert(
+        std::pair("effect:cotrolled", &buildControlledEffect));
+    _effects_dictionary.insert(
+        std::pair("effect:dazzled", &buildDazzledEffect));
+    _effects_dictionary.insert(
+        std::pair("effect:deafened", &buildDeafenedEffect));
+  }
 
-  void buildClumsyEffect(int value, int duration) {
+  void buildClumsyEffect(int duration, int value) {
     _builder->reset();
     _builder->setName("effect:clumsy")
         ->setPenaltyType()
@@ -38,7 +52,8 @@ class EffectDirector {
             "and Thievery.");
   }
 
-  void buildConcealedEffect(int duration) {
+  void buildConcealedEffect(int duration,
+                            __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:concealed")
         ->setNoType()
@@ -55,7 +70,8 @@ class EffectDirector {
             "check.");
   }
 
-  void buildConfusedEffect(int duration) {
+  void buildConfusedEffect(int duration,
+                           __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:confused")
         ->setPenaltyType()
@@ -79,7 +95,8 @@ class EffectDirector {
             "recover from your confusion and end the condition.");
   }
 
-  void buildControlledEffect(int duration) {
+  void buildControlledEffect(int duration,
+                             __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:cotrolled")
         ->setPenaltyType()
@@ -94,7 +111,7 @@ class EffectDirector {
             "own actions when controlling you.");
   }
 
-  void buildDazzledEffect(int duration) {
+  void buildDazzledEffect(int duration, __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:dazzled")
         ->setPenaltyType()
@@ -107,7 +124,8 @@ class EffectDirector {
             "concealed from you.");
   }
 
-  void buildDeafenedEffect(int duration) {
+  void buildDeafenedEffect(int duration,
+                           __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:deafened")
         ->setPenaltyType()
@@ -127,7 +145,7 @@ class EffectDirector {
             "immune to auditory effects while deafened.");
   }
 
-  void buildDoomedEffect(int value) {
+  void buildDoomedEffect(__attribute__((unused)) int duration, int value) {
     _builder->reset();
     _builder->setName("effect:doomed")
         ->setPenaltyType()
@@ -143,7 +161,7 @@ class EffectDirector {
             "time you get a full night's rest.");
   }
 
-  void buildDrainedEffect(int value) {
+  void buildDrainedEffect(__attribute__((unused)) int duration, int value) {
     _builder->reset();
     _builder->setName("effect:drained")
         ->setPenaltyType()
@@ -170,7 +188,7 @@ class EffectDirector {
             "Points, but you don't immediately recover the lost Hit Points.");
   }
 
-  void buildDyingEffect(int value) {
+  void buildDyingEffect(__attribute__((unused)) int duration, int value) {
     _builder->reset();
     _builder->setName("effect:dying")
         ->setPenaltyType()
@@ -195,7 +213,8 @@ class EffectDirector {
             "wounded condition value by 1 if you already have that condition.");
   }
 
-  void buildEncumberedEffect(int duration) {
+  void buildEncumberedEffect(int duration,
+                             __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:encumbered")
         ->setPenaltyType()
@@ -209,7 +228,7 @@ class EffectDirector {
             "reduce your Speed below 5 feet.");
   }
 
-  void buildEnfeebledEffect(int value, int duration) {
+  void buildEnfeebledEffect(int duration, int value) {
     _builder->reset();
     _builder->setName("effect:enfeebled")
         ->setPenaltyType()
@@ -227,7 +246,8 @@ class EffectDirector {
             "and Athletics checks.");
   }
 
-  void buildFascinatedEffect(int duration) {
+  void buildFascinatedEffect(int duration,
+                             __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:fascinated")
         ->setPenaltyType()
@@ -248,7 +268,8 @@ class EffectDirector {
             "creature uses hostile actions against you or any of your allies.");
   }
 
-  void buildFatiguedEffect(int duration) {
+  void buildFatiguedEffect(int duration,
+                           __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:fatigue")
         ->setPenaltyType()
@@ -266,7 +287,7 @@ class EffectDirector {
             "438–439.\nYou recover from fatigue after a full night's rest.");
   }
 
-  void buildFleeingEffect(int duration) {
+  void buildFleeingEffect(int duration, __attribute__((unused)) int value = 0) {
     _builder->reset();
     _builder->setName("effect:fleeing")
         ->setPenaltyType()
@@ -284,7 +305,7 @@ class EffectDirector {
             "while fleeing.");
   }
 
-  void buildFrightenedEffect(int value) {
+  void buildFrightenedEffect(__attribute__((unused)) int duration, int value) {
     _builder->reset();
     _builder->setName("effect:fleeing")
         ->setPenaltyType()
@@ -301,7 +322,9 @@ class EffectDirector {
             "of your frightened condition decreases by 1.");
   }
 
-  void buildGrabbedEffect(int duration) { ; }
+  void buildGrabbedEffect(int duration, __attribute__((unused)) int value = 0) {
+    ;
+  }
   void buildHiddenEffect() { ; }
   void buildImmobilizedEffect() { ; }
   void buildIndifferentEffect() { ; }
@@ -324,8 +347,20 @@ class EffectDirector {
   void buildUnnoticedEffect() { ; }
   void buildWoundedEffect() { ; }
 
+  void buildEffectByName(const std::string& name, int duration, int value) {
+    // try{
+    (std::any_cast<void (*)(int, int)>(_effects_dictionary[name]))(duration,
+                                                                   value);
+    // }
+    // catch (const std::bad_any_cast& ex){
+    //   throw std:: << "Bad Any Cast: EffectDirector"
+    // }
+  }
+
  private:
   SimpleEffectBuilder* _builder;
+  // std::any is purposed only to void(int, int)
+  std::map<const std::string, std::any> _effects_dictionary;
 };
 
 // struct EffectDictionaryValues {

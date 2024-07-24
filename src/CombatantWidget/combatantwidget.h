@@ -8,7 +8,8 @@
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class CombatantWidget;
-}
+using namespace pf2e_manager;
+}  // namespace Ui
 QT_END_NAMESPACE
 
 class CombatantWidget : public QWidget {
@@ -20,6 +21,6 @@ class CombatantWidget : public QWidget {
 
  private:
   Ui::CombatantWidget *ui;
-  Controller *_controller;
+  pf2e_manager::Controller *_controller;
 };
 #endif  // COMBATANTWIDGET_H

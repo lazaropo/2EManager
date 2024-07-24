@@ -9,7 +9,7 @@ class SubjectBase {
   SubjectBase(SubjectBase* subject, SubjectBase* object = nullptr)
       : _subject(subject), _object(object) {}
 
-  const std::string getName() const { return _name; }
+  virtual const std::string getName() const { return _name; }
   SubjectBase* getSubject() const { return _subject; }
   SubjectBase* getObject() const { return _object; }
 

@@ -40,9 +40,7 @@ class Combatant : public SubjectBase {
    * @return true
    * @return false
    */
-  bool operator<(const Combatant& other) {
-    return this->_initiative < other._initiative;
-  }
+  friend bool operator<(const Combatant& fisrt, const Combatant& second);
 
   std::list<SimpleEffect*>& getEffects() { return _effects; }
 
@@ -80,9 +78,11 @@ class Combatant : public SubjectBase {
 
   Vitality getVitality() const { return _vitality; }
 
-  const std::string& getName() const { return _name; }
+  const std::string getName() const { return _name; }
 
   void setName(const std::string& name) { _name = name; }
+
+  int getInitiative() const { return _initiative; }
 
   friend class SimpleEffect;
 
@@ -99,6 +99,10 @@ class Combatant : public SubjectBase {
   std::list<SimpleEffect*> _effects;
   // void(*f_eventDeath)(Combatant* object);
 };
+
+inline bool operator<(const Combatant& fisrt, const Combatant& second) {
+  return fisrt._initiative < second._initiative;
+}
 }  // namespace pf2e_manager
 
 #endif

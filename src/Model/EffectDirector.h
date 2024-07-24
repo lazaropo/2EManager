@@ -2,6 +2,7 @@
 #define _EFFECT_DIRECTOR_C61F8EA4_4104_405C_8865_237A7CE5BC26_
 
 #include <any>
+#include <functional>
 #include <map>
 #include <string>
 
@@ -21,17 +22,25 @@ class EffectDirector {
  public:
   EffectDirector(SimpleEffectBuilder* builder) : _builder(builder) {
     // TODO: fill the constructor by all effect names and funcs pointers pairs
-    _effects_dictionary.insert(std::pair("effect:clumsy", &buildClumsyEffect));
+    using namespace std::placeholders;
     _effects_dictionary.insert(
-        std::pair("effect:concealed", &buildConcealedEffect));
-    _effects_dictionary.insert(
-        std::pair("effect:confused", &buildConfusedEffect));
-    _effects_dictionary.insert(
-        std::pair("effect:cotrolled", &buildControlledEffect));
-    _effects_dictionary.insert(
-        std::pair("effect:dazzled", &buildDazzledEffect));
-    _effects_dictionary.insert(
-        std::pair("effect:deafened", &buildDeafenedEffect));
+        std::pair("effect:clumsy",
+                  std::bind(&EffectDirector::buildClumsyEffect, this, _1, _2)));
+    _effects_dictionary.insert(std::pair(
+        "effect:concealed",
+        std::bind(&EffectDirector::buildConcealedEffect, this, _1, _2)));
+    _effects_dictionary.insert(std::pair(
+        "effect:confused",
+        std::bind(&EffectDirector::buildConfusedEffect, this, _1, _2)));
+    _effects_dictionary.insert(std::pair(
+        "effect:cotrolled",
+        std::bind(&EffectDirector::buildControlledEffect, this, _1, _2)));
+    _effects_dictionary.insert(std::pair(
+        "effect:dazzled",
+        std::bind(&EffectDirector::buildDazzledEffect, this, _1, _2)));
+    _effects_dictionary.insert(std::pair(
+        "effect:deafened",
+        std::bind(&EffectDirector::buildDeafenedEffect, this, _1, _2)));
   }
 
   void buildClumsyEffect(int duration, int value) {

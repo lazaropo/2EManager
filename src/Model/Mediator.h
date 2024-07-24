@@ -40,13 +40,19 @@ class Mediator : public MediatorInterface {
   void makeCommand(SubjectBase* sender, SubjectBase* reciever,
                    const std::string& name) override;
 
+  void makeCommand(CommandBase* cmd) { _commands.push_back(cmd); };
+
   void undoEffect(SubjectBase* sender, SubjectBase* reciever,
                   const std::string& name) override;
 
   void undoCommand(SubjectBase* sender, SubjectBase* reciever,
                    const std::string& name) override;
 
-  const std::list<CommandBase*>& getCommands() const { return _commands; }
+  void undoCommand(t_pos_cmd pos) { _commands.erase(pos); };
+
+  const std::list<CommandBase*>& getCommands() const override {
+    return _commands;
+  }
 
  private:
   std::list<Combatant>* _combatants;

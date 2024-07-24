@@ -5,10 +5,12 @@
 CombatantWidget::CombatantWidget(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::CombatantWidget),
-      _controller(new Controller()) {
+      _controller(new pf2e_manager::Controller()) {
   ui->setupUi(this);
-  Combatant tmp(100, 36, Combatant::Side::ALIVE, "Peppa");
-  _controller->addCombatant(std::move(tmp));
+  using namespace pf2e_manager;
+  Combatant tmp(100, 36, Combatant::Side::TEAM, "Peppa");
+  _controller->addCombatant(_controller->getCombatants().begin(),
+                            std::move(tmp));
 }
 
 CombatantWidget::~CombatantWidget() {

@@ -4,26 +4,21 @@
 #include "EffectDirector.h"
 
 namespace pf2e_manager {
-    class EffectExecutor
-    {
-    public:
-        EffectExecutor(Mediator* mediator)
-        : _mediator(mediator) {}
+class EffectExecutor {
+ public:
+  EffectExecutor(Mediator* mediator) : _mediator(mediator) {}
 
-        ~EffectExecutor();
+  ~EffectExecutor();
 
-        void doNothing() const {
-            ;
-        }
+  void doNothing() const { ; }
 
-        void createEffect(const std::string& name) {
-            _mediator->makeEffect(name);
-        }
+  void createEffect(const std::string& name) { _mediator->makeEffect(name); }
 
-        void createCommand() {;}
-    private:
-        Mediator* _mediator;
-    };
-}
+  void createCommand() { ; }
+
+ private:
+  Mediator* _mediator;
+};
+}  // namespace pf2e_manager
 
 #endif

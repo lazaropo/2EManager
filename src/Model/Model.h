@@ -8,8 +8,8 @@
 #include <utility>  // std::pair, std::forward
 #include <vector>
 
-#include "Invoker.h"
-#include "SimpleEffectBuilder.h"
+#include "Mediator.h"
+// #include "SimpleEffectBuilder.h"
 
 namespace pf2e_manager {
 class Model {

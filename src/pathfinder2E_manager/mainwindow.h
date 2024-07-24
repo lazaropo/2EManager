@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "../CombatantWidget/combatantwidget.h"
 #include "../Model/Controller.h"
 
 QT_BEGIN_NAMESPACE

@@ -46,8 +46,6 @@ class Combatant : public SubjectBase {
 
   std::list<SimpleEffect*>& getEffects() { return _effects; }
 
-  const std::string& getName() const { return _name; }
-
   void addEffect(SimpleEffect* effect) { _effects.push_back(effect); }
 
   void setEffectDuration(t_pos_eff pos, int duration) {
@@ -74,7 +72,7 @@ class Combatant : public SubjectBase {
 
   int getHPMax() const { return _hp_max; }
 
-  int setHPTmp(int value) { _hp_tmp = value; }
+  void setHPTmp(int value) { _hp_tmp = value; }
 
   int getHPTmp() const { return _hp_tmp; }
 
@@ -95,8 +93,8 @@ class Combatant : public SubjectBase {
   int _initiative;
   int _level;
   Side _side;
-  const Vitality _vitality;
   std::string _name;
+  const Vitality _vitality;
 
   std::list<SimpleEffect*> _effects;
   // void(*f_eventDeath)(Combatant* object);

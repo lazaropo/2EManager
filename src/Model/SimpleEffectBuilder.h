@@ -4,14 +4,15 @@
 #include "SimpleEffect.h"
 #include "SubjectBase.h"
 
-namespace {
-using ns_trigger = pf2e_manager::SimpleEffect::Trigger;
-using ns_type = pf2e_manager::SimpleEffect::Type;
-}  // namespace
+namespace {}  // namespace
 
 namespace pf2e_manager {
+class SimpleEffect;
 class SimpleEffectBuilder {
  public:
+  using ns_trigger = pf2e_manager::SimpleEffect::Trigger;
+  using ns_type = pf2e_manager::SimpleEffect::Type;
+
   SimpleEffectBuilder() { reset(); }
   ~SimpleEffectBuilder() { delete[] _effect; }
 
@@ -187,7 +188,7 @@ class SimpleEffectBuilder {
   }
 
   SimpleEffectBuilder* setDuration(int value) {
-    if (value < 0) return;
+    if (value < 0) return this;
     if (!value) _effect->_is_active = false;
 
     _effect->_duration = value;
@@ -237,7 +238,7 @@ class SimpleEffectBuilder {
 
  private:
   SimpleEffect* _effect = nullptr;
-}
+};
 }  // namespace pf2e_manager
 
 #endif

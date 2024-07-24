@@ -4,11 +4,12 @@
 #include <list>
 
 #include "CommandBase.h"
-#include "CommandsImplementation/CommandsImplementation.h"
+#include "CommandsImplementation.h"
 #include "EffectDirector.h"
+#include "MediatorInterface.h"
 
 namespace pf2e_manager {
-class Mediator {
+class Mediator : public MediatorInterface {
  public:
   using t_pos_cmd = std::list<CommandBase*>::iterator;
 
@@ -26,7 +27,7 @@ class Mediator {
 
   void makeEffect(SubjectBase* sender, SubjectBase* reciever,
                   const std::string& name, const int duration = 0,
-                  const int value = 0) {
+                  const int value = 0) override {
     Combatant* combatant = dynamic_cast<Combatant*>(reciever);
     if (!combatant)
       throw std::runtime_error(
@@ -37,13 +38,13 @@ class Mediator {
   }
 
   void makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                   const std::string& name);
+                   const std::string& name) override;
 
   void undoEffect(SubjectBase* sender, SubjectBase* reciever,
-                  const std::string& name);
+                  const std::string& name) override;
 
   void undoCommand(SubjectBase* sender, SubjectBase* reciever,
-                   const std::string& name);
+                   const std::string& name) override;
 
   const std::list<CommandBase*>& getCommands() const { return _commands; }
 

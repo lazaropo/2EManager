@@ -5,11 +5,12 @@
 #include <string>
 
 #include "EffectExecutor.h"
-#include "Mediator.h"
-#include "SubjectBase.h"
+#include "MediatorInterface.h"
+// #include "SubjectBase.h"
 
 namespace pf2e_manager {
 class Combatant;
+class Mediator;
 class SimpleEffect : public SubjectBase {
  public:
   enum class Trigger { NO_TRIGGER, START_TURN, END_TURN };
@@ -53,7 +54,8 @@ class SimpleEffect : public SubjectBase {
   SimpleEffect();
 
   SimpleEffect(const SimpleEffect& other)
-      : _type(other._type),
+      : SubjectBase(this, other.getObject()),
+        _type(other._type),
         _value(other._value),
         _trigger(other._trigger),
         _duration(other._duration),
@@ -105,7 +107,7 @@ class SimpleEffect : public SubjectBase {
 
   EffectExecutor* _executor;
 
-  Mediator* _mediator;
+  MediatorInterface* _mediator;
 };
 }  // namespace pf2e_manager
 #endif

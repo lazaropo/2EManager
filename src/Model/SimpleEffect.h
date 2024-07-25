@@ -83,6 +83,10 @@ class SimpleEffect : public SubjectBase {
     }
   }
 
+  int getDuration() const { return _duration; }
+  int getValue() const { return _value._value; }
+
+  // const std::string getName() const { return _name; }
   const std::string& what() const { return _descprition; }
 
   void removeEffect() {
@@ -101,7 +105,7 @@ class SimpleEffect : public SubjectBase {
   Trigger _trigger = Trigger::NO_TRIGGER;
   int _duration = 0;  // per round
   bool _is_active = false;
-  std::string _name = "";
+  // std::string _name = "";
   std::string _descprition = "";
 
   std::list<std::string> _associated_actions;

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>598</width>
+    <width>1000</width>
     <height>162</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CombatantWidget</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_name">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -56,16 +56,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QListView" name="listView_effects">
-   <property name="geometry">
-    <rect>
-     <x>340</x>
-     <y>20</y>
-     <width>221</width>
-     <height>121</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
@@ -103,6 +93,16 @@
    </property>
    <property name="text">
     <string>HP tmp</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget_effect">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>10</y>
+     <width>621</width>
+     <height>141</height>
+    </rect>
    </property>
   </widget>
  </widget>

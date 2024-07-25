@@ -217,6 +217,11 @@ class SimpleEffectBuilder {
     return this;
   }
 
+  SimpleEffectBuilder* setCreator(SubjectBase* creator) {
+    _effect->setCreator(creator);
+    return this;
+  }
+
   virtual void reset() {
     if (!_effect) {
       _effect = new SimpleEffect();

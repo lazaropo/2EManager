@@ -7,14 +7,15 @@
 namespace {}  // namespace
 
 namespace pf2e_manager {
-class SimpleEffect;
+// class SimpleEffect;
 class SimpleEffectBuilder {
  public:
   using ns_trigger = pf2e_manager::SimpleEffect::Trigger;
   using ns_type = pf2e_manager::SimpleEffect::Type;
 
-  SimpleEffectBuilder() { reset(); }
-  ~SimpleEffectBuilder() { delete[] _effect; }
+  SimpleEffectBuilder() : _effect(new SimpleEffect()) {}
+
+  ~SimpleEffectBuilder() { delete _effect; }
 
   SimpleEffectBuilder* setNoType() {
     int mask = 0;

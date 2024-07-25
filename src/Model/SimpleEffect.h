@@ -25,6 +25,7 @@ class SimpleEffect : public SubjectBase {
     BONUS = 1 << 6
   };
   struct Value {
+    Value() = default;
     explicit Value(bool is_constant, int value)
         : _is_constant(is_constant), _value(value) {}
 
@@ -51,7 +52,7 @@ class SimpleEffect : public SubjectBase {
     int _init = 0;
   };
 
-  SimpleEffect();
+  SimpleEffect() : SubjectBase(this) {}
 
   SimpleEffect(const SimpleEffect& other)
       : SubjectBase(this, other.getObject()),
@@ -95,9 +96,9 @@ class SimpleEffect : public SubjectBase {
   // const Trigger _trigger;
 
  protected:
-  int _type;  // bit field
+  int _type = 0;  // bit field
   Value _value;
-  Trigger _trigger;
+  Trigger _trigger = Trigger::NO_TRIGGER;
   int _duration = 0;  // per round
   bool _is_active = false;
   std::string _name = "";
@@ -105,9 +106,9 @@ class SimpleEffect : public SubjectBase {
 
   std::list<std::string> _associated_actions;
 
-  EffectExecutor* _executor;
+  EffectExecutor* _executor = nullptr;
 
-  MediatorInterface* _mediator;
+  MediatorInterface* _mediator = nullptr;
 };
 }  // namespace pf2e_manager
 #endif

@@ -1,6 +1,7 @@
 #ifndef COMBATANTWIDGET_H
 #define COMBATANTWIDGET_H
 
+#include <QListWidget>
 #include <QWidget>
 
 #include "../Model/Controller.h"
@@ -18,6 +19,11 @@ class CombatantWidget : public QWidget {
  public:
   CombatantWidget(QWidget *parent = nullptr);
   ~CombatantWidget();
+
+ private slots:
+  void on_listWidget_effect_itemEntered(QListWidgetItem *item);
+
+  void on_listWidget_effect_itemClicked(QListWidgetItem *item);
 
  private:
   Ui::CombatantWidget *ui;

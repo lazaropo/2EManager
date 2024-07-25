@@ -50,3 +50,17 @@ CombatantWidget::~CombatantWidget() {
   delete ui;
   delete _controller;
 }
+
+void CombatantWidget::on_listWidget_effect_itemEntered(QListWidgetItem* item) {
+  QLabel* label = new QLabel(this);
+  auto it_eff = _controller->getCombatants().begin()->getEffects().begin();
+  label->setText(QString("%1").arg(QString::fromStdString((*it_eff)->what())));
+  this->update();
+}
+
+void CombatantWidget::on_listWidget_effect_itemClicked(QListWidgetItem* item) {
+  QLabel* label = new QLabel(this);
+  auto it_eff = _controller->getCombatants().begin()->getEffects().begin();
+  label->setText(QString("%1").arg(QString::fromStdString((*it_eff)->what())));
+  this->update();
+}

@@ -27,6 +27,8 @@ HEADERS += \
     ../Model/EffectExecutor.h \
     ../Model/Mediator.h \
     ../Model/Model.h \
+    EffectListWidgetItem.h \
+    MyMenuWidget.h \
     combatantwidget.h
 
 FORMS += \

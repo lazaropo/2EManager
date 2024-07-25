@@ -27,13 +27,11 @@ CombatantWidget::CombatantWidget(QWidget* parent)
   _controller->addEffect(_builder, it);
 
   auto it_eff = it->getEffects().begin();
-  // QLabel* label = new QLabel();
-  // label->setText(QString("%1:%2\tDuratoin:%3\tValue:%4").arg(QString::fromStdString((*it_eff)->getName())).
-  //                arg(QString::fromStdString((*it_eff)->getObject()->getName())).
-  //                arg(QString::number((*it_eff)->getDuration())).
-  //                arg(QString::number((*it_eff)->getValue())));
 
-  QListWidgetItem* item = new QListWidgetItem();
+  ui->listWidget_effect->setUI(this);
+
+  EffectListWidgetItem* item =
+      new EffectListWidgetItem(it_eff, QString::number(1));
   item->setText(
       QString("%1 from %2 on %3\tDuratoin:%4\tValue:%5")
           .arg(QString::fromStdString((*it_eff)->getName()))
@@ -43,6 +41,11 @@ CombatantWidget::CombatantWidget(QWidget* parent)
           .arg(QString::fromStdString((*it_eff)->getObject()->getName()))
           .arg(QString::number((*it_eff)->getDuration()))
           .arg(QString::number((*it_eff)->getValue())));
+  item->setToolTip(QString::fromStdString((*it_eff)->what()));
+  // ToolTip::add(item, QString::fromStdString((*it_eff)->what()));
+
+  // setFocusPolicy(Qt::NoFocus);
+  // item->setToolTipDuration(10000);
   ui->listWidget_effect->addItem(item);
 }
 
@@ -51,16 +54,25 @@ CombatantWidget::~CombatantWidget() {
   delete _controller;
 }
 
-void CombatantWidget::on_listWidget_effect_itemEntered(QListWidgetItem* item) {
-  QLabel* label = new QLabel(this);
-  auto it_eff = _controller->getCombatants().begin()->getEffects().begin();
-  label->setText(QString("%1").arg(QString::fromStdString((*it_eff)->what())));
-  this->update();
-}
+// void CombatantWidget::on_listWidget_effect_itemEntered(QListWidgetItem*
+// item_unused) {
+//   QLabel* item = new QLabel();
+//   item->setScaledContents(true);
+//   item->setMaximumSize(ui->layout_effect->maximumSize().rwidth(),
+//   ui->layout_effect->maximumSize().rheight()); auto it_eff =
+//   _controller->getCombatants().begin()->getEffects().begin();
+//   item->setToolTip(QString("%1").arg(QString::fromStdString((*it_eff)->what())));
+//   ui->layout_effect->addWidget(item);
+// }
 
-void CombatantWidget::on_listWidget_effect_itemClicked(QListWidgetItem* item) {
-  QLabel* label = new QLabel(this);
-  auto it_eff = _controller->getCombatants().begin()->getEffects().begin();
-  label->setText(QString("%1").arg(QString::fromStdString((*it_eff)->what())));
-  this->update();
-}
+// void CombatantWidget::on_listWidget_effect_itemClicked(QListWidgetItem*
+// item_unused) {
+//   QLabel* item = new QLabel();
+//   item->setScaledContents(true);
+//   item->setMaximumSize(ui->layout_effect->maximumSize().rwidth(),
+//   ui->layout_effect->maximumSize().rheight()); auto it_eff =
+//   _controller->getCombatants().begin()->getEffects().begin();
+//   item->setText(QString("%1").arg(QString::fromStdString((*it_eff)->what())));
+//   item->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+//   ui->layout_effect->addWidget(item);
+// }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>162</height>
+    <height>343</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,7 +95,7 @@
     <string>HP tmp</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="listWidget_effect">
+  <widget class="MyMenuWidget" name="listWidget_effect">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -105,7 +105,34 @@
     </rect>
    </property>
   </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>170</y>
+     <width>461</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="layout_effect"/>
+  </widget>
+  <zorder>listWidget_effect</zorder>
+  <zorder>label_name</zorder>
+  <zorder>lineEdit_hp_curr</zorder>
+  <zorder>lineEdit_hp_max</zorder>
+  <zorder>lineEdit_hp_tmp</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>verticalLayoutWidget</zorder>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyMenuWidget</class>
+   <extends>QListWidget</extends>
+   <header location="global">MyMenuWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

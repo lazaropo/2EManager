@@ -2,9 +2,12 @@
 #define COMBATANTWIDGET_H
 
 #include <QListWidget>
+#include <QToolTip>
 #include <QWidget>
 
+// #include "EffectListWidgetItem.h"
 #include "../Model/Controller.h"
+#include "MyMenuWidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,10 +23,7 @@ class CombatantWidget : public QWidget {
   CombatantWidget(QWidget *parent = nullptr);
   ~CombatantWidget();
 
- private slots:
-  void on_listWidget_effect_itemEntered(QListWidgetItem *item);
-
-  void on_listWidget_effect_itemClicked(QListWidgetItem *item);
+  void addTextBrowser(QTextBrowser *text) { ui->layout_effect->addItem(text); }
 
  private:
   Ui::CombatantWidget *ui;

@@ -33,9 +33,10 @@ CombatantWidget::CombatantWidget(QWidget* parent)
   ui->listWidget_effect->setUI(std::bind(&MyMenuWidget::setLayout, ui->listWidget_effect,
                                          std::placeholders::_1/*, 0,
                                          Qt::Alignment()*/));
-  ui->listWidget_effect->setFrame(ui->effect_layout);
+  // ui->listWidget_effect->setFrame(ui->effect_layout);
 
   // ui->effect_layout->setFixedSize(370, 130);
+  // ui->effect_layout->set();
 
   EffectListWidgetItem* item =
       new EffectListWidgetItem(it_eff, QString::number(1));

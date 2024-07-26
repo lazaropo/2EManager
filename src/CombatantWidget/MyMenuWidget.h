@@ -22,6 +22,7 @@ class MyMenuWidget : public QListWidget {
  private slots:
   void keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Escape) {
+      this->parentWidget()->layout()->removeWidget(_item);
       if (_item)
         delete _item;
       else
@@ -31,6 +32,9 @@ class MyMenuWidget : public QListWidget {
       // else
       //   return;
       _item = nullptr;
+      delete _frame;
+      _frame = nullptr;
+      // _frame->setEnabled(false);
       //_layout = nullptr;
     }
   };
@@ -48,14 +52,16 @@ class MyMenuWidget : public QListWidget {
               (*(dynamic_cast<EffectListWidgetItem*>(currentItem())
                      ->getEffect()))
                   ->what()));
-          _frame->addWidget(_item);
+          this->parentWidget()->layout()->addWidget(_item);
+          //_frame->setEnabled(true);
           // this->parentWidget()->setLayout(_frame->layout());
         });
 
     QAbstractItemDelegate::connect(heal_command, &QAction::triggered, [=]() {
       if (!_item) setTextBrowser();
       _item->setText(QString::fromStdString("HEAL COMMAND"));
-      _frame->addWidget(_item);
+      this->parentWidget()->layout()->addWidget(_item);
+      //_frame->setEnabled(true);
       // this->parentWidget()->setLayout(_frame->layout());
     });
 
@@ -65,14 +71,23 @@ class MyMenuWidget : public QListWidget {
   void setTextBrowser() {
     if (_item /*|| _layout*/) return;
 
-    //_layout = new QVBoxLayout(_frame);
+    _frame = new QVBoxLayout(this->parentWidget());
     // _layout->setGeometry(_frame->geometry());
     // _layout->setContentsMargins(_frame->contentsMargins());
     _item = new QTextBrowser(this->parentWidget());
-    // _item->setGeometry(QRect(_frame->x(),
-    //                          _frame->y(),
-    //                              _frame->x()+_frame->width(),
-    //                           _frame->y() + _frame->height()));
+    // _item->setGeometry(QRect(600,
+    //                           10,
+    //                               600+370,
+    //                            10 + 140));
+    _item->setFixedSize(370, 140);
+    _frame->setSizeConstraint(QLayout::SetFixedSize);
+    // _frame->setContentsMargins(600,
+    //                            10,
+    //                            600+370,
+    //                            10 + 140);
+    _frame->setContentsMargins(600, 10, 30, 30);
+
+    _frame->addWidget(_item);
     // _item->setGeometry(_frame->geometry());
     // _item->setContentsMargins(_frame->contentsMargins());
     //_layout->addWidget(_item);

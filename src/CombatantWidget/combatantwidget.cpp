@@ -10,6 +10,8 @@ CombatantWidget::CombatantWidget(QWidget* parent)
       _director(new pf2e_manager::EffectDirector(_builder)) {
   ui->setupUi(this);
 
+  // ui->effect_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
+
   using namespace pf2e_manager;
   Combatant tmp(100, 36, Combatant::Side::TEAM, "Peppa");
   _controller->addCombatant(_controller->getCombatants().begin(),
@@ -28,7 +30,12 @@ CombatantWidget::CombatantWidget(QWidget* parent)
 
   auto it_eff = it->getEffects().begin();
 
-  ui->listWidget_effect->setUI(this);
+  ui->listWidget_effect->setUI(std::bind(&MyMenuWidget::setLayout, ui->listWidget_effect,
+                                         std::placeholders::_1/*, 0,
+                                         Qt::Alignment()*/));
+  ui->listWidget_effect->setFrame(ui->effect_layout);
+
+  // ui->effect_layout->setFixedSize(370, 130);
 
   EffectListWidgetItem* item =
       new EffectListWidgetItem(it_eff, QString::number(1));

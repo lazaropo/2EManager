@@ -4,6 +4,7 @@
 #include <QListWidget>
 #include <QToolTip>
 #include <QWidget>
+#include <QtWidgets>
 
 // #include "EffectListWidgetItem.h"
 #include "../Model/Controller.h"
@@ -23,7 +24,8 @@ class CombatantWidget : public QWidget {
   CombatantWidget(QWidget *parent = nullptr);
   ~CombatantWidget();
 
-  void addTextBrowser(QTextBrowser *text) { ui->layout_effect->addItem(text); }
+  // void addTextBrowser(QTextBrowser *text) { ui->layout_effect->addItem(text);
+  // }
 
  private:
   Ui::CombatantWidget *ui;

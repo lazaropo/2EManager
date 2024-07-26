@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>343</height>
+    <height>174</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -108,13 +108,13 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>170</y>
-     <width>461</width>
+     <x>580</x>
+     <y>10</y>
+     <width>331</width>
      <height>131</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="layout_effect"/>
+   <layout class="QVBoxLayout" name="effect_layout"/>
   </widget>
   <zorder>listWidget_effect</zorder>
   <zorder>label_name</zorder>

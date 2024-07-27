@@ -44,6 +44,9 @@ class MyMenuWidget : public QListWidget {
     QMenu menu(this->parentWidget());
     QAction* show_description = menu.addAction("Get Discripttion");
     QAction* heal_command = menu.addAction("makeSomethingElse");
+    QMenu* make_effect = menu.addMenu("Make Effect...");
+
+    QAction* make_clumsy = menu.addAction("Make Clumsy");
 
     QAbstractItemDelegate::connect(
         show_description, &QAction::triggered, [=]() {
@@ -53,7 +56,6 @@ class MyMenuWidget : public QListWidget {
                      ->getEffect()))
                   ->what()));
           this->parentWidget()->layout()->addWidget(_item);
-          //_frame->setEnabled(true);
           // this->parentWidget()->setLayout(_frame->layout());
         });
 
@@ -61,8 +63,16 @@ class MyMenuWidget : public QListWidget {
       if (!_item) setTextBrowser();
       _item->setText(QString::fromStdString("HEAL COMMAND"));
       this->parentWidget()->layout()->addWidget(_item);
-      //_frame->setEnabled(true);
-      // this->parentWidget()->setLayout(_frame->layout());
+    });
+
+    QAbstractItemDelegate::connect(make_clumsy, &QAction::triggered, [=]() {
+      if (!_item) setTextBrowser();
+
+      // _item->setText(QString::fromStdString(
+      //     (*(dynamic_cast<EffectListWidgetItem*>(currentItem())
+      //            ->getEffect()))
+      //         ->what()));
+      // this->parentWidget()->layout()->addWidget(_item);
     });
 
     menu.exec(event->globalPos());

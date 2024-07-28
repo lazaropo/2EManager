@@ -10,7 +10,8 @@ CombatantWidget::CombatantWidget(QWidget* parent)
       _director(new pf2e_manager::EffectDirector(_builder)) {
   ui->setupUi(this);
 
-  // ui->effect_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->listWidget_effect->setUI(std::bind(&MyMenuWidget::setLayout, ui->listWidget_effect,
+                                           std::placeholders::_1));
 
   using namespace pf2e_manager;
   Combatant tmp(100, 36, Combatant::Side::TEAM, "Peppa");
@@ -28,33 +29,51 @@ CombatantWidget::CombatantWidget(QWidget* parent)
   _builder->setCreator(nullptr);
   _controller->addEffect(_builder, it);
 
-  auto it_eff = it->getEffects().begin();
+  _director->buildConfusedEffect(5);
+  _builder->setReciever(&(*it));
+  _builder->setCreator(nullptr);
+  _controller->addEffect(_builder, it);
 
-  ui->listWidget_effect->setUI(std::bind(&MyMenuWidget::setLayout, ui->listWidget_effect,
-                                         std::placeholders::_1/*, 0,
-                                         Qt::Alignment()*/));
-  // ui->listWidget_effect->setFrame(ui->effect_layout);
+  for(auto it_eff = it->getEffects().begin(),
+it_eff_end = it->getEffects().end(); it_eff != it_eff_end; ++it_eff) {
+      EffectListWidgetItem* item =
+          new EffectListWidgetItem(it_eff, QString::number(1));
+      item->setText(
+          QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
+              .arg(QString::fromStdString((*it_eff)->getName()))
+              .arg(QString::fromStdString((*it_eff)->getCreator()
+                                              ? (*it_eff)->getCreator()->getName()
+                                              : "User"))
+              .arg(QString::fromStdString((*it_eff)->getObject()->getName()))
+              .arg(QString::number((*it_eff)->getDuration()))
+              .arg(QString::number((*it_eff)->getValue())));
 
-  // ui->effect_layout->setFixedSize(370, 130);
-  // ui->effect_layout->set();
+      ui->listWidget_effect->addItem(item);
+  }
 
-  EffectListWidgetItem* item =
-      new EffectListWidgetItem(it_eff, QString::number(1));
-  item->setText(
-      QString("%1 from %2 on %3\tDuratoin:%4\tValue:%5")
-          .arg(QString::fromStdString((*it_eff)->getName()))
-          .arg(QString::fromStdString((*it_eff)->getCreator()
-                                          ? (*it_eff)->getCreator()->getName()
-                                          : "User"))
-          .arg(QString::fromStdString((*it_eff)->getObject()->getName()))
-          .arg(QString::number((*it_eff)->getDuration()))
-          .arg(QString::number((*it_eff)->getValue())));
-  item->setToolTip(QString::fromStdString((*it_eff)->what()));
-  // ToolTip::add(item, QString::fromStdString((*it_eff)->what()));
 
-  // setFocusPolicy(Qt::NoFocus);
-  // item->setToolTipDuration(10000);
-  ui->listWidget_effect->addItem(item);
+  // item->setToolTip(QString::fromStdString((*it_eff)->what()));
+
+
+
+
+
+//  it_eff = it->getEffects().begin() + 1;
+
+//  item =
+//      new EffectListWidgetItem(it_eff, QString::number(1));
+//  item->setText(
+//      QString("%1 from %2 on %3\tDuratoin:%4\tValue:%5")
+//          .arg(QString::fromStdString((*it_eff)->getName()))
+//          .arg(QString::fromStdString((*it_eff)->getCreator()
+//                                          ? (*it_eff)->getCreator()->getName()
+//                                          : "User"))
+//          .arg(QString::fromStdString((*it_eff)->getObject()->getName()))
+//          .arg(QString::number((*it_eff)->getDuration()))
+//          .arg(QString::number((*it_eff)->getValue())));
+//  item->setToolTip(QString::fromStdString((*it_eff)->what()));
+
+//ui->listWidget_effect->addItem(item);
 }
 
 CombatantWidget::~CombatantWidget() {

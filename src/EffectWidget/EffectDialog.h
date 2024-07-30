@@ -18,25 +18,25 @@ public:
     EffectDialog(QWidget *parent = nullptr);
     ~EffectDialog();
 
-   signals:
-    void closed();
+//   signals:
+//    void closed();
 
-       private slots:
-    void onDialogClosed() {
-        emit closed();
-    }
+//       private slots:
+//    void onDialogClosed() {
+//        emit closed();
+//    }
 
 protected:
-    virtual void closeEvent(QCloseEvent *event) override {
-        emit onDialogClosed();
-        event->accept();
-    }
+//    virtual void closeEvent(QCloseEvent *event) override {
+//        emit onDialogClosed();
+//        event->accept();
+//    }
 
-    pf2e_manager::SimpleEffectBuilder* getData() const {
-        return _director->buildEffectByName(ui->comboBox_effect->currentText()->toStdString(),
-                                            ui->lineEdit_duration->text()->toInt(),
-                                            ui->lineEdit_value->text()->toInt());
-    }
+//    pf2e_manager::SimpleEffectBuilder* getData() const {
+//        return _director->buildEffectByName(ui->comboBox_effect->currentText()->toStdString(),
+//                                            ui->lineEdit_duration->text()->toInt(),
+//                                            ui->lineEdit_value->text()->toInt());
+//    }
 
 
 private:

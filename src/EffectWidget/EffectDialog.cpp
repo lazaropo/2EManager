@@ -51,7 +51,9 @@ EffectDialog::EffectDialog(QWidget *parent)
 
     ui->comboBox_effect->addItem("Other effect");
 
-    ui->comboBox_effect->setEditable(true);
+//    ui->comboBox_effect->setEditable(true);
+    ui->comboBox_effect->window()->blockSignals()
+
 
 }
 

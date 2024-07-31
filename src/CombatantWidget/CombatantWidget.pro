@@ -10,6 +10,7 @@ QMAKE_CXXFLAGS += -std=c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    MyMenuWidget.cpp \
     main.cpp \
     combatantwidget.cpp
 
@@ -28,12 +29,11 @@ HEADERS += \
     ../Model/Mediator.h \
     ../Model/Model.h \
     EffectListWidgetItem.h \
-    MyMenuWidget.h \
+    ../CombatantWidget/MyMenuWidget.h \
     combatantwidget.h
 
 FORMS += \
-    combatantwidget.ui \
-    ../EffectWidget/effectwidget.ui
+    combatantwidget.ui
 
 TRANSLATIONS += \
     CombatantWidget_ru_RU.ts

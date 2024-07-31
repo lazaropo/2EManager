@@ -1,4 +1,5 @@
 EffectListWidgetItem.h
+MyMenuWidget.cpp
 MyMenuWidget.h
 combatantwidget.cpp
 combatantwidget.h

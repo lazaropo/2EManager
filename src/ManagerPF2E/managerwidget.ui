@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
+    <enum>QFrame::StyledPanel</enum>
    </property>
    <property name="frameShadow">
     <enum>QFrame::Plain</enum>
@@ -36,8 +36,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1151</width>
-      <height>481</height>
+      <width>1149</width>
+      <height>479</height>
      </rect>
     </property>
    </widget>

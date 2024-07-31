@@ -27,6 +27,15 @@ class ManagerWidget : public QWidget {
  private slots:
   void on_pushButton_create_effect_clicked();
 
+  void setCurrent(QMouseEvent *event) {
+    Q_UNUSED(event);
+    if (_current_widget)
+      _current_widget->setStyleSheet(
+          "CombatantWidget{ background-color: rgb(0, 0, 0); };");
+    _current_widget = static_cast<CombatantWidget *>(sender());
+    _current_widget->setStyleSheet("CombatantWidget {\n background-color: red; \n};");
+  }
+
  private:
   Ui::ManagerWidget *ui;
   pf2e_manager::Controller *_controller;
@@ -35,5 +44,7 @@ class ManagerWidget : public QWidget {
   QList<CombatantWidget *> _combatant_list;
   QVBoxLayout *_combatants_layout;
   QWidget *_box;
+
+  CombatantWidget *_current_widget;
 };
 #endif  // MANAGERWIDGET_H

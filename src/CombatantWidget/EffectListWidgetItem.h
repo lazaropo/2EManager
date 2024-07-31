@@ -8,12 +8,6 @@
 
 #include "../Model/Controller.h"
 
-// QT_BEGIN_NAMESPACE
-// namespace Ui {
-// class EffectListWidgetItem;
-// }
-// QT_END_NAMESPACE
-
 class EffectListWidgetItem : public QListWidgetItem {
  public:
   explicit EffectListWidgetItem(pf2e_manager::Combatant::t_pos_eff pos,

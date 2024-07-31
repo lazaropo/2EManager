@@ -57,15 +57,19 @@ pf2e_manager:
   int count = 0;
   for (auto it : _combatant_list) {
     _combatants_layout->addWidget(it);
+    QObject::connect(it, &CombatantWidget::mousePressed, this,
+                     &ManagerWidget::setCurrent);
+    it->setAttribute(Qt::WA_StyledBackground);
     ++count;
   }
   _box->setFixedHeight(count * (*_combatant_list.begin())->height());
 
   _box->layout()->setSpacing(12);
-  // setLayout(_combatants_layout);
+
   ui->scrollArea->setWidget(_box);
 
-  ui->scrollArea->setBackgroundRole(QPalette::Window);
+  ui->scrollArea->setAttribute(Qt::WA_StyledBackground);
+  // ui->scrollArea->setBackgroundRole(QPalette::Window);
 }
 
 ManagerWidget::~ManagerWidget() {

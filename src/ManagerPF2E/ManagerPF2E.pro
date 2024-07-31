@@ -16,15 +16,18 @@ SUBDIRS += ../CombatantWidget/
 SOURCES += \
     main.cpp \
     managerwidget.cpp \
-    ../CombatantWidget/combatantwidget.cpp
+    ../CombatantWidget/combatantwidget.cpp \
+    ../CombatantWidget/MyMenuWidget.cpp
 
 HEADERS += \
     managerwidget.h \
-    ../CombatantWidget/*.h
+    ../CombatantWidget/combatantwidget.h \
+    ../CombatantWidget/MyMenuWidget.h
 
 FORMS += \
     managerwidget.ui \
-    ../CombatantWidget/combatantwidget.ui
+    ../CombatantWidget/combatantwidget.ui \
+    ../EffectDialog/effectdialog.ui
 
 TRANSLATIONS += \
     ManagerPF2E_ru_RU.ts

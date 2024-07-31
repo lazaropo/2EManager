@@ -34,50 +34,9 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
             .arg(QString::number((*it_eff)->getValue())));
 
     ui->listWidget_effect->addItem(item);
+
+    setAttribute(Qt::WA_StyledBackground);
   }
-
-  // item->setToolTip(QString::fromStdString((*it_eff)->what()));
-
-  //  it_eff = it->getEffects().begin() + 1;
-
-  //  item =
-  //      new EffectListWidgetItem(it_eff, QString::number(1));
-  //  item->setText(
-  //      QString("%1 from %2 on %3\tDuratoin:%4\tValue:%5")
-  //          .arg(QString::fromStdString((*it_eff)->getName()))
-  //          .arg(QString::fromStdString((*it_eff)->getCreator()
-  //                                          ?
-  //                                          (*it_eff)->getCreator()->getName()
-  //                                          : "User"))
-  //          .arg(QString::fromStdString((*it_eff)->getObject()->getName()))
-  //          .arg(QString::number((*it_eff)->getDuration()))
-  //          .arg(QString::number((*it_eff)->getValue())));
-  //  item->setToolTip(QString::fromStdString((*it_eff)->what()));
-
-  // ui->listWidget_effect->addItem(item);
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }
-
-// void CombatantWidget::on_listWidget_effect_itemEntered(QListWidgetItem*
-// item_unused) {
-//   QLabel* item = new QLabel();
-//   item->setScaledContents(true);
-//   item->setMaximumSize(ui->layout_effect->maximumSize().rwidth(),
-//   ui->layout_effect->maximumSize().rheight()); auto it_eff =
-//   _controller->getCombatants().begin()->getEffects().begin();
-//   item->setToolTip(QString("%1").arg(QString::fromStdString((*it_eff)->what())));
-//   ui->layout_effect->addWidget(item);
-// }
-
-// void CombatantWidget::on_listWidget_effect_itemClicked(QListWidgetItem*
-// item_unused) {
-//   QLabel* item = new QLabel();
-//   item->setScaledContents(true);
-//   item->setMaximumSize(ui->layout_effect->maximumSize().rwidth(),
-//   ui->layout_effect->maximumSize().rheight()); auto it_eff =
-//   _controller->getCombatants().begin()->getEffects().begin();
-//   item->setText(QString("%1").arg(QString::fromStdString((*it_eff)->what())));
-//   item->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-//   ui->layout_effect->addWidget(item);
-// }

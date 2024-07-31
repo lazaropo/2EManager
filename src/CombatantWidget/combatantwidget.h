@@ -7,12 +7,13 @@
 #include <QtWidgets>
 
 // #include "EffectListWidgetItem.h"
+#include "../CombatantWidget/MyMenuWidget.h"
 #include "../Model/Controller.h"
-#include "MyMenuWidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class CombatantWidget;
+// class MyMenuWidget;
 using namespace pf2e_manager;
 }  // namespace Ui
 QT_END_NAMESPACE
@@ -25,13 +26,16 @@ class CombatantWidget : public QWidget {
                   QWidget *parent = nullptr);
   ~CombatantWidget();
 
-  // void addTextBrowser(QTextBrowser *text) { ui->layout_effect->addItem(text);
-  // }
+ protected slots:
+  void mousePressEvent(QMouseEvent *event = nullptr) {
+    emit mousePressed(event);
+  }
+
+ signals:
+  void mousePressed(QMouseEvent *event = nullptr);
 
  private:
   Ui::CombatantWidget *ui;
   pf2e_manager::Combatant *_combatant;
-  //  pf2e_manager::SimpleEffectBuilder *_builder;
-  //  pf2e_manager::EffectDirector *_director;
 };
 #endif  // COMBATANTWIDGET_H

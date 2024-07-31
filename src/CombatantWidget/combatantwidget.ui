@@ -130,7 +130,7 @@
   <customwidget>
    <class>MyMenuWidget</class>
    <extends>QListWidget</extends>
-   <header location="global">MyMenuWidget.h</header>
+   <header>MyMenuWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

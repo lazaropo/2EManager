@@ -8,18 +8,26 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+TEMPLATE += SUBDIRS
+
+SUBDIRS += ../EffectDialog/
+SUBDIRS += ../CombatantWidget/
+
 SOURCES += \
     main.cpp \
-    EffectDialog.cpp
+    managerwidget.cpp \
+    ../CombatantWidget/combatantwidget.cpp
 
 HEADERS += \
-    EffectDialog.h
+    managerwidget.h \
+    ../CombatantWidget/*.h
 
 FORMS += \
-    effectdialog.ui
+    managerwidget.ui \
+    ../CombatantWidget/combatantwidget.ui
 
 TRANSLATIONS += \
-    EffectWidget_ru_RU.ts
+    ManagerPF2E_ru_RU.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 
@@ -27,3 +35,5 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+

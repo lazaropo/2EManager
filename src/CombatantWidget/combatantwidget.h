@@ -21,7 +21,8 @@ class CombatantWidget : public QWidget {
   Q_OBJECT
 
  public:
-  CombatantWidget(QWidget *parent = nullptr);
+  CombatantWidget(pf2e_manager::Combatant *_combatant,
+                  QWidget *parent = nullptr);
   ~CombatantWidget();
 
   // void addTextBrowser(QTextBrowser *text) { ui->layout_effect->addItem(text);
@@ -29,8 +30,8 @@ class CombatantWidget : public QWidget {
 
  private:
   Ui::CombatantWidget *ui;
-  pf2e_manager::Controller *_controller;
-  pf2e_manager::SimpleEffectBuilder *_builder;
-  pf2e_manager::EffectDirector *_director;
+  pf2e_manager::Combatant *_combatant;
+  //  pf2e_manager::SimpleEffectBuilder *_builder;
+  //  pf2e_manager::EffectDirector *_director;
 };
 #endif  // COMBATANTWIDGET_H

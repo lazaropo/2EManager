@@ -16,7 +16,7 @@
   <property name="modal">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -39,8 +39,26 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
         <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
+         <enum>Qt::WheelFocus</enum>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::DefaultContextMenu</enum>
+        </property>
+        <property name="maxVisibleItems">
+         <number>10</number>
+        </property>
+        <property name="maxCount">
+         <number>100</number>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+        </property>
+        <property name="minimumContentsLength">
+         <number>10</number>
         </property>
        </widget>
       </item>

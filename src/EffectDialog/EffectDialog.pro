@@ -8,23 +8,19 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-TEMPLATE += SUBDIRS
-
-SUBDIRS += ../EffectDialog/
-SUBDIRS += ../CombatantWidget/
-
 SOURCES += \
     main.cpp \
-    managerwidget.cpp
+    EffectDialog.cpp
 
 HEADERS += \
-    managerwidget.h
+    DataSource.h \
+    EffectDialog.h
 
 FORMS += \
-    managerwidget.ui
+    effectdialog.ui
 
 TRANSLATIONS += \
-    pathfinder2E_manager_ru_RU.ts
+    EffectWidget_ru_RU.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 

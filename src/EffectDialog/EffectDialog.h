@@ -16,7 +16,7 @@ class EffectDialog : public QDialog {
   Q_OBJECT
 
  public:
-  EffectDialog(QWidget* parent = nullptr, DataSource* data = nullptr);
+  EffectDialog(pf2e_manager::Combatant* unit, QWidget* parent = nullptr);
   ~EffectDialog();
 
  protected:
@@ -26,7 +26,7 @@ class EffectDialog : public QDialog {
  private:
   Ui::EffectDialog* ui;
 
-  DataSource* _data;
+  pf2e_manager::Combatant* _unit;
 
   pf2e_manager::SimpleEffectBuilder* _builder =
       new pf2e_manager::SimpleEffectBuilder();

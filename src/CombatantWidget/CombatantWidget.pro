@@ -32,7 +32,8 @@ HEADERS += \
     combatantwidget.h
 
 FORMS += \
-    combatantwidget.ui
+    combatantwidget.ui \
+    ../EffectWidget/effectwidget.ui
 
 TRANSLATIONS += \
     CombatantWidget_ru_RU.ts

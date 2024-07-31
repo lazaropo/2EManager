@@ -2,8 +2,8 @@
 
 #include "ui_effectdialog.h"
 
-EffectDialog::EffectDialog(QWidget* parent, DataSource* data)
-    : QDialog(parent), ui(new Ui::EffectDialog), _data(data) {
+EffectDialog::EffectDialog(pf2e_manager::Combatant* unit, QWidget* parent)
+    : QDialog(parent), _unit(unit), ui(new Ui::EffectDialog) {
   ui->setupUi(this);
 
   ui->comboBox_effect->addItem("Clumsy");
@@ -56,10 +56,16 @@ EffectDialog::EffectDialog(QWidget* parent, DataSource* data)
 EffectDialog::~EffectDialog() { delete ui; }
 
 void EffectDialog::on_button_set_clicked() {
-  if (_data) {
-    _data->_value = ui->lineEdit_value->text().toInt();
-    _data->_duration = ui->lineEdit_duration->text().toInt();
-    _data->_effect_name = ui->comboBox_effect->currentText().toStdString();
-  }
+  pf2e_manager::SimpleEffectBuilder builder;
+  pf2e_manager::EffectDirector director(&builder);
+  director.buildEffectByName(ui->comboBox_effect->currentText().toStdString(),
+                             ui->lineEdit_duration->text().toInt(),
+                             ui->lineEdit_value->text().toInt());
+  _unit->addEffect(builder.getSimpleEffect());
+  //  if (_data) {
+  //    _data->_value = ui->lineEdit_value->text().toInt();
+  //    _data->_duration = ui->lineEdit_duration->text().toInt();
+  //    _data->_effect_name = ui->comboBox_effect->currentText().toStdString();
+  //  }
   emit accept();
 }

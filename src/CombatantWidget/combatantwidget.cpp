@@ -12,6 +12,7 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   using namespace pf2e_manager;
 
+  ui->label_name->setText(QString::fromStdString(_combatant->getName()));
   ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPCurr()));
   ui->lineEdit_hp_max->setText(QString::number(_combatant->getHPMax()));
   ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));

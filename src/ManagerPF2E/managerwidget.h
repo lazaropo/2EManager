@@ -3,9 +3,11 @@
 
 #include <QList>
 #include <QListWidget>
+#include <QVBoxLayout>
 #include <QWidget>
 
 #include "../CombatantWidget/combatantwidget.h"
+#include "../EffectDialog/EffectDialog.h"
 #include "../Model/Controller.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,10 +24,16 @@ class ManagerWidget : public QWidget {
   ManagerWidget(QWidget *parent = nullptr);
   ~ManagerWidget();
 
+ private slots:
+  void on_pushButton_create_effect_clicked();
+
  private:
   Ui::ManagerWidget *ui;
   pf2e_manager::Controller *_controller;
 
-  QStandardItemModel _combatant_model;
+  // QStandardItemModel _combatant_model;
+  QList<CombatantWidget *> _combatant_list;
+  QVBoxLayout *_combatants_layout;
+  QWidget *_box;
 };
 #endif  // MANAGERWIDGET_H

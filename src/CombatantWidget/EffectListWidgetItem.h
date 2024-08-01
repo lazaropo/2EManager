@@ -12,15 +12,15 @@ class EffectListWidgetItem : public QListWidgetItem {
  public:
   explicit EffectListWidgetItem(pf2e_manager::Combatant::t_pos_eff pos,
                                 QListWidget* listview = nullptr)
-      : _effect(pos), QListWidgetItem(listview) {}
+      : QListWidgetItem(listview), _effect(pos) {}
 
   explicit EffectListWidgetItem(pf2e_manager::Combatant::t_pos_eff pos,
                                 const QString& text,
                                 QListWidget* listview = nullptr)
-      : _effect(pos), QListWidgetItem(text, listview) {}
+      : QListWidgetItem(text, listview), _effect(pos) {}
 
   EffectListWidgetItem(const EffectListWidgetItem& other)
-      : _effect(other._effect), QListWidgetItem(other) {}
+      : QListWidgetItem(other), _effect(other._effect) {}
 
   pf2e_manager::Combatant::t_pos_eff getEffect() { return _effect; }
 

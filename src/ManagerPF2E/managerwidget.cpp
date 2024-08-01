@@ -84,9 +84,13 @@ ManagerWidget::~ManagerWidget() {
 
 void ManagerWidget::on_pushButton_create_effect_clicked() {
   if (!_current_widget) return;
-  EffectDialog *dialog = new EffectDialog(_current_widget->getCombatant());
+  EffectDialog *dialog =
+      new EffectDialog(_current_widget->getCombatant(), this);
   dialog->exec();
+
   delete dialog;
+
+  _current_widget->updateContent();
 }
 
 void ManagerWidget::setCurrent(QMouseEvent *event) {

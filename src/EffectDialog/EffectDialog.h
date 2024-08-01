@@ -1,5 +1,5 @@
-#ifndef EFFECTDIALOG_H
-#define EFFECTDIALOG_H
+#ifndef _EFFECTDIALOG_H
+#define _EFFECTDIALOG_H
 
 #include <QDialog>
 #include <QPushButton>

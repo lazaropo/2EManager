@@ -96,7 +96,7 @@ class Combatant : public SubjectBase {
   int _initiative;
   int _level;
   Side _side;
-  std::string _name;
+  std::string _name = "";
   const Vitality _vitality;
 
   std::list<SimpleEffect*> _effects = std::list<SimpleEffect*>();

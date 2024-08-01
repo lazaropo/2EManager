@@ -63,17 +63,15 @@ void EffectDialog::on_button_set_clicked() {
   if (!_unit) return;
   pf2e_manager::SimpleEffectBuilder builder;
   pf2e_manager::EffectDirector director(&builder);
+
   director.buildEffectByName(
       "effect:" + ui->comboBox_effect->currentText().toLower().toStdString(),
       ui->lineEdit_duration->text().toInt(),
       ui->lineEdit_value->text().toInt());
   builder.setCreator(nullptr);
   builder.setReciever(_unit);
+
   _unit->addEffect(builder.getSimpleEffect());
-  // delete ui;
   _unit = nullptr;
-  //  delete _director;
-  //  delete _builder;
-  closeDialog();
-  // QDialog::done(QDialog::Accepted);
+  // closeDialog();
 }

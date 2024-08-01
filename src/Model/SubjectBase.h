@@ -9,6 +9,8 @@ class SubjectBase {
   SubjectBase(SubjectBase* subject, SubjectBase* object = nullptr)
       : _subject(subject), _object(object) {}
 
+  virtual ~SubjectBase() = default;
+
   virtual const std::string getName() const { return _name; }
   SubjectBase* getSubject() const { return _subject; }
   SubjectBase* getObject() const { return _object; }

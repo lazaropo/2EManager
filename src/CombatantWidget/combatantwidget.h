@@ -28,6 +28,8 @@ class CombatantWidget : public QWidget {
 
   pf2e_manager::Combatant *getCombatant() { return _combatant; }
 
+  void updateContent();
+
  protected slots:
   void mousePressEvent(QMouseEvent *event = nullptr) {
     emit mousePressed(event);

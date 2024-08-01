@@ -56,16 +56,19 @@ EffectDialog::EffectDialog(pf2e_manager::Combatant* unit, QWidget* parent)
 EffectDialog::~EffectDialog() { delete ui; }
 
 void EffectDialog::on_button_set_clicked() {
+  if (!_unit) return;
   pf2e_manager::SimpleEffectBuilder builder;
   pf2e_manager::EffectDirector director(&builder);
-  director.buildEffectByName(ui->comboBox_effect->currentText().toStdString(),
-                             ui->lineEdit_duration->text().toInt(),
-                             ui->lineEdit_value->text().toInt());
+  director.buildEffectByName(
+      "effect:" + ui->comboBox_effect->currentText().toLower().toStdString(),
+      ui->lineEdit_duration->text().toInt(),
+      ui->lineEdit_value->text().toInt());
+  builder.setCreator(nullptr);
   _unit->addEffect(builder.getSimpleEffect());
   //  if (_data) {
   //    _data->_value = ui->lineEdit_value->text().toInt();
   //    _data->_duration = ui->lineEdit_duration->text().toInt();
   //    _data->_effect_name = ui->comboBox_effect->currentText().toStdString();
   //  }
-  emit accept();
+  close();
 }

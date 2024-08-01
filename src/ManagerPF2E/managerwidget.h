@@ -33,7 +33,8 @@ class ManagerWidget : public QWidget {
       _current_widget->setStyleSheet(
           "CombatantWidget{ background-color: rgb(0, 0, 0); };");
     _current_widget = static_cast<CombatantWidget *>(sender());
-    _current_widget->setStyleSheet("CombatantWidget {\n background-color: red; \n};");
+    _current_widget->setStyleSheet(
+        "CombatantWidget {\n background-color: red; \n};");
   }
 
  private:
@@ -45,6 +46,6 @@ class ManagerWidget : public QWidget {
   QVBoxLayout *_combatants_layout;
   QWidget *_box;
 
-  CombatantWidget *_current_widget;
+  CombatantWidget *_current_widget = nullptr;
 };
 #endif  // MANAGERWIDGET_H

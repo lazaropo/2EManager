@@ -17,12 +17,14 @@ SOURCES += \
     main.cpp \
     managerwidget.cpp \
     ../CombatantWidget/combatantwidget.cpp \
-    ../CombatantWidget/MyMenuWidget.cpp
+    ../CombatantWidget/MyMenuWidget.cpp \
+    ../EffectDialog/EffectDialog.cpp
 
 HEADERS += \
     managerwidget.h \
     ../CombatantWidget/combatantwidget.h \
-    ../CombatantWidget/MyMenuWidget.h
+    ../CombatantWidget/MyMenuWidget.h \
+    ../EffectDialog/EffectDialog.h
 
 FORMS += \
     managerwidget.ui \

@@ -78,5 +78,6 @@ ManagerWidget::~ManagerWidget() {
 }
 
 void ManagerWidget::on_pushButton_create_effect_clicked() {
-  // EffectDialog dialog(, this);
+  EffectDialog dialog(_current_widget->getCombatant(), this);
+  dialog.exec();
 }

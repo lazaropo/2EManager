@@ -26,7 +26,9 @@ class Combatant : public SubjectBase {
         _initiative(initiative),
         _side(side),
         _name(name),
-        _vitality(vit) {}
+        _vitality(vit) {
+    _effects.clear();
+  }
 
   ~Combatant() {
     for (auto it : _effects) delete it;
@@ -96,8 +98,7 @@ class Combatant : public SubjectBase {
   std::string _name;
   const Vitality _vitality;
 
-  std::list<SimpleEffect*> _effects;
-  // void(*f_eventDeath)(Combatant* object);
+  std::list<SimpleEffect*> _effects = std::list<SimpleEffect*>();
 };
 
 inline bool operator<(const Combatant& fisrt, const Combatant& second) {

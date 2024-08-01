@@ -359,8 +359,10 @@ class EffectDirector {
 
   void buildEffectByName(const std::string& name, int duration, int value) {
     // try{
-    (std::any_cast<void (*)(int, int)>(_effects_dictionary[name]))(duration,
-                                                                   value);
+    if (_effects_dictionary.find(name) != _effects_dictionary.end())
+      (_effects_dictionary[name])(duration, value);
+    else
+      return;
     // }
     // catch (const std::bad_any_cast& ex){
     //   throw std:: << "Bad Any Cast: EffectDirector"
@@ -370,7 +372,8 @@ class EffectDirector {
  private:
   SimpleEffectBuilder* _builder;
   // std::any is purposed only to void(int, int)
-  std::map<const std::string, std::any> _effects_dictionary;
+  std::map<const std::string, std::function<void(int, int)>>
+      _effects_dictionary;
 };
 }  // namespace pf2e_manager
 

@@ -6,14 +6,14 @@
 namespace pf2e_manager {
 class EffectExecutor {
  public:
-  EffectExecutor(MediatorInterface* mediator) : _mediator(mediator) {}
+  EffectExecutor(MediatorInterface *mediator) : _mediator(mediator) {}
 
   ~EffectExecutor();
 
   void doNothing() const { ; }
 
-  void createEffect(SubjectBase* sender, SubjectBase* reciever,
-                    const std::string& name, const int duration = 0,
+  void createEffect(SubjectBase *sender, SubjectBase *reciever,
+                    const std::string &name, const int duration = 0,
                     const int value = 0) {
     _mediator->makeEffect(sender, reciever, name, duration, value);
   }
@@ -21,7 +21,7 @@ class EffectExecutor {
   void createCommand() { ; }
 
  private:
-  MediatorInterface* _mediator;
+  MediatorInterface *_mediator;
 };
 }  // namespace pf2e_manager
 

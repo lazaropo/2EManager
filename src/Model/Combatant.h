@@ -13,7 +13,7 @@
 namespace pf2e_manager {
 class Combatant : public SubjectBase {
  public:
-  using t_pos_eff = std::list<SimpleEffect*>::iterator;
+  using t_pos_eff = std::list<SimpleEffect *>::iterator;
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
@@ -43,11 +43,11 @@ class Combatant : public SubjectBase {
    * @return true
    * @return false
    */
-  friend bool operator<(const Combatant& fisrt, const Combatant& second);
+  friend bool operator<(const Combatant &fisrt, const Combatant &second);
 
-  std::list<SimpleEffect*>& getEffects() { return _effects; }
+  std::list<SimpleEffect *> &getEffects() { return _effects; }
 
-  void addEffect(SimpleEffect* effect) { _effects.push_back(effect); }
+  void addEffect(SimpleEffect *effect) { _effects.push_back(effect); }
 
   void setEffectDuration(t_pos_eff pos, int duration) {
     if (duration < 0) return;
@@ -83,7 +83,7 @@ class Combatant : public SubjectBase {
 
   const std::string getName() const { return _name; }
 
-  void setName(const std::string& name) { _name = name; }
+  void setName(const std::string &name) { _name = name; }
 
   int getInitiative() const { return _initiative; }
 
@@ -99,10 +99,10 @@ class Combatant : public SubjectBase {
   std::string _name = "";
   const Vitality _vitality;
 
-  std::list<SimpleEffect*> _effects = std::list<SimpleEffect*>();
+  std::list<SimpleEffect *> _effects = std::list<SimpleEffect *>();
 };
 
-inline bool operator<(const Combatant& fisrt, const Combatant& second) {
+inline bool operator<(const Combatant &fisrt, const Combatant &second) {
   return fisrt._initiative < second._initiative;
 }
 }  // namespace pf2e_manager

@@ -20,7 +20,7 @@ using ns_value = pf2e_manager::SimpleEffect::Value;
 namespace pf2e_manager {
 class EffectDirector {
  public:
-  EffectDirector(SimpleEffectBuilder* builder) : _builder(builder) {
+  EffectDirector(SimpleEffectBuilder *builder) : _builder(builder) {
     // TODO: fill the constructor by all effect names and funcs pointers pairs
     using namespace std::placeholders;
     _effects_dictionary.insert(
@@ -357,7 +357,7 @@ class EffectDirector {
   void buildUnnoticedEffect() { ; }
   void buildWoundedEffect() { ; }
 
-  void buildEffectByName(const std::string& name, int duration, int value) {
+  void buildEffectByName(const std::string &name, int duration, int value) {
     // try{
     if (_effects_dictionary.find(name) != _effects_dictionary.end())
       (_effects_dictionary[name])(duration, value);
@@ -370,7 +370,7 @@ class EffectDirector {
   }
 
  private:
-  SimpleEffectBuilder* _builder;
+  SimpleEffectBuilder *_builder;
   // std::any is purposed only to void(int, int)
   std::map<const std::string, std::function<void(int, int)>>
       _effects_dictionary;

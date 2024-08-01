@@ -11,9 +11,9 @@
 namespace pf2e_manager {
 class Mediator : public MediatorInterface {
  public:
-  using t_pos_cmd = std::list<CommandBase*>::iterator;
+  using t_pos_cmd = std::list<CommandBase *>::iterator;
 
-  explicit Mediator(std::list<Combatant>* combatant)
+  explicit Mediator(std::list<Combatant> *combatant)
       : _combatants(combatant),
         _builder(new SimpleEffectBuilder()),
         _director(new EffectDirector(_builder)) {
@@ -25,10 +25,10 @@ class Mediator : public MediatorInterface {
     delete _builder;
   }
 
-  void makeEffect(SubjectBase* sender, SubjectBase* reciever,
-                  const std::string& name, const int duration = 0,
+  void makeEffect(SubjectBase *sender, SubjectBase *reciever,
+                  const std::string &name, const int duration = 0,
                   const int value = 0) override {
-    Combatant* combatant = dynamic_cast<Combatant*>(reciever);
+    Combatant *combatant = dynamic_cast<Combatant *>(reciever);
     if (!combatant)
       throw std::runtime_error(
           "Mediator - MakeEffect func: reciever is not Combatant class.");
@@ -37,29 +37,29 @@ class Mediator : public MediatorInterface {
     combatant->addEffect(_builder->getSimpleEffect());
   }
 
-  void makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                   const std::string& name) override;
+  void makeCommand(SubjectBase *sender, SubjectBase *reciever,
+                   const std::string &name) override;
 
-  void makeCommand(CommandBase* cmd) { _commands.push_back(cmd); };
+  void makeCommand(CommandBase *cmd) { _commands.push_back(cmd); };
 
-  void undoEffect(SubjectBase* sender, SubjectBase* reciever,
-                  const std::string& name) override;
+  void undoEffect(SubjectBase *sender, SubjectBase *reciever,
+                  const std::string &name) override;
 
-  void undoCommand(SubjectBase* sender, SubjectBase* reciever,
-                   const std::string& name) override;
+  void undoCommand(SubjectBase *sender, SubjectBase *reciever,
+                   const std::string &name) override;
 
   void undoCommand(t_pos_cmd pos) { _commands.erase(pos); };
 
-  const std::list<CommandBase*>& getCommands() const override {
+  const std::list<CommandBase *> &getCommands() const override {
     return _commands;
   }
 
  private:
-  std::list<Combatant>* _combatants;
-  std::list<CommandBase*> _commands;
+  std::list<Combatant> *_combatants;
+  std::list<CommandBase *> _commands;
 
-  SimpleEffectBuilder* _builder;
-  EffectDirector* _director;
+  SimpleEffectBuilder *_builder;
+  EffectDirector *_director;
 };
 }  // namespace pf2e_manager
 

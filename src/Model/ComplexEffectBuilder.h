@@ -16,34 +16,34 @@ class ComplexEffectBuilder : public SimpleEffectBuilder {
     if (!_effect) _effect = new ComplexEffect();
   }
 
-  ComplexEffect* getComplexEffect() {
-    ComplexEffect* ret = _effect;
+  ComplexEffect *getComplexEffect() {
+    ComplexEffect *ret = _effect;
     _effect = nullptr;
     reset();
     return ret;
   }
 
-  SimpleEffect* getSimpleEffect() final {
+  SimpleEffect *getSimpleEffect() final {
     throw std::runtime_error(
         "Attempt to get SimpleEffect base-class from Complex Effect class "
         "builder.");
   }
 
-  ComplexEffectBuilder& setCombatant(Combatant* combatant) {
+  ComplexEffectBuilder &setCombatant(Combatant *combatant) {
     _effect->_combatant = combatant;
   }
 
-  ComplexEffectBuilder& setCallbackExecution(void (*fp)(int, Combatant*)) {
+  ComplexEffectBuilder &setCallbackExecution(void (*fp)(int, Combatant *)) {
     _effect->fp_execute = fp;
   }
 
-  ComplexEffectBuilder& setCallbackNewValueSetter(int (*fp)(const std::string&,
-                                                            const Combatant*)) {
+  ComplexEffectBuilder &setCallbackNewValueSetter(
+      int (*fp)(const std::string &, const Combatant *)) {
     _effect->fp_get_new_value = fp;
   }
 
  private:
-  ComplexEffect* _effect = nullptr;
+  ComplexEffect *_effect = nullptr;
 };
 }  // namespace pf2e_manager
 

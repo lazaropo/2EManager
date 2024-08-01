@@ -54,7 +54,7 @@ class SimpleEffect : public SubjectBase {
 
   SimpleEffect() : SubjectBase(this) {}
 
-  SimpleEffect(const SimpleEffect& other)
+  SimpleEffect(const SimpleEffect &other)
       : SubjectBase(this, other.getObject()),
         _type(other._type),
         _value(other._value),
@@ -63,9 +63,9 @@ class SimpleEffect : public SubjectBase {
         _is_active(other._is_active),
         _descprition(other._descprition) {}
 
-  SimpleEffect(SimpleEffect&& other) : SimpleEffect(other) {}
+  SimpleEffect(SimpleEffect &&other) : SimpleEffect(other) {}
 
-  virtual SimpleEffect* copy() { return new SimpleEffect(*this); }
+  virtual SimpleEffect *copy() { return new SimpleEffect(*this); }
 
   virtual void execute() {
     --_duration;
@@ -87,7 +87,7 @@ class SimpleEffect : public SubjectBase {
   int getValue() const { return _value._value; }
 
   // const std::string getName() const { return _name; }
-  const std::string& what() const { return _descprition; }
+  const std::string &what() const { return _descprition; }
 
   void removeEffect() {
     _duration = 0;
@@ -110,9 +110,9 @@ class SimpleEffect : public SubjectBase {
 
   std::list<std::string> _associated_actions = std::list<std::string>();
 
-  EffectExecutor* _executor = nullptr;
+  EffectExecutor *_executor = nullptr;
 
-  MediatorInterface* _mediator = nullptr;
+  MediatorInterface *_mediator = nullptr;
 };
 }  // namespace pf2e_manager
 #endif

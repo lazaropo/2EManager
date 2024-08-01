@@ -21,7 +21,7 @@ class Model {
   void addCombatant(t_pos_comb pos, Combatant new_body) {
     _combatants.insert(pos, std::move(new_body));
   }
-  void addCombatantGroup(t_pos_comb pos, std::vector<Combatant>& other) {
+  void addCombatantGroup(t_pos_comb pos, std::vector<Combatant> &other) {
     for (auto it : other) addCombatant(pos, std::move(it));
   }
 
@@ -36,27 +36,27 @@ class Model {
     _combatants.splice(--before, _combatants, from);
   }
 
-  void addCommand(CommandBase* cmd) { _mediator->makeCommand(cmd); }
+  void addCommand(CommandBase *cmd) { _mediator->makeCommand(cmd); }
   // void addAndDoCommand(CommandBase* cmd) { _mediator->addAndDoCommand(cmd); }
   void removeCommand(Mediator::t_pos_cmd pos) { _mediator->undoCommand(pos); }
   void removeCombatant(t_pos_comb it) { _combatants.erase(it); }
-  void removeCombatantGroup(std::vector<t_pos_comb>& collection) {
+  void removeCombatantGroup(std::vector<t_pos_comb> &collection) {
     for (auto it : collection) removeCombatant(it);
   }
 
-  void addEffect(SimpleEffectBuilder* builder, t_pos_comb pos) {
+  void addEffect(SimpleEffectBuilder *builder, t_pos_comb pos) {
     builder->setReciever(&(*pos));
     pos->addEffect(builder->getSimpleEffect());
   }
 
-  void addEffect(SimpleEffectBuilder* builder, Combatant* pos) {
+  void addEffect(SimpleEffectBuilder *builder, Combatant *pos) {
     builder->setReciever(pos);
     pos->addEffect(builder->getSimpleEffect());
   }
 
-  void addEffectOnGroup(SimpleEffectBuilder* builder,
-                        std::vector<t_pos_comb>& collection) {
-    SimpleEffect* effect = builder->getSimpleEffect();
+  void addEffectOnGroup(SimpleEffectBuilder *builder,
+                        std::vector<t_pos_comb> &collection) {
+    SimpleEffect *effect = builder->getSimpleEffect();
     for (auto it : collection) addEffect(builder, it);
     delete[] effect;
   }
@@ -66,12 +66,12 @@ class Model {
   }
 
   void setEffectDurationOnGroup(
-      int duration, std::vector<t_pair_comb_with_effect>& collection) {
+      int duration, std::vector<t_pair_comb_with_effect> &collection) {
     for (auto it : collection) setEffectDuration(duration, it);
   }
 
   void sortByInit() {
-    _combatants.sort([](const Combatant& a, const Combatant& b) {
+    _combatants.sort([](const Combatant &a, const Combatant &b) {
       return a.getInitiative() < b.getInitiative();
     });
   }
@@ -96,17 +96,17 @@ class Model {
         it_eff->getTrigger(SimpleEffect::Trigger::END_TURN);
   }
 
-  const std::list<Combatant>& getCombatants() const { return _combatants; }
+  const std::list<Combatant> &getCombatants() const { return _combatants; }
 
-  std::list<Combatant>& getCombatants() { return _combatants; }
+  std::list<Combatant> &getCombatants() { return _combatants; }
 
-  const std::list<CommandBase*>& getCommands() const {
+  const std::list<CommandBase *> &getCommands() const {
     return _mediator->getCommands();
   }
 
  private:
   std::list<Combatant> _combatants;
-  Mediator* _mediator;
+  Mediator *_mediator;
 
   t_pos_comb _curr_pos;
 };

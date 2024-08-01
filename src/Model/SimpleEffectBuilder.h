@@ -17,7 +17,7 @@ class SimpleEffectBuilder {
 
   ~SimpleEffectBuilder() { delete _effect; }
 
-  SimpleEffectBuilder* setNoType() {
+  SimpleEffectBuilder *setNoType() {
     int mask = 0;
     mask |= ns_type::PENALTY;
     mask |= ns_type::BONUS;
@@ -26,37 +26,37 @@ class SimpleEffectBuilder {
     return this;
   }
 
-  SimpleEffectBuilder* setCommonType() {
+  SimpleEffectBuilder *setCommonType() {
     setNoType();
     _effect->_type |= ns_type::COMMON_TYPE;
     return this;
   }
 
-  SimpleEffectBuilder* setStatusType() {
+  SimpleEffectBuilder *setStatusType() {
     setNoType();
     _effect->_type |= ns_type::STATUS;
     return this;
   }
 
-  SimpleEffectBuilder* setCircumstanceType() {
+  SimpleEffectBuilder *setCircumstanceType() {
     setNoType();
     _effect->_type |= ns_type::CIRCUMSTANCE;
     return this;
   }
 
-  SimpleEffectBuilder* setItemType() {
+  SimpleEffectBuilder *setItemType() {
     setNoType();
     _effect->_type |= ns_type::ITEM;
     return this;
   }
 
-  SimpleEffectBuilder* setLuckType() {
+  SimpleEffectBuilder *setLuckType() {
     setNoType();
     _effect->_type |= ns_type::LUCK;
     return this;
   }
 
-  SimpleEffectBuilder* setPenaltyType() {
+  SimpleEffectBuilder *setPenaltyType() {
     int mask = 0;
     mask |= ns_type::PENALTY;
     mask |= ns_type::BONUS;
@@ -66,7 +66,7 @@ class SimpleEffectBuilder {
     return this;
   }
 
-  SimpleEffectBuilder* setBonusType() {
+  SimpleEffectBuilder *setBonusType() {
     int mask = 0;
     mask |= ns_type::PENALTY;
     mask |= ns_type::BONUS;
@@ -76,102 +76,102 @@ class SimpleEffectBuilder {
     return this;
   }
 
-  SimpleEffectBuilder* setNoTrigger() {
+  SimpleEffectBuilder *setNoTrigger() {
     _effect->_trigger = ns_trigger::NO_TRIGGER;
     return this;
   }
 
-  SimpleEffectBuilder* setStartTrigger() {
+  SimpleEffectBuilder *setStartTrigger() {
     _effect->_trigger = ns_trigger::START_TURN;
     return this;
   }
 
-  SimpleEffectBuilder* setEndTrigger() {
+  SimpleEffectBuilder *setEndTrigger() {
     _effect->_trigger = ns_trigger::END_TURN;
     return this;
   }
 
-  SimpleEffectBuilder* setConstantValue() {
+  SimpleEffectBuilder *setConstantValue() {
     _effect->_value._is_constant = true;
     return this;
   }
 
-  SimpleEffectBuilder* setNoConstantValue() {
+  SimpleEffectBuilder *setNoConstantValue() {
     _effect->_value._is_constant = false;
     return this;
   }
 
-  SimpleEffectBuilder* setValueMagnitude(int value) {
+  SimpleEffectBuilder *setValueMagnitude(int value) {
     _effect->_value._value = value;
     return this;
   }
 
-  SimpleEffectBuilder* setStrValue(int value) {
+  SimpleEffectBuilder *setStrValue(int value) {
     _effect->_value._str = value;
     return this;
   }
 
-  SimpleEffectBuilder* setDexValue(int value) {
+  SimpleEffectBuilder *setDexValue(int value) {
     _effect->_value._dex = value;
     return this;
   }
 
-  SimpleEffectBuilder* setConValue(int value) {
+  SimpleEffectBuilder *setConValue(int value) {
     _effect->_value._con = value;
     return this;
   }
 
-  SimpleEffectBuilder* setMindValue(int value) {
+  SimpleEffectBuilder *setMindValue(int value) {
     _effect->_value._mind = value;
     return this;
   }
 
-  SimpleEffectBuilder* setFortValue(int value) {
+  SimpleEffectBuilder *setFortValue(int value) {
     _effect->_value._fort = value;
     return this;
   }
 
-  SimpleEffectBuilder* setReflValue(int value) {
+  SimpleEffectBuilder *setReflValue(int value) {
     _effect->_value._refl = value;
     return this;
   }
 
-  SimpleEffectBuilder* setWillValue(int value) {
+  SimpleEffectBuilder *setWillValue(int value) {
     _effect->_value._will = value;
     return this;
   }
 
-  SimpleEffectBuilder* setSkillsValue(int value) {
+  SimpleEffectBuilder *setSkillsValue(int value) {
     _effect->_value._skills = value;
     return this;
   }
 
-  SimpleEffectBuilder* setPercValue(int value) {
+  SimpleEffectBuilder *setPercValue(int value) {
     _effect->_value._perc = value;
     return this;
   }
 
-  SimpleEffectBuilder* setAtkValue(int value) {
+  SimpleEffectBuilder *setAtkValue(int value) {
     _effect->_value._atk = value;
     return this;
   }
 
-  SimpleEffectBuilder* setAcValue(int value) {
+  SimpleEffectBuilder *setAcValue(int value) {
     _effect->_value._ac = value;
     return this;
   }
 
-  SimpleEffectBuilder* setDcValue(int value) {
+  SimpleEffectBuilder *setDcValue(int value) {
     _effect->_value._dc = value;
     return this;
   }
 
-  SimpleEffectBuilder* setInitiativeValue(int value) {
+  SimpleEffectBuilder *setInitiativeValue(int value) {
     _effect->_value._init = value;
     return this;
   }
 
-  SimpleEffectBuilder* setEveryValue(int value) {
+  SimpleEffectBuilder *setEveryValue(int value) {
     setStrValue(value)
         ->setDexValue(value)
         ->setConValue(value)
@@ -188,7 +188,7 @@ class SimpleEffectBuilder {
     return this;
   }
 
-  SimpleEffectBuilder* setDuration(int value) {
+  SimpleEffectBuilder *setDuration(int value) {
     if (value < 0) return this;
     if (!value) _effect->_is_active = false;
 
@@ -196,28 +196,28 @@ class SimpleEffectBuilder {
     return this;
   }
 
-  SimpleEffectBuilder* setDescription(const std::string& text) {
+  SimpleEffectBuilder *setDescription(const std::string &text) {
     _effect->_descprition = text;
     return this;
   }
 
-  SimpleEffectBuilder* setName(const std::string& name) {
+  SimpleEffectBuilder *setName(const std::string &name) {
     _effect->_name = name;
     return this;
   }
 
-  SimpleEffectBuilder* setAssociatedActions(
-      const std::list<std::string>& actions) {
+  SimpleEffectBuilder *setAssociatedActions(
+      const std::list<std::string> &actions) {
     _effect->_associated_actions = actions;
     return this;
   }
 
-  SimpleEffectBuilder* setReciever(SubjectBase* reciever) {
+  SimpleEffectBuilder *setReciever(SubjectBase *reciever) {
     _effect->setObject(reciever);
     return this;
   }
 
-  SimpleEffectBuilder* setCreator(SubjectBase* creator) {
+  SimpleEffectBuilder *setCreator(SubjectBase *creator) {
     _effect->setCreator(creator);
     return this;
   }
@@ -229,21 +229,21 @@ class SimpleEffectBuilder {
     }
   }
 
-  virtual void setSubject(SubjectBase* object) {
+  virtual void setSubject(SubjectBase *object) {
     if (_effect) {
       _effect->_object = object;
     }
   }
 
-  virtual SimpleEffect* getSimpleEffect() {
-    SimpleEffect* ret = _effect;
+  virtual SimpleEffect *getSimpleEffect() {
+    SimpleEffect *ret = _effect;
     _effect = nullptr;
     reset();
     return ret;
   }
 
  private:
-  SimpleEffect* _effect = nullptr;
+  SimpleEffect *_effect = nullptr;
 };
 }  // namespace pf2e_manager
 

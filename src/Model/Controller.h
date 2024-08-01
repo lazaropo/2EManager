@@ -12,7 +12,7 @@ class Controller {
   void addCombatant(Model::t_pos_comb pos, Combatant new_body) {
     _model->addCombatant(pos, std::move(new_body));
   }
-  void addCombatantGroup(Model::t_pos_comb pos, std::vector<Combatant>& other) {
+  void addCombatantGroup(Model::t_pos_comb pos, std::vector<Combatant> &other) {
     for (auto it : other) _model->addCombatant(pos, std::move(it));
   }
 
@@ -20,24 +20,24 @@ class Controller {
     _model->moveCombatant(from, before);
   }
 
-  void addCommand(CommandBase* cmd) { _model->addCommand(cmd); }
+  void addCommand(CommandBase *cmd) { _model->addCommand(cmd); }
   // void addAndDoCommand(CommandBase* cmd) { _model->addAndDoCommand(cmd); }
   void removeCommand(Mediator::t_pos_cmd pos) { _model->removeCommand(pos); }
   void removeCombatant(Model::t_pos_comb it) { _model->removeCombatant(it); }
-  void removeCombatantGroup(std::vector<Model::t_pos_comb>& collection) {
+  void removeCombatantGroup(std::vector<Model::t_pos_comb> &collection) {
     _model->removeCombatantGroup(collection);
   }
 
-  void addEffect(SimpleEffectBuilder* builder, Model::t_pos_comb pos) {
+  void addEffect(SimpleEffectBuilder *builder, Model::t_pos_comb pos) {
     _model->addEffect(builder, pos);
   }
 
-  void addEffect(SimpleEffectBuilder* builder, Combatant* pos) {
+  void addEffect(SimpleEffectBuilder *builder, Combatant *pos) {
     _model->addEffect(builder, pos);
   }
 
-  void addEffectOnGroup(SimpleEffectBuilder* builder,
-                        std::vector<Model::t_pos_comb>& collection) {
+  void addEffectOnGroup(SimpleEffectBuilder *builder,
+                        std::vector<Model::t_pos_comb> &collection) {
     _model->addEffectOnGroup(builder, collection);
   }
 
@@ -46,7 +46,7 @@ class Controller {
   }
 
   void setEffectDurationOnGroup(
-      int duration, std::vector<Model::t_pair_comb_with_effect>& collection) {
+      int duration, std::vector<Model::t_pair_comb_with_effect> &collection) {
     _model->setEffectDurationOnGroup(duration, collection);
   }
 
@@ -56,18 +56,18 @@ class Controller {
 
   void nextTurn() { _model->nextTurn(); }
 
-  const std::list<Combatant>& getCombatants() const {
+  const std::list<Combatant> &getCombatants() const {
     return _model->getCombatants();
   }
 
-  std::list<Combatant>& getCombatants() { return _model->getCombatants(); }
+  std::list<Combatant> &getCombatants() { return _model->getCombatants(); }
 
-  const std::list<CommandBase*>& getCommands() const {
+  const std::list<CommandBase *> &getCommands() const {
     return _model->getCommands();
   }
 
  private:
-  Model* _model;
+  Model *_model;
 };
 }  // namespace pf2e_manager
 #endif

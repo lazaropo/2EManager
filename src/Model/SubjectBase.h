@@ -6,25 +6,25 @@
 namespace pf2e_manager {
 class SubjectBase {
  public:
-  SubjectBase(SubjectBase* subject, SubjectBase* object = nullptr)
+  SubjectBase(SubjectBase *subject, SubjectBase *object = nullptr)
       : _subject(subject), _object(object) {}
 
   virtual ~SubjectBase() = default;
 
   virtual const std::string getName() const { return _name; }
-  SubjectBase* getSubject() const { return _subject; }
-  SubjectBase* getObject() const { return _object; }
-  SubjectBase* getCreator() const { return _creator; }
+  SubjectBase *getSubject() const { return _subject; }
+  SubjectBase *getObject() const { return _object; }
+  SubjectBase *getCreator() const { return _creator; }
 
   void setName(const std::string name) { _name = name; }
-  void setObject(SubjectBase* object) { _object = object; }
-  void setCreator(SubjectBase* creator) { _creator = creator; }
+  void setObject(SubjectBase *object) { _object = object; }
+  void setCreator(SubjectBase *creator) { _creator = creator; }
 
  protected:
   std::string _name;
-  SubjectBase* _subject;  // this
-  SubjectBase* _object;   // direction of exertion
-  SubjectBase* _creator;  // exertion from whom
+  SubjectBase *_subject;  // this
+  SubjectBase *_object;   // direction of exertion
+  SubjectBase *_creator;  // exertion from whom
 };
 }  // namespace pf2e_manager
 

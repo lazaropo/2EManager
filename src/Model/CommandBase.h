@@ -9,7 +9,7 @@
 namespace pf2e_manager {
 class CommandBase : public SubjectBase {
  public:
-  CommandBase(CommandBase* p) : SubjectBase(p) {}
+  CommandBase(CommandBase *p) : SubjectBase(p) {}
   virtual void execute(int value) = 0;
   virtual void undo() = 0;
 

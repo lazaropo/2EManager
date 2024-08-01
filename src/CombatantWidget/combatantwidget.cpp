@@ -34,9 +34,9 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
             .arg(QString::number((*it_eff)->getValue())));
 
     ui->listWidget_effect->addItem(item);
-
-    setAttribute(Qt::WA_StyledBackground);
   }
+
+  setAttribute(Qt::WA_StyledBackground);
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }

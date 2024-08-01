@@ -13,14 +13,13 @@ SOURCES += \
     EffectDialog.cpp
 
 HEADERS += \
-    DataSource.h \
     EffectDialog.h
 
 FORMS += \
     effectdialog.ui
 
-TRANSLATIONS += \
-    EffectWidget_ru_RU.ts
+#TRANSLATIONS += \
+#    EffectDialog_ru_RU.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 

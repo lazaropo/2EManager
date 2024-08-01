@@ -21,10 +21,12 @@ SOURCES += \
     ../EffectDialog/EffectDialog.cpp
 
 HEADERS += \
-    managerwidget.h \
-    ../CombatantWidget/combatantwidget.h \
+    managerwidget.h \    
+    ../CombatantWidget/EffectListWidgetItem.h \
     ../CombatantWidget/MyMenuWidget.h \
-    ../EffectDialog/EffectDialog.h
+    ../CombatantWidget/combatantwidget.h \
+    ../EffectDialog/EffectDialog.h \
+    ../Model/*.h
 
 FORMS += \
     managerwidget.ui \

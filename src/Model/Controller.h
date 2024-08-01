@@ -32,6 +32,10 @@ class Controller {
     _model->addEffect(builder, pos);
   }
 
+  void addEffect(SimpleEffectBuilder* builder, Combatant* pos) {
+    _model->addEffect(builder, pos);
+  }
+
   void addEffectOnGroup(SimpleEffectBuilder* builder,
                         std::vector<Model::t_pos_comb>& collection) {
     _model->addEffectOnGroup(builder, collection);

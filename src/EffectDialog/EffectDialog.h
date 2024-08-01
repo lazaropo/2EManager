@@ -4,7 +4,6 @@
 #include <QDialog>
 
 #include "../Model/Controller.h"
-#include "DataSource.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,10 +26,5 @@ class EffectDialog : public QDialog {
   Ui::EffectDialog* ui;
 
   pf2e_manager::Combatant* _unit;
-
-  pf2e_manager::SimpleEffectBuilder* _builder =
-      new pf2e_manager::SimpleEffectBuilder();
-  pf2e_manager::EffectDirector* _director =
-      new pf2e_manager::EffectDirector(_builder);
 };
 #endif  // EFFECTDIALOG_H

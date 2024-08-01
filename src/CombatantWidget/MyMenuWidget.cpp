@@ -6,7 +6,9 @@
 MyMenuWidget::MyMenuWidget(QWidget* item) : QListWidget(item) {}
 
 MyMenuWidget::~MyMenuWidget() {
-  delete _item;
+  if (_item) delete _item;
+  if (_frame) delete _frame;
+
   // delete _frame;
 }
 

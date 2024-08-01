@@ -1,5 +1,7 @@
 #include "managerwidget.h"
 
+#include <iostream>  // <-----------------------------
+
 #include "ui_managerwidget.h"
 
 ManagerWidget::ManagerWidget(QWidget *parent)
@@ -39,12 +41,15 @@ pf2e_manager:
   director.buildClumsyEffect(2, 1);
   builder.setReciever(&(*unit_it));
   builder.setCreator(nullptr);
-  _controller->addEffect(&builder, unit_it);
+  _controller->addEffect(&builder, &tmp);
 
   director.buildConfusedEffect(5);
   builder.setReciever(&(*unit_it));
   builder.setCreator(nullptr);
-  _controller->addEffect(&builder, unit_it);
+  _controller->addEffect(&builder, &tmp);
+
+  for (auto comb : _controller->getCombatants().begin()->getEffects())
+    std::cout << comb->getName();
 
   _combatant_list.push_back(new CombatantWidget(&tmp, this));
   _combatant_list.push_back(new CombatantWidget(&tmp1, this));
@@ -69,7 +74,7 @@ pf2e_manager:
   ui->scrollArea->setWidget(_box);
 
   ui->scrollArea->setAttribute(Qt::WA_StyledBackground);
-  // ui->scrollArea->setBackgroundRole(QPalette::Window);
+  ui->scrollArea->setBackgroundRole(QPalette::Window);
 }
 
 ManagerWidget::~ManagerWidget() {
@@ -78,6 +83,18 @@ ManagerWidget::~ManagerWidget() {
 }
 
 void ManagerWidget::on_pushButton_create_effect_clicked() {
-  EffectDialog dialog(_current_widget->getCombatant(), this);
-  dialog.exec();
+  if (!_current_widget) return;
+  EffectDialog *dialog =
+      new EffectDialog(_current_widget->getCombatant(), this);
+  dialog->exec();
+  delete dialog;
+}
+
+void ManagerWidget::setCurrent(QMouseEvent *event) {
+  if (_current_widget)
+    _current_widget->setStyleSheet(
+        "CombatantWidget{ background-color:  rgb(0,0,0);  };");
+  _current_widget = static_cast<CombatantWidget *>(sender());
+  _current_widget->setStyleSheet(
+      "CombatantWidget{ background-color:  red;  };");
 }

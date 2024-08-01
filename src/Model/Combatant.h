@@ -5,6 +5,7 @@
 #include <list>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 #include "SimpleEffect.h"
 #include "SubjectBase.h"

@@ -16,7 +16,9 @@ int main(int argc, char *argv[]) {
       break;
     }
   }
-  EffectDialog w;
+  pf2e_manager::Combatant tmp(100, 233, pf2e_manager::Combatant::Side::ENEAMY,
+                              "Peppa");
+  EffectDialog w(&tmp);
   w.show();
   return a.exec();
 }

@@ -27,15 +27,7 @@ class ManagerWidget : public QWidget {
  private slots:
   void on_pushButton_create_effect_clicked();
 
-  void setCurrent(QMouseEvent *event) {
-    Q_UNUSED(event);
-    if (_current_widget)
-      _current_widget->setStyleSheet(
-          "CombatantWidget{ background-color: rgb(0, 0, 0); };");
-    _current_widget = static_cast<CombatantWidget *>(sender());
-    _current_widget->setStyleSheet(
-        "CombatantWidget {\n background-color: red; \n};");
-  }
+  void setCurrent(QMouseEvent *event);
 
  private:
   Ui::ManagerWidget *ui;

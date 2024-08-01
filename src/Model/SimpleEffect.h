@@ -101,14 +101,14 @@ class SimpleEffect : public SubjectBase {
 
  protected:
   int _type = 0;  // bit field
-  Value _value;
+  Value _value = Value();
   Trigger _trigger = Trigger::NO_TRIGGER;
   int _duration = 0;  // per round
   bool _is_active = false;
   // std::string _name = "";
   std::string _descprition = "";
 
-  std::list<std::string> _associated_actions;
+  std::list<std::string> _associated_actions = std::list<std::string>();
 
   EffectExecutor* _executor = nullptr;
 

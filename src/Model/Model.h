@@ -45,8 +45,12 @@ class Model {
   }
 
   void addEffect(SimpleEffectBuilder* builder, t_pos_comb pos) {
-    // std::list<Combatant>::iterator& it =
-    // const_cast<std::list<Combatant>::iterator&>(pos);
+    builder->setReciever(&(*pos));
+    pos->addEffect(builder->getSimpleEffect());
+  }
+
+  void addEffect(SimpleEffectBuilder* builder, Combatant* pos) {
+    builder->setReciever(pos);
     pos->addEffect(builder->getSimpleEffect());
   }
 

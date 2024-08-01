@@ -2,6 +2,7 @@
 #define EFFECTDIALOG_H
 
 #include <QDialog>
+#include <QPushButton>
 
 #include "../Model/Controller.h"
 
@@ -17,6 +18,8 @@ class EffectDialog : public QDialog {
  public:
   EffectDialog(pf2e_manager::Combatant* unit, QWidget* parent = nullptr);
   ~EffectDialog();
+
+  void closeDialog() { this->accept(); }
 
  protected:
  private slots:

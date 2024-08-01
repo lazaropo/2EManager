@@ -84,8 +84,7 @@ ManagerWidget::~ManagerWidget() {
 
 void ManagerWidget::on_pushButton_create_effect_clicked() {
   if (!_current_widget) return;
-  EffectDialog *dialog =
-      new EffectDialog(_current_widget->getCombatant(), this);
+  EffectDialog *dialog = new EffectDialog(_current_widget->getCombatant());
   dialog->exec();
   delete dialog;
 }

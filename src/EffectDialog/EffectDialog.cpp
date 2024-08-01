@@ -74,6 +74,6 @@ void EffectDialog::on_button_set_clicked() {
   _unit = nullptr;
   //  delete _director;
   //  delete _builder;
-  this->close();
+  closeDialog();
   // QDialog::done(QDialog::Accepted);
 }

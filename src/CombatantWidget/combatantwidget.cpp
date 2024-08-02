@@ -32,28 +32,10 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
             .arg(QString::number((it_eff)->getValue())));
 
     listWidget_effect->addItem(item);
-    listWidget_effect->setGeometry(QRect(400, 10, 500, 140));
   }
 
+  listWidget_effect->setGeometry(QRect(400, 10, 500, 140));
   setAttribute(Qt::WA_StyledBackground);
-
-  /// updateContent();
-
-  pf2e_manager::SimpleEffectBuilder builder;
-  pf2e_manager::EffectDirector director(&builder);
-  director.buildConfusedEffect(2, 5);
-  builder.setReciever(_combatant);
-  builder.setCreator(nullptr);
-  _combatant->addEffect(builder.getSimpleEffect());
-
-  //  updateContent();
-
-  director.buildDazzledEffect(1, 4);
-  builder.setReciever(_combatant);
-  builder.setCreator(nullptr);
-  _combatant->addEffect(builder.getSimpleEffect());
-
-  // updateContent();
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }

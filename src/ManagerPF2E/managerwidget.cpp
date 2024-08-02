@@ -14,24 +14,25 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
   using namespace pf2e_manager;
 
-  Combatant tmp(100, 36, Combatant::Side::TEAM, "Peppa");
+  Combatant *tmp = new Combatant(100, 36, Combatant::Side::TEAM, "Peppa");
   _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(tmp));
-  Combatant tmp1(50, 16, Combatant::Side::TEAM, "Ricky");
+                            std::move(*tmp));
+  Combatant *tmp1 = new Combatant(50, 16, Combatant::Side::TEAM, "Ricky");
   _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(tmp1));
-  Combatant tmp2(200, 40, Combatant::Side::ENEAMY, "Stone");
+                            std::move(*tmp1));
+  Combatant *tmp2 = new Combatant(200, 40, Combatant::Side::ENEAMY, "Stone");
   _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(tmp2));
-  Combatant tmp3(10, 36, Combatant::Side::TEAM, "Tree");
+                            std::move(*tmp2));
+  Combatant *tmp3 = new Combatant(10, 36, Combatant::Side::TEAM, "Tree");
   _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(tmp3));
-  Combatant tmp4(278, 45, Combatant::Side::ENEAMY, "Sun Child");
+                            std::move(*tmp3));
+  Combatant *tmp4 =
+      new Combatant(278, 45, Combatant::Side::ENEAMY, "Sun Child");
   _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(tmp4));
-  Combatant tmp5(128, 28, Combatant::Side::TEAM, "IG-500");
+                            std::move(*tmp4));
+  Combatant *tmp5 = new Combatant(128, 28, Combatant::Side::TEAM, "IG-500");
   _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(tmp5));
+                            std::move(*tmp5));
 
   auto unit_it = _controller->getCombatants().begin();
 
@@ -40,22 +41,22 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   director.buildClumsyEffect(2, 1);
   builder.setReciever(&(*unit_it));
   builder.setCreator(nullptr);
-  _controller->addEffect(&builder, &tmp);
+  _controller->addEffect(&builder, tmp);
 
   director.buildConfusedEffect(5);
   builder.setReciever(&(*unit_it));
   builder.setCreator(nullptr);
-  _controller->addEffect(&builder, &tmp);
+  _controller->addEffect(&builder, tmp);
 
   for (auto comb : _controller->getCombatants().begin()->getEffects())
     std::cout << comb->getName();
 
-  _combatant_list.push_back(new CombatantWidget(&tmp));
-  _combatant_list.push_back(new CombatantWidget(&tmp1));
-  _combatant_list.push_back(new CombatantWidget(&tmp2));
-  _combatant_list.push_back(new CombatantWidget(&tmp3));
-  _combatant_list.push_back(new CombatantWidget(&tmp4));
-  _combatant_list.push_back(new CombatantWidget(&tmp5));
+  _combatant_list.push_back(new CombatantWidget(tmp));
+  _combatant_list.push_back(new CombatantWidget(tmp1));
+  _combatant_list.push_back(new CombatantWidget(tmp2));
+  _combatant_list.push_back(new CombatantWidget(tmp3));
+  _combatant_list.push_back(new CombatantWidget(tmp4));
+  _combatant_list.push_back(new CombatantWidget(tmp5));
 
   //  for(auto it : _combatant_list)
   //    it->updateContent();

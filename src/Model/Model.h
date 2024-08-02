@@ -18,6 +18,10 @@ class Model {
   using t_pos_comb = std::list<Combatant>::iterator;
   using t_pair_comb_with_effect = std::pair<t_pos_comb, Combatant::t_pos_eff>;
 
+  ~Model() {
+    for (auto it : _combatants) delete &it;
+  }
+
   // void addCombatant(t_pos_comb pos, Combatant new_body) {
   //   _combatants.insert(pos, std::move(new_body));
   // }

@@ -23,6 +23,33 @@ EffectDirector::EffectDirector(SimpleEffectBuilder* builder)
   _effects_dictionary.insert(
       std::pair("effect:deafened",
                 std::bind(&EffectDirector::buildDeafenedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:doomed",
+                std::bind(&EffectDirector::buildDoomedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:drained",
+                std::bind(&EffectDirector::buildDrainedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:dying",
+                std::bind(&EffectDirector::buildDyingEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:encumbered",
+      std::bind(&EffectDirector::buildEncumberedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:enfeebled",
+      std::bind(&EffectDirector::buildEnfeebledEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:fascinated",
+      std::bind(&EffectDirector::buildFascinatedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:fatigued",
+                std::bind(&EffectDirector::buildFatiguedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:fleeing",
+                std::bind(&EffectDirector::buildFleeingEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:frightened",
+      std::bind(&EffectDirector::buildFrightenedEffect, this, _1, _2)));
 }
 
 void EffectDirector::buildClumsyEffect(int duration, int value) {
@@ -305,7 +332,7 @@ void EffectDirector::buildFleeingEffect(int duration,
 void EffectDirector::buildFrightenedEffect(__attribute__((unused)) int duration,
                                            int value) {
   _builder->reset();
-  _builder->setName("effect:fleeing")
+  _builder->setName("effect:frightened")
       ->setPenaltyType()
       ->setStatusType()
       ->setValueMagnitude(value)

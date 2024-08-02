@@ -119,3 +119,18 @@ void ManagerWidget::setCurrent(QMouseEvent *event) {
       "CombatantWidget{ background-color:  red;  };");
   // ui->verticalLayout->addWidget(_current_widget);
 }
+
+void ManagerWidget::on_pushButton_create_combatant_clicked() {
+  pf2e_manager::Combatant *body;
+  CombatantDialog dialog(&body);
+  dialog.exec();
+  _controller->addCombatant(std::move(*body));
+
+  CombatantWidget *obj = new CombatantWidget(body);
+  _combatant_list.push_back(obj);
+
+  _combatants_layout->addWidget(obj);
+  QObject::connect(obj, &CombatantWidget::mousePressed, this,
+                   &ManagerWidget::setCurrent);
+  obj->setAttribute(Qt::WA_StyledBackground);
+}

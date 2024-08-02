@@ -33,7 +33,7 @@ class Combatant : public SubjectBase {
   }
 
   ~Combatant() {
-    for (auto it : _effects) delete it;
+    // for (auto it : _effects) delete it;
   }
 
   /**

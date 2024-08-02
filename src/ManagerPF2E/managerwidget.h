@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "../CombatantDialog/combatantdialog.h"
 #include "../CombatantWidget/combatantwidget.h"
 #include "../EffectDialog/EffectDialog.h"
 #include "../Model/Controller.h"
@@ -28,6 +29,8 @@ class ManagerWidget : public QWidget {
   void on_pushButton_create_effect_clicked();
 
   void setCurrent(QMouseEvent *event);
+
+  void on_pushButton_create_combatant_clicked();
 
  private:
   Ui::ManagerWidget *ui;

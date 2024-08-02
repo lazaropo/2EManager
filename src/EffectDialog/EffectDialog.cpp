@@ -61,20 +61,6 @@ EffectDialog::~EffectDialog() {
 
 void EffectDialog::on_button_set_clicked() {
   if (!_unit) return;
-  // f2e_manager::SimpleEffectBuilder builder;
-  // f2e_manager::EffectDirector director(&builder);
-
-  //  director.buildEffectByName(
-  //      "effect:" +
-  //      ui->comboBox_effect->currentText().toLower().toStdString(),
-  //      ui->lineEdit_duration->text().toInt(),
-  //      ui->lineEdit_value->text().toInt());
-  //  builder.setCreator(nullptr);
-  //  builder.setReciever(_unit);
-
-  //  _unit->addEffect(builder.getSimpleEffect());
-  //  _unit = nullptr;
-
   _unit->buildEffectByName(
       "effect:" + ui->comboBox_effect->currentText().toLower().toStdString(),
       ui->lineEdit_duration->text().toInt(),

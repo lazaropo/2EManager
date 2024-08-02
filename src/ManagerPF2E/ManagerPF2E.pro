@@ -6,10 +6,10 @@ CONFIG += c++17
 
 QMAKE_CXXFLAGS += -Wall -Werror -Wextra \
     -pedantic -Wno-unused-parameter \
-    -Wno-unused-variable -Wno-delete-non-virtual-dtor \
-    -fsanitize=address
+    -Wno-unused-variable -Wno-delete-non-virtual-dtor #\
+#    -fsanitize=address
 
-QMAKE_LFLAGS += -fsanitize=address
+#QMAKE_LFLAGS += -fsanitize=address
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -19,6 +19,7 @@ TEMPLATE += SUBDIRS
 
 SUBDIRS += ../EffectDialog/EffectDialog.pro
 SUBDIRS += ../CombatantWidget/CombatantWidget.pro
+SUBDIRS += ../CombatantDialog/CombatantDialog.pro
 
 SOURCES += \
     main.cpp \
@@ -26,7 +27,8 @@ SOURCES += \
     ../CombatantWidget/combatantwidget.cpp \
     ../CombatantWidget/MyMenuWidget.cpp \
     ../EffectDialog/EffectDialog.cpp \
-    ../Model/*.cpp
+    ../Model/*.cpp \
+    ../CombatantDialog/combatantdialog.cpp
 
 HEADERS += \
     managerwidget.h \    
@@ -34,12 +36,14 @@ HEADERS += \
     ../CombatantWidget/MyMenuWidget.h \
     ../CombatantWidget/combatantwidget.h \
     ../EffectDialog/EffectDialog.h \
-    ../Model/*.h
+    ../Model/*.h \
+    ../CombatantDialog/combatantdialog.h
 
 FORMS += \
     managerwidget.ui \
     ../CombatantWidget/combatantwidget.ui \
-    ../EffectDialog/effectdialog.ui
+    ../EffectDialog/effectdialog.ui \
+    ../CombatantDialog/combatantdialog.ui
 
 TRANSLATIONS += \
     ManagerPF2E_ru_RU.ts

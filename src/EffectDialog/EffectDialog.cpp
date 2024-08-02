@@ -2,7 +2,7 @@
 
 #include "ui_effectdialog.h"
 
-EffectDialog::EffectDialog(pf2e_manager::Combatant* unit, QWidget* parent)
+EffectDialog::EffectDialog(pf2e_manager::EffectDirector* unit, QWidget* parent)
     : QDialog(parent), ui(new Ui::EffectDialog), _unit(unit) {
   ui->setupUi(this);
 
@@ -61,17 +61,25 @@ EffectDialog::~EffectDialog() {
 
 void EffectDialog::on_button_set_clicked() {
   if (!_unit) return;
-  pf2e_manager::SimpleEffectBuilder builder;
-  pf2e_manager::EffectDirector director(&builder);
+  // f2e_manager::SimpleEffectBuilder builder;
+  // f2e_manager::EffectDirector director(&builder);
 
-  director.buildEffectByName(
+  //  director.buildEffectByName(
+  //      "effect:" +
+  //      ui->comboBox_effect->currentText().toLower().toStdString(),
+  //      ui->lineEdit_duration->text().toInt(),
+  //      ui->lineEdit_value->text().toInt());
+  //  builder.setCreator(nullptr);
+  //  builder.setReciever(_unit);
+
+  //  _unit->addEffect(builder.getSimpleEffect());
+  //  _unit = nullptr;
+
+  _unit->buildEffectByName(
       "effect:" + ui->comboBox_effect->currentText().toLower().toStdString(),
       ui->lineEdit_duration->text().toInt(),
       ui->lineEdit_value->text().toInt());
-  builder.setCreator(nullptr);
-  builder.setReciever(_unit);
-
-  _unit->addEffect(builder.getSimpleEffect());
   _unit = nullptr;
-  // closeDialog();
+
+  closeDialog();
 }

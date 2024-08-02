@@ -54,34 +54,17 @@ class SimpleEffect : public SubjectBase {
 
   SimpleEffect() : SubjectBase(this) {}
 
-  SimpleEffect(const SimpleEffect& other)
-      : SubjectBase(this, other.getObject()),
-        _type(other._type),
-        _value(other._value),
-        _trigger(other._trigger),
-        _duration(other._duration),
-        _is_active(other._is_active),
-        _descprition(other._descprition) {}
+  SimpleEffect(const SimpleEffect& other);
 
   SimpleEffect(SimpleEffect&& other) : SimpleEffect(other) {}
 
-  virtual SimpleEffect* copy() { return new SimpleEffect(*this); }
+  SimpleEffect* copy() { return new SimpleEffect(*this); }
 
-  virtual void execute() {
-    --_duration;
-    if (_duration < 1) _is_active = false;
-  }
+  void execute();
 
-  virtual void undo() {
-    ++_duration;
-    _is_active = _is_active ? false : true;
-  }
+  void undo();
 
-  void getTrigger(Trigger trigger) {
-    if (trigger == _trigger && _is_active) {
-      execute();
-    }
-  }
+  void getTrigger(Trigger trigger);
 
   int getDuration() const { return _duration; }
   int getValue() const { return _value._value; }

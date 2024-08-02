@@ -10,10 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    EffectDialog.cpp
+    EffectDialog.cpp \
+    ../Model/*.cpp
+
 
 HEADERS += \
-    EffectDialog.h
+    EffectDialog.h \
+    ../Model/*.h
 
 FORMS += \
     effectdialog.ui

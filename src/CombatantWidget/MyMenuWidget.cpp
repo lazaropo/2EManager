@@ -42,7 +42,7 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   QAbstractItemDelegate::connect(show_description, &QAction::triggered, [=]() {
     if (!_item) setTextBrowser();
     _item->setText(QString::fromStdString(
-        (*(dynamic_cast<EffectListWidgetItem*>(currentItem())->getEffect()))
+        ((dynamic_cast<EffectListWidgetItem*>(currentItem())->getEffect()))
             ->what()));
     this->parentWidget()->layout()->addWidget(_item);
     // this->parentWidget()->setLayout(_frame->layout());

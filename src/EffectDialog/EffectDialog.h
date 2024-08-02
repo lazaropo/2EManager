@@ -16,7 +16,7 @@ class EffectDialog : public QDialog {
   Q_OBJECT
 
  public:
-  EffectDialog(pf2e_manager::Combatant* unit, QWidget* parent = nullptr);
+  EffectDialog(pf2e_manager::EffectDirector* unit, QWidget* parent = nullptr);
   ~EffectDialog();
 
   void closeDialog() { this->accept(); }
@@ -28,6 +28,6 @@ class EffectDialog : public QDialog {
  private:
   Ui::EffectDialog* ui;
 
-  pf2e_manager::Combatant* _unit;
+  pf2e_manager::EffectDirector* _unit;
 };
 #endif  // EFFECTDIALOG_H

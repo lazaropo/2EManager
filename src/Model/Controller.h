@@ -9,8 +9,8 @@ class Controller {
   Controller() : _model(new Model()) {}
   ~Controller() { delete _model; }
 
-  void addCombatant(Model::t_pos_comb pos, Combatant new_body) {
-    _model->addCombatant(pos, std::move(new_body));
+  void addCombatant(/*Model::t_pos_comb pos, */ Combatant&& new_body) {
+    _model->addCombatant(/*pos, */ std::forward<Combatant>(new_body));
   }
   void addCombatantGroup(Model::t_pos_comb pos, std::vector<Combatant>& other) {
     for (auto it : other) _model->addCombatant(pos, std::move(it));

@@ -13,7 +13,7 @@
 namespace pf2e_manager {
 class Combatant : public SubjectBase {
  public:
-  using t_pos_eff = std::list<SimpleEffect*>::iterator;
+  using t_pos_eff = std::vector<SimpleEffect*>::iterator;
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
@@ -26,9 +26,10 @@ class Combatant : public SubjectBase {
         _hp_curr(hp),
         _initiative(initiative),
         _side(side),
-        _name(name),
+        // _name(name),
         _vitality(vit) {
-    _effects.clear();
+    setName(name);
+    //_effects.clear();
   }
 
   ~Combatant() {
@@ -45,27 +46,11 @@ class Combatant : public SubjectBase {
    */
   friend bool operator<(const Combatant& fisrt, const Combatant& second);
 
-  std::list<SimpleEffect*>& getEffects() { return _effects; }
+  std::vector<SimpleEffect*>& getEffects() { return _effects; }
 
   void addEffect(SimpleEffect* effect) { _effects.push_back(effect); }
 
-  void setEffectDuration(t_pos_eff pos, int duration) {
-    if (duration < 0) return;
-
-    t_pos_eff it = _effects.begin();
-    t_pos_eff it_end = _effects.end();
-    while (it != it_end && it != pos) ++it;
-
-    if (it != pos && pos != it_end)
-      throw std::runtime_error(
-          "There are effect iterators from various Combatants");
-
-    (*pos)->removeEffect();
-    if (duration) {
-      _effects.insert(_effects.end(), *pos);
-      _effects.back()->_duration = duration;
-    }
-  }
+  void setEffectDuration(t_pos_eff pos, int duration);
 
   int getHPCurr() const { return _hp_curr; }
 
@@ -81,9 +66,9 @@ class Combatant : public SubjectBase {
 
   Vitality getVitality() const { return _vitality; }
 
-  const std::string getName() const { return _name; }
+  // const std::string getName() const { return _name; }
 
-  void setName(const std::string& name) { _name = name; }
+  // void setName(const std::string& name) { _name = name; }
 
   int getInitiative() const { return _initiative; }
 
@@ -96,10 +81,10 @@ class Combatant : public SubjectBase {
   int _initiative;
   int _level;
   Side _side;
-  std::string _name = "";
+  // std::string _name = "";
   const Vitality _vitality;
 
-  std::list<SimpleEffect*> _effects = std::list<SimpleEffect*>();
+  std::vector<SimpleEffect*> _effects = {};
 };
 
 inline bool operator<(const Combatant& fisrt, const Combatant& second) {

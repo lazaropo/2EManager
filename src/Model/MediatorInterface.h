@@ -1,7 +1,7 @@
 #ifndef _MEDIATOR_INTERFACE_H_250D0D9E_9EBB_482B_B709_09EEB6A3AD7D_
 #define _MEDIATOR_INTERFACE_H_250D0D9E_9EBB_482B_B709_09EEB6A3AD7D_
 
-#include <string>
+#include <list>
 
 #include "CommandBase.h"
 #include "SubjectBase.h"

@@ -43,26 +43,10 @@
     <string>Name</string>
    </property>
   </widget>
-  <widget class="MyMenuWidget" name="listWidget_effect">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>10</y>
-     <width>621</width>
-     <height>141</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">MyMenuWidget{
-	background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0)
-}</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>140</x>
      <y>50</y>
      <width>241</width>
      <height>41</height>
@@ -104,7 +88,7 @@ color: rgb(0, 0, 0)
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>140</x>
      <y>10</y>
      <width>241</width>
      <height>31</height>
@@ -134,14 +118,10 @@ color: rgb(0, 0, 0)
     </item>
    </layout>
   </widget>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>label_name</zorder>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MyMenuWidget</class>
-   <extends>QListWidget</extends>
-   <header>../CombatantWidget/MyMenuWidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

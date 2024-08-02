@@ -12,7 +12,8 @@ QMAKE_CXXFLAGS += -std=c++17
 SOURCES += \
     MyMenuWidget.cpp \
     main.cpp \
-    combatantwidget.cpp
+    combatantwidget.cpp \
+    ../Model/*.cpp
 
 HEADERS += \
     ../Model/SubjectBase.h \

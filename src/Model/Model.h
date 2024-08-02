@@ -18,23 +18,23 @@ class Model {
   using t_pos_comb = std::list<Combatant>::iterator;
   using t_pair_comb_with_effect = std::pair<t_pos_comb, Combatant::t_pos_eff>;
 
-  void addCombatant(t_pos_comb pos, Combatant new_body) {
-    _combatants.insert(pos, std::move(new_body));
+  // void addCombatant(t_pos_comb pos, Combatant new_body) {
+  //   _combatants.insert(pos, std::move(new_body));
+  // }
+
+  void addCombatant(/*t_pos_comb pos, */ Combatant&& new_body) {
+    _combatants.push_back(/*pos, */ std::forward<Combatant>(new_body));
   }
+
+  void addCombatant(t_pos_comb pos, Combatant&& new_body) {
+    _combatants.insert(pos, std::forward<Combatant>(new_body));
+  }
+
   void addCombatantGroup(t_pos_comb pos, std::vector<Combatant>& other) {
     for (auto it : other) addCombatant(pos, std::move(it));
   }
 
-  void moveCombatant(t_pos_comb from, t_pos_comb before) {
-    if (++before == from)
-      throw std::range_error(
-          "Attempt to move Combatant to its current position.");
-    if (_curr_pos == from) {
-      startTurn();
-      nextTurn();
-    }
-    _combatants.splice(--before, _combatants, from);
-  }
+  void moveCombatant(t_pos_comb from, t_pos_comb before);
 
   void addCommand(CommandBase* cmd) { _mediator->makeCommand(cmd); }
   // void addAndDoCommand(CommandBase* cmd) { _mediator->addAndDoCommand(cmd); }
@@ -46,7 +46,7 @@ class Model {
 
   void addEffect(SimpleEffectBuilder* builder, t_pos_comb pos) {
     builder->setReciever(&(*pos));
-    pos->addEffect(builder->getSimpleEffect());
+    addEffect(builder, &(*pos));
   }
 
   void addEffect(SimpleEffectBuilder* builder, Combatant* pos) {
@@ -55,11 +55,7 @@ class Model {
   }
 
   void addEffectOnGroup(SimpleEffectBuilder* builder,
-                        std::vector<t_pos_comb>& collection) {
-    SimpleEffect* effect = builder->getSimpleEffect();
-    for (auto it : collection) addEffect(builder, it);
-    delete[] effect;
-  }
+                        std::vector<t_pos_comb>& collection);
 
   void setEffectDuration(int duration, t_pair_comb_with_effect pair) {
     pair.first->setEffectDuration(pair.second, duration);
@@ -76,25 +72,9 @@ class Model {
     });
   }
 
-  void startTurn() {
-    if (_combatants.empty())
-      throw std::runtime_error("There are not any combatants!");
+  void startTurn();
 
-    if (++_curr_pos == _combatants.end()) _curr_pos = _combatants.begin();
-
-    for (auto it : _combatants)
-      for (auto it_eff : it.getEffects())
-        it_eff->getTrigger(SimpleEffect::Trigger::START_TURN);
-  }
-
-  void nextTurn() {
-    if (_combatants.empty())
-      throw std::runtime_error("There are not any combatants!");
-
-    for (auto it : _combatants)
-      for (auto it_eff : it.getEffects())
-        it_eff->getTrigger(SimpleEffect::Trigger::END_TURN);
-  }
+  void nextTurn();
 
   const std::list<Combatant>& getCombatants() const { return _combatants; }
 

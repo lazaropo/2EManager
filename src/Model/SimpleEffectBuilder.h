@@ -202,7 +202,7 @@ class SimpleEffectBuilder {
   }
 
   SimpleEffectBuilder* setName(const std::string& name) {
-    _effect->_name = name;
+    _effect->setName(name);
     return this;
   }
 

@@ -40,6 +40,8 @@ class CombatantWidget : public QWidget {
 
  private:
   Ui::CombatantWidget *ui;
-  pf2e_manager::Combatant *_combatant;
+
+  MyMenuWidget *listWidget_effect = new MyMenuWidget(this);
+  pf2e_manager::Combatant *_combatant = nullptr;
 };
 #endif  // COMBATANTWIDGET_H

@@ -1,15 +1,16 @@
 #ifndef MANAGERWIDGET_H
 #define MANAGERWIDGET_H
 
-#include <QList>
+// #include <QList>
 #include <QListWidget>
-#include <QVBoxLayout>
 #include <QWidget>
+#include <list>
 
 #include "../CombatantDialog/combatantdialog.h"
 #include "../CombatantWidget/combatantwidget.h"
 #include "../EffectDialog/EffectDialog.h"
 #include "../Model/Controller.h"
+#include "dragndropqgraphicsview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,19 +29,29 @@ class ManagerWidget : public QWidget {
  private slots:
   void on_pushButton_create_effect_clicked();
 
-  void setCurrent(QMouseEvent *event);
+  // void setCurrent(QMouseEvent *event);
 
   void on_pushButton_create_combatant_clicked();
+
+  //   void mousePressEvent(QMouseEvent* event);
+  // void mouseMoveEvent(QMouseEvent *event);
+  //  void mouseReleaseEvent(QMouseEvent *event);
+
+  //  void dragEnterEvent(QDragEnterEvent *event);
+  //  void dragMoveEvent(QDragMoveEvent *event);
+  // void dropEvent(QDropEvent *event) override;
+
+  // void on_widget_drag(QMouseEvent *event);
 
  private:
   Ui::ManagerWidget *ui;
   pf2e_manager::Controller *_controller;
 
   // QStandardItemModel _combatant_model;
-  QList<CombatantWidget *> _combatant_list;
-  QVBoxLayout *_combatants_layout;
-  QWidget *_box;
+  std::map<pf2e_manager::Combatant *, CombatantWidget *> _combatant_list;
 
-  CombatantWidget *_current_widget = nullptr;
+  DragNDropQGraphicsView *_box;
+
+  QPoint _mouseStartPosition;  // <------------- possibly dummy var
 };
 #endif  // MANAGERWIDGET_H

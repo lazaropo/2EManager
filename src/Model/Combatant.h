@@ -32,8 +32,12 @@ class Combatant : public SubjectBase {
     //_effects.clear();
   }
 
-  ~Combatant() {
-    // for (auto it : _effects) delete it;
+  //  ~Combatant() {
+  //    // for (auto it : _effects) delete it;
+  //  }
+
+  bool operator==(const Combatant& other) {
+    return getObject() == other.getObject();
   }
 
   /**

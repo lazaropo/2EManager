@@ -1,6 +1,7 @@
 #ifndef COMBATANTWIDGET_H
 #define COMBATANTWIDGET_H
 
+#include <QDrag>
 #include <QListWidget>
 #include <QToolTip>
 #include <QWidget>
@@ -27,16 +28,24 @@ class CombatantWidget : public QWidget {
   ~CombatantWidget();
 
   pf2e_manager::Combatant *getCombatant() { return _combatant; }
+  void setCombatant(pf2e_manager::Combatant *other) { _combatant = other; }
 
   void updateContent();
 
  protected slots:
-  void mousePressEvent(QMouseEvent *event = nullptr) {
+  void mousePressEvent(QMouseEvent *event = nullptr) override {
     emit mousePressed(event);
   }
 
+  // void mouseMoveEvent(QMouseEvent *event = nullptr) { emit mouseMoved(event);
+  // }
+
+  void enterEvent(QEnterEvent *event) override;
+  void leaveEvent(QEvent *event) override;
+
  signals:
   void mousePressed(QMouseEvent *event = nullptr);
+  // void mouseMoved(QMouseEvent *event = nullptr);
 
  private:
   Ui::CombatantWidget *ui;

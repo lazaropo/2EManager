@@ -26,18 +26,21 @@ class Mediator : public MediatorInterface {
                   const std::string& name, const int duration = 0,
                   const int value = 0) override;
 
-  // void makeCommand(SubjectBase* sender, SubjectBase* reciever,
-  //                  const std::string& name) override;
+  void makeCommand(__attribute__((unused)) SubjectBase* sender,
+                   __attribute__((unused)) SubjectBase* reciever,
+                   __attribute__((unused)) const std::string& name) override {}
 
-  void makeCommand(CommandBase* cmd) { _commands.push_back(cmd); };
+  void makeCommand(CommandBase* cmd) { _commands.push_back(cmd); }
 
-  // void undoEffect(SubjectBase* sender, SubjectBase* reciever,
-  //                 const std::string& name) override;
+  void undoEffect(__attribute__((unused)) SubjectBase* sender,
+                  __attribute__((unused)) SubjectBase* reciever,
+                  __attribute__((unused)) const std::string& name) override {}
 
-  // void undoCommand(SubjectBase* sender, SubjectBase* reciever,
-  //                  const std::string& name) override;
+  void undoCommand(__attribute__((unused)) SubjectBase* sender,
+                   __attribute__((unused)) SubjectBase* reciever,
+                   __attribute__((unused)) const std::string& name) override {}
 
-  void undoCommand(t_pos_cmd pos) { _commands.erase(pos); };
+  void undoCommand(t_pos_cmd pos) { _commands.erase(pos); }
 
   const std::list<CommandBase*>& getCommands() const override {
     return _commands;

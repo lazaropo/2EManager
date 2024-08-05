@@ -222,20 +222,20 @@ class SimpleEffectBuilder {
     return this;
   }
 
-  virtual void reset() {
+  /* virtual */ void reset() {
     if (!_effect) {
       _effect = new SimpleEffect();
       _effect->_subject = _effect;
     }
   }
 
-  virtual void setSubject(SubjectBase* object) {
+  /*virtual*/ void setSubject(SubjectBase* object) {
     if (_effect) {
       _effect->_object = object;
     }
   }
 
-  virtual SimpleEffect* getSimpleEffect() {
+  /* virtual*/ SimpleEffect* getSimpleEffect() {
     SimpleEffect* ret = _effect;
     _effect = nullptr;
     reset();

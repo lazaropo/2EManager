@@ -56,9 +56,9 @@ class EffectDirector {
 
   void buildFrightenedEffect(__attribute__((unused)) int duration, int value);
 
-  void buildGrabbedEffect(int duration, __attribute__((unused)) int value = 0) {
-    // TODO: implement this func and further
-  }
+  void buildGrabbedEffect(int duration, __attribute__((unused)) int value = 0);
+  // TODO: implement this func and further
+
   void buildHiddenEffect() { ; }
   void buildImmobilizedEffect() { ; }
   void buildIndifferentEffect() { ; }

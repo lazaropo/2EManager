@@ -17,7 +17,7 @@ CombatantDialog::~CombatantDialog()
 
 void CombatantDialog::on_pushButton_finish_clicked()
 {
-    pf2e_manager::Combatant::Vitality vit;
+    pf2e_manager::Combatant::Vitality vit = pf2e_manager::Combatant::Vitality::CONSTRUCT;
     switch (ui->comboBox_vitality->currentIndex()) {
     case 0:
         vit = pf2e_manager::Combatant::Vitality::ALIVE;
@@ -32,7 +32,7 @@ void CombatantDialog::on_pushButton_finish_clicked()
        reject();
     };
 
-    pf2e_manager::Combatant::Side side;
+    pf2e_manager::Combatant::Side side = pf2e_manager::Combatant::Side::OTHER;
     switch (ui->comboBox_vitality->currentIndex()) {
     case 0:
        side = pf2e_manager::Combatant::Side::TEAM;

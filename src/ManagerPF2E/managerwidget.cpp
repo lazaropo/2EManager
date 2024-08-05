@@ -7,10 +7,13 @@
 ManagerWidget::ManagerWidget(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::ManagerWidget),
-      _controller(new pf2e_manager::Controller),
-      _combatants_layout(new QVBoxLayout(this)),
-      _box(new QWidget(this)) {
+      _controller(new pf2e_manager::Controller) /*,
+       _box(new DragNDropQGraphicsView(_controller, &_combatant_list, this))*/
+{
   ui->setupUi(this);
+
+  ui->graphicsView->setController(_controller);
+  ui->graphicsView->setWidgets(&_combatant_list);
 
   using namespace pf2e_manager;
 
@@ -48,43 +51,35 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   builder.setCreator(nullptr);
   _controller->addEffect(&builder, tmp);
 
-  for (auto comb : _controller->getCombatants().begin()->getEffects())
-    std::cout << comb->getName();
+  //  for (auto comb : _controller->getCombatants().begin()->getEffects())
+  //    std::cout << comb->getName();
 
-  _combatant_list.push_back(new CombatantWidget(tmp));
-  _combatant_list.push_back(new CombatantWidget(tmp1));
-  _combatant_list.push_back(new CombatantWidget(tmp2));
-  _combatant_list.push_back(new CombatantWidget(tmp3));
-  _combatant_list.push_back(new CombatantWidget(tmp4));
-  _combatant_list.push_back(new CombatantWidget(tmp5));
+  ui->graphicsView->addWidget(tmp);
+  ui->graphicsView->addWidget(tmp1);
+  ui->graphicsView->addWidget(tmp2);
+  ui->graphicsView->addWidget(tmp3);
+  ui->graphicsView->addWidget(tmp4);
+  ui->graphicsView->addWidget(tmp5);
 
   //  for(auto it : _combatant_list)
   //    it->updateContent();
 
-  _box->setLayout(_combatants_layout);
-  int count = 0;
-  for (auto it : _combatant_list) {
-    _combatants_layout->addWidget(it);
-    QObject::connect(it, &CombatantWidget::mousePressed, this,
-                     &ManagerWidget::setCurrent);
-    it->setAttribute(Qt::WA_StyledBackground);
-    ++count;
-  }
-  _box->setFixedHeight(count * (*_combatant_list.begin())->height());
+  ui->graphicsView->setFixedHeight(_combatant_list.size() *
+                                   (_combatant_list.begin()->second)->height());
 
-  _box->layout()->setSpacing(12);
+  ui->graphicsView->layout()->setSpacing(12);
 
-  ui->scrollArea->setWidget(_box);
+  // _box->setMouseTracking(true);
+  // setMouseTracking(true);
 
-  ui->scrollArea->setAttribute(Qt::WA_StyledBackground);
-  ui->scrollArea->setBackgroundRole(QPalette::Window);
+  //  ui->scrollArea->setWidget(_box);
 
-  //  _current_widget = _combatant_list.front();
-  //  EffectDialog *dialog =
-  //      new EffectDialog(_current_widget->getCombatant(), this);
-  //  dialog->exec();
+  //  ui->scrollArea->setAttribute(Qt::WA_StyledBackground);
+  //  ui->scrollArea->setBackgroundRole(QPalette::Window);
+  //  ui->scrollArea->setMouseTracking(true);
 
-  //  delete dialog;
+  // ui->graphicsView->addScrollBarWidget(ui->scrollArea, Qt::AlignTop);
+  // ui->graphicsView->setLayout(_box->layout());
 }
 
 ManagerWidget::~ManagerWidget() {
@@ -93,7 +88,8 @@ ManagerWidget::~ManagerWidget() {
 }
 
 void ManagerWidget::on_pushButton_create_effect_clicked() {
-  if (!_current_widget) return;
+  auto current_widget = ui->graphicsView->getCurrentWidget();
+  if (!current_widget) return;
 
   pf2e_manager::SimpleEffectBuilder builder;
   pf2e_manager::EffectDirector director(&builder);
@@ -102,23 +98,16 @@ void ManagerWidget::on_pushButton_create_effect_clicked() {
   dialog.exec();
 
   builder.setCreator(nullptr);
-  builder.setReciever(_current_widget->getCombatant());
-  _controller->addEffect(&builder, _current_widget->getCombatant());
+  builder.setReciever(current_widget->getCombatant());
+  _controller->addEffect(&builder, current_widget->getCombatant());
 
-  _current_widget->updateContent();
+  current_widget->updateContent();
 }
 
-void ManagerWidget::setCurrent(QMouseEvent *event) {
-  if (_current_widget)
-    _current_widget->setStyleSheet(
-        "CombatantWidget{ background-color:  rgb(0,0,0);  };");
+// void ManagerWidget::setCurrent(QMouseEvent *event) {
+//   Q_UNUSED(event);
 
-  // ui->verticalLayout->removeWidget(_current_widget);
-  _current_widget = static_cast<CombatantWidget *>(sender());
-  _current_widget->setStyleSheet(
-      "CombatantWidget{ background-color:  red;  };");
-  // ui->verticalLayout->addWidget(_current_widget);
-}
+//}
 
 void ManagerWidget::on_pushButton_create_combatant_clicked() {
   pf2e_manager::Combatant *body;
@@ -126,11 +115,38 @@ void ManagerWidget::on_pushButton_create_combatant_clicked() {
   dialog.exec();
   _controller->addCombatant(std::move(*body));
 
-  CombatantWidget *obj = new CombatantWidget(body);
-  _combatant_list.push_back(obj);
-
-  _combatants_layout->addWidget(obj);
-  QObject::connect(obj, &CombatantWidget::mousePressed, this,
-                   &ManagerWidget::setCurrent);
-  obj->setAttribute(Qt::WA_StyledBackground);
+  ui->graphicsView->addWidget(body);
 }
+
+// void ManagerWidget::mouseMoveEvent(QMouseEvent *event) {
+//   if (event->button() == Qt::LeftButton &&
+//       ui->scrollArea->geometry().contains(event->pos()) &&
+//       ((event->pos() - _mouseStartPosition).manhattanLength() >=
+//        QApplication::startDragDistance())) {
+//     QDrag *new_drag = new QDrag(this);
+//     QMimeData *mime_data = new QMimeData();
+
+//    // mime_data->setData(mimeType, data);
+
+//    new_drag->setMimeData(mime_data);
+
+//    Qt::DropAction action = new_drag->exec(Qt::MoveAction);
+//    Q_UNUSED(action);
+
+//    (*std::find(_combatant_list.begin(), _combatant_list.end(),
+//                _current_widget))
+//        ->hide();
+//    //  _combatants_layout->removeItem(_current_widget);
+//  }
+//}
+
+// void ManagerWidget::mouseReleaseEvent(QMouseEvent* event) {
+//   if (event->button() == Qt::LeftButton &&
+//       ui->scrollArea->geometry().contains(event->pos()) &&
+//       ((event->pos() - _mouseStartPosition).manhattanLength() >=
+//        QApplication::startDragDistance()))
+// }
+
+// void ManagerWidget::on_widget_drag(QMouseEvent *event) {
+
+//}

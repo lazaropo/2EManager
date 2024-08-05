@@ -2,14 +2,14 @@
 
 namespace pf2e_manager {
 void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {
-  if (++before == from)
+  if (--before == from)
     throw std::range_error(
         "Attempt to move Combatant to its current position.");
   if (_curr_pos == from) {
     startTurn();
     nextTurn();
   }
-  _combatants.splice(--before, _combatants, from);
+  _combatants.splice(++before, _combatants, from);
 }
 
 void Model::addEffectOnGroup(SimpleEffectBuilder* builder,

@@ -18,6 +18,7 @@ void Mediator::makeEffect(SubjectBase* sender, SubjectBase* reciever,
   _director->buildEffectByName(name, duration, value);
   _builder->setSubject(sender);
   combatant->addEffect(_builder->getSimpleEffect());
+  if (_combatants->size()) return;
 }
 
 }  // namespace pf2e_manager

@@ -236,7 +236,7 @@ void EffectDirector::buildDyingEffect(__attribute__((unused)) int duration,
           "wounded condition value by 1 if you already have that condition.");
 }
 
-void EffectDirector::buildEncumberedEffect(int duration,
+void EffectDirector::buildEncumberedEffect(__attribute__((unused)) int duration,
                                            __attribute__((unused)) int value) {
   _builder->reset();
   _builder->setName("effect:encumbered")
@@ -279,6 +279,7 @@ void EffectDirector::buildFascinatedEffect(int duration,
       ->setPercValue(2)
       ->setSkillsValue(2)
       ->setEndTrigger()
+      ->setDuration(duration)
       ->setDescription(
           "You're compelled to focus your attention on something, "
           "distracting you from whatever else is going on around you. You "

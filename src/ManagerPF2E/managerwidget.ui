@@ -16,11 +16,14 @@
   <widget class="QScrollArea" name="scrollArea">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>110</y>
+     <x>-10</x>
+     <y>370</y>
      <width>1151</width>
-     <height>481</height>
+     <height>431</height>
     </rect>
+   </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -37,7 +40,7 @@
       <x>0</x>
       <y>0</y>
       <width>1149</width>
-      <height>479</height>
+      <height>429</height>
      </rect>
     </property>
    </widget>
@@ -83,7 +86,30 @@
     </item>
    </layout>
   </widget>
+  <widget class="DragNDropQGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>120</y>
+     <width>1111</width>
+     <height>500</height>
+    </rect>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="dragMode">
+    <enum>QGraphicsView::ScrollHandDrag</enum>
+   </property>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DragNDropQGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>dragndropqgraphicsview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -36,6 +36,7 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   QAction* show_description = menu.addAction("Get Discripttion");
   QAction* heal_command = menu.addAction("makeSomethingElse");
   QMenu* make_effect = menu.addMenu("Make Effect...");
+  Q_UNUSED(make_effect);
 
   QAction* make_clumsy = menu.addAction("Make Clumsy");
 

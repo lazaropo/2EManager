@@ -36,6 +36,13 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   listWidget_effect->setGeometry(QRect(400, 10, 500, 140));
   setAttribute(Qt::WA_StyledBackground);
+  setMouseTracking(true);
+  setFocusPolicy(Qt::NoFocus);
+
+  QObject::connect(this, &CombatantWidget::enterEvent, this,
+                   &CombatantWidget::enterEvent, Qt::DirectConnection);
+  QObject::connect(this, &CombatantWidget::leaveEvent, this,
+                   &CombatantWidget::leaveEvent, Qt::DirectConnection);
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }
@@ -68,3 +75,23 @@ void CombatantWidget::updateContent() {
     listWidget_effect->addItem(item);
   }
 }
+void CombatantWidget::enterEvent(QEnterEvent* event) {
+  Q_UNUSED(event);
+  // if(event->button() & Qt::LeftButton)
+  setStyleSheet("CombatantWidget{ background-color:  green;  };");
+}
+
+void CombatantWidget::leaveEvent(QEvent* event) {
+  Q_UNUSED(event);
+  setStyleSheet("CombatantWidget{ background-color:  rgb(0,0,0);  };");
+}
+
+// void CombatantWidget::dragEnterEvent(QDragEnterEvent* event) {
+//   Q_UNUSED(event);
+//   setStyleSheet("CombatantWidget{ background-color:  green;  };");
+// }
+
+// void CombatantWidget::dragLeaveEvent(QDragLeaveEvent* event) {
+//   Q_UNUSED(event);
+//   setStyleSheet("CombatantWidget{ background-color:  rgb(0,0,0);  };");
+// }

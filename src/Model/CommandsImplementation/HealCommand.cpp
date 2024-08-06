@@ -1,7 +1,7 @@
 #include "HealCommand.h"
 
 namespace pf2e_manager {
-void HealCommand::execute(int value) override {
+void HealCommand::execute(int value) {
   if (value <= 0 || _is_active) return;
 
   _value = value;
@@ -27,7 +27,7 @@ void HealCommand::execute(int value) override {
   _is_active = true;
 }
 
-void HealCommand::undo() override {
+void HealCommand::undo() {
   if (!_is_active) return;
 
   Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
@@ -36,13 +36,14 @@ void HealCommand::undo() override {
         "HealCommand - execute func: reciever is not Combatant class.");
 
   int curr_hp = combatant->getHPCurr();
-  int max_hp = combatant->getHPMax();
-
-  if (combatant->getHPCurr() > 0) {
-    combatant->setHPCurr(combatant->getHPCurr() - _value);
-
-    if (combatant->getHPCurr() < 0) combatant->setHPCurr(0);
+  if (curr_hp <= _value) {
+    combatant->setHPCurr(0);
+    _mediator->makeEffect(getSubject(), getReciever(), "effect:dying",
+                          420000 /*very big duration*/, 1);
+  } else {
+    combatant->setHPCurr(curr_hp - _value);
   }
+
   _is_active = false;
 }
 }  // namespace pf2e_manager

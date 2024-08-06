@@ -21,9 +21,9 @@ SUBDIRS += ../EffectDialog/EffectDialog.pro
 SUBDIRS += ../CombatantWidget/CombatantWidget.pro
 SUBDIRS += ../CombatantDialog/CombatantDialog.pro
 SUBDIRS += ../CommandDialog/CommandDialog.pro
+SUBDIRS += ../CommandIcon/CommandIcon.pro
 
 SOURCES += \
-    commandicon.cpp \
     dragndropqwidget.cpp \
     dragndropqwidget_commands.cpp \
     main.cpp \
@@ -33,10 +33,11 @@ SOURCES += \
     ../EffectDialog/EffectDialog.cpp \
     ../Model/*.cpp \
     ../Model/CommandsImplementation/*.cpp \
-    ../CombatantDialog/combatantdialog.cpp
+    ../CombatantDialog/combatantdialog.cpp \
+    ../CommandDialog/commanddialog.cpp \
+    ../CommandIcon/commandicon.cpp
 
 HEADERS += \
-    commandicon.h \
     dragndropqwidget.h \
     dragndropqwidget_commands.h \
     managerwidget.h \    
@@ -46,13 +47,17 @@ HEADERS += \
     ../EffectDialog/EffectDialog.h \
     ../Model/*.h \
     ../Model/CommandsImplementation/*.h \
-    ../CombatantDialog/combatantdialog.h
+    ../CombatantDialog/combatantdialog.h \
+    ../CommandDialog/commanddialog.h \
+    ../CommandIcon/commandicon.h
 
 FORMS += \
     managerwidget.ui \
     ../CombatantWidget/combatantwidget.ui \
     ../EffectDialog/effectdialog.ui \
-    ../CombatantDialog/combatantdialog.ui
+    ../CombatantDialog/combatantdialog.ui \
+    ../CommandDialog/commanddialog.ui \
+    ../CommandIcon/commandicon.ui
 
 TRANSLATIONS += \
     ManagerPF2E_ru_RU.ts
@@ -65,6 +70,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resource.qrc
+    ../CommandIcon/resource.qrc
 
 

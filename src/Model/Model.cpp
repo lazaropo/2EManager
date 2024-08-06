@@ -19,9 +19,9 @@ void Model::addEffectOnGroup(SimpleEffectBuilder* builder,
   delete[] effect;
 }
 
-void Model::makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                        const std::string& name, int value) {
-  _mediator->makeCommand(sender, reciever, name, value);
+CommandBase* Model::makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                                const std::string& name, int value) {
+  return _mediator->makeCommand(sender, reciever, name, value);
 }
 
 void Model::startTurn() {

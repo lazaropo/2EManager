@@ -11,7 +11,8 @@
 //+++++++++++STL+++++++++++
 #include <vector>
 //+++++++++++CUSTOM+++++++++++
-#include "commandicon.h"
+#include "../CommandDialog/commanddialog.h"
+#include "../CommandIcon/commandicon.h"
 
 class DragNDropQWidgetCommands : public QWidget {
  public:
@@ -25,7 +26,7 @@ class DragNDropQWidgetCommands : public QWidget {
 
  public slots:
   void mousePressEvent(QMouseEvent* event) override;
-  void mouseMoveEvent(QMouseEvent* event) override;
+  // void mouseMoveEvent(QMouseEvent* event) override;
   void mouseReleaseEvent(QMouseEvent* event) override;
   //    void dragEnterEvent(QDragEnterEvent* event);
   //    void dragLeaveEvent(QDragLeaveEvent* event);

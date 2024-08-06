@@ -13,7 +13,8 @@
 namespace pf2e_manager {
 class CommandsCreator {
  public:
-  CommandsCreator(MediatorInterface* mediator) : _mediator(mediator) {}
+  CommandsCreator(MediatorInterface* mediator);
+
   CommandBase* createCommandByName(SubjectBase* sender, SubjectBase* reciever,
                                    int value, const std::string name);
 

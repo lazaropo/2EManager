@@ -26,7 +26,7 @@
     <string>OK</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -91,11 +91,21 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <item>
+       <property name="text">
+        <string>harm</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>heal</string>
+       </property>
+      </item>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -119,6 +129,9 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="text">
+       <string>0</string>
       </property>
      </widget>
     </item>

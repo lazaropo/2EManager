@@ -69,6 +69,21 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   //  setFixedHeight(_combatant_list.size() *
   //                 (_combatant_list.begin()->second)->height());
 
+  // ui->scrollArea_combatants->setMouseTracking(true);
+
+  // ui->graphicsView->addScrollBarWidget(ui->scrollArea_combatants,
+  // Qt::AlignTop); ui->graphicsView->setLayout(_box_combatants->layout());
+
+  _box_commands->addCommand(_controller->makeCommand(
+      nullptr, static_cast<SubjectBase *>(tmp), "command:harm", 10));
+  _box_commands->addCommand(_controller->makeCommand(
+      nullptr, static_cast<SubjectBase *>(tmp1), "command:harm", 10));
+  _box_commands->addCommand(_controller->makeCommand(
+      static_cast<SubjectBase *>(tmp), static_cast<SubjectBase *>(tmp2),
+      "command:harm", 10));
+  _box_commands->addCommand(_controller->makeCommand(
+      nullptr, static_cast<SubjectBase *>(tmp3), "command:harm", 10));
+
   ui->scrollArea_combatants->setWidget(_box_combatants);
   ui->scrollArea_commands->setWidget(_box_commands);
 
@@ -77,11 +92,6 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
   ui->scrollArea_commands->setAttribute(Qt::WA_StyledBackground);
   ui->scrollArea_commands->setBackgroundRole(QPalette::Window);
-
-  // ui->scrollArea_combatants->setMouseTracking(true);
-
-  // ui->graphicsView->addScrollBarWidget(ui->scrollArea_combatants,
-  // Qt::AlignTop); ui->graphicsView->setLayout(_box_combatants->layout());
 }
 
 ManagerWidget::~ManagerWidget() {
@@ -120,35 +130,11 @@ void ManagerWidget::on_pushButton_create_combatant_clicked() {
   _box_combatants->addWidget(body);
 }
 
-// void ManagerWidget::mouseMoveEvent(QMouseEvent *event) {
-//   if (event->button() == Qt::LeftButton &&
-//       ui->scrollArea_combatants->geometry().contains(event->pos()) &&
-//       ((event->pos() - _mouseStartPosition).manhattanLength() >=
-//        QApplication::startDragDistance())) {
-//     QDrag *new_drag = new QDrag(this);
-//     QMimeData *mime_data = new QMimeData();
+void ManagerWidget::on_pushButton_create_effect_2_clicked() {
+  pf2e_manager::CommandBase *command;
+  CommandDialog dialog(&command, _controller);
+  dialog.exec();
+  // command have to be set in collection from model
 
-//    // mime_data->setData(mimeType, data);
-
-//    new_drag->setMimeData(mime_data);
-
-//    Qt::DropAction action = new_drag->exec(Qt::MoveAction);
-//    Q_UNUSED(action);
-
-//    (*std::find(_combatant_list.begin(), _combatant_list.end(),
-//                _current_widget))
-//        ->hide();
-//    //  _combatants_layout->removeItem(_current_widget);
-//  }
-//}
-
-// void ManagerWidget::mouseReleaseEvent(QMouseEvent* event) {
-//   if (event->button() == Qt::LeftButton &&
-//       ui->scrollArea_combatants->geometry().contains(event->pos()) &&
-//       ((event->pos() - _mouseStartPosition).manhattanLength() >=
-//        QApplication::startDragDistance()))
-// }
-
-// void ManagerWidget::on_widget_drag(QMouseEvent *event) {
-
-//}
+  _box_commands->addCommand(command);
+}

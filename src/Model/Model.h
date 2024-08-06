@@ -20,6 +20,7 @@ class Model {
 
   ~Model() {
     for (auto it : _combatants) delete &it;
+    delete _mediator;
   }
 
   // void addCombatant(t_pos_comb pos, Combatant new_body) {
@@ -40,11 +41,12 @@ class Model {
 
   void moveCombatant(t_pos_comb from, t_pos_comb before);
 
-  void addCommand(CommandBase* cmd) { _mediator->makeCommand(cmd); }
+  // void addCommand(CommandBase* cmd) { _mediator->makeCommand(cmd); }
   // void addAndDoCommand(CommandBase* cmd) { _mediator->addAndDoCommand(cmd); }
-  void makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                   const std::string& name, int value);
-  void removeCommand(Mediator::t_pos_cmd pos) { _mediator->undoCommand(pos); }
+  CommandBase* makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                           const std::string& name, int value);
+  // void removeCommand(Mediator::t_pos_cmd pos) { _mediator->undoCommand(pos);
+  // }
   void removeCombatant(t_pos_comb it) { _combatants.erase(it); }
   void removeCombatantGroup(std::vector<t_pos_comb>& collection) {
     for (auto it : collection) removeCombatant(it);
@@ -94,7 +96,7 @@ class Model {
 
  private:
   std::list<Combatant> _combatants;
-  Mediator* _mediator;
+  MediatorInterface* _mediator = new Mediator(&_combatants);
 
   t_pos_comb _curr_pos;
 };

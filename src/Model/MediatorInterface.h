@@ -9,12 +9,13 @@
 namespace pf2e_manager {
 class MediatorInterface {
  public:
+  virtual ~MediatorInterface() = default;
   virtual void makeEffect(SubjectBase* sender, SubjectBase* reciever,
                           const std::string& name, const int duration = 0,
                           const int value = 0) = 0;
 
-  virtual void makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                           const std::string& name, int value) = 0;
+  virtual CommandBase* makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                                   const std::string& name, int value) = 0;
 
   virtual void undoEffect(SubjectBase* sender, SubjectBase* reciever,
                           const std::string& name) = 0;

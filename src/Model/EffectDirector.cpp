@@ -52,6 +52,19 @@ EffectDirector::EffectDirector(SimpleEffectBuilder* builder)
       std::bind(&EffectDirector::buildFrightenedEffect, this, _1, _2)));
 }
 
+void EffectDirector::buildEffectByName(const std::string& name, int duration,
+                                       int value) {
+  // try{
+  if (_effects_dictionary.find(name) != _effects_dictionary.end())
+    (_effects_dictionary[name])(duration, value);
+  else
+    return;
+  // }
+  // catch (const std::bad_any_cast& ex){
+  //   throw std:: << "Bad Any Cast: EffectDirector"
+  // }
+}
+
 void EffectDirector::buildClumsyEffect(int duration, int value) {
   _builder->reset();
   _builder->setName("effect:clumsy")

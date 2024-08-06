@@ -17,21 +17,14 @@ class Mediator : public MediatorInterface {
 
   explicit Mediator(std::list<Combatant>* combatant);
 
-  ~Mediator() {
-    delete _builder;
-    delete _director;
-  }
+  ~Mediator();
 
   void makeEffect(SubjectBase* sender, SubjectBase* reciever,
                   const std::string& name, const int duration = 0,
                   const int value = 0) override;
 
-  void makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                   const std::string& name, int value) override {
-    CommandBase* command =
-        _commands_creator->createCommandByName(sender, reciever, value, name);
-    makeCommand(command);
-  }
+  CommandBase* makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                           const std::string& name, int value) override;
 
   void makeCommand(CommandBase* cmd) { _commands.push_back(cmd); }
 

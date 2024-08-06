@@ -10,7 +10,7 @@ DragNDropQWidget::DragNDropQWidget(
       _widgets_collection(_widgets_collection),
       _combatants_layout(new QVBoxLayout(this)) {
   setLayout(_combatants_layout);
-  _combatants_layout - setSpacing(12);
+  _combatants_layout->setSpacing(12);
 
   // auto combatants_layout = layout();
   for (auto it : *_widgets_collection) {
@@ -23,8 +23,9 @@ DragNDropQWidget::DragNDropQWidget(
     //    QObject::connect(it, &CombatantWidget::clicked, this,
     //                     &ManagerWidget::on_widget_drag);
     it.second->setAttribute(Qt::WA_StyledBackground);
-    setFocusPolicy(Qt::NoFocus);
   }
+  this->setFixedHeight(1000);
+  //_widgets_collection
   // setMouseTracking(true);
 }
 
@@ -50,8 +51,6 @@ void DragNDropQWidget::mousePressEvent(QMouseEvent *event) {
 
     _mouseStartPosition = QPoint(event->scenePosition().x() - x(),
                                  event->scenePosition().y() - y());
-    _pressed = true;
-    _long_press = false;
   }
 }
 

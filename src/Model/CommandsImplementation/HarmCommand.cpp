@@ -30,7 +30,7 @@ void HarmCommand::undo() {
   Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
   if (!combatant)
     throw std::runtime_error(
-        "HealCommand - execute func: reciever is not Combatant class.");
+        "HarmCommand - execute func: reciever is not Combatant class.");
 
   int curr_hp = combatant->getHPCurr();
   if (curr_hp <= 0) {

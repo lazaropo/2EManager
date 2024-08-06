@@ -16,7 +16,6 @@ DragNDropQWidgetCommands::DragNDropQWidgetCommands(
     _commands_layout->addWidget(it);
 
     it->setAttribute(Qt::WA_StyledBackground);
-    setFocusPolicy(Qt::NoFocus);
   }
 }
 
@@ -24,10 +23,10 @@ void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {
   CommandIcon *obj = new CommandIcon(command);
   _widgets_collection.push_back(obj);
 
-  _commands_layout->insertWidget(_widgets_collection.size() - 1, obj);
+  _commands_layout->addWidget(obj);
   QObject::connect(obj, &CommandIcon::mousePressed, this,
                    &DragNDropQWidgetCommands::mousePressEvent);
-  obj->setAttribute(Qt::WA_StyledBackground);
+  // obj->setAttribute(Qt::WA_StyledBackground);
 }
 
 void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
@@ -43,52 +42,52 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
         "  border-width: 0px;\n"
         "border-radius: 10px; };");
 
-    _mouseStartPosition = QPoint(event->scenePosition().x() - x(),
-                                 event->scenePosition().y() - y());
+    //    _mouseStartPosition = QPoint(event->scenePosition().x() - x(),
+    //                                 event->scenePosition().y() - y());
   }
 }
 
-void DragNDropQWidgetCommands::mouseMoveEvent(QMouseEvent *event) {
-  Q_UNUSED(event);
+// void DragNDropQWidgetCommands::mouseMoveEvent(QMouseEvent *event) {
+//   Q_UNUSED(event);
 
-  auto button = QApplication::mouseButtons();
-  setCursor(Qt::ClosedHandCursor);
+//  auto button = QApplication::mouseButtons();
+//  setCursor(Qt::ClosedHandCursor);
 
-  if (button & Qt::LeftButton) {
-    QPoint n_coordinates = QPoint(event->scenePosition().x() - x(),
-                                  event->scenePosition().y() - y());
+//  if (button & Qt::LeftButton) {
+//    QPoint n_coordinates = QPoint(event->scenePosition().x() - x(),
+//                                  event->scenePosition().y() - y());
 
-    int count = (n_coordinates.x() - _mouseStartPosition.x()) /
-                (_current_icon->width());
-    if (!count) return;
+//    int count = (n_coordinates.x() - _mouseStartPosition.x()) /
+//                (_current_icon->width());
+//    if (!count) return;
 
-    auto it = std::find(_commands_list->begin(), _commands_list->end(),
-                        _current_icon->getCommand());
-    auto it_before = it;
+//    auto it = std::find(_commands_list->begin(), _commands_list->end(),
+//                        _current_icon->getCommand());
+//    auto it_before = it;
 
-    // auto widget = _widgets_collection->find(&(*it))->second;
-    int layout_size = _commands_layout->count();
-    int ind = _commands_layout->indexOf(_current_icon);
-    if (ind == -1) return;
+//    // auto widget = _widgets_collection->find(&(*it))->second;
+//    int layout_size = _commands_layout->count();
+//    int ind = _commands_layout->indexOf(_current_icon);
+//    if (ind == -1) return;
 
-    if (count < 0 && ind > 0) {
-      _controller->moveCombatant(it, --it_before);
-      _commands_layout->removeWidget(_current_icon);
-      _commands_layout->insertWidget(ind - 1, _current_icon);
-      _mouseStartPosition -= QPoint(0, _current_icon->height());
-    } else if (count > 0 && ind < layout_size - 1) {
-      _controller->moveCombatant(it, ++ ++it_before);
-      _commands_layout->removeWidget(_current_icon);
-      _commands_layout->insertWidget(ind + 1, _current_icon);
-      _mouseStartPosition += QPoint(0, _current_icon->height());
-    }
-    update();
-    QVBoxLayout *new_layout =
-        qobject_cast<QVBoxLayout *>(_commands_layout /*this->layout()*/);
-    new_layout->update();
-    this->saveGeometry();
-  }
-}
+//    if (count < 0 && ind > 0) {
+//      _controller->moveCombatant(it, --it_before);
+//      _commands_layout->removeWidget(_current_icon);
+//      _commands_layout->insertWidget(ind - 1, _current_icon);
+//      _mouseStartPosition -= QPoint(0, _current_icon->height());
+//    } else if (count > 0 && ind < layout_size - 1) {
+//      _controller->moveCombatant(it, ++ ++it_before);
+//      _commands_layout->removeWidget(_current_icon);
+//      _commands_layout->insertWidget(ind + 1, _current_icon);
+//      _mouseStartPosition += QPoint(0, _current_icon->height());
+//    }
+//    update();
+//    QVBoxLayout *new_layout =
+//        qobject_cast<QVBoxLayout *>(_commands_layout /*this->layout()*/);
+//    new_layout->update();
+//    this->saveGeometry();
+//  }
+//}
 
 void DragNDropQWidgetCommands::mouseReleaseEvent(QMouseEvent *event) {
   Q_UNUSED(event);

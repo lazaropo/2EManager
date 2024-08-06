@@ -21,17 +21,7 @@ class EffectDirector {
  public:
   EffectDirector(SimpleEffectBuilder* builder);
 
-  void buildEffectByName(const std::string& name, int duration, int value) {
-    // try{
-    if (_effects_dictionary.find(name) != _effects_dictionary.end())
-      (_effects_dictionary[name])(duration, value);
-    else
-      return;
-    // }
-    // catch (const std::bad_any_cast& ex){
-    //   throw std:: << "Bad Any Cast: EffectDirector"
-    // }
-  }
+  void buildEffectByName(const std::string& name, int duration, int value);
 
   void buildClumsyEffect(int duration, int value);
 

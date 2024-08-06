@@ -20,9 +20,9 @@ class Controller {
     _model->moveCombatant(from, before);
   }
 
-  void addCommand(CommandBase* cmd) { _model->addCommand(cmd); }
+  // void addCommand(CommandBase* cmd) { _model->addCommand(cmd); }
   // void addAndDoCommand(CommandBase* cmd) { _model->addAndDoCommand(cmd); }
-  void removeCommand(Mediator::t_pos_cmd pos) { _model->removeCommand(pos); }
+  // void removeCommand(Mediator::t_pos_cmd pos) { _model->removeCommand(pos); }
   void removeCombatant(Model::t_pos_comb it) { _model->removeCombatant(it); }
   void removeCombatantGroup(std::vector<Model::t_pos_comb>& collection) {
     _model->removeCombatantGroup(collection);
@@ -50,9 +50,9 @@ class Controller {
     _model->setEffectDurationOnGroup(duration, collection);
   }
 
-  void makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                   const std::string& name, int value) {
-    _model->makeCommand(sender, reciever, name, value);
+  CommandBase* makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                           const std::string& name, int value) {
+    return _model->makeCommand(sender, reciever, name, value);
   }
 
   void sortByInit() { _model->sortByInit(); }

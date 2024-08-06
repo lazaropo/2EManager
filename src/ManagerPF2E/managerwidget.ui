@@ -19,7 +19,7 @@
      <x>10</x>
      <y>110</y>
      <width>1150</width>
-     <height>541</height>
+     <height>361</height>
     </rect>
    </property>
    <property name="mouseTracking">
@@ -40,7 +40,7 @@
       <x>0</x>
       <y>0</y>
       <width>1148</width>
-      <height>539</height>
+      <height>359</height>
      </rect>
     </property>
    </widget>
@@ -50,7 +50,7 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>471</width>
+     <width>641</width>
      <height>81</height>
     </rect>
    </property>
@@ -84,15 +84,28 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_create_effect_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Create Command</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
-  <widget class="QScrollArea" name="scrollArea_2">
+  <widget class="QScrollArea" name="scrollArea_commands">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>660</y>
+     <y>480</y>
      <width>1151</width>
-     <height>131</height>
+     <height>171</height>
     </rect>
    </property>
    <property name="widgetResizable">
@@ -104,7 +117,7 @@
       <x>0</x>
       <y>0</y>
       <width>1149</width>
-      <height>129</height>
+      <height>169</height>
      </rect>
     </property>
    </widget>

@@ -44,6 +44,8 @@ class ManagerWidget : public QWidget {
 
   // void on_widget_drag(QMouseEvent *event);
 
+  void on_pushButton_create_effect_2_clicked();
+
  private:
   Ui::ManagerWidget *ui;
   pf2e_manager::Controller *_controller;

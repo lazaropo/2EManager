@@ -2,6 +2,7 @@
 #define _EFFECT_BASE_H_82A0C4AB_9EEF_4E15_9F9A_6535D003B2D3_
 
 #include <algorithm>  // std::swap
+#include <list>
 #include <string>
 
 #include "EffectExecutor.h"

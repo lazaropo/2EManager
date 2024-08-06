@@ -11,6 +11,7 @@
 #include "../EffectDialog/EffectDialog.h"
 #include "../Model/Controller.h"
 #include "dragndropqwidget.h"
+#include "dragndropqwidget_commands.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -50,7 +51,8 @@ class ManagerWidget : public QWidget {
   // QStandardItemModel _combatant_model;
   std::map<pf2e_manager::Combatant *, CombatantWidget *> _combatant_list;
 
-  DragNDropQWidget *_box;
+  DragNDropQWidget *_box_combatants;
+  DragNDropQWidgetCommands *_box_commands;
 
   QPoint _mouseStartPosition;  // <------------- possibly dummy var
 };

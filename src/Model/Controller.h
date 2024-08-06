@@ -50,6 +50,11 @@ class Controller {
     _model->setEffectDurationOnGroup(duration, collection);
   }
 
+  void makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                   const std::string& name, int value) {
+    _model->makeCommand(sender, reciever, name, value);
+  }
+
   void sortByInit() { _model->sortByInit(); }
 
   void startTurn() { _model->startTurn(); }
@@ -62,9 +67,11 @@ class Controller {
 
   std::list<Combatant>& getCombatants() { return _model->getCombatants(); }
 
-  const std::list<CommandBase*>& getCommands() const {
+  const std::vector<CommandBase*>& getCommands() const {
     return _model->getCommands();
   }
+
+  std::vector<CommandBase*>& getCommands() { return _model->getCommands(); }
 
  private:
   Model* _model;

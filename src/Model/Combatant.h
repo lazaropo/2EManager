@@ -37,7 +37,7 @@ class Combatant : public SubjectBase {
   //  }
 
   bool operator==(const Combatant& other) {
-    return getObject() == other.getObject();
+    return getReciever() == other.getReciever();
   }
 
   /**

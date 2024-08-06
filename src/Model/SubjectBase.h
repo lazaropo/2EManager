@@ -8,8 +8,8 @@ namespace pf2e_manager {
 class SubjectBase {
  public:
   SubjectBase() = delete;
-  SubjectBase(SubjectBase* subject, SubjectBase* object = nullptr)
-      : _subject(subject), _object(object) {}
+  SubjectBase(SubjectBase* subject, SubjectBase* reciever = nullptr)
+      : _subject(subject), _reciever(reciever) {}
 
   virtual ~SubjectBase() = default;
 
@@ -18,18 +18,18 @@ class SubjectBase {
     return _name;
   }
   SubjectBase* getSubject() const { return _subject; }
-  SubjectBase* getObject() const { return _object; }
-  SubjectBase* getCreator() const { return _creator; }
+  SubjectBase* getReciever() const { return _reciever; }
+  SubjectBase* getInvoker() const { return _invoker; }
 
   void setName(const std::string name) { _name = name; }
-  void setObject(SubjectBase* object) { _object = object; }
-  void setCreator(SubjectBase* creator) { _creator = creator; }
+  void setReciever(SubjectBase* reciever) { _reciever = reciever; }
+  void setInvoker(SubjectBase* invoker) { _invoker = invoker; }
 
  protected:
   std::string _name = "";
-  SubjectBase* _subject = nullptr;  // this
-  SubjectBase* _object = nullptr;   // direction of exertion
-  SubjectBase* _creator = nullptr;  // exertion from whom
+  SubjectBase* _subject = nullptr;   // this
+  SubjectBase* _reciever = nullptr;  // direction of exertion
+  SubjectBase* _invoker = nullptr;   // exertion from whom
 };
 }  // namespace pf2e_manager
 

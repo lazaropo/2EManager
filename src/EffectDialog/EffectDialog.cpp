@@ -53,11 +53,7 @@ EffectDialog::EffectDialog(pf2e_manager::EffectDirector* unit, QWidget* parent)
   ui->comboBox_effect->setEditable(true);
 }
 
-EffectDialog::~EffectDialog() {
-  delete ui;
-  //  delete _director;
-  //  delete _builder;
-}
+EffectDialog::~EffectDialog() { delete ui; }
 
 void EffectDialog::on_button_set_clicked() {
   if (!_unit) return;

@@ -42,6 +42,8 @@ class Model {
 
   void addCommand(CommandBase* cmd) { _mediator->makeCommand(cmd); }
   // void addAndDoCommand(CommandBase* cmd) { _mediator->addAndDoCommand(cmd); }
+  void makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                   const std::string& name, int value);
   void removeCommand(Mediator::t_pos_cmd pos) { _mediator->undoCommand(pos); }
   void removeCombatant(t_pos_comb it) { _combatants.erase(it); }
   void removeCombatantGroup(std::vector<t_pos_comb>& collection) {
@@ -84,9 +86,11 @@ class Model {
 
   std::list<Combatant>& getCombatants() { return _combatants; }
 
-  const std::list<CommandBase*>& getCommands() const {
+  const std::vector<CommandBase*>& getCommands() const {
     return _mediator->getCommands();
   }
+
+  std::vector<CommandBase*>& getCommands() { return _mediator->getCommands(); }
 
  private:
   std::list<Combatant> _combatants;

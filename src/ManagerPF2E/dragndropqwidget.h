@@ -29,7 +29,7 @@ class DragNDropQWidget : public QWidget {
 
   void setWidgets(
       std::map<pf2e_manager::Combatant*, CombatantWidget*>* widgets_list) {
-    _widgets_list = widgets_list;
+    _widgets_collection = widgets_list;
   }
 
   CombatantWidget* getCurrentWidget() { return _current_widget; }
@@ -49,16 +49,12 @@ class DragNDropQWidget : public QWidget {
   pf2e_manager::Controller* _controller;
   std::list<pf2e_manager::Combatant>* _combatants_list;
 
-  std::map<pf2e_manager::Combatant*, CombatantWidget*>* _widgets_list;
+  std::map<pf2e_manager::Combatant*, CombatantWidget*>* _widgets_collection;
   QVBoxLayout* _combatants_layout;
 
   QPoint _mouseStartPosition = QPoint();
 
   CombatantWidget* _current_widget = nullptr;
-  CombatantWidget* _sender_widget = nullptr;
-
-  bool _pressed = false;
-  bool _long_press = false;
 };
 
 #endif  // DRAGNDROPQWidget_H

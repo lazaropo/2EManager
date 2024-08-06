@@ -2,17 +2,18 @@
 
 DragNDropQWidget::DragNDropQWidget(
     pf2e_manager::Controller *controller,
-    std::map<pf2e_manager::Combatant *, CombatantWidget *> *_widgets_list,
+    std::map<pf2e_manager::Combatant *, CombatantWidget *> *_widgets_collection,
     QWidget *parent)
     : QWidget(parent),
       _controller(controller),
       _combatants_list(&_controller->getCombatants()),
-      _widgets_list(_widgets_list),
+      _widgets_collection(_widgets_collection),
       _combatants_layout(new QVBoxLayout(this)) {
   setLayout(_combatants_layout);
+  _combatants_layout - setSpacing(12);
 
   // auto combatants_layout = layout();
-  for (auto it : *_widgets_list) {
+  for (auto it : *_widgets_collection) {
     _combatants_layout->addWidget(it.second);
     QObject::connect(it.second, &CombatantWidget::mousePressed, this,
                      &DragNDropQWidget::mousePressEvent);
@@ -29,9 +30,9 @@ DragNDropQWidget::DragNDropQWidget(
 
 void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {
   CombatantWidget *obj = new CombatantWidget(combatant);
-  _widgets_list->insert(std::pair(obj->getCombatant(), obj));
+  _widgets_collection->insert(std::pair(obj->getCombatant(), obj));
 
-  _combatants_layout->insertWidget(_widgets_list->size() - 1, obj);
+  _combatants_layout->insertWidget(_widgets_collection->size() - 1, obj);
   QObject::connect(obj, &CombatantWidget::mousePressed, this,
                    &DragNDropQWidget::mousePressEvent);
   obj->setAttribute(Qt::WA_StyledBackground);
@@ -72,7 +73,7 @@ void DragNDropQWidget::mouseMoveEvent(QMouseEvent *event) {
                         *_current_widget->getCombatant());
     auto it_before = it;
 
-    // auto widget = _widgets_list->find(&(*it))->second;
+    // auto widget = _widgets_collection->find(&(*it))->second;
     int layout_size = _combatants_layout->count();
     int ind = _combatants_layout->indexOf(_current_widget);
     if (ind == -1) return;

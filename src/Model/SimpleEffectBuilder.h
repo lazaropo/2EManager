@@ -213,12 +213,12 @@ class SimpleEffectBuilder {
   }
 
   SimpleEffectBuilder* setReciever(SubjectBase* reciever) {
-    _effect->setObject(reciever);
+    _effect->setReciever(reciever);
     return this;
   }
 
   SimpleEffectBuilder* setCreator(SubjectBase* creator) {
-    _effect->setCreator(creator);
+    _effect->setInvoker(creator);
     return this;
   }
 
@@ -231,7 +231,7 @@ class SimpleEffectBuilder {
 
   /*virtual*/ void setSubject(SubjectBase* object) {
     if (_effect) {
-      _effect->_object = object;
+      _effect->setReciever(object);
     }
   }
 

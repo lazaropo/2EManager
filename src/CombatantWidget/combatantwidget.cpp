@@ -43,9 +43,10 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
     item->setText(
         QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
             .arg(QString::fromStdString((it_eff)->getName()))
-            .arg(QString::fromStdString((it_eff)->getCreator()
-                                            ? (it_eff)->getCreator()->getName()
+            .arg(QString::fromStdString((it_eff)->getInvoker()
+                                            ? (it_eff)->getInvoker()->getName()
                                             : "User"))
+            .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
             .arg(QString::number((it_eff)->getDuration()))
             .arg(QString::number((it_eff)->getValue())));
 
@@ -54,13 +55,15 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   listWidget_effect->setGeometry(QRect(500, 10, 500, 140));
   setAttribute(Qt::WA_StyledBackground);
-  setMouseTracking(true);
+  // setMouseTracking(true);
   setFocusPolicy(Qt::NoFocus);
 
   QObject::connect(this, &CombatantWidget::enterEvent, this,
                    &CombatantWidget::enterEvent, Qt::DirectConnection);
   QObject::connect(this, &CombatantWidget::leaveEvent, this,
                    &CombatantWidget::leaveEvent, Qt::DirectConnection);
+  // QObject::connect(ui->lineEdit_hp_curr, &QLineEdit::editingFinished, this,
+  // lineEditCurrHPFinished);
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }
@@ -74,25 +77,30 @@ void CombatantWidget::updateContent() {
   ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));
 
   listWidget_effect->clear();
-  for (auto it_eff : _combatant->getEffects() /*= _combatant->getEffects().begin(),
-            it_eff_end = _combatant->getEffects().end();
-       it_eff != it_eff_end; ++it_eff*/) {
+  for (auto it_eff : _combatant->getEffects()) {
     if (!it_eff) break;
     EffectListWidgetItem* item =
         new EffectListWidgetItem(it_eff, QString::number(1));
     item->setText(
         QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
             .arg(QString::fromStdString((it_eff)->getName()))
-            .arg(QString::fromStdString((it_eff)->getCreator()
-                                            ? (it_eff)->getCreator()->getName()
+            .arg(QString::fromStdString((it_eff)->getInvoker()
+                                            ? (it_eff)->getInvoker()->getName()
                                             : "User"))
-            .arg(QString::fromStdString((it_eff)->getObject()->getName()))
+            .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
             .arg(QString::number((it_eff)->getDuration()))
             .arg(QString::number((it_eff)->getValue())));
 
     listWidget_effect->addItem(item);
   }
 }
+
+// void CombatantWidget::lineEditCurrHPFinished() {
+//   QLineEdit* le = qobject_cast<QLineEdit*>(sender());
+//   if(le)
+//     _combatant->
+// }
+
 void CombatantWidget::enterEvent(QEnterEvent* event) {
   Q_UNUSED(event);
   // if(event->button() & Qt::LeftButton)

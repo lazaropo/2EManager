@@ -5,7 +5,7 @@
 #include <string>
 
 #include "CommandBase.h"
-#include "CommandsImplementation.h"
+#include "CommandsCreator.h"
 #include "EffectDirector.h"
 #include "MediatorInterface.h"
 #include "SubjectBase.h"
@@ -13,7 +13,7 @@
 namespace pf2e_manager {
 class Mediator : public MediatorInterface {
  public:
-  using t_pos_cmd = std::list<CommandBase*>::iterator;
+  using t_pos_cmd = std::vector<CommandBase*>::iterator;
 
   explicit Mediator(std::list<Combatant>* combatant);
 
@@ -26,9 +26,12 @@ class Mediator : public MediatorInterface {
                   const std::string& name, const int duration = 0,
                   const int value = 0) override;
 
-  void makeCommand(__attribute__((unused)) SubjectBase* sender,
-                   __attribute__((unused)) SubjectBase* reciever,
-                   __attribute__((unused)) const std::string& name) override {}
+  void makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                   const std::string& name, int value) override {
+    CommandBase* command =
+        _commands_creator->createCommandByName(sender, reciever, value, name);
+    makeCommand(command);
+  }
 
   void makeCommand(CommandBase* cmd) { _commands.push_back(cmd); }
 
@@ -40,18 +43,22 @@ class Mediator : public MediatorInterface {
                    __attribute__((unused)) SubjectBase* reciever,
                    __attribute__((unused)) const std::string& name) override {}
 
-  void undoCommand(t_pos_cmd pos) { _commands.erase(pos); }
+  void undoCommand(t_pos_cmd pos) { (*pos)->undo(); }
 
-  const std::list<CommandBase*>& getCommands() const override {
+  const std::vector<CommandBase*>& getCommands() const override {
     return _commands;
   }
 
+  std::vector<CommandBase*>& getCommands() override { return _commands; }
+
  private:
   std::list<Combatant>* _combatants;
-  std::list<CommandBase*> _commands;
+  std::vector<CommandBase*> _commands;
 
   SimpleEffectBuilder* _builder;
   EffectDirector* _director;
+
+  CommandsCreator* _commands_creator;
 };
 }  // namespace pf2e_manager
 

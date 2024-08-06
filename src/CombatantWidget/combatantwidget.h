@@ -32,19 +32,20 @@ class CombatantWidget : public QWidget {
 
   void updateContent();
 
+ signals:
+  void mousePressed(QMouseEvent *event = nullptr);
+
  protected slots:
   void mousePressEvent(QMouseEvent *event = nullptr) override {
     emit mousePressed(event);
   }
 
-  // void mouseMoveEvent(QMouseEvent *event = nullptr) { emit mouseMoved(event);
-  // }
-
   void enterEvent(QEnterEvent *event) override;
   void leaveEvent(QEvent *event) override;
 
- signals:
-  void mousePressed(QMouseEvent *event = nullptr);
+ private slots:
+  // void lineEditCurrHPFinished();
+
   // void mouseMoved(QMouseEvent *event = nullptr);
 
  private:

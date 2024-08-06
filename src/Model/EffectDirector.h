@@ -1,7 +1,6 @@
 #ifndef _EFFECT_DIRECTOR_C61F8EA4_4104_405C_8865_237A7CE5BC26_
 #define _EFFECT_DIRECTOR_C61F8EA4_4104_405C_8865_237A7CE5BC26_
 
-#include <any>
 #include <functional>
 #include <map>
 #include <string>
@@ -21,6 +20,18 @@ namespace pf2e_manager {
 class EffectDirector {
  public:
   EffectDirector(SimpleEffectBuilder* builder);
+
+  void buildEffectByName(const std::string& name, int duration, int value) {
+    // try{
+    if (_effects_dictionary.find(name) != _effects_dictionary.end())
+      (_effects_dictionary[name])(duration, value);
+    else
+      return;
+    // }
+    // catch (const std::bad_any_cast& ex){
+    //   throw std:: << "Bad Any Cast: EffectDirector"
+    // }
+  }
 
   void buildClumsyEffect(int duration, int value);
 
@@ -80,18 +91,6 @@ class EffectDirector {
   void buildUndetectedEffect() { ; }
   void buildUnnoticedEffect() { ; }
   void buildWoundedEffect() { ; }
-
-  void buildEffectByName(const std::string& name, int duration, int value) {
-    // try{
-    if (_effects_dictionary.find(name) != _effects_dictionary.end())
-      (_effects_dictionary[name])(duration, value);
-    else
-      return;
-    // }
-    // catch (const std::bad_any_cast& ex){
-    //   throw std:: << "Bad Any Cast: EffectDirector"
-    // }
-  }
 
  private:
   SimpleEffectBuilder* _builder;

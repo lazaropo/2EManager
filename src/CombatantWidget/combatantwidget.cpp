@@ -16,7 +16,25 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPCurr()));
   ui->lineEdit_hp_max->setText(QString::number(_combatant->getHPMax()));
   ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));
-  // ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPMax()));
+
+  auto side = _combatant->getSide();
+  QString text;
+  if (side == pf2e_manager::Combatant::Side::TEAM)
+    text = "TEAM";
+  else if (side == pf2e_manager::Combatant::Side::ENEAMY)
+    text = "ENEAMY";
+  else if (side == pf2e_manager::Combatant::Side::OTHER)
+    text = "OTHER";
+  ui->label_side->setText(text);
+
+  auto vitality = _combatant->getVitality();
+  if (vitality == pf2e_manager::Combatant::Vitality::ALIVE)
+    text = "ALIVE";
+  else if (vitality == pf2e_manager::Combatant::Vitality::DEAD)
+    text = "DEAD";
+  else if (vitality == pf2e_manager::Combatant::Vitality::CONSTRUCT)
+    text = "CONSTRUCT";
+  ui->label_vitality->setText(text);
 
   for (auto it_eff : _combatant->getEffects() /*= _combatant->getEffects().begin(),
             it_eff_end = _combatant->*/) {
@@ -34,7 +52,7 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
     listWidget_effect->addItem(item);
   }
 
-  listWidget_effect->setGeometry(QRect(400, 10, 500, 140));
+  listWidget_effect->setGeometry(QRect(500, 10, 500, 140));
   setAttribute(Qt::WA_StyledBackground);
   setMouseTracking(true);
   setFocusPolicy(Qt::NoFocus);

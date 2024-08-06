@@ -10,7 +10,7 @@
 #include "../CombatantWidget/combatantwidget.h"
 #include "../EffectDialog/EffectDialog.h"
 #include "../Model/Controller.h"
-#include "dragndropqgraphicsview.h"
+#include "dragndropqwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -50,7 +50,7 @@ class ManagerWidget : public QWidget {
   // QStandardItemModel _combatant_model;
   std::map<pf2e_manager::Combatant *, CombatantWidget *> _combatant_list;
 
-  DragNDropQGraphicsView *_box;
+  DragNDropQWidget *_box;
 
   QPoint _mouseStartPosition;  // <------------- possibly dummy var
 };

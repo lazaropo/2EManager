@@ -22,7 +22,7 @@ SUBDIRS += ../CombatantWidget/CombatantWidget.pro
 SUBDIRS += ../CombatantDialog/CombatantDialog.pro
 
 SOURCES += \
-    dragndropqgraphicsview.cpp \
+    dragndropqwidget.cpp \
     main.cpp \
     managerwidget.cpp \
     ../CombatantWidget/combatantwidget.cpp \
@@ -32,7 +32,7 @@ SOURCES += \
     ../CombatantDialog/combatantdialog.cpp
 
 HEADERS += \
-    dragndropqgraphicsview.h \
+    dragndropqwidget.h \
     managerwidget.h \    
     ../CombatantWidget/EffectListWidgetItem.h \
     ../CombatantWidget/MyMenuWidget.h \

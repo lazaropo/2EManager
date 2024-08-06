@@ -7,13 +7,12 @@
 ManagerWidget::ManagerWidget(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::ManagerWidget),
-      _controller(new pf2e_manager::Controller) /*,
-       _box(new DragNDropQGraphicsView(_controller, &_combatant_list, this))*/
-{
+      _controller(new pf2e_manager::Controller),
+      _box(new DragNDropQWidget(_controller, &_combatant_list, this)) {
   ui->setupUi(this);
 
-  ui->graphicsView->setController(_controller);
-  ui->graphicsView->setWidgets(&_combatant_list);
+  //  ui->graphicsView->setController(_controller);
+  //  ui->graphicsView->setWidgets(&_combatant_list);
 
   using namespace pf2e_manager;
 
@@ -54,29 +53,29 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   //  for (auto comb : _controller->getCombatants().begin()->getEffects())
   //    std::cout << comb->getName();
 
-  ui->graphicsView->addWidget(tmp);
-  ui->graphicsView->addWidget(tmp1);
-  ui->graphicsView->addWidget(tmp2);
-  ui->graphicsView->addWidget(tmp3);
-  ui->graphicsView->addWidget(tmp4);
-  ui->graphicsView->addWidget(tmp5);
+  _box->addWidget(tmp);
+  _box->addWidget(tmp1);
+  _box->addWidget(tmp2);
+  _box->addWidget(tmp3);
+  _box->addWidget(tmp4);
+  _box->addWidget(tmp5);
 
   //  for(auto it : _combatant_list)
   //    it->updateContent();
 
-  ui->graphicsView->setFixedHeight(_combatant_list.size() *
-                                   (_combatant_list.begin()->second)->height());
+  _box->setFixedHeight(_combatant_list.size() *
+                       (_combatant_list.begin()->second)->height());
 
-  ui->graphicsView->layout()->setSpacing(12);
+  _box->layout()->setSpacing(12);
 
-  // _box->setMouseTracking(true);
-  // setMouseTracking(true);
+  _box->setMouseTracking(true);
+  setMouseTracking(true);
 
-  //  ui->scrollArea->setWidget(_box);
+  ui->scrollArea->setWidget(_box);
 
-  //  ui->scrollArea->setAttribute(Qt::WA_StyledBackground);
-  //  ui->scrollArea->setBackgroundRole(QPalette::Window);
-  //  ui->scrollArea->setMouseTracking(true);
+  ui->scrollArea->setAttribute(Qt::WA_StyledBackground);
+  ui->scrollArea->setBackgroundRole(QPalette::Window);
+  ui->scrollArea->setMouseTracking(true);
 
   // ui->graphicsView->addScrollBarWidget(ui->scrollArea, Qt::AlignTop);
   // ui->graphicsView->setLayout(_box->layout());
@@ -88,7 +87,7 @@ ManagerWidget::~ManagerWidget() {
 }
 
 void ManagerWidget::on_pushButton_create_effect_clicked() {
-  auto current_widget = ui->graphicsView->getCurrentWidget();
+  auto current_widget = _box->getCurrentWidget();
   if (!current_widget) return;
 
   pf2e_manager::SimpleEffectBuilder builder;
@@ -115,7 +114,7 @@ void ManagerWidget::on_pushButton_create_combatant_clicked() {
   dialog.exec();
   _controller->addCombatant(std::move(*body));
 
-  ui->graphicsView->addWidget(body);
+  _box->addWidget(body);
 }
 
 // void ManagerWidget::mouseMoveEvent(QMouseEvent *event) {

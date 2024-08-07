@@ -35,6 +35,11 @@ void CommandDialog::on_pushButton_accept_clicked() {
   int ind_reciever = ui->comboBox_to->currentIndex();
   auto reciever = _list[ind_reciever];
 
+  if (reciever && (QString::fromStdString(reciever->getName()) !=
+                   ui->comboBox_to->currentText()))
+    throw std::logic_error(
+        "CommandDialog: reciever by index and by next is not the same.");
+
   *_command = _controller->makeCommand(
       sender, reciever,
       "command:" + ui->comboBox_command->currentText().toStdString(),

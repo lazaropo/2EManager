@@ -26,7 +26,7 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
   if (dynamic_cast<HarmCommand *>(_command)) {
     base_style =
         "QWidget#CommandIcon {"
-        "background-image: url(:/images/sword.png);"
+        "background: url(:/images/sword.png) center;"
         "border-radius: 10px; "
         " }";
     highligth_style =
@@ -36,11 +36,22 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
         "border: none;"
         "border-radius: 9px; "
         "border-image: solid 10px red;"
-        // "outline-radius: 7px;"
-        "padding: 7px 7px 7px 7px; "
-        "padding-radius: 10px; "
-        // "margin: 7px 7px 7px 7px; "
-        // "background-size: 90px 90px;"
+        "margin: 10px 7px 7px 7px; "
+        "}";
+  } else if (dynamic_cast<HealCommand *>(_command)) {
+    base_style =
+        "QWidget#CommandIcon {"
+        "background: url(:/images/leaf.png) center;"
+        "border-radius: 10px; "
+        " }";
+    highligth_style =
+        "QWidget#CommandIcon {"
+        "background: url(:/images/leaf.png) content center;"
+        "background-clip: content;"
+        "border: none;"
+        "border-radius: 9px; "
+        "border-image: solid 10px red;"
+        "margin: 10px 7px 7px 7px; "
         "}";
   }
 

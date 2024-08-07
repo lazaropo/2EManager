@@ -11,6 +11,7 @@ class CommandBase : public SubjectBase {
   CommandBase(int value, CommandBase* p) : SubjectBase(p), _value(value) {}
   virtual void execute(int value) = 0;
   virtual void undo() = 0;
+  int value() const { return _value; }
 
  protected:
   int _value = 0;

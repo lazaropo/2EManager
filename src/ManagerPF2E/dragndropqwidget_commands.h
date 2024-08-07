@@ -3,10 +3,11 @@
 
 //+++++++++++QT+++++++++++
 #include <QApplication>
+#include <QBoxLayout>
 #include <QDrag>
-#include <QHBoxLayout>
 #include <QMimeData>
 #include <QMouseEvent>
+#include <QTextBrowser>
 #include <QWidget>
 //+++++++++++STL+++++++++++
 #include <vector>
@@ -42,6 +43,7 @@ class DragNDropQWidgetCommands : public QWidget {
   QPoint _mouseStartPosition = QPoint();
 
   CommandIcon* _current_icon = nullptr;
+  QTextBrowser* _description = nullptr;
 };
 
 #endif  // DragNDropQWidgetCommands_H

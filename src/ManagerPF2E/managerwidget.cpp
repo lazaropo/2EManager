@@ -92,6 +92,8 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
   ui->scrollArea_commands->setAttribute(Qt::WA_StyledBackground);
   ui->scrollArea_commands->setBackgroundRole(QPalette::Window);
+
+  // ui->horizontalLayout->insertWidget(1, new CommandIcon(nullptr, this));
 }
 
 ManagerWidget::~ManagerWidget() {

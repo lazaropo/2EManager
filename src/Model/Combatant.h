@@ -11,6 +11,7 @@
 #include "SubjectBase.h"
 
 namespace pf2e_manager {
+
 class Combatant : public SubjectBase {
  public:
   using t_pos_eff = std::vector<SimpleEffect*>::iterator;
@@ -32,9 +33,9 @@ class Combatant : public SubjectBase {
     //_effects.clear();
   }
 
-  //  ~Combatant() {
-  //    // for (auto it : _effects) delete it;
-  //  }
+  ~Combatant() {
+    for (auto it : _effects) delete it;
+  }
 
   bool operator==(const Combatant& other) {
     return getReciever() == other.getReciever();

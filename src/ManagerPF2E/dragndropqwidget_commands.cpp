@@ -5,42 +5,56 @@ DragNDropQWidgetCommands::DragNDropQWidgetCommands(
     : QWidget(parent),
       _controller(controller),
       _commands_list(&_controller->getCommands()),
-      _commands_layout(new QHBoxLayout(this)) {
+      _commands_layout(new QBoxLayout(QBoxLayout::LeftToRight, this)) {
+  setFixedSize(2000, 110);
+
+  // _commands_layout->addStretch();
+  _commands_layout->setAlignment(Qt::AlignLeft);
+  // _commands_layout->setSizeConstraint(QLayout::SetMaximumSize);
   setLayout(_commands_layout);
-  _commands_layout->setSpacing(12);
+  _commands_layout->setSpacing(4);
+
+  setAttribute(Qt::WA_StyledBackground);
+
+  // _commands_layout->setContentsMargins(QMargins(0, 0, 0, 0));
+  _commands_layout->setSpacing(2);
 
   for (auto it : _widgets_collection) {
     _commands_layout->addWidget(it);
     QObject::connect(it, &CommandIcon::mousePressed, this,
                      &DragNDropQWidgetCommands::mousePressEvent);
-    _commands_layout->addWidget(it);
 
     it->setAttribute(Qt::WA_StyledBackground);
   }
+  /*
+     for (int i = 0; i < 1; ++i) {
+       CommandIcon *icon = new CommandIcon(nullptr);
+       _commands_layout->addWidget(icon);
+       _widgets_collection.push_back(icon);
+       QObject::connect(icon, &CommandIcon::mousePressed, this,
+                        &DragNDropQWidgetCommands::mousePressEvent);
+       icon->setAttribute(Qt::WA_StyledBackground);
+       // icon->repaint();
+     }*/
 }
 
 void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {
   CommandIcon *obj = new CommandIcon(command);
   _widgets_collection.push_back(obj);
 
-  _commands_layout->addWidget(obj);
+  _commands_layout->addWidget(/*_commands_layout->count(),*/ obj);
   QObject::connect(obj, &CommandIcon::mousePressed, this,
                    &DragNDropQWidgetCommands::mousePressEvent);
-  // obj->setAttribute(Qt::WA_StyledBackground);
+  obj->setAttribute(Qt::WA_StyledBackground);
 }
 
 void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
   if (event->button() & Qt::LeftButton) {
-    if (_current_icon)
-      _current_icon->setStyleSheet(
-          "CommandIcon{ border-width:  10px;\n"
-          "border-radius: 10px;  };");
+    if (_current_icon) _current_icon->setBaseStyle();
 
     _current_icon = static_cast<CommandIcon *>(sender());
-    _current_icon->setStyleSheet(
-        "CommandIcon{ border-color:  red;\n"
-        "  border-width: 0px;\n"
-        "border-radius: 10px; };");
+    if (!_current_icon) return;
+    _current_icon->setHighligthStyle();
 
     //    _mouseStartPosition = QPoint(event->scenePosition().x() - x(),
     //                                 event->scenePosition().y() - y());

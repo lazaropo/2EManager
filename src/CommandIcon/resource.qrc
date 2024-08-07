@@ -2,4 +2,7 @@
     <qresource prefix="/path/images">
         <file>images/sword.jpg</file>
     </qresource>
+    <qresource prefix="/">
+        <file>images/sword.png</file>
+    </qresource>
 </RCC>

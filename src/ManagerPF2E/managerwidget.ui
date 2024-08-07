@@ -104,8 +104,8 @@
     <rect>
      <x>10</x>
      <y>480</y>
-     <width>1151</width>
-     <height>171</height>
+     <width>1150</width>
+     <height>150</height>
     </rect>
    </property>
    <property name="widgetResizable">
@@ -116,8 +116,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1149</width>
-      <height>169</height>
+      <width>1148</width>
+      <height>148</height>
      </rect>
     </property>
    </widget>

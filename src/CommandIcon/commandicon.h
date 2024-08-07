@@ -2,8 +2,12 @@
 #define COMMANDICON_H
 
 #include <QBrush>
+#include <QHBoxLayout>
 #include <QImage>
+#include <QLabel>
+#include <QPainter>
 #include <QPalette>
+#include <QPixmap>
 #include <QWidget>
 
 #include "../Model/Controller.h"
@@ -23,6 +27,9 @@ class CommandIcon : public QWidget {
 
   pf2e_manager::CommandBase* getCommand() { return _command; }
 
+  void setBaseStyle() { setStyleSheet(base_style); }
+  void setHighligthStyle() { setStyleSheet(highligth_style); }
+
  signals:
   void mousePressed(QMouseEvent* event = nullptr);
 
@@ -31,8 +38,12 @@ class CommandIcon : public QWidget {
     emit mousePressed(event);
   }
 
+  // void paintEvent(QPaintEvent* event) override;
+
  private:
   Ui::CommandIcon* ui;
   pf2e_manager::CommandBase* _command;
+  QString base_style;
+  QString highligth_style;
 };
 #endif  // COMMANDICON_H

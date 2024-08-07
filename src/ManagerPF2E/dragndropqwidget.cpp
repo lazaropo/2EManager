@@ -12,14 +12,13 @@ DragNDropQWidget::DragNDropQWidget(
   setLayout(_combatants_layout);
   _combatants_layout->setSpacing(12);
 
-  // auto combatants_layout = layout();
   for (auto it : *_widgets_collection) {
     _combatants_layout->addWidget(it.second);
     QObject::connect(it.second, &CombatantWidget::mousePressed, this,
                      &DragNDropQWidget::mousePressEvent);
     //    QObject::connect(it, &CombatantWidget::mouseMoved, this,
     //                     &DragNDropQWidget::mouseMoveEvent);
-    _combatants_layout->addWidget(it.second);
+    // _combatants_layout->addWidget(it.second);
     //    QObject::connect(it, &CombatantWidget::clicked, this,
     //                     &ManagerWidget::on_widget_drag);
     it.second->setAttribute(Qt::WA_StyledBackground);

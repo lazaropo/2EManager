@@ -37,7 +37,7 @@ class DragNDropQWidgetCommands : public QWidget {
   std::vector<pf2e_manager::CommandBase*>* _commands_list;
 
   QList<CommandIcon*> _widgets_collection;
-  QHBoxLayout* _commands_layout;
+  QLayout* _commands_layout;
 
   QPoint _mouseStartPosition = QPoint();
 

@@ -80,13 +80,32 @@ class Model {
 
   void sortByInit() {
     _combatants.sort([](const Combatant* a, const Combatant* b) {
-      return a->getInitiative() < b->getInitiative();
+      // the std::greater-like definition. first combatant with greater init and
+      // side::eneamy or side::other.
+      bool ret = false;
+      int init1 = a->getInitiative();
+      int init2 = b->getInitiative();
+      if (init1 > init2)
+        ret = true;
+      else if (init1 == init2 && a->getSide() != b->getSide()) {
+        if (a->getSide() == Combatant::Side::TEAM)
+          ret = false;
+        else if (b->getSide() == Combatant::Side::TEAM)
+          ret = true;
+      }
+      return ret;
     });
   }
 
-  void startTurn();
+  void startTurn() {
+    for (auto it : _combatants)
+      it->notifyTrigger(SimpleEffect::Trigger::START_TURN);
+  }
 
-  void nextTurn();
+  void nextTurn() {
+    for (auto it : _combatants)
+      it->notifyTrigger(SimpleEffect::Trigger::END_TURN);
+  }
 
   const std::list<Combatant*>& getCombatants() const { return _combatants; }
 

@@ -134,3 +134,18 @@ void ManagerWidget::on_pushButton_create_effect_2_clicked() {
 
   _box_commands->addCommand(command);
 }
+
+void ManagerWidget::on_pushButton_create_order_clicked() {
+  _controller->sortByInit();
+  _box_combatants->updateContent();
+}
+
+void ManagerWidget::on_pushButton_turn_clicked(bool checked) {
+  if (checked) {
+    _controller->startTurn();
+  } else {
+    _controller->nextTurn();
+    // TODO:
+    // make new _current_widget;
+  }
+}

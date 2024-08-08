@@ -50,7 +50,7 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>641</width>
+     <width>691</width>
      <height>81</height>
     </rect>
    </property>
@@ -85,7 +85,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_create_effect_2">
+     <widget class="QPushButton" name="pushButton_create_command">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -94,6 +94,20 @@
       </property>
       <property name="text">
        <string>Create Command</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_create_order">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Create Comatants 
+Order</string>
       </property>
      </widget>
     </item>
@@ -121,6 +135,25 @@
      </rect>
     </property>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_turn">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>20</y>
+     <width>329</width>
+     <height>78</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="text">
+    <string>Start Turn</string>
+   </property>
   </widget>
  </widget>
  <resources/>

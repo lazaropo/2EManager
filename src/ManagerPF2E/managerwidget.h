@@ -46,6 +46,8 @@ class ManagerWidget : public QWidget {
 
   void on_pushButton_create_effect_2_clicked();
 
+  void on_pushButton_create_order_clicked();
+
  private:
   Ui::ManagerWidget *ui;
   pf2e_manager::Controller *_controller;

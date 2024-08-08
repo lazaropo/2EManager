@@ -36,22 +36,25 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
     text = "CONSTRUCT";
   ui->label_vitality->setText(text);
 
-  for (auto it_eff : _combatant->getEffects() /*= _combatant->getEffects().begin(),
-            it_eff_end = _combatant->*/) {
-    EffectListWidgetItem* item =
-        new EffectListWidgetItem(it_eff, QString::number(1));
-    item->setText(
-        QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
-            .arg(QString::fromStdString((it_eff)->getName()))
-            .arg(QString::fromStdString((it_eff)->getInvoker()
-                                            ? (it_eff)->getInvoker()->getName()
-                                            : "User"))
-            .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
-            .arg(QString::number((it_eff)->getDuration()))
-            .arg(QString::number((it_eff)->getValue())));
+  //  for (auto it_eff : _combatant->getEffects() /*=
+  //  _combatant->getEffects().begin(),
+  //            it_eff_end = _combatant->*/) {
+  //    EffectListWidgetItem* item =
+  //        new EffectListWidgetItem(it_eff, QString::number(1));
+  //    item->setText(
+  //        QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
+  //            .arg(QString::fromStdString((it_eff)->getName()))
+  //            .arg(QString::fromStdString((it_eff)->getInvoker()
+  //                                            ?
+  //                                            (it_eff)->getInvoker()->getName()
+  //                                            : "User"))
+  //            .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
+  //            .arg(QString::number((it_eff)->getDuration()))
+  //            .arg(QString::number((it_eff)->getValue())));
 
-    listWidget_effect->addItem(item);
-  }
+  //    listWidget_effect->addItem(item);
+  //  }
+  updateContent();
 
   listWidget_effect->setGeometry(QRect(500, 20, 500, 140));
   setAttribute(Qt::WA_StyledBackground);
@@ -73,6 +76,9 @@ void CombatantWidget::updateContent() {
   ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPCurr()));
   ui->lineEdit_hp_max->setText(QString::number(_combatant->getHPMax()));
   ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));
+
+  ui->lineEdit_initiative->setText(
+      QString::number(_combatant->getInitiative()));
 
   listWidget_effect->clear();
   for (auto it_eff : _combatant->getEffects()) {

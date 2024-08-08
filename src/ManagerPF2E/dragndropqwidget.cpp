@@ -99,7 +99,13 @@ void DragNDropQWidget::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void DragNDropQWidget::updateContent() {
-  for (auto it : *_widgets_collection) it.second->updateContent();
+  int count = 0;
+  for (auto it : *_combatants_list) {
+    auto widget = (*_widgets_collection)[it];
+    _combatants_layout->removeWidget(widget);
+    _combatants_layout->insertWidget(count++, widget);
+    widget->updateContent();
+  }
 }
 
 void DragNDropQWidget::updateContent(pf2e_manager::SubjectBase *combatant) {

@@ -57,6 +57,10 @@ class Combatant : public SubjectBase {
 
   void setEffectDuration(t_pos_eff pos, int duration);
 
+  void notifyTrigger(SimpleEffect::Trigger trigger) {
+    for (auto it : _effects) it->notifyTrigger(trigger);
+  }
+
   int getHPCurr() const { return _hp_curr; }
 
   void setHPCurr(int value) { _hp_curr = value; }
@@ -70,10 +74,6 @@ class Combatant : public SubjectBase {
   Side getSide() const { return _side; }
 
   Vitality getVitality() const { return _vitality; }
-
-  // const std::string getName() const { return _name; }
-
-  // void setName(const std::string& name) { _name = name; }
 
   int getInitiative() const { return _initiative; }
 

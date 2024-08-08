@@ -65,7 +65,7 @@ class SimpleEffect : public SubjectBase {
 
   void undo();
 
-  void getTrigger(Trigger trigger);
+  void notifyTrigger(Trigger trigger);
 
   int getDuration() const { return _duration; }
   int getValue() const { return _value._value; }

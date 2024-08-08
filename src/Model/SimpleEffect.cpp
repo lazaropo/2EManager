@@ -20,7 +20,7 @@ void SimpleEffect::undo() {
   _is_active = _is_active ? false : true;
 }
 
-void SimpleEffect::getTrigger(Trigger trigger) {
+void SimpleEffect::notifyTrigger(Trigger trigger) {
   if (trigger == _trigger && _is_active) {
     execute();
   }

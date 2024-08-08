@@ -19,36 +19,30 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   using namespace pf2e_manager;
 
   Combatant *tmp = new Combatant(100, 36, Combatant::Side::TEAM, "Peppa");
-  _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(*tmp));
+  _controller->addCombatant(tmp);
   Combatant *tmp1 = new Combatant(50, 16, Combatant::Side::TEAM, "Ricky");
-  _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(*tmp1));
+  _controller->addCombatant(tmp1);
   Combatant *tmp2 = new Combatant(200, 40, Combatant::Side::ENEAMY, "Stone");
-  _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(*tmp2));
+  _controller->addCombatant(tmp2);
   Combatant *tmp3 = new Combatant(10, 36, Combatant::Side::TEAM, "Tree");
-  _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(*tmp3));
+  _controller->addCombatant(tmp3);
   Combatant *tmp4 =
       new Combatant(278, 45, Combatant::Side::ENEAMY, "Sun Child");
-  _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(*tmp4));
+  _controller->addCombatant(tmp4);
   Combatant *tmp5 = new Combatant(128, 28, Combatant::Side::TEAM, "IG-500");
-  _controller->addCombatant(/*_controller->getCombatants().begin(),*/
-                            std::move(*tmp5));
+  _controller->addCombatant(tmp5);
 
   auto unit_it = _controller->getCombatants().begin();
 
   pf2e_manager::SimpleEffectBuilder builder;
   pf2e_manager::EffectDirector director(&builder);
   director.buildClumsyEffect(2, 1);
-  builder.setReciever(&(*unit_it));
+  builder.setReciever(*unit_it);
   builder.setCreator(nullptr);
   _controller->addEffect(&builder, tmp);
 
   director.buildConfusedEffect(5);
-  builder.setReciever(&(*unit_it));
+  builder.setReciever(*unit_it);
   builder.setCreator(nullptr);
   _controller->addEffect(&builder, tmp);
 
@@ -83,6 +77,11 @@ ManagerWidget::ManagerWidget(QWidget *parent)
       "command:harm", 10));
   _box_commands->addCommand(_controller->makeCommand(
       nullptr, static_cast<SubjectBase *>(tmp3), "command:harm", 10));
+  _box_commands->addCommand(_controller->makeCommand(
+      static_cast<SubjectBase *>(tmp), static_cast<SubjectBase *>(tmp2),
+      "command:heal", 10));
+  _box_commands->addCommand(_controller->makeCommand(
+      nullptr, static_cast<SubjectBase *>(tmp1), "command:harm", 10));
 
   ui->scrollArea_combatants->setWidget(_box_combatants);
   ui->scrollArea_commands->setWidget(_box_commands);
@@ -93,7 +92,7 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   ui->scrollArea_commands->setAttribute(Qt::WA_StyledBackground);
   ui->scrollArea_commands->setBackgroundRole(QPalette::Window);
 
-  // ui->horizontalLayout->insertWidget(1, new CommandIcon(nullptr, this));
+  _box_combatants->updateContent();
 }
 
 ManagerWidget::~ManagerWidget() {
@@ -105,15 +104,9 @@ void ManagerWidget::on_pushButton_create_effect_clicked() {
   auto current_widget = _box_combatants->getCurrentWidget();
   if (!current_widget) return;
 
-  pf2e_manager::SimpleEffectBuilder builder;
-  pf2e_manager::EffectDirector director(&builder);
   EffectDialog dialog =
-      /*new */ EffectDialog(&director, this);
-  dialog.exec();
-
-  builder.setCreator(nullptr);
-  builder.setReciever(current_widget->getCombatant());
-  _controller->addEffect(&builder, current_widget->getCombatant());
+      /*new */ EffectDialog(_controller, current_widget->getCombatant(), this);
+  if (dialog.exec() == QDialog::Rejected) return;
 
   current_widget->updateContent();
 }
@@ -127,7 +120,7 @@ void ManagerWidget::on_pushButton_create_combatant_clicked() {
   pf2e_manager::Combatant *body;
   CombatantDialog dialog(&body);
   dialog.exec();
-  _controller->addCombatant(std::move(*body));
+  _controller->addCombatant(body);
 
   _box_combatants->addWidget(body);
 }
@@ -135,8 +128,9 @@ void ManagerWidget::on_pushButton_create_combatant_clicked() {
 void ManagerWidget::on_pushButton_create_effect_2_clicked() {
   pf2e_manager::CommandBase *command;
   CommandDialog dialog(&command, _controller);
-  dialog.exec();
   // command have to be set in collection from model
+  if (dialog.exec() == QDialog::Rejected) return;
+  _box_combatants->updateContent(command->getReciever());
 
   _box_commands->addCommand(command);
 }

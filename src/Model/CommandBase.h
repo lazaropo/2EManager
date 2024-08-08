@@ -9,13 +9,13 @@ namespace pf2e_manager {
 class CommandBase : public SubjectBase {
  public:
   CommandBase(int value, CommandBase* p) : SubjectBase(p), _value(value) {}
-  virtual void execute(int value) = 0;
+  virtual void execute() = 0;
   virtual void undo() = 0;
   int value() const { return _value; }
 
  protected:
   int _value = 0;
-  bool _is_active = true;
+  bool _is_active = false;
 };
 }  // namespace pf2e_manager
 #endif

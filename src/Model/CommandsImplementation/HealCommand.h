@@ -14,7 +14,7 @@ class HealCommand : public CommandBase {
     setInvoker(sender);
     setReciever(reciever);
   }
-  void execute(int value) override;
+  void execute() override;
 
   void undo() override;
 

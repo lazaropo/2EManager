@@ -1,9 +1,9 @@
 <RCC>
-    <qresource prefix="/path/images">
-        <file>images/sword.jpg</file>
-    </qresource>
+    <qresource prefix="/path/images"/>
     <qresource prefix="/">
-        <file>images/sword.png</file>
         <file>images/leaf.png</file>
+        <file>images/leaf_small.png</file>
+        <file>images/sword_small.png</file>
+        <file>images/sword.png</file>
     </qresource>
 </RCC>

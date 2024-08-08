@@ -1,10 +1,8 @@
 #include "HealCommand.h"
 
 namespace pf2e_manager {
-void HealCommand::execute(int value) {
-  if (value <= 0 || _is_active) return;
-
-  _value = value;
+void HealCommand::execute() {
+  if (_value <= 0 || _is_active) return;
 
   Combatant* combatant = dynamic_cast<Combatant*>(this->getReciever());
   if (!combatant)
@@ -14,7 +12,7 @@ void HealCommand::execute(int value) {
   int curr_hp = combatant->getHPCurr();
   int max_hp = combatant->getHPMax();
   if (curr_hp <= 0) {
-    combatant->setHPCurr(value);
+    combatant->setHPCurr(_value);
     // now sender is nullptr. but actually it must work without direction of
     // sender
     _mediator->undoEffect(nullptr, combatant, "effect:dying");

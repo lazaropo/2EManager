@@ -34,6 +34,7 @@ class DragNDropQWidget : public QWidget {
 
   CombatantWidget* getCurrentWidget() { return _current_widget; }
   void updateContent();
+  void updateContent(pf2e_manager::SubjectBase* combatant);
 
   void addWidget(pf2e_manager::Combatant* combatant);
 
@@ -47,7 +48,7 @@ class DragNDropQWidget : public QWidget {
 
  private:
   pf2e_manager::Controller* _controller;
-  std::list<pf2e_manager::Combatant>* _combatants_list;
+  std::list<pf2e_manager::Combatant*>* _combatants_list;
 
   std::map<pf2e_manager::Combatant*, CombatantWidget*>* _widgets_collection;
   QVBoxLayout* _combatants_layout;

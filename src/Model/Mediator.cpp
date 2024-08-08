@@ -1,7 +1,7 @@
 #include "Mediator.h"
 
 namespace pf2e_manager {
-Mediator::Mediator(std::list<Combatant>* combatant)
+Mediator::Mediator(std::list<Combatant*>* combatant)
     : _combatants(combatant),
       _builder(new SimpleEffectBuilder()),
       _director(new EffectDirector(_builder)),
@@ -24,6 +24,7 @@ void Mediator::makeEffect(SubjectBase* sender, SubjectBase* reciever,
         "Mediator - MakeEffect func: reciever is not Combatant class.");
   _director->buildEffectByName(name, duration, value);
   _builder->setSubject(sender);
+  _builder->setReciever(combatant);
   combatant->addEffect(_builder->getSimpleEffect());
   if (_combatants->size()) return;
 }
@@ -32,7 +33,7 @@ CommandBase* Mediator::makeCommand(SubjectBase* sender, SubjectBase* reciever,
                                    const std::string& name, int value) {
   CommandBase* command =
       _commands_creator->createCommandByName(sender, reciever, value, name);
-  makeCommand(command);
+  doCommand(command);
   return command;
 }
 

@@ -22,7 +22,7 @@ class HarmCommand : public CommandBase {
    *
    * @param value damage value
    */
-  void execute(int value) override;
+  void execute() override;
 
   void undo() override;
 

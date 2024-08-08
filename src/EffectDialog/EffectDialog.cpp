@@ -2,8 +2,12 @@
 
 #include "ui_effectdialog.h"
 
-EffectDialog::EffectDialog(pf2e_manager::EffectDirector* unit, QWidget* parent)
-    : QDialog(parent), ui(new Ui::EffectDialog), _unit(unit) {
+EffectDialog::EffectDialog(pf2e_manager::Controller* unit,
+                           pf2e_manager::Combatant* combatant, QWidget* parent)
+    : QDialog(parent),
+      ui(new Ui::EffectDialog),
+      _controller(unit),
+      _combatant(combatant) {
   ui->setupUi(this);
 
   ui->comboBox_effect->addItem("Clumsy");
@@ -56,12 +60,13 @@ EffectDialog::EffectDialog(pf2e_manager::EffectDirector* unit, QWidget* parent)
 EffectDialog::~EffectDialog() { delete ui; }
 
 void EffectDialog::on_button_set_clicked() {
-  if (!_unit) return;
-  _unit->buildEffectByName(
+  if (!_controller || !_combatant) return;
+  _controller->makeEffect(
+      nullptr, _combatant,
       "effect:" + ui->comboBox_effect->currentText().toLower().toStdString(),
       ui->lineEdit_duration->text().toInt(),
       ui->lineEdit_value->text().toInt());
-  _unit = nullptr;
-
-  closeDialog();
+  // _controller = nullptr;
+  accept();
+  // closeDialog();
 }

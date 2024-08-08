@@ -53,17 +53,15 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
     listWidget_effect->addItem(item);
   }
 
-  listWidget_effect->setGeometry(QRect(500, 10, 500, 140));
+  listWidget_effect->setGeometry(QRect(500, 20, 500, 140));
   setAttribute(Qt::WA_StyledBackground);
-  // setMouseTracking(true);
   setFocusPolicy(Qt::NoFocus);
+  setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
   QObject::connect(this, &CombatantWidget::enterEvent, this,
                    &CombatantWidget::enterEvent, Qt::DirectConnection);
   QObject::connect(this, &CombatantWidget::leaveEvent, this,
                    &CombatantWidget::leaveEvent, Qt::DirectConnection);
-  // QObject::connect(ui->lineEdit_hp_curr, &QLineEdit::editingFinished, this,
-  // lineEditCurrHPFinished);
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }
@@ -95,22 +93,15 @@ void CombatantWidget::updateContent() {
   }
 }
 
-// void CombatantWidget::lineEditCurrHPFinished() {
-//   QLineEdit* le = qobject_cast<QLineEdit*>(sender());
-//   if(le)
-//     _combatant->
+// void CombatantWidget::enterEvent(QEnterEvent* event) {
+//   Q_UNUSED(event);
+//   setHoverStyle();
 // }
 
-void CombatantWidget::enterEvent(QEnterEvent* event) {
-  Q_UNUSED(event);
-  // if(event->button() & Qt::LeftButton)
-  setStyleSheet("CombatantWidget{ background-color:  green;  };");
-}
-
-void CombatantWidget::leaveEvent(QEvent* event) {
-  Q_UNUSED(event);
-  setStyleSheet("CombatantWidget{ background-color:  rgb(0,0,0);  };");
-}
+// void CombatantWidget::leaveEvent(QEvent* event) {
+//   Q_UNUSED(event);
+//   if (style() == _hover_style) setBaseStyle();
+// }
 
 // void CombatantWidget::dragEnterEvent(QDragEnterEvent* event) {
 //   Q_UNUSED(event);

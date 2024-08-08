@@ -2,10 +2,8 @@
 
 namespace pf2e_manager {
 
-void HarmCommand::execute(int value) {
-  if (value <= 0 || _is_active) return;
-
-  _value = value;
+void HarmCommand::execute() {
+  if (_value <= 0 || _is_active) return;
 
   Combatant* combatant = dynamic_cast<Combatant*>(this->getReciever());
   if (!combatant)

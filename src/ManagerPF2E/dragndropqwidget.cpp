@@ -23,9 +23,7 @@ DragNDropQWidget::DragNDropQWidget(
     //                     &ManagerWidget::on_widget_drag);
     it.second->setAttribute(Qt::WA_StyledBackground);
   }
-  this->setFixedHeight(1000);
-  //_widgets_collection
-  // setMouseTracking(true);
+  // this->setFixedHeight(1000);
 }
 
 void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {
@@ -36,17 +34,16 @@ void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {
   QObject::connect(obj, &CombatantWidget::mousePressed, this,
                    &DragNDropQWidget::mousePressEvent);
   obj->setAttribute(Qt::WA_StyledBackground);
+  this->setFixedHeight(height() + _combatants_layout->spacing() +
+                       obj->height());
 }
 
 void DragNDropQWidget::mousePressEvent(QMouseEvent *event) {
   if (event->button() & Qt::LeftButton) {
-    if (_current_widget)
-      _current_widget->setStyleSheet(
-          "CombatantWidget{ background-color:  rgb(0,0,0);  };");
+    if (_current_widget) _current_widget->setBaseStyle();
 
     _current_widget = static_cast<CombatantWidget *>(sender());
-    _current_widget->setStyleSheet(
-        "CombatantWidget{ background-color:  red;  };");
+    _current_widget->setHighlightStyle();
 
     _mouseStartPosition = QPoint(event->scenePosition().x() - x(),
                                  event->scenePosition().y() - y());
@@ -68,7 +65,7 @@ void DragNDropQWidget::mouseMoveEvent(QMouseEvent *event) {
     if (!count) return;
 
     auto it = std::find(_combatants_list->begin(), _combatants_list->end(),
-                        *_current_widget->getCombatant());
+                        _current_widget->getCombatant());
     auto it_before = it;
 
     // auto widget = _widgets_collection->find(&(*it))->second;
@@ -101,9 +98,14 @@ void DragNDropQWidget::mouseReleaseEvent(QMouseEvent *event) {
   setCursor(Qt::ArrowCursor);
 }
 
-// void DragNDropQWidget::dragEnterEvent(QDragEnterEvent* event) {
+void DragNDropQWidget::updateContent() {
+  for (auto it : *_widgets_collection) it.second->updateContent();
+}
 
-//}
-
-// void DragNDropQWidget::dragLeaveEvent(QDragLeaveEvent* event);
-// void DragNDropQWidget::dropEvent(QDropEvent* event);
+void DragNDropQWidget::updateContent(pf2e_manager::SubjectBase *combatant) {
+  pf2e_manager::Combatant *body =
+      dynamic_cast<pf2e_manager::Combatant *>(combatant);
+  if (!body) return;
+  auto widget = (*_widgets_collection)[body];
+  if (widget) widget->updateContent();
+}

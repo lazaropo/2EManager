@@ -6,7 +6,7 @@ DragNDropQWidgetCommands::DragNDropQWidgetCommands(
       _controller(controller),
       _commands_list(&_controller->getCommands()),
       _commands_layout(new QBoxLayout(QBoxLayout::LeftToRight, this)) {
-  setFixedSize(2000, 110);
+  setFixedHeight(110);
 
   _commands_layout->setAlignment(Qt::AlignLeft);
   _commands_layout->setAlignment(Qt::AlignVCenter);
@@ -33,6 +33,7 @@ void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {
   QObject::connect(obj, &CommandIcon::mousePressed, this,
                    &DragNDropQWidgetCommands::mousePressEvent);
   obj->setAttribute(Qt::WA_StyledBackground);
+  this->setFixedWidth(width() + _commands_layout->spacing() + obj->width());
 }
 
 void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {

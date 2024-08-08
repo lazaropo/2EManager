@@ -31,12 +31,11 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
         " }";
     highligth_style =
         "QWidget#CommandIcon {"
-        "background: url(:/images/sword.png) content center;"
-        "background-clip: content;"
+        "background: url(:/images/sword_small.png) center;"
+        // "background-clip: content;"
         "border: none;"
         "border-radius: 9px; "
-        "border-image: solid 10px red;"
-        "margin: 10px 7px 7px 7px; "
+        "margin: 7px 3px 3px 3px; "
         "}";
   } else if (dynamic_cast<HealCommand *>(_command)) {
     base_style =
@@ -46,12 +45,12 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
         " }";
     highligth_style =
         "QWidget#CommandIcon {"
-        "background: url(:/images/leaf.png) content center;"
+        "background: url(:/images/leaf_small.png) center;"
         "background-clip: content;"
         "border: none;"
         "border-radius: 9px; "
-        "border-image: solid 10px red;"
-        "margin: 10px 7px 7px 7px; "
+        // "border-image: solid 10px red;"
+        "margin-top: 3px; "
         "}";
   }
 

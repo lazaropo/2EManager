@@ -9,12 +9,11 @@ class Controller {
   Controller() : _model(new Model()) {}
   ~Controller() { delete _model; }
 
-  void addCombatant(/*Model::t_pos_comb pos, */ Combatant&& new_body) {
-    _model->addCombatant(/*pos, */ std::forward<Combatant>(new_body));
-  }
-  void addCombatantGroup(Model::t_pos_comb pos, std::vector<Combatant>& other) {
-    for (auto it : other) _model->addCombatant(pos, std::move(it));
-  }
+  void addCombatant(Combatant* new_body) { _model->addCombatant(new_body); }
+  //  void addCombatantGroup(Model::t_pos_comb pos, std::vector<Combatant>&
+  //  other) {
+  //    for (auto it : other) _model->addCombatant(pos, it);
+  //  }
 
   void moveCombatant(Model::t_pos_comb from, Model::t_pos_comb before) {
     _model->moveCombatant(from, before);
@@ -34,6 +33,12 @@ class Controller {
 
   void addEffect(SimpleEffectBuilder* builder, Combatant* pos) {
     _model->addEffect(builder, pos);
+  }
+
+  void makeEffect(SubjectBase* sender, SubjectBase* reciever,
+                  const std::string& name, const int duration,
+                  const int value) {
+    _model->makeEffect(sender, reciever, name, duration, value);
   }
 
   void addEffectOnGroup(SimpleEffectBuilder* builder,
@@ -61,11 +66,11 @@ class Controller {
 
   void nextTurn() { _model->nextTurn(); }
 
-  const std::list<Combatant>& getCombatants() const {
+  const std::list<Combatant*>& getCombatants() const {
     return _model->getCombatants();
   }
 
-  std::list<Combatant>& getCombatants() { return _model->getCombatants(); }
+  std::list<Combatant*>& getCombatants() { return _model->getCombatants(); }
 
   const std::vector<CommandBase*>& getCommands() const {
     return _model->getCommands();

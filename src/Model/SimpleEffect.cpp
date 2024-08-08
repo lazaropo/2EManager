@@ -2,7 +2,7 @@
 
 namespace pf2e_manager {
 SimpleEffect::SimpleEffect(const SimpleEffect& other)
-    : SubjectBase(this, other.getObject()),
+    : SubjectBase(this, other.getReciever()),
       _type(other._type),
       _value(other._value),
       _trigger(other._trigger),

@@ -1,5 +1,5 @@
-#ifndef DRAGNDROPQGRAPHICSVIEW_H
-#define DRAGNDROPQGRAPHICSVIEW_H
+#ifndef DRAGNDROPQWidget_H
+#define DRAGNDROPQWidget_H
 
 //+++++++++++QT+++++++++++
 #include <QDrag>
@@ -12,15 +12,15 @@
 //+++++++++++CUSTOM+++++++++++
 #include "../CombatantWidget/combatantwidget.h"
 
-class DragNDropQGraphicsView : public QGraphicsView {
+class DragNDropQWidget : public QWidget {
  public:
-  DragNDropQGraphicsView(QWidget* parent = nullptr)
-      : QGraphicsView(parent), _combatants_layout(new QVBoxLayout(this)) {}
+  DragNDropQWidget(QWidget* parent = nullptr)
+      : QWidget(parent), _combatants_layout(new QVBoxLayout(this)) {}
 
-  DragNDropQGraphicsView(
+  DragNDropQWidget(
       pf2e_manager::Controller* controller,
       std::map<pf2e_manager::Combatant*, CombatantWidget*>* widgets_list,
-      QGraphicsView* parent = nullptr);
+      QWidget* parent = nullptr);
 
   void setController(pf2e_manager::Controller* controller) {
     _controller = controller;
@@ -29,11 +29,12 @@ class DragNDropQGraphicsView : public QGraphicsView {
 
   void setWidgets(
       std::map<pf2e_manager::Combatant*, CombatantWidget*>* widgets_list) {
-    _widgets_list = widgets_list;
+    _widgets_collection = widgets_list;
   }
 
   CombatantWidget* getCurrentWidget() { return _current_widget; }
   void updateContent();
+  void updateContent(pf2e_manager::SubjectBase* combatant);
 
   void addWidget(pf2e_manager::Combatant* combatant);
 
@@ -47,18 +48,14 @@ class DragNDropQGraphicsView : public QGraphicsView {
 
  private:
   pf2e_manager::Controller* _controller;
-  std::list<pf2e_manager::Combatant>* _combatants_list;
+  std::list<pf2e_manager::Combatant*>* _combatants_list;
 
-  std::map<pf2e_manager::Combatant*, CombatantWidget*>* _widgets_list;
+  std::map<pf2e_manager::Combatant*, CombatantWidget*>* _widgets_collection;
   QVBoxLayout* _combatants_layout;
 
   QPoint _mouseStartPosition = QPoint();
 
   CombatantWidget* _current_widget = nullptr;
-  CombatantWidget* _sender_widget = nullptr;
-
-  bool _pressed = false;
-  bool _long_press = false;
 };
 
-#endif  // DRAGNDROPQGRAPHICSVIEW_H
+#endif  // DRAGNDROPQWidget_H

@@ -19,6 +19,11 @@ void Model::addEffectOnGroup(SimpleEffectBuilder* builder,
   delete[] effect;
 }
 
+CommandBase* Model::makeCommand(SubjectBase* sender, SubjectBase* reciever,
+                                const std::string& name, int value) {
+  return _mediator->makeCommand(sender, reciever, name, value);
+}
+
 void Model::startTurn() {
   if (_combatants.empty())
     throw std::runtime_error("There are not any combatants!");
@@ -26,7 +31,7 @@ void Model::startTurn() {
   if (++_curr_pos == _combatants.end()) _curr_pos = _combatants.begin();
 
   for (auto it : _combatants)
-    for (auto it_eff : it.getEffects())
+    for (auto it_eff : it->getEffects())
       it_eff->getTrigger(SimpleEffect::Trigger::START_TURN);
 }
 
@@ -35,7 +40,8 @@ void Model::nextTurn() {
     throw std::runtime_error("There are not any combatants!");
 
   for (auto it : _combatants)
-    for (auto it_eff : it.getEffects())
+    for (auto it_eff : it->getEffects())
       it_eff->getTrigger(SimpleEffect::Trigger::END_TURN);
 }
+
 }  // namespace pf2e_manager

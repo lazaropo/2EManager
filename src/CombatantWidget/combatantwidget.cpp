@@ -16,7 +16,25 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPCurr()));
   ui->lineEdit_hp_max->setText(QString::number(_combatant->getHPMax()));
   ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));
-  // ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPMax()));
+
+  auto side = _combatant->getSide();
+  QString text;
+  if (side == pf2e_manager::Combatant::Side::TEAM)
+    text = "TEAM";
+  else if (side == pf2e_manager::Combatant::Side::ENEAMY)
+    text = "ENEAMY";
+  else if (side == pf2e_manager::Combatant::Side::OTHER)
+    text = "OTHER";
+  ui->label_side->setText(text);
+
+  auto vitality = _combatant->getVitality();
+  if (vitality == pf2e_manager::Combatant::Vitality::ALIVE)
+    text = "ALIVE";
+  else if (vitality == pf2e_manager::Combatant::Vitality::DEAD)
+    text = "DEAD";
+  else if (vitality == pf2e_manager::Combatant::Vitality::CONSTRUCT)
+    text = "CONSTRUCT";
+  ui->label_vitality->setText(text);
 
   for (auto it_eff : _combatant->getEffects() /*= _combatant->getEffects().begin(),
             it_eff_end = _combatant->*/) {
@@ -25,19 +43,20 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
     item->setText(
         QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
             .arg(QString::fromStdString((it_eff)->getName()))
-            .arg(QString::fromStdString((it_eff)->getCreator()
-                                            ? (it_eff)->getCreator()->getName()
+            .arg(QString::fromStdString((it_eff)->getInvoker()
+                                            ? (it_eff)->getInvoker()->getName()
                                             : "User"))
+            .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
             .arg(QString::number((it_eff)->getDuration()))
             .arg(QString::number((it_eff)->getValue())));
 
     listWidget_effect->addItem(item);
   }
 
-  listWidget_effect->setGeometry(QRect(400, 10, 500, 140));
+  listWidget_effect->setGeometry(QRect(500, 20, 500, 140));
   setAttribute(Qt::WA_StyledBackground);
-  setMouseTracking(true);
   setFocusPolicy(Qt::NoFocus);
+  setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
   QObject::connect(this, &CombatantWidget::enterEvent, this,
                    &CombatantWidget::enterEvent, Qt::DirectConnection);
@@ -56,35 +75,33 @@ void CombatantWidget::updateContent() {
   ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));
 
   listWidget_effect->clear();
-  for (auto it_eff : _combatant->getEffects() /*= _combatant->getEffects().begin(),
-            it_eff_end = _combatant->getEffects().end();
-       it_eff != it_eff_end; ++it_eff*/) {
+  for (auto it_eff : _combatant->getEffects()) {
     if (!it_eff) break;
     EffectListWidgetItem* item =
         new EffectListWidgetItem(it_eff, QString::number(1));
     item->setText(
         QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
             .arg(QString::fromStdString((it_eff)->getName()))
-            .arg(QString::fromStdString((it_eff)->getCreator()
-                                            ? (it_eff)->getCreator()->getName()
+            .arg(QString::fromStdString((it_eff)->getInvoker()
+                                            ? (it_eff)->getInvoker()->getName()
                                             : "User"))
-            .arg(QString::fromStdString((it_eff)->getObject()->getName()))
+            .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
             .arg(QString::number((it_eff)->getDuration()))
             .arg(QString::number((it_eff)->getValue())));
 
     listWidget_effect->addItem(item);
   }
 }
-void CombatantWidget::enterEvent(QEnterEvent* event) {
-  Q_UNUSED(event);
-  // if(event->button() & Qt::LeftButton)
-  setStyleSheet("CombatantWidget{ background-color:  green;  };");
-}
 
-void CombatantWidget::leaveEvent(QEvent* event) {
-  Q_UNUSED(event);
-  setStyleSheet("CombatantWidget{ background-color:  rgb(0,0,0);  };");
-}
+// void CombatantWidget::enterEvent(QEnterEvent* event) {
+//   Q_UNUSED(event);
+//   setHoverStyle();
+// }
+
+// void CombatantWidget::leaveEvent(QEvent* event) {
+//   Q_UNUSED(event);
+//   if (style() == _hover_style) setBaseStyle();
+// }
 
 // void CombatantWidget::dragEnterEvent(QDragEnterEvent* event) {
 //   Q_UNUSED(event);

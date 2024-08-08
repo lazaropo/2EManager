@@ -10,7 +10,8 @@
 #include "../CombatantWidget/combatantwidget.h"
 #include "../EffectDialog/EffectDialog.h"
 #include "../Model/Controller.h"
-#include "dragndropqgraphicsview.h"
+#include "dragndropqwidget.h"
+#include "dragndropqwidget_commands.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -43,6 +44,8 @@ class ManagerWidget : public QWidget {
 
   // void on_widget_drag(QMouseEvent *event);
 
+  void on_pushButton_create_effect_2_clicked();
+
  private:
   Ui::ManagerWidget *ui;
   pf2e_manager::Controller *_controller;
@@ -50,7 +53,8 @@ class ManagerWidget : public QWidget {
   // QStandardItemModel _combatant_model;
   std::map<pf2e_manager::Combatant *, CombatantWidget *> _combatant_list;
 
-  DragNDropQGraphicsView *_box;
+  DragNDropQWidget *_box_combatants;
+  DragNDropQWidgetCommands *_box_commands;
 
   QPoint _mouseStartPosition;  // <------------- possibly dummy var
 };

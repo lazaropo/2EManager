@@ -4,21 +4,18 @@
 #include <string>
 
 #include "SubjectBase.h"
-// #include "Combatant.h"
 
 namespace pf2e_manager {
 class CommandBase : public SubjectBase {
  public:
-  CommandBase(CommandBase* p) : SubjectBase(p) {}
-  virtual void execute(int value) = 0;
+  CommandBase(int value, CommandBase* p) : SubjectBase(p), _value(value) {}
+  virtual void execute() = 0;
   virtual void undo() = 0;
+  int value() const { return _value; }
 
  protected:
-  // Combatant* _combatant;
   int _value = 0;
-  bool _is_active = true;
-  std::string _invoker = "";
-  std::string _receiver = "";
+  bool _is_active = false;
 };
 }  // namespace pf2e_manager
 #endif

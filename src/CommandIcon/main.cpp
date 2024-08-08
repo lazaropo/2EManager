@@ -1,13 +1,11 @@
 #include <QApplication>
 
-#include "combatantdialog.h"
+#include "commandicon.h"
 
 int main(int argc, char *argv[]) {
+  Q_INIT_RESOURCE(resource);
   QApplication a(argc, argv);
-  pf2e_manager::Combatant *body;
-  CombatantDialog w(&body);
+  CommandIcon w(nullptr);
   w.show();
-
-  delete body;
   return a.exec();
 }

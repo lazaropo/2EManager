@@ -24,7 +24,7 @@ class DragNDropQWidget : public QWidget {
 
   void setController(pf2e_manager::Controller* controller) {
     _controller = controller;
-    _combatants_list = &controller->getCombatants();
+    _combatants_list = controller->getCombatants();
   }
 
   void setWidgets(

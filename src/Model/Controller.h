@@ -23,6 +23,7 @@ class Controller {
   // void addAndDoCommand(CommandBase* cmd) { _model->addAndDoCommand(cmd); }
   // void removeCommand(Mediator::t_pos_cmd pos) { _model->removeCommand(pos); }
   void removeCombatant(Model::t_pos_comb it) { _model->removeCombatant(it); }
+  void removeCombatant(Combatant* ptr) { _model->removeCombatant(ptr); }
   void removeCombatantGroup(std::vector<Model::t_pos_comb>& collection) {
     _model->removeCombatantGroup(collection);
   }
@@ -66,11 +67,11 @@ class Controller {
 
   void nextTurn() { _model->nextTurn(); }
 
-  const std::list<Combatant*>& getCombatants() const {
+  const std::list<Combatant*>* getCombatants() const {
     return _model->getCombatants();
   }
 
-  std::list<Combatant*>& getCombatants() { return _model->getCombatants(); }
+  std::list<Combatant*>* getCombatants() { return _model->getCombatants(); }
 
   const std::vector<CommandBase*>& getCommands() const {
     return _model->getCommands();

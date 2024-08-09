@@ -10,6 +10,7 @@
 
 #include "Combatant.h"
 #include "Mediator.h"
+#include "TXTReader.h"
 // #include "SimpleEffectBuilder.h"
 
 namespace pf2e_manager {
@@ -18,8 +19,16 @@ class Model {
   using t_pos_comb = std::list<Combatant*>::iterator;
   using t_pair_comb_with_effect = std::pair<t_pos_comb, Combatant::t_pos_eff>;
 
+  Model() {
+    _combatants = _reader->readCombatants(_path);
+    if (!_combatants) _combatants = new std::list<Combatant*>();
+  }
+
   ~Model() {
-    for (auto it : _combatants) delete it;
+    _reader->writeCombatants(_path, _combatants);
+    delete _reader;
+    for (auto it : *_combatants) delete it;
+    delete _combatants;
     delete _mediator;
   }
 
@@ -27,10 +36,10 @@ class Model {
   //   _combatants.insert(pos, std::move(new_body));
   // }
 
-  void addCombatant(Combatant* new_body) { _combatants.push_back(new_body); }
+  void addCombatant(Combatant* new_body) { _combatants->push_back(new_body); }
 
   void addCombatant(t_pos_comb pos, Combatant* new_body) {
-    _combatants.insert(pos, new_body);
+    _combatants->insert(pos, new_body);
   }
 
   //  void addCombatantGroup(t_pos_comb pos, std::vector<Combatant>& other) {
@@ -45,7 +54,8 @@ class Model {
                            const std::string& name, int value);
   // void removeCommand(Mediator::t_pos_cmd pos) { _mediator->undoCommand(pos);
   // }
-  void removeCombatant(t_pos_comb it) { _combatants.erase(it); }
+  void removeCombatant(t_pos_comb it) { _combatants->erase(it); }
+  void removeCombatant(Combatant* ptr) { _combatants->remove(ptr); }
   void removeCombatantGroup(std::vector<t_pos_comb>& collection) {
     for (auto it : collection) removeCombatant(it);
   }
@@ -57,7 +67,10 @@ class Model {
 
   void addEffect(SimpleEffectBuilder* builder, Combatant* pos) {
     builder->setReciever(pos);
-    pos->addEffect(builder->getSimpleEffect());
+    if (pos)
+      pos->addEffect(builder->getSimpleEffect());
+    else
+      builder->reset();
   }
 
   void makeEffect(SubjectBase* sender, SubjectBase* reciever,
@@ -79,7 +92,7 @@ class Model {
   }
 
   void sortByInit() {
-    _combatants.sort([](const Combatant* a, const Combatant* b) {
+    _combatants->sort([](const Combatant* a, const Combatant* b) {
       // the std::greater-like definition. first combatant with greater init and
       // side::eneamy or side::other.
       bool ret = false;
@@ -97,19 +110,13 @@ class Model {
     });
   }
 
-  void startTurn() {
-    for (auto it : _combatants)
-      it->notifyTrigger(SimpleEffect::Trigger::START_TURN);
-  }
+  void startTurn();
 
-  void nextTurn() {
-    for (auto it : _combatants)
-      it->notifyTrigger(SimpleEffect::Trigger::END_TURN);
-  }
+  void nextTurn();
 
-  const std::list<Combatant*>& getCombatants() const { return _combatants; }
+  const std::list<Combatant*>* getCombatants() const { return _combatants; }
 
-  std::list<Combatant*>& getCombatants() { return _combatants; }
+  std::list<Combatant*>* getCombatants() { return _combatants; }
 
   const std::vector<CommandBase*>& getCommands() const {
     return _mediator->getCommands();
@@ -118,10 +125,13 @@ class Model {
   std::vector<CommandBase*>& getCommands() { return _mediator->getCommands(); }
 
  private:
-  std::list<Combatant*> _combatants;
-  MediatorInterface* _mediator = new Mediator(&_combatants);
+  std::list<Combatant*>* _combatants = nullptr;
+  MediatorInterface* _mediator = new Mediator(_combatants);
 
   t_pos_comb _curr_pos;
+
+  FileReaderBase* _reader = new TXTReader();
+  const std::string _path = ("../Saved_info/info.txt");
 };
 }  // namespace pf2e_manager
 #endif

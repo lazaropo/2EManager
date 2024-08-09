@@ -17,24 +17,29 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   ui->lineEdit_hp_max->setText(QString::number(_combatant->getHPMax()));
   ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));
 
-  auto side = _combatant->getSide();
-  QString text;
-  if (side == pf2e_manager::Combatant::Side::TEAM)
-    text = "TEAM";
-  else if (side == pf2e_manager::Combatant::Side::ENEAMY)
-    text = "ENEAMY";
-  else if (side == pf2e_manager::Combatant::Side::OTHER)
-    text = "OTHER";
-  ui->label_side->setText(text);
+  // auto side = _combatant->getSide();
+  //  QString text;
+  //  if (side == pf2e_manager::Combatant::Side::TEAM)
+  //    text = "TEAM";
+  //  else if (side == pf2e_manager::Combatant::Side::ENEAMY)
+  //    text = "ENEAMY";
+  //  else if (side == pf2e_manager::Combatant::Side::OTHER)
+  //    text = "OTHER";
+  ui->label_side->setText(
+      QString::fromStdString(pf2e_manager::Combatant::formattingSide(
+          _combatant->getSide(), true, false)));
 
-  auto vitality = _combatant->getVitality();
-  if (vitality == pf2e_manager::Combatant::Vitality::ALIVE)
-    text = "ALIVE";
-  else if (vitality == pf2e_manager::Combatant::Vitality::DEAD)
-    text = "DEAD";
-  else if (vitality == pf2e_manager::Combatant::Vitality::CONSTRUCT)
-    text = "CONSTRUCT";
-  ui->label_vitality->setText(text);
+  // auto vitality = _combatant->getVitality();
+
+  //  if (vitality == pf2e_manager::Combatant::Vitality::ALIVE)
+  //    text = "ALIVE";
+  //  else if (vitality == pf2e_manager::Combatant::Vitality::DEAD)
+  //    text = "DEAD";
+  //  else if (vitality == pf2e_manager::Combatant::Vitality::CONSTRUCT)
+  //    text = "CONSTRUCT";
+  ui->label_vitality->setText(
+      QString::fromStdString(pf2e_manager::Combatant::formattingVitality(
+          _combatant->getVitality(), true, false)));
 
   //  for (auto it_eff : _combatant->getEffects() /*=
   //  _combatant->getEffects().begin(),
@@ -65,6 +70,10 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
                    &CombatantWidget::enterEvent, Qt::DirectConnection);
   QObject::connect(this, &CombatantWidget::leaveEvent, this,
                    &CombatantWidget::leaveEvent, Qt::DirectConnection);
+  QObject::connect(
+      ui->lineEdit_initiative, &QLineEdit::editingFinished, this, [&]() {
+        _combatant->setInitiative(ui->lineEdit_initiative->text().toInt());
+      });
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }

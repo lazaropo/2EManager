@@ -26,7 +26,7 @@ void Mediator::makeEffect(SubjectBase* sender, SubjectBase* reciever,
   _builder->setSubject(sender);
   _builder->setReciever(combatant);
   combatant->addEffect(_builder->getSimpleEffect());
-  if (_combatants->size()) return;
+  if (!_combatants || _combatants->size()) return;
 }
 
 CommandBase* Mediator::makeCommand(SubjectBase* sender, SubjectBase* reciever,

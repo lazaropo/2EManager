@@ -69,6 +69,7 @@ class SimpleEffect : public SubjectBase {
 
   int getDuration() const { return _duration; }
   int getValue() const { return _value._value; }
+  int isActive() const { return _is_active; }
 
   // const std::string getName() const { return _name; }
   const std::string& what() const { return _descprition; }

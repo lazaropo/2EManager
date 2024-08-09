@@ -6,7 +6,7 @@ DragNDropQWidget::DragNDropQWidget(
     QWidget *parent)
     : QWidget(parent),
       _controller(controller),
-      _combatants_list(&_controller->getCombatants()),
+      _combatants_list(_controller->getCombatants()),
       _widgets_collection(_widgets_collection),
       _combatants_layout(new QVBoxLayout(this)) {
   setLayout(_combatants_layout);

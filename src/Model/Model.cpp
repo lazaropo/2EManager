@@ -9,7 +9,7 @@ void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {
     startTurn();
     nextTurn();
   }
-  _combatants.splice(++before, _combatants, from);
+  _combatants->splice(++before, *_combatants, from);
 }
 
 void Model::addEffectOnGroup(SimpleEffectBuilder* builder,
@@ -25,23 +25,21 @@ CommandBase* Model::makeCommand(SubjectBase* sender, SubjectBase* reciever,
 }
 
 void Model::startTurn() {
-  if (_combatants.empty())
+  if (!_combatants || _combatants->empty())
     throw std::runtime_error("There are not any combatants!");
 
-  if (++_curr_pos == _combatants.end()) _curr_pos = _combatants.begin();
+  if (++_curr_pos == _combatants->end()) _curr_pos = _combatants->begin();
 
-  for (auto it : _combatants)
-    for (auto it_eff : it->getEffects())
-      it_eff->getTrigger(SimpleEffect::Trigger::START_TURN);
+  for (auto it : *_combatants)
+    it->notifyTrigger(SimpleEffect::Trigger::START_TURN);
 }
 
 void Model::nextTurn() {
-  if (_combatants.empty())
+  if (!_combatants || _combatants->empty())
     throw std::runtime_error("There are not any combatants!");
 
-  for (auto it : _combatants)
-    for (auto it_eff : it->getEffects())
-      it_eff->getTrigger(SimpleEffect::Trigger::END_TURN);
+  for (auto it : *_combatants)
+    it->notifyTrigger(SimpleEffect::Trigger::END_TURN);
 }
 
 }  // namespace pf2e_manager

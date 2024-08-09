@@ -18,70 +18,63 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
   using namespace pf2e_manager;
 
-  Combatant *tmp = new Combatant(100, 36, Combatant::Side::TEAM, "Peppa");
-  _controller->addCombatant(tmp);
-  Combatant *tmp1 = new Combatant(50, 16, Combatant::Side::TEAM, "Ricky");
-  _controller->addCombatant(tmp1);
-  Combatant *tmp2 = new Combatant(200, 40, Combatant::Side::ENEAMY, "Stone");
-  _controller->addCombatant(tmp2);
-  Combatant *tmp3 = new Combatant(10, 36, Combatant::Side::TEAM, "Tree");
-  _controller->addCombatant(tmp3);
-  Combatant *tmp4 =
-      new Combatant(278, 45, Combatant::Side::ENEAMY, "Sun Child");
-  _controller->addCombatant(tmp4);
-  Combatant *tmp5 = new Combatant(128, 28, Combatant::Side::TEAM, "IG-500");
-  _controller->addCombatant(tmp5);
+  //  Combatant *tmp = new Combatant(100, 36, Combatant::Side::TEAM, "Peppa");
+  //  _controller->addCombatant(tmp);
+  //  Combatant *tmp1 = new Combatant(50, 16, Combatant::Side::TEAM, "Ricky");
+  //  _controller->addCombatant(tmp1);
+  //  Combatant *tmp2 = new Combatant(200, 40, Combatant::Side::ENEAMY,
+  //  "Stone"); _controller->addCombatant(tmp2); Combatant *tmp3 = new
+  //  Combatant(10, 36, Combatant::Side::TEAM, "Tree");
+  //  _controller->addCombatant(tmp3);
+  //  Combatant *tmp4 =
+  //      new Combatant(278, 45, Combatant::Side::ENEAMY, "Sun Child");
+  //  _controller->addCombatant(tmp4);
+  //  Combatant *tmp5 = new Combatant(128, 28, Combatant::Side::TEAM, "IG-500");
+  //  _controller->addCombatant(tmp5);
 
-  auto unit_it = _controller->getCombatants().begin();
+  // auto unit_it = _controller->getCombatants()->begin();
 
-  pf2e_manager::SimpleEffectBuilder builder;
-  pf2e_manager::EffectDirector director(&builder);
-  director.buildClumsyEffect(2, 1);
-  builder.setReciever(*unit_it);
-  builder.setCreator(nullptr);
-  _controller->addEffect(&builder, tmp);
+  //  pf2e_manager::SimpleEffectBuilder builder;
+  //  pf2e_manager::EffectDirector director(&builder);
+  //  director.buildClumsyEffect(2, 1);
+  //  builder.setReciever(*unit_it);
+  //  builder.setCreator(nullptr);
+  //  _controller->addEffect(&builder, *unit_it);
 
-  director.buildConfusedEffect(5);
-  builder.setReciever(*unit_it);
-  builder.setCreator(nullptr);
-  _controller->addEffect(&builder, tmp);
+  //  director.buildConfusedEffect(5);
+  //  builder.setReciever(*unit_it);
+  //  builder.setCreator(nullptr);
+  //  _controller->addEffect(&builder, *unit_it);
 
   //  for (auto comb : _controller->getCombatants().begin()->getEffects())
   //    std::cout << comb->getName();
 
-  _box_combatants->addWidget(tmp);
-  _box_combatants->addWidget(tmp1);
-  _box_combatants->addWidget(tmp2);
-  _box_combatants->addWidget(tmp3);
-  _box_combatants->addWidget(tmp4);
-  _box_combatants->addWidget(tmp5);
+  for (auto it : *_controller->getCombatants()) _box_combatants->addWidget(it);
+  //  _box_combatants->addWidget(tmp);
+  //  _box_combatants->addWidget(tmp1);
+  //  _box_combatants->addWidget(tmp2);
+  //  _box_combatants->addWidget(tmp3);
+  //  _box_combatants->addWidget(tmp4);
+  //  _box_combatants->addWidget(tmp5);
 
   //  for(auto it : _combatant_list)
   //    it->updateContent();
   // setMouseTracking(true);
 
-  //  setFixedHeight(_combatant_list.size() *
-  //                 (_combatant_list.begin()->second)->height());
-
-  // ui->scrollArea_combatants->setMouseTracking(true);
-
-  // ui->graphicsView->addScrollBarWidget(ui->scrollArea_combatants,
-  // Qt::AlignTop); ui->graphicsView->setLayout(_box_combatants->layout());
-
-  _box_commands->addCommand(_controller->makeCommand(
-      nullptr, static_cast<SubjectBase *>(tmp), "command:harm", 10));
-  _box_commands->addCommand(_controller->makeCommand(
-      nullptr, static_cast<SubjectBase *>(tmp1), "command:harm", 10));
-  _box_commands->addCommand(_controller->makeCommand(
-      static_cast<SubjectBase *>(tmp), static_cast<SubjectBase *>(tmp2),
-      "command:harm", 10));
-  _box_commands->addCommand(_controller->makeCommand(
-      nullptr, static_cast<SubjectBase *>(tmp3), "command:harm", 10));
-  _box_commands->addCommand(_controller->makeCommand(
-      static_cast<SubjectBase *>(tmp), static_cast<SubjectBase *>(tmp2),
-      "command:heal", 10));
-  _box_commands->addCommand(_controller->makeCommand(
-      nullptr, static_cast<SubjectBase *>(tmp1), "command:harm", 10));
+  //  _box_commands->addCommand(_controller->makeCommand(
+  //      nullptr, static_cast<SubjectBase *>(tmp), "command:harm", 10));
+  //  _box_commands->addCommand(_controller->makeCommand(
+  //      nullptr, static_cast<SubjectBase *>(tmp1), "command:harm", 10));
+  //  _box_commands->addCommand(_controller->makeCommand(
+  //      static_cast<SubjectBase *>(tmp), static_cast<SubjectBase *>(tmp2),
+  //      "command:harm", 10));
+  //  _box_commands->addCommand(_controller->makeCommand(
+  //      nullptr, static_cast<SubjectBase *>(tmp3), "command:harm", 10));
+  //  _box_commands->addCommand(_controller->makeCommand(
+  //      static_cast<SubjectBase *>(tmp), static_cast<SubjectBase *>(tmp2),
+  //      "command:heal", 10));
+  //  _box_commands->addCommand(_controller->makeCommand(
+  //      nullptr, static_cast<SubjectBase *>(tmp1), "command:harm", 10));
 
   ui->scrollArea_combatants->setWidget(_box_combatants);
   ui->scrollArea_commands->setWidget(_box_commands);
@@ -147,5 +140,14 @@ void ManagerWidget::on_pushButton_turn_clicked(bool checked) {
     _controller->nextTurn();
     // TODO:
     // make new _current_widget;
+  }
+}
+
+void ManagerWidget::on_pushButton_create_remove_clicked() {
+  auto widget = _combatant_list.extract(
+      _box_combatants->getCurrentWidget()->getCombatant());
+  if (widget.mapped() && widget.mapped()->getCombatant()) {
+    _controller->removeCombatant(widget.mapped()->getCombatant());
+    delete widget.mapped();
   }
 }

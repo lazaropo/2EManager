@@ -12,35 +12,11 @@ CombatantDialog::~CombatantDialog() { delete ui; }
 
 void CombatantDialog::on_pushButton_finish_clicked() {
   pf2e_manager::Combatant::Vitality vit =
-      pf2e_manager::Combatant::Vitality::CONSTRUCT;
-  switch (ui->comboBox_vitality->currentIndex()) {
-    case 0:
-      vit = pf2e_manager::Combatant::Vitality::ALIVE;
-      break;
-    case 1:
-      vit = pf2e_manager::Combatant::Vitality::DEAD;
-      break;
-    case 2:
-      vit = pf2e_manager::Combatant::Vitality::CONSTRUCT;
-      break;
-    default:
-      reject();
-  };
+      pf2e_manager::Combatant::formattingVitality(
+          ui->comboBox_vitality->currentText().toStdString());
 
-  pf2e_manager::Combatant::Side side = pf2e_manager::Combatant::Side::OTHER;
-  switch (ui->comboBox_vitality->currentIndex()) {
-    case 0:
-      side = pf2e_manager::Combatant::Side::TEAM;
-      break;
-    case 1:
-      side = pf2e_manager::Combatant::Side::ENEAMY;
-      break;
-    case 2:
-      side = pf2e_manager::Combatant::Side::OTHER;
-      break;
-    default:
-      reject();
-  };
+  pf2e_manager::Combatant::Side side = pf2e_manager::Combatant::formattingSide(
+      ui->comboBox_side->currentText().toStdString());
 
   *_combatant = new pf2e_manager::Combatant(
       ui->lineEdit_hp->text().toInt(), ui->lineEdit_init->text().toInt(), side,

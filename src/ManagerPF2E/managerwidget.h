@@ -48,6 +48,10 @@ class ManagerWidget : public QWidget {
 
   void on_pushButton_create_order_clicked();
 
+  void on_pushButton_turn_clicked(bool checked);
+
+  void on_pushButton_create_remove_clicked();
+
  private:
   Ui::ManagerWidget *ui;
   pf2e_manager::Controller *_controller;

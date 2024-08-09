@@ -38,8 +38,10 @@ class Combatant : public SubjectBase {
   }
 
   bool operator==(const Combatant& other) {
-    return getReciever() == other.getReciever();
+    return getName() == other.getName();
   }
+
+  bool operator==(const std::string& name) { return getName() == name; }
 
   /**
    * @brief Definition of less < overload
@@ -49,7 +51,10 @@ class Combatant : public SubjectBase {
    * @return true
    * @return false
    */
-  friend bool operator<(const Combatant& fisrt, const Combatant& second);
+  //  friend bool operator<(const Combatant& fisrt, const Combatant& second);
+  //  bool operator==(const Combatant& other) {
+  //    return getName() == other.getName();
+  //  }
 
   std::vector<SimpleEffect*>& getEffects() { return _effects; }
 
@@ -60,6 +65,14 @@ class Combatant : public SubjectBase {
   void notifyTrigger(SimpleEffect::Trigger trigger) {
     for (auto it : _effects) it->notifyTrigger(trigger);
   }
+
+  static std::string formattingSide(Side side, bool is_first_upper,
+                                    bool with_colon);
+  static Side formattingSide(const std::string& string);
+
+  static std::string formattingVitality(Vitality side, bool is_first_upper,
+                                        bool with_colon);
+  static Vitality formattingVitality(const std::string& string);
 
   int getHPCurr() const { return _hp_curr; }
 
@@ -77,6 +90,8 @@ class Combatant : public SubjectBase {
 
   int getInitiative() const { return _initiative; }
 
+  void setInitiative(int initiavite) { _initiative = initiavite; }
+
   friend class SimpleEffect;
 
  private:
@@ -92,9 +107,9 @@ class Combatant : public SubjectBase {
   std::vector<SimpleEffect*> _effects = {};
 };
 
-inline bool operator<(const Combatant& fisrt, const Combatant& second) {
-  return fisrt._initiative < second._initiative;
-}
+// inline bool operator<(const Combatant& fisrt, const Combatant& second) {
+//   return fisrt._initiative < second._initiative;
+// }
 }  // namespace pf2e_manager
 
 #endif

@@ -217,7 +217,7 @@ class SimpleEffectBuilder {
     return this;
   }
 
-  SimpleEffectBuilder* setCreator(SubjectBase* creator) {
+  SimpleEffectBuilder* setInvoker(SubjectBase* creator) {
     _effect->setInvoker(creator);
     return this;
   }

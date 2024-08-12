@@ -12,7 +12,7 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
       _command(command) {
   ui->setupUi(this);
 
-  std::list<pf2e_manager::Combatant *> *combatants =
+  std::vector<pf2e_manager::Combatant *> *combatants =
       _controller->getCombatants();
   ui->comboBox_from->addItem(QIcon(), "<user>");
   for (auto it : *combatants) {

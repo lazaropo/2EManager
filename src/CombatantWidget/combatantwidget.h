@@ -38,6 +38,8 @@ class CombatantWidget : public QWidget {
 
   void updateContent();
 
+  int _id = 0;
+
  signals:
   void mousePressed(QMouseEvent *event = nullptr);
 

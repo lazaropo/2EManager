@@ -13,8 +13,16 @@ ManagerWidget::ManagerWidget(QWidget *parent)
       _box_commands(new DragNDropQWidgetCommands(_controller, this)) {
   ui->setupUi(this);
 
-  //  ui->graphicsView->setController(_controller);
-  //  ui->graphicsView->setWidgets(&_combatant_list);
+  CombatantModelDelegete *delegete =
+      new CombatantModelDelegete(_box_combatants, this);
+  ui->listView->setModel(_box_combatants);
+  ui->listView->setItemDelegate(delegete);
+
+  ui->listView->setViewMode(QListView::ListMode);
+  ui->listView->setFlow(QListView::TopToBottom);
+  ui->listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  ui->listView->setUniformItemSizes(true);
+  // ui->listView->
 
   using namespace pf2e_manager;
 
@@ -76,11 +84,11 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   //  _box_commands->addCommand(_controller->makeCommand(
   //      nullptr, static_cast<SubjectBase *>(tmp1), "command:harm", 10));
 
-  ui->scrollArea_combatants->setWidget(_box_combatants);
+  // ui->scrollArea_combatants->setWidget(_box_combatants);
   ui->scrollArea_commands->setWidget(_box_commands);
 
-  ui->scrollArea_combatants->setAttribute(Qt::WA_StyledBackground);
-  ui->scrollArea_combatants->setBackgroundRole(QPalette::Window);
+  //  ui->scrollArea_combatants->setAttribute(Qt::WA_StyledBackground);
+  //  ui->scrollArea_combatants->setBackgroundRole(QPalette::Window);
 
   ui->scrollArea_commands->setAttribute(Qt::WA_StyledBackground);
   ui->scrollArea_commands->setBackgroundRole(QPalette::Window);

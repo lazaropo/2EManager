@@ -13,38 +13,6 @@
   <property name="windowTitle">
    <string>ManagerWidget</string>
   </property>
-  <widget class="QScrollArea" name="scrollArea_combatants">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>110</y>
-     <width>1150</width>
-     <height>461</height>
-    </rect>
-   </property>
-   <property name="mouseTracking">
-    <bool>false</bool>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
-   </property>
-   <property name="widgetResizable">
-    <bool>true</bool>
-   </property>
-   <widget class="QWidget" name="scrollAreaWidgetContents">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>1148</width>
-      <height>459</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
@@ -166,6 +134,19 @@ Order</string>
    </property>
    <property name="text">
     <string>Start Turn</string>
+   </property>
+  </widget>
+  <widget class="QListView" name="listView">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>1151</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <property name="movement">
+    <enum>QListView::Static</enum>
    </property>
   </widget>
  </widget>

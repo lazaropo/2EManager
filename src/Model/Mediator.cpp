@@ -1,7 +1,7 @@
 #include "Mediator.h"
 
 namespace pf2e_manager {
-Mediator::Mediator(std::list<Combatant*>* combatant)
+Mediator::Mediator(std::vector<Combatant*>* combatant)
     : _combatants(combatant),
       _builder(new SimpleEffectBuilder()),
       _director(new EffectDirector(_builder)),

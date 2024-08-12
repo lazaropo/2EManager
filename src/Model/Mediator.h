@@ -15,7 +15,7 @@ class Mediator : public MediatorInterface {
  public:
   using t_pos_cmd = std::vector<CommandBase*>::iterator;
 
-  explicit Mediator(std::list<Combatant*>* combatant);
+  explicit Mediator(std::vector<Combatant*>* combatant);
 
   ~Mediator();
 
@@ -48,7 +48,7 @@ class Mediator : public MediatorInterface {
   std::vector<CommandBase*>& getCommands() override { return _commands; }
 
  private:
-  std::list<Combatant*>* _combatants;
+  std::vector<Combatant*>* _combatants;
   std::vector<CommandBase*> _commands;
 
   SimpleEffectBuilder* _builder;

@@ -10,6 +10,7 @@
 #include "../CombatantWidget/combatantwidget.h"
 #include "../EffectDialog/EffectDialog.h"
 #include "../Model/Controller.h"
+#include "combatantmodeldelegete.h"
 #include "dragndropqwidget.h"
 #include "dragndropqwidget_commands.h"
 

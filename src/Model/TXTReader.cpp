@@ -1,7 +1,7 @@
 #include "TXTReader.h"
 
 namespace pf2e_manager {
-std::list<Combatant*>* TXTReader::readCombatants(const std::string& path) {
+std::vector<Combatant*>* TXTReader::readCombatants(const std::string& path) {
 #ifdef __APPLE__
   setlocale(LC_ALL, "en_US.UTF-8");
 #else
@@ -12,7 +12,7 @@ std::list<Combatant*>* TXTReader::readCombatants(const std::string& path) {
 
   std::ifstream file(path);
   if (file.is_open()) {
-    _ret_list = new std::list<Combatant*>();
+    _ret_list = new std::vector<Combatant*>();
 
     std::string buff;
 
@@ -27,7 +27,7 @@ std::list<Combatant*>* TXTReader::readCombatants(const std::string& path) {
 }
 
 void TXTReader::writeCombatants(const std::string& path,
-                                std::list<Combatant*>* collection) {
+                                std::vector<Combatant*>* collection) {
   if (!isCorrectName(path)) return;
 
   std::fstream file(path, std::ios::in | std::ios::out | std::ios::trunc);

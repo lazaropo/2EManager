@@ -13,9 +13,9 @@ class TXTReader : public FileReaderBase {
     delete _director;
   }
 
-  std::list<Combatant*>* readCombatants(const std::string& path);
+  std::vector<Combatant*>* readCombatants(const std::string& path);
   void writeCombatants(const std::string& path,
-                       std::list<Combatant*>* collection);
+                       std::vector<Combatant*>* collection);
 
  private:
   bool isCorrectName(const std::string& name);
@@ -24,7 +24,7 @@ class TXTReader : public FileReaderBase {
   void stringProcessing(const std::string& buff);
 
  private:
-  std::list<Combatant*>* _ret_list = nullptr;
+  std::vector<Combatant*>* _ret_list = nullptr;
   SimpleEffectBuilder* _builder = new SimpleEffectBuilder();
   EffectDirector* _director = new EffectDirector(_builder);
 };

@@ -59,6 +59,8 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   //    listWidget_effect->addItem(item);
   //  }
+
+  setFixedWidth(1100);
   updateContent();
 
   listWidget_effect->setGeometry(QRect(500, 20, 500, 140));

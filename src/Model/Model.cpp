@@ -9,7 +9,8 @@ void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {
     startTurn();
     nextTurn();
   }
-  _combatants->splice(++before, *_combatants, from);
+  std::swap(*(++before), *from);
+  // _combatants->splice(++before, *_combatants, from);
 }
 
 void Model::addEffectOnGroup(SimpleEffectBuilder* builder,

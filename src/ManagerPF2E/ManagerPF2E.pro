@@ -24,6 +24,7 @@ SUBDIRS += ../CommandDialog/CommandDialog.pro
 SUBDIRS += ../CommandIcon/CommandIcon.pro
 
 SOURCES += \
+    combatantmodeldelegete.cpp \
     dragndropqwidget.cpp \
     dragndropqwidget_commands.cpp \
     main.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
     ../CommandIcon/commandicon.cpp
 
 HEADERS += \
+    combatantmodeldelegete.h \
     dragndropqwidget.h \
     dragndropqwidget_commands.h \
     managerwidget.h \    

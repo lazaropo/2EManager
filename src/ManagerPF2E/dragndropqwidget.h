@@ -41,7 +41,7 @@ class DragNDropQWidget : public QAbstractListModel {
   void addWidget(pf2e_manager::Combatant* combatant);
 
  public:
-  int rowCount(const QModelIndex& parent) const {
+  int rowCount(const QModelIndex& parent) const override {
     Q_UNUSED(parent);
     if (_combatants_list)
       return _combatants_list->size();
@@ -49,16 +49,21 @@ class DragNDropQWidget : public QAbstractListModel {
       return 0;
   }
 
-  int columnCount(const QModelIndex& parent) const {
+  int columnCount(const QModelIndex& parent) const override {
     Q_UNUSED(parent);
     return 1;
   }
 
-  QVariant data(const QModelIndex& index, int role) const;
+  QVariant data(const QModelIndex& index, int role) const override;
 
   void add(pf2e_manager::Combatant* widget);
 
   CombatantWidget* at(int index) const;
+
+  Qt::ItemFlags flags(const QModelIndex& index) const override {
+    Q_UNUSED(index);
+    return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+  }
 
  public slots:
   //  void mousePressEvent(QMouseEvent* event);
@@ -75,7 +80,7 @@ class DragNDropQWidget : public QAbstractListModel {
 
   int _id_root = 0;
 
-  std::map<pf2e_manager::Combatant*, CombatantWidget*>* _widgets_collection;
+  std::vector<CombatantWidget*> _widgets_collection;
   // QVBoxLayout* _combatants_layout;
 
   QPoint _mouseStartPosition = QPoint();

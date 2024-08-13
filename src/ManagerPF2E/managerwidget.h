@@ -2,6 +2,7 @@
 #define MANAGERWIDGET_H
 
 // #include <QList>
+#include <QListView>
 #include <QListWidget>
 #include <QWidget>
 #include <list>
@@ -62,6 +63,8 @@ class ManagerWidget : public QWidget {
 
   DragNDropQWidget *_box_combatants;
   DragNDropQWidgetCommands *_box_commands;
+
+  QModelIndex _index = QModelIndex();
 
   QPoint _mouseStartPosition;  // <------------- possibly dummy var
 };

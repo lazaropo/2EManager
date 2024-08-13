@@ -22,6 +22,11 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   ui->listView->setFlow(QListView::TopToBottom);
   ui->listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   ui->listView->setUniformItemSizes(true);
+
+  ui->listView->setEditTriggers(
+      QAbstractItemView::EditTrigger::AllEditTriggers);
+  ui->listView->setMouseTracking(true);
+
   // ui->listView->
 
   using namespace pf2e_manager;
@@ -97,6 +102,8 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 }
 
 ManagerWidget::~ManagerWidget() {
+  //  if (ui->listView->isPersistentEditorOpen(index))
+  //      ui->listView->closePersistentEditor(index);
   delete ui;
   delete _controller;
 }

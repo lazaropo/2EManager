@@ -10,7 +10,7 @@ DragNDropQWidget::DragNDropQWidget(
       _widgets_collection(_widgets_collection),
       _combatants_layout(new QVBoxLayout(this)) {
   setLayout(_combatants_layout);
-  _combatants_layout->setSpacing(12);
+  _combatants_layout->setSpacing(7);
 
   for (auto it : *_widgets_collection) {
     _combatants_layout->addWidget(it.second);
@@ -59,10 +59,16 @@ void DragNDropQWidget::mouseMoveEvent(QMouseEvent *event) {
   if (button & Qt::LeftButton) {
     QPoint n_coordinates = QPoint(event->scenePosition().x() - x(),
                                   event->scenePosition().y() - y());
+    int delta = n_coordinates.y() - _mouseStartPosition.y();
+    if (delta < 0)
+      _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() -
+                                           2);
+    else if (delta > 0)
+      _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() +
+                                           2);
 
-    int count = (n_coordinates.y() - _mouseStartPosition.y()) /
-                (_current_widget->height());
-    if (!count) return;
+    int count = delta / (_current_widget->height());
+    if (!count || !_area) return;
 
     auto it = std::find(_combatants_list->begin(), _combatants_list->end(),
                         _current_widget->getCombatant());
@@ -78,17 +84,39 @@ void DragNDropQWidget::mouseMoveEvent(QMouseEvent *event) {
       _combatants_layout->removeWidget(_current_widget);
       _combatants_layout->insertWidget(ind - 1, _current_widget);
       _mouseStartPosition -= QPoint(0, _current_widget->height());
+      _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() -
+                                           100);
+      // scroll(0, -1000);
     } else if (count > 0 && ind < layout_size - 1) {
       _controller->moveCombatant(it, ++ ++it_before);
       _combatants_layout->removeWidget(_current_widget);
       _combatants_layout->insertWidget(ind + 1, _current_widget);
       _mouseStartPosition += QPoint(0, _current_widget->height());
+      _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() +
+                                           100);
     }
     update();
     QVBoxLayout *new_layout =
         qobject_cast<QVBoxLayout *>(_combatants_layout /*this->layout()*/);
     new_layout->update();
     this->saveGeometry();
+
+    //    int delta = 0;
+    //    if (n_coordinates.y() < 0.5 * _area_heigth && count < 0)
+    //      delta = -200;
+    //    else if (n_coordinates.y() > 0.5 * _area_heigth && count > 0)
+    //      delta = 70;
+
+    //    // _mouseStartPosition = event->position().toPoint();
+    //    if (!delta) return;
+
+    //    // QScrollArea *area = qobject_cast<QScrollArea *>(parent());
+    //    _area->scroll(0, delta);
+    //    QWheelEvent *wheel = new QWheelEvent(
+    //        event->position() - QPointF(x(), y()), event->position(),
+    //        QPoint(), QPoint(delta, delta), event->buttons(),
+    //        event->modifiers(), Qt::ScrollEnd, false);
+    //    QApplication::instance()->postEvent(this->parent(), wheel);
   }
 }
 

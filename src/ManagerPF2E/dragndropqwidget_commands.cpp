@@ -41,7 +41,7 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
     if (_current_icon) _current_icon->setBaseStyle();
 
     _current_icon = static_cast<CommandIcon *>(sender());
-    if (!_current_icon) {
+    if (!_current_icon && _description) {
       _description->hide();
       // delete _description;
       return;

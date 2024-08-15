@@ -32,6 +32,11 @@ class DragNDropQWidget : public QWidget {
     _widgets_collection = widgets_list;
   }
 
+  void setArea(QScrollArea* area) {
+    _area = area;
+    _area_heigth = _area->height();
+  }
+
   CombatantWidget* getCurrentWidget() { return _current_widget; }
   void updateContent();
   void updateContent(pf2e_manager::SubjectBase* combatant);
@@ -47,6 +52,7 @@ class DragNDropQWidget : public QWidget {
   // void dropEvent(QDropEvent* event);
 
  private:
+  QScrollArea* _area = nullptr;
   pf2e_manager::Controller* _controller;
   std::list<pf2e_manager::Combatant*>* _combatants_list;
 
@@ -56,6 +62,7 @@ class DragNDropQWidget : public QWidget {
   QPoint _mouseStartPosition = QPoint();
 
   CombatantWidget* _current_widget = nullptr;
+  int _area_heigth = 0;
 };
 
 #endif  // DRAGNDROPQWidget_H

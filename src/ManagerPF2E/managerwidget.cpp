@@ -18,6 +18,8 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
   using namespace pf2e_manager;
 
+  _box_combatants->setArea(ui->scrollArea_combatants);
+
   //  Combatant *tmp = new Combatant(100, 36, Combatant::Side::TEAM, "Peppa");
   //  _controller->addCombatant(tmp);
   //  Combatant *tmp1 = new Combatant(50, 16, Combatant::Side::TEAM, "Ricky");

@@ -66,6 +66,8 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   setFocusPolicy(Qt::NoFocus);
   setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
+  setAcceptDrops(true);
+
   QObject::connect(this, &CombatantWidget::enterEvent, this,
                    &CombatantWidget::enterEvent, Qt::DirectConnection);
   QObject::connect(this, &CombatantWidget::leaveEvent, this,

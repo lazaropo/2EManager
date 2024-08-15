@@ -42,9 +42,11 @@ class DragNDropQWidget : public QWidget {
   void mousePressEvent(QMouseEvent* event) override;
   void mouseMoveEvent(QMouseEvent* event) override;
   void mouseReleaseEvent(QMouseEvent* event) override;
-  //    void dragEnterEvent(QDragEnterEvent* event);
-  //    void dragLeaveEvent(QDragLeaveEvent* event);
-  // void dropEvent(QDropEvent* event);
+
+  void dragEnterEvent(QDragEnterEvent* event) override;
+  void dragLeaveEvent(QDragLeaveEvent* event) override;
+  void dragMoveEvent(QDragMoveEvent* event) override;
+  void dropEvent(QDropEvent* event) override;
 
  private:
   pf2e_manager::Controller* _controller;
@@ -56,6 +58,7 @@ class DragNDropQWidget : public QWidget {
   QPoint _mouseStartPosition = QPoint();
 
   CombatantWidget* _current_widget = nullptr;
+  bool _drag_started = false;
 };
 
 #endif  // DRAGNDROPQWidget_H

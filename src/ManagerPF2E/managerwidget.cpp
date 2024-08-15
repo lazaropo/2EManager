@@ -85,6 +85,8 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   ui->scrollArea_commands->setAttribute(Qt::WA_StyledBackground);
   ui->scrollArea_commands->setBackgroundRole(QPalette::Window);
 
+  ui->scrollArea_combatants->setAcceptDrops(true);
+
   _box_combatants->updateContent();
 }
 

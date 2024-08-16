@@ -22,6 +22,7 @@ SUBDIRS += ../CombatantWidget/CombatantWidget.pro
 SUBDIRS += ../CombatantDialog/CombatantDialog.pro
 SUBDIRS += ../CommandDialog/CommandDialog.pro
 SUBDIRS += ../CommandIcon/CommandIcon.pro
+SUBDIRS += ../ValueInputDialog/ValueInputDialog.pro
 
 SOURCES += \
     dragndropqwidget.cpp \
@@ -35,9 +36,11 @@ SOURCES += \
     ../Model/CommandsImplementation/*.cpp \
     ../CombatantDialog/combatantdialog.cpp \
     ../CommandDialog/commanddialog.cpp \
-    ../CommandIcon/commandicon.cpp
+    ../CommandIcon/commandicon.cpp \
+    ../ValueInputDialog/valueinputdialog.cpp
 
 HEADERS += \
+    ../Model/EffectBase.h \
     dragndropqwidget.h \
     dragndropqwidget_commands.h \
     managerwidget.h \    
@@ -49,7 +52,8 @@ HEADERS += \
     ../Model/CommandsImplementation/*.h \
     ../CombatantDialog/combatantdialog.h \
     ../CommandDialog/commanddialog.h \
-    ../CommandIcon/commandicon.h
+    ../CommandIcon/commandicon.h \
+    ../ValueInputDialog/valueinputdialog.h
 
 FORMS += \
     managerwidget.ui \
@@ -57,7 +61,8 @@ FORMS += \
     ../EffectDialog/effectdialog.ui \
     ../CombatantDialog/combatantdialog.ui \
     ../CommandDialog/commanddialog.ui \
-    ../CommandIcon/commandicon.ui
+    ../CommandIcon/commandicon.ui \
+    ../ValueInputDialog/valueinputdialog.ui
 
 TRANSLATIONS += \
     ManagerPF2E_ru_RU.ts

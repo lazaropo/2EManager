@@ -10,11 +10,11 @@
 
 class EffectListWidgetItem : public QListWidgetItem {
  public:
-  explicit EffectListWidgetItem(pf2e_manager::SimpleEffect* pos,
+  explicit EffectListWidgetItem(pf2e_manager::EffectBase* pos,
                                 QListWidget* listview = nullptr)
       : QListWidgetItem(listview), _effect(pos) {}
 
-  explicit EffectListWidgetItem(pf2e_manager::SimpleEffect* pos,
+  explicit EffectListWidgetItem(pf2e_manager::EffectBase* pos,
                                 const QString& text,
                                 QListWidget* listview = nullptr)
       : QListWidgetItem(text, listview), _effect(pos) {}
@@ -22,10 +22,10 @@ class EffectListWidgetItem : public QListWidgetItem {
   EffectListWidgetItem(const EffectListWidgetItem& other)
       : QListWidgetItem(other), _effect(other._effect) {}
 
-  pf2e_manager::SimpleEffect* getEffect() { return _effect; }
+  pf2e_manager::EffectBase* getEffect() { return _effect; }
 
  protected:
-  pf2e_manager::SimpleEffect* _effect;
+  pf2e_manager::EffectBase* _effect;
 };
 
 #endif  // EFFECTLISTWIDGETITEM_H

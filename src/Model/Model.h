@@ -19,18 +19,9 @@ class Model {
   using t_pos_comb = std::list<Combatant*>::iterator;
   using t_pair_comb_with_effect = std::pair<t_pos_comb, Combatant::t_pos_eff>;
 
-  Model() {
-    _combatants = _reader->readCombatants(_path);
-    if (!_combatants) _combatants = new std::list<Combatant*>();
-  }
+  Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp);
 
-  ~Model() {
-    _reader->writeCombatants(_path, _combatants);
-    delete _reader;
-    for (auto it : *_combatants) delete it;
-    delete _combatants;
-    delete _mediator;
-  }
+  ~Model();
 
   // void addCombatant(t_pos_comb pos, Combatant new_body) {
   //   _combatants.insert(pos, std::move(new_body));
@@ -124,13 +115,15 @@ class Model {
 
   std::vector<CommandBase*>& getCommands() { return _mediator->getCommands(); }
 
+  Combatant* getCurrent() { return *_curr_pos; }
+
  private:
   std::list<Combatant*>* _combatants = nullptr;
-  MediatorInterface* _mediator = new Mediator(_combatants);
+  MediatorInterface* _mediator;
 
   t_pos_comb _curr_pos;
 
-  FileReaderBase* _reader = new TXTReader();
+  FileReaderBase* _reader;
   const std::string _path = ("../Saved_info/info.txt");
 };
 }  // namespace pf2e_manager

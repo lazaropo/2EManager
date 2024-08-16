@@ -10,6 +10,7 @@
 #include "../CombatantWidget/combatantwidget.h"
 #include "../EffectDialog/EffectDialog.h"
 #include "../Model/Controller.h"
+#include "../ValueInputDialog/valueinputdialog.h"
 #include "dragndropqwidget.h"
 #include "dragndropqwidget_commands.h"
 
@@ -26,6 +27,11 @@ class ManagerWidget : public QWidget {
  public:
   ManagerWidget(QWidget *parent = nullptr);
   ~ManagerWidget();
+
+ private:
+  int getActionConfirmation(pf2e_manager::SubjectBase *sender,
+                            pf2e_manager::SubjectBase *reciever,
+                            const std::string &name);
 
  private slots:
   void on_pushButton_create_effect_clicked();
@@ -44,11 +50,11 @@ class ManagerWidget : public QWidget {
 
   // void on_widget_drag(QMouseEvent *event);
 
-  void on_pushButton_create_effect_2_clicked();
+  void on_pushButton_create_command_clicked();
 
   void on_pushButton_create_order_clicked();
 
-  void on_pushButton_turn_clicked(bool checked);
+  void on_pushButton_turn_clicked();
 
   void on_pushButton_create_remove_clicked();
 
@@ -61,6 +67,8 @@ class ManagerWidget : public QWidget {
 
   DragNDropQWidget *_box_combatants;
   DragNDropQWidgetCommands *_box_commands;
+
+  bool _button_start_flag = false;
 
   QPoint _mouseStartPosition;  // <------------- possibly dummy var
 };

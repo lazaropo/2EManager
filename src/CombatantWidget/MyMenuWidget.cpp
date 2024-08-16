@@ -8,45 +8,45 @@ MyMenuWidget::MyMenuWidget(QWidget* item) : QListWidget(item) {}
 MyMenuWidget::~MyMenuWidget() {
   if (_item) delete _item;
   if (_frame) delete _frame;
-
-  // delete _frame;
 }
 
 void MyMenuWidget::keyPressEvent(QKeyEvent* event) {
   if (event->key() == Qt::Key_Escape) {
-    // this->parentWidget()->layout()->removeWidget(_item);
     if (_item)
       delete _item;
     else
       return;
-    // if (_layout)
-    //   delete _layout;
-    // else
-    //   return;
+
     _item = nullptr;
     delete _frame;
     _frame = nullptr;
-    // _frame->setEnabled(false);
-    //_layout = nullptr;
   }
 }
 
 void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   QMenu menu(this->parentWidget());
   QAction* show_description = menu.addAction("Get Discripttion");
-  //  QAction* heal_command = menu.addAction("makeSomethingElse");
-  //  QMenu* make_effect = menu.addMenu("Make Effect...");
-  // Q_UNUSED(make_effect);
+  auto eff = dynamic_cast<EffectListWidgetItem*>(currentItem())->getEffect();
 
-  // QAction* make_clumsy = menu.addAction("Make Clumsy");
+  bool is_active = false;
+  if (eff)
+    is_active = eff->isActive();
+  else
+    return;
+
+  QAction* do_undo_effect =
+      menu.addAction(is_active ? "Remove Effect" : "Activate Effect");
 
   QAbstractItemDelegate::connect(show_description, &QAction::triggered, [=]() {
     if (!_item) setTextBrowser();
-    _item->setText(QString::fromStdString(
-        ((dynamic_cast<EffectListWidgetItem*>(currentItem())->getEffect()))
-            ->what()));
-    // this->parentWidget()->layout()->addWidget(_item);
-    // this->parentWidget()->setLayout(_frame->layout());
+    _item->setText(QString::fromStdString((eff->getDescription())));
+  });
+  QAbstractItemDelegate::connect(do_undo_effect, &QAction::triggered, [=]() {
+    if (is_active)
+      eff->removeEffect();
+    else
+      eff->activateEffect();
+    emit itemChanged(currentItem());
   });
 
   //  QAbstractItemDelegate::connect(heal_command, &QAction::triggered, [=]() {
@@ -77,19 +77,9 @@ void MyMenuWidget::setTextBrowser() {
   _item = new QTextBrowser(this->parentWidget());
   _item->setGeometry(QRect(600, 10, 400, 140));
   _item->show();
-  // _item->setFixedSize(370, 140);
-  // _frame->setSizeConstraint(QLayout::SetFixedSize);
-  // _frame->setContentsMargins(600,
-  //                            10,
-  //                            600+370,
-  //                            10 + 140);
-  // _frame->setContentsMargins(600, 10, 30, 30);
 
-  // _frame->addWidget(_item);
-  // _item->setGeometry(_frame->geometry());
-  // _item->setContentsMargins(_frame->contentsMargins());
-  //_layout->addWidget(_item);
-  QObject::connect(_item, SIGNAL(keyPressed()), _item, SLOT(onKeyPressed()));
+  //  QObject::connect(_item, &QTextBrowser::keyPressed, _item,
+  //                   &QTextBrowser::onKeyPressed);
 }
 
 #endif

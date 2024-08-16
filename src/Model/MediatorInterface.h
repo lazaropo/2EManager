@@ -10,6 +10,10 @@ namespace pf2e_manager {
 class MediatorInterface {
  public:
   virtual ~MediatorInterface() = default;
+
+  virtual int getConfirmation(SubjectBase* sender, SubjectBase* reciever,
+                              const std::string& name) = 0;
+
   virtual void makeEffect(SubjectBase* sender, SubjectBase* reciever,
                           const std::string& name, const int duration = 0,
                           const int value = 0) = 0;

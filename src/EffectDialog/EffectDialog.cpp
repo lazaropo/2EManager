@@ -61,11 +61,15 @@ EffectDialog::~EffectDialog() { delete ui; }
 
 void EffectDialog::on_button_set_clicked() {
   if (!_controller || !_combatant) return;
+  int duration = ui->lineEdit_duration->text().toInt();
+  int value = ui->lineEdit_value->text().toInt();
+
+  if (!duration && !value) return;
+
   _controller->makeEffect(
       nullptr, _combatant,
       "effect:" + ui->comboBox_effect->currentText().toLower().toStdString(),
-      ui->lineEdit_duration->text().toInt(),
-      ui->lineEdit_value->text().toInt());
+      duration, value);
   // _controller = nullptr;
   accept();
   // closeDialog();

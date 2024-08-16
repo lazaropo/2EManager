@@ -13,7 +13,8 @@ class SimpleEffectBuilder {
   using ns_trigger = pf2e_manager::SimpleEffect::Trigger;
   using ns_type = pf2e_manager::SimpleEffect::Type;
 
-  SimpleEffectBuilder() : _effect(new SimpleEffect()) {}
+  SimpleEffectBuilder(MediatorInterface* mediator)
+      : _effect(new SimpleEffect()), _executor(new EffectExecutor(mediator)) {}
 
   ~SimpleEffectBuilder() { delete _effect; }
 
@@ -193,11 +194,12 @@ class SimpleEffectBuilder {
     if (!value) _effect->_is_active = false;
 
     _effect->_duration = value;
+    _effect->_is_active = true;
     return this;
   }
 
   SimpleEffectBuilder* setDescription(const std::string& text) {
-    _effect->_descprition = text;
+    _effect->_description = text;
     return this;
   }
 
@@ -207,8 +209,14 @@ class SimpleEffectBuilder {
   }
 
   SimpleEffectBuilder* setAssociatedActions(
-      const std::list<std::string>& actions) {
+      const std::vector<std::string>& actions) {
     _effect->_associated_actions = actions;
+    return this;
+  }
+
+  SimpleEffectBuilder* setExecuteActions(
+      const std::vector<std::string>& actions) {
+    _effect->_execute_actions = actions;
     return this;
   }
 
@@ -226,6 +234,10 @@ class SimpleEffectBuilder {
     if (!_effect) {
       _effect = new SimpleEffect();
       _effect->_subject = _effect;
+      _effect->_executor = _executor;
+      if (!_executor)
+        throw std::logic_error(
+            "SimpleEffectBuilder: reset(): Executor is null.");
     }
   }
 
@@ -237,6 +249,7 @@ class SimpleEffectBuilder {
 
   /* virtual*/ SimpleEffect* getSimpleEffect() {
     SimpleEffect* ret = _effect;
+    ret->_executor = _executor;
     _effect = nullptr;
     reset();
     return ret;
@@ -244,6 +257,7 @@ class SimpleEffectBuilder {
 
  private:
   SimpleEffect* _effect = nullptr;
+  EffectExecutor* _executor = nullptr;
 };
 }  // namespace pf2e_manager
 

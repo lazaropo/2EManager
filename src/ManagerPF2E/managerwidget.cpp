@@ -7,7 +7,9 @@
 ManagerWidget::ManagerWidget(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::ManagerWidget),
-      _controller(new pf2e_manager::Controller),
+      _controller(new pf2e_manager::Controller(std::bind(
+          &ManagerWidget::getActionConfirmation, this, std::placeholders::_1,
+          std::placeholders::_2, std::placeholders::_3))),
       _box_combatants(
           new DragNDropQWidget(_controller, &_combatant_list, this)),
       _box_commands(new DragNDropQWidgetCommands(_controller, this)) {
@@ -120,7 +122,7 @@ void ManagerWidget::on_pushButton_create_combatant_clicked() {
   _box_combatants->addWidget(body);
 }
 
-void ManagerWidget::on_pushButton_create_effect_2_clicked() {
+void ManagerWidget::on_pushButton_create_command_clicked() {
   pf2e_manager::CommandBase *command;
   CommandDialog dialog(&command, _controller);
   // command have to be set in collection from model
@@ -135,14 +137,33 @@ void ManagerWidget::on_pushButton_create_order_clicked() {
   _box_combatants->updateContent();
 }
 
-void ManagerWidget::on_pushButton_turn_clicked(bool checked) {
-  if (checked) {
-    _controller->startTurn();
-  } else {
+void ManagerWidget::on_pushButton_turn_clicked() {
+  if (_button_start_flag) {
     _controller->nextTurn();
-    // TODO:
-    // make new _current_widget;
+
+    ui->pushButton_turn->setText("Start of Turn");
+    ui->pushButton_turn->setStyleSheet(
+        "QPushButton{"
+        "font: bold 28px;"
+        "color: black; "
+        "background-color: rgb(246, 97, 81);"
+        "}");
+  } else {
+    _controller->startTurn();
+    _box_combatants->setModelCurrentComatant(_controller->getCurrent());
+
+    ui->pushButton_turn->setText("End of Turn");
+    ui->pushButton_turn->setStyleSheet(
+        "QPushButton {"
+        "font: bold 28px; "
+        "color: black;"
+        "background-color: rgb(143, 240, 164);"
+        "}");
   }
+
+  _button_start_flag = !_button_start_flag;
+
+  _box_combatants->updateContent();
 }
 
 void ManagerWidget::on_pushButton_create_remove_clicked() {
@@ -152,4 +173,17 @@ void ManagerWidget::on_pushButton_create_remove_clicked() {
     _controller->removeCombatant(widget.mapped()->getCombatant());
     delete widget.mapped();
   }
+}
+
+int ManagerWidget::getActionConfirmation(pf2e_manager::SubjectBase *sender,
+                                         pf2e_manager::SubjectBase *reciever,
+                                         const std::string &name) {
+  int ret = 0;
+  const std::string sender_name = sender ? sender->getName() : "User";
+  if (!reciever)
+    throw std::logic_error(
+        "ManagerWidget: getActionConfirmation: Reciever is null.");
+  ValueInputDialog dialog(&ret, sender_name, reciever->getName(), name);
+  dialog.exec();
+  return ret;
 }

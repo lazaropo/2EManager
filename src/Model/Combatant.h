@@ -7,14 +7,14 @@
 #include <string>
 #include <vector>
 
-#include "SimpleEffect.h"
+#include "EffectBase.h"
 #include "SubjectBase.h"
 
 namespace pf2e_manager {
 
 class Combatant : public SubjectBase {
  public:
-  using t_pos_eff = std::vector<SimpleEffect*>::iterator;
+  using t_pos_eff = std::vector<EffectBase*>::iterator;
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
@@ -56,13 +56,16 @@ class Combatant : public SubjectBase {
   //    return getName() == other.getName();
   //  }
 
-  std::vector<SimpleEffect*>& getEffects() { return _effects; }
+  std::vector<EffectBase*>& getEffects() { return _effects; }
 
-  void addEffect(SimpleEffect* effect) { _effects.push_back(effect); }
+  void addEffect(EffectBase* effect) {
+    _effects.push_back(effect);
+    effect->executeAssociated();
+  }
 
   void setEffectDuration(t_pos_eff pos, int duration);
 
-  void notifyTrigger(SimpleEffect::Trigger trigger) {
+  void notifyTrigger(EffectBase::Trigger trigger) {
     for (auto it : _effects) it->notifyTrigger(trigger);
   }
 
@@ -92,7 +95,7 @@ class Combatant : public SubjectBase {
 
   void setInitiative(int initiavite) { _initiative = initiavite; }
 
-  friend class SimpleEffect;
+  // friend class SimpleEffect;
 
  private:
   int _hp_max;
@@ -104,7 +107,7 @@ class Combatant : public SubjectBase {
   // std::string _name = "";
   const Vitality _vitality;
 
-  std::vector<SimpleEffect*> _effects = {};
+  std::vector<EffectBase*> _effects = {};
 };
 
 // inline bool operator<(const Combatant& fisrt, const Combatant& second) {

@@ -23,6 +23,8 @@ class EffectDirector {
 
   void buildEffectByName(const std::string& name, int duration, int value);
 
+  void buildBlindedEffect(int duration, __attribute__((unused)) int value = 0);
+
   void buildClumsyEffect(int duration, int value);
 
   void buildConcealedEffect(int duration,
@@ -60,27 +62,27 @@ class EffectDirector {
   void buildGrabbedEffect(int duration, __attribute__((unused)) int value = 0);
   // TODO: implement this func and further
 
-  void buildHiddenEffect() { ; }
-  void buildImmobilizedEffect() { ; }
-  void buildIndifferentEffect() { ; }
-  void buildInvisibleEffect() { ; }
-  void buildObservedEffect() { ; }
-  void buildOffGuardEffect() { ; }
-  void buildParalyzedEffect() { ; }
-  void buildPersistentDamageEffect() { ; }
-  void buildPetrifiedEffect() { ; }
-  void buildProneEffect() { ; }
-  void buildQuickenedEffect() { ; }
-  void buildRestrainedEffect() { ; }
+  void buildHiddenEffect(int duration, int value);
+  void buildImmobilizedEffect(int duration, int value);
+  void buildIndifferentEffect(int duration, int value);
+  void buildInvisibleEffect(int duration, int value);
+  void buildObservedEffect(int duration, int value);
+  void buildOffGuardEffect(int duration, int value);
+  void buildParalyzedEffect(int duration, int value);
+  void buildPersistentDamageEffect(int duration, int value);
+  void buildPetrifiedEffect(int duration, int value);
+  void buildProneEffect(int duration, int value);
+  void buildQuickenedEffect(int duration, int value);
+  void buildRestrainedEffect(int duration, int value);
 
-  void buildSickenedEffect() { ; }
-  void buildSlowedEffect() { ; }
-  void buildStunnedEffect() { ; }
-  void buildStupefiedEffect() { ; }
-  void buildUnconsciousEffect() { ; }
-  void buildUndetectedEffect() { ; }
-  void buildUnnoticedEffect() { ; }
-  void buildWoundedEffect() { ; }
+  void buildSickenedEffect(int duration, int value);
+  void buildSlowedEffect(int duration, int value);
+  void buildStunnedEffect(int duration, int value);
+  void buildStupefiedEffect(int duration, int value);
+  void buildUnconsciousEffect(int duration, int value);
+  void buildUndetectedEffect(int duration, int value);
+  void buildUnnoticedEffect(int duration, int value);
+  void buildWoundedEffect(int duration, int value);
 
  private:
   SimpleEffectBuilder* _builder;

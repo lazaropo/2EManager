@@ -27,6 +27,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#CombatantWidget {
+border-radius: 30px;
 	background-color: rgb(0, 0, 0);
 };</string>
   </property>

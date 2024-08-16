@@ -119,6 +119,9 @@ Order</string>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>Remove combatant</string>
       </property>
@@ -164,8 +167,15 @@ Order</string>
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+font: bold 28px; 
+color: black;
+background-color: rgb(143, 240, 164);
+}</string>
+   </property>
    <property name="text">
-    <string>Start Turn</string>
+    <string>Start of Turn</string>
    </property>
   </widget>
  </widget>

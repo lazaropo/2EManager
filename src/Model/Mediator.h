@@ -1,6 +1,7 @@
 #ifndef _INVOKER_H_FB1B5BB7_152F_4BF6_9845_8B4B026A68A9_
 #define _INVOKER_H_FB1B5BB7_152F_4BF6_9845_8B4B026A68A9_
 
+#include <functional>  // std::function
 #include <list>
 #include <string>
 
@@ -15,9 +16,16 @@ class Mediator : public MediatorInterface {
  public:
   using t_pos_cmd = std::vector<CommandBase*>::iterator;
 
-  explicit Mediator(std::list<Combatant*>* combatant);
+  explicit Mediator(
+      std::list<Combatant*>* combatant,
+      std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp);
 
   ~Mediator();
+
+  int getConfirmation(SubjectBase* sender, SubjectBase* reciever,
+                      const std::string& name) override {
+    return _callback(sender, reciever, name);
+  }
 
   void makeEffect(SubjectBase* sender, SubjectBase* reciever,
                   const std::string& name, const int duration = 0,
@@ -55,6 +63,8 @@ class Mediator : public MediatorInterface {
   EffectDirector* _director;
 
   CommandsCreator* _commands_creator;
+
+  std::function<int(SubjectBase*, SubjectBase*, const std::string&)> _callback;
 };
 }  // namespace pf2e_manager
 

@@ -7,8 +7,8 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
     : QWidget(parent), ui(new Ui::CombatantWidget), _combatant(combatant) {
   ui->setupUi(this);
 
-  listWidget_effect->setUI(std::bind(&MyMenuWidget::setLayout,
-                                     listWidget_effect, std::placeholders::_1));
+  _listWidget_effect->setUI(std::bind(
+      &MyMenuWidget::setLayout, _listWidget_effect, std::placeholders::_1));
 
   using namespace pf2e_manager;
 
@@ -41,30 +41,15 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
       QString::fromStdString(pf2e_manager::Combatant::formattingVitality(
           _combatant->getVitality(), true, false)));
 
-  //  for (auto it_eff : _combatant->getEffects() /*=
-  //  _combatant->getEffects().begin(),
-  //            it_eff_end = _combatant->*/) {
-  //    EffectListWidgetItem* item =
-  //        new EffectListWidgetItem(it_eff, QString::number(1));
-  //    item->setText(
-  //        QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
-  //            .arg(QString::fromStdString((it_eff)->getName()))
-  //            .arg(QString::fromStdString((it_eff)->getInvoker()
-  //                                            ?
-  //                                            (it_eff)->getInvoker()->getName()
-  //                                            : "User"))
-  //            .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
-  //            .arg(QString::number((it_eff)->getDuration()))
-  //            .arg(QString::number((it_eff)->getValue())));
-
-  //    listWidget_effect->addItem(item);
-  //  }
   updateContent();
 
-  listWidget_effect->setGeometry(QRect(500, 20, 500, 140));
+  _listWidget_effect->setGeometry(QRect(500, 20, 600, 140));
   setAttribute(Qt::WA_StyledBackground);
   setFocusPolicy(Qt::NoFocus);
   setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+  QObject::connect(_listWidget_effect, &MyMenuWidget::itemChanged, this,
+                   &CombatantWidget::itemChanged);
 
   QObject::connect(this, &CombatantWidget::enterEvent, this,
                    &CombatantWidget::enterEvent, Qt::DirectConnection);
@@ -79,7 +64,7 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 CombatantWidget::~CombatantWidget() { delete ui; }
 
 void CombatantWidget::updateContent() {
-  if (!_combatant || !ui || !listWidget_effect) return;
+  if (!_combatant || !ui || !_listWidget_effect) return;
 
   ui->label_name->setText(QString::fromStdString(_combatant->getName()));
   ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPCurr()));
@@ -89,22 +74,34 @@ void CombatantWidget::updateContent() {
   ui->lineEdit_initiative->setText(
       QString::number(_combatant->getInitiative()));
 
-  listWidget_effect->clear();
+  _listWidget_effect->clear();
+  int count = 0;
   for (auto it_eff : _combatant->getEffects()) {
     if (!it_eff) break;
     EffectListWidgetItem* item =
-        new EffectListWidgetItem(it_eff, QString::number(1));
-    item->setText(
-        QString("%1 from %2 on %3\tDuration:%4\tValue:%5")
-            .arg(QString::fromStdString((it_eff)->getName()))
+        new EffectListWidgetItem(it_eff, QString::number(++count));
+
+    _listWidget_effect->addItem(item);
+    QLabel* l = new QLabel();
+    l->setText(
+        QString("%1 from\t%2"
+                // "on %3\t"
+                "Duration:%3Value:%4")
+            .arg(QString::fromStdString((it_eff)->getName()), -30)
             .arg(QString::fromStdString((it_eff)->getInvoker()
                                             ? (it_eff)->getInvoker()->getName()
-                                            : "User"))
-            .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
-            .arg(QString::number((it_eff)->getDuration()))
-            .arg(QString::number((it_eff)->getValue())));
+                                            : "User"),
+                 -30)
+            // .arg(QString::fromStdString((it_eff)->getReciever()->getName()))
+            .arg(QString::number((it_eff)->getDuration()), -12)
+            .arg(QString::number((it_eff)->getValue()), -12));
 
-    listWidget_effect->addItem(item);
+    if (it_eff->isActive())
+      l->setStyleSheet(_label_active_style);
+    else
+      l->setStyleSheet(_label_disable_style);
+
+    _listWidget_effect->setItemWidget(item, l);
   }
 }
 

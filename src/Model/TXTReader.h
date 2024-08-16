@@ -7,7 +7,9 @@
 namespace pf2e_manager {
 class TXTReader : public FileReaderBase {
  public:
-  TXTReader() = default;
+  TXTReader(MediatorInterface* mediator)
+      : _builder(new SimpleEffectBuilder(mediator)),
+        _director(new EffectDirector(_builder)) {}
   ~TXTReader() {
     delete _builder;
     delete _director;
@@ -25,8 +27,8 @@ class TXTReader : public FileReaderBase {
 
  private:
   std::list<Combatant*>* _ret_list = nullptr;
-  SimpleEffectBuilder* _builder = new SimpleEffectBuilder();
-  EffectDirector* _director = new EffectDirector(_builder);
+  SimpleEffectBuilder* _builder;
+  EffectDirector* _director;
 };
 }  // namespace pf2e_manager
 

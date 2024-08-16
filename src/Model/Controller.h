@@ -6,7 +6,9 @@
 namespace pf2e_manager {
 class Controller {
  public:
-  Controller() : _model(new Model()) {}
+  Controller(
+      std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
+      : _model(new Model(fp)) {}
   ~Controller() { delete _model; }
 
   void addCombatant(Combatant* new_body) { _model->addCombatant(new_body); }
@@ -78,6 +80,8 @@ class Controller {
   }
 
   std::vector<CommandBase*>& getCommands() { return _model->getCommands(); }
+
+  Combatant* getCurrent() { return _model->getCurrent(); }
 
  private:
   Model* _model;

@@ -3,6 +3,7 @@
 
 #include "../Combatant.h"
 #include "../CommandBase.h"
+#include "../MediatorInterface.h"
 
 namespace pf2e_manager {
 class HealCommand : public CommandBase {

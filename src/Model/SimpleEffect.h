@@ -2,58 +2,19 @@
 #define _EFFECT_BASE_H_82A0C4AB_9EEF_4E15_9F9A_6535D003B2D3_
 
 #include <algorithm>  // std::swap
-#include <list>
-#include <string>
 
+#include "Combatant.h"
+#include "EffectBase.h"
 #include "EffectExecutor.h"
 #include "MediatorInterface.h"
 // #include "SubjectBase.h"
 
 namespace pf2e_manager {
-class Combatant;
-class Mediator;
-class SimpleEffect : public SubjectBase {
+// class Combatant;
+// class Mediator;
+class SimpleEffect : public EffectBase {
  public:
-  enum class Trigger { NO_TRIGGER, START_TURN, END_TURN };
-  enum Type {
-    NO_VALUE_TYPE = 0,
-    COMMON_TYPE = 1 << 0,
-    STATUS = 1 << 1,
-    CIRCUMSTANCE = 1 << 2,
-    ITEM = 1 << 3,
-    LUCK = 1 << 4,
-    PENALTY = 1 << 5,
-    BONUS = 1 << 6
-  };
-  struct Value {
-    Value() = default;
-    explicit Value(bool is_constant, int value)
-        : _is_constant(is_constant), _value(value) {}
-
-    operator bool() const { return _value; }
-
-    bool _is_constant = true;
-    int _value = 0;
-
-    int _str = 0;
-    int _dex = 0;
-    int _con = 0;
-    int _mind = 0;
-
-    int _fort = 0;
-    int _refl = 0;
-    int _will = 0;
-
-    int _skills = 0;
-    int _perc = 0;  // perception
-
-    int _atk = 0;
-    int _ac = 0;
-    int _dc = 0;  // class DC
-    int _init = 0;
-  };
-
-  SimpleEffect() : SubjectBase(this) {}
+  SimpleEffect() : EffectBase(this) {}
 
   SimpleEffect(const SimpleEffect& other);
 
@@ -61,22 +22,35 @@ class SimpleEffect : public SubjectBase {
 
   SimpleEffect* copy() { return new SimpleEffect(*this); }
 
-  void execute();
+  void execute() override;
 
-  void undo();
+  void undo() override;
 
-  void notifyTrigger(Trigger trigger);
-
-  int getDuration() const { return _duration; }
-  int getValue() const { return _value._value; }
-  int isActive() const { return _is_active; }
-
-  // const std::string getName() const { return _name; }
-  const std::string& what() const { return _descprition; }
-
-  void removeEffect() {
-    _duration = 0;
+  void removeEffect() override {
     _is_active = false;
+    Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
+    if (combatant) {
+      auto eff_container = &combatant->getEffects();
+      for (auto it : *eff_container)
+        if (getSubject() == it->getInvoker()) it->removeEffect();
+    }
+  }
+
+  void activateEffect() override {
+    if (_duration) _is_active = true;
+    Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
+    if (combatant) {
+      auto eff_container = &combatant->getEffects();
+      for (auto it : *eff_container)
+        if (getSubject() == it->getInvoker()) it->activateEffect();
+    }
+  }
+
+  void executeAssociated() override {
+    if (!_is_associated_provided) {
+      _executor->execute(this, getReciever(), _associated_actions);
+      _is_associated_provided = true;
+    }
   }
 
   friend class Combatant;
@@ -85,15 +59,10 @@ class SimpleEffect : public SubjectBase {
   // const Trigger _trigger;
 
  protected:
-  int _type = 0;  // bit field
-  Value _value = Value();
-  Trigger _trigger = Trigger::NO_TRIGGER;
-  int _duration = 0;  // per round
-  bool _is_active = false;
-  // std::string _name = "";
-  std::string _descprition = "";
+  bool _is_associated_provided = false;
 
-  std::list<std::string> _associated_actions = std::list<std::string>();
+  std::vector<std::string> _associated_actions = std::vector<std::string>();
+  std::vector<std::string> _execute_actions = std::vector<std::string>();
 
   EffectExecutor* _executor = nullptr;
 

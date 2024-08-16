@@ -37,6 +37,16 @@ class DragNDropQWidget : public QWidget {
     _area_heigth = _area->height();
   }
 
+  void setModelCurrentComatant(pf2e_manager::Combatant* combatant) {
+    if (_model_current_widget) {
+      _model_current_widget->_fixe_style = false;
+      _model_current_widget->setBaseStyle();
+    }
+    _model_current_widget = (*_widgets_collection)[combatant];
+    _model_current_widget->setModelCurrentStyle();
+    _model_current_widget->_fixe_style = true;
+  }
+
   CombatantWidget* getCurrentWidget() { return _current_widget; }
   void updateContent();
   void updateContent(pf2e_manager::SubjectBase* combatant);
@@ -62,6 +72,7 @@ class DragNDropQWidget : public QWidget {
   QPoint _mouseStartPosition = QPoint();
 
   CombatantWidget* _current_widget = nullptr;
+  CombatantWidget* _model_current_widget = nullptr;
   int _area_heigth = 0;
 };
 

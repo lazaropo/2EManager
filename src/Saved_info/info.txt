@@ -1,7 +1,5 @@
-combatant:name:Sun Child/hpmax:278/initiative:45/side:eneamy/vitality:alive/
-combatant:name:puppy/hpmax:13/initiative:36/side:other/vitality:alive/
-combatant:name:bee/hpmax:43/initiative:36/side:eneamy/vitality:alive/
-combatant:name:Stone/hpmax:200/initiative:40/side:eneamy/vitality:construct/
-combatant:name:Peppa/hpmax:100/initiative:36/side:team/vitality:alive/
-combatant:name:IG-500/hpmax:128/initiative:28/side:team/vitality:alive/
-combatant:name:Ricky/hpmax:50/initiative:16/side:team/vitality:dead/
+combatant:name:Vulphi/hpmax:233/initiative:42/side:team/vitality:alive/
+combatant:name:Zalayla/hpmax:186/initiative:36/side:team/vitality:alive/
+combatant:name:Aksel/hpmax:161/initiative:26/side:team/vitality:alive/
+combatant:name:Shell/hpmax:237/initiative:24/side:team/vitality:alive/
+combatant:name:ttt/hpmax:123/initiative:1/side:team/vitality:alive/

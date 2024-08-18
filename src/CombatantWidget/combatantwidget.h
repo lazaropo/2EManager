@@ -48,11 +48,29 @@ class CombatantWidget : public QWidget {
 
  signals:
   void mousePressed(QMouseEvent *event = nullptr);
+  void mouseMoved(QMouseEvent *event = nullptr);
+  void dragEntered(QDragEnterEvent *event = nullptr);
+  void dragLeaved(QDragLeaveEvent *event = nullptr);
+  void dragMoved(QDragMoveEvent *event = nullptr);
+  void droped(QDropEvent *event = nullptr);
 
  protected slots:
   void mousePressEvent(QMouseEvent *event = nullptr) override {
     emit mousePressed(event);
   }
+  void mouseMoveEvent(QMouseEvent *event = nullptr) override {
+    emit mouseMoved(event);
+  }
+  void dragEnterEvent(QDragEnterEvent *event = nullptr) override {
+    emit dragEntered(event);
+  }
+  void dragLeaveEvent(QDragLeaveEvent *event = nullptr) override {
+    emit dragLeaved(event);
+  }
+  void dragMoveEvent(QDragMoveEvent *event = nullptr) override {
+    emit dragMoved(event);
+  }
+  void dropEvent(QDropEvent *event = nullptr) override { emit droped(event); }
 
   void itemChanged(QListWidgetItem *item) {
     Q_UNUSED(item);

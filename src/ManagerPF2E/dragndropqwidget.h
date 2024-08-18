@@ -57,9 +57,10 @@ class DragNDropQWidget : public QWidget {
   void mousePressEvent(QMouseEvent* event) override;
   void mouseMoveEvent(QMouseEvent* event) override;
   void mouseReleaseEvent(QMouseEvent* event) override;
-  //    void dragEnterEvent(QDragEnterEvent* event);
-  //    void dragLeaveEvent(QDragLeaveEvent* event);
-  // void dropEvent(QDropEvent* event);
+  void dragEnterEvent(QDragEnterEvent* event) override;
+  void dragLeaveEvent(QDragLeaveEvent* event) override;
+  void dragMoveEvent(QDragMoveEvent* event) override;
+  void dropEvent(QDropEvent* event) override;
 
  private:
   QScrollArea* _area = nullptr;

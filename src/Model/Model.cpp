@@ -20,9 +20,7 @@ Model::~Model() {
 }
 
 void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {
-  if (--before == from)
-    throw std::range_error(
-        "Attempt to move Combatant to its current position.");
+  if (--before == from) return;
   if (_curr_pos == from) {
     startTurn();
     nextTurn();

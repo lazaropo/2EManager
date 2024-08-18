@@ -35,14 +35,12 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   QObject::connect(_listWidget_effect, &MyMenuWidget::itemChanged, this,
                    &CombatantWidget::itemChanged);
 
-  //  QObject::connect(this, &CombatantWidget::enterEvent, this,
-  //                   &CombatantWidget::enterEvent, Qt::DirectConnection);
-  //  QObject::connect(this, &CombatantWidget::leaveEvent, this,
-  //                   &CombatantWidget::leaveEvent, Qt::DirectConnection);
   QObject::connect(
       ui->lineEdit_initiative, &QLineEdit::editingFinished, this, [&]() {
         _combatant->setInitiative(ui->lineEdit_initiative->text().toInt());
       });
+
+  setAcceptDrops(true);
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }

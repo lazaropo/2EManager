@@ -13,6 +13,8 @@ ManagerWidget::ManagerWidget(QWidget *parent)
       _box_commands(new DragNDropQWidgetCommands(_controller, this)) {
   ui->setupUi(this);
 
+  _box_combatants->setArea(ui->scrollArea_combatants);
+
   //  ui->graphicsView->setController(_controller);
   //  ui->graphicsView->setWidgets(&_combatant_list);
 

@@ -8,7 +8,9 @@ DragNDropQWidget::DragNDropQWidget(
       _controller(controller),
       _combatants_list(_controller->getCombatants()),
       _widgets_collection(_widgets_collection),
-      _combatants_layout(new QVBoxLayout(this)) {
+      _combatants_layout(new QVBoxLayout(this))
+
+{
   setLayout(_combatants_layout);
   _combatants_layout->setSpacing(12);
 
@@ -106,6 +108,8 @@ void DragNDropQWidget::dragLeaveEvent(QDragLeaveEvent *event) {
 
 void DragNDropQWidget::dragMoveEvent(QDragMoveEvent *event) {
   Q_UNUSED(event);
+  _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() +
+                                       50);
   //  int delta = 0;
   //  if (event->position().y() < 0.3 * this->height() &&
   //      _mouseStartPosition.y() - event->position().y() > 0)

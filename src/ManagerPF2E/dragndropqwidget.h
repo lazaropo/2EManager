@@ -14,8 +14,10 @@
 
 class DragNDropQWidget : public QWidget {
  public:
-  DragNDropQWidget(QWidget* parent = nullptr)
-      : QWidget(parent), _combatants_layout(new QVBoxLayout(this)) {}
+  DragNDropQWidget(QScrollArea* area, QWidget* parent = nullptr)
+      : QWidget(parent),
+        _combatants_layout(new QVBoxLayout(this)),
+        _area(area) {}
 
   DragNDropQWidget(
       pf2e_manager::Controller* controller,
@@ -31,6 +33,8 @@ class DragNDropQWidget : public QWidget {
       std::map<pf2e_manager::Combatant*, CombatantWidget*>* widgets_list) {
     _widgets_collection = widgets_list;
   }
+
+  void setArea(QScrollArea* area) { _area = area; }
 
   CombatantWidget* getCurrentWidget() { return _current_widget; }
   void updateContent();
@@ -59,6 +63,8 @@ class DragNDropQWidget : public QWidget {
 
   CombatantWidget* _current_widget = nullptr;
   bool _drag_started = false;
+
+  QScrollArea* _area = nullptr;
 };
 
 #endif  // DRAGNDROPQWidget_H

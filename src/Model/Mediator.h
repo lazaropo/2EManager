@@ -31,8 +31,9 @@ class Mediator : public MediatorInterface {
                   const std::string& name, const int duration = 0,
                   const int value = 0) override;
 
-  CommandBase* makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                           const std::string& name, int value) override;
+  CommandBase* makeCommand(
+      SubjectBase* sender, const std::string& name,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) override;
 
   void doCommand(CommandBase* cmd) {
     cmd->execute();

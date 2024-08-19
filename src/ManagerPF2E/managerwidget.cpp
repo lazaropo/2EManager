@@ -68,7 +68,7 @@ void ManagerWidget::on_pushButton_create_command_clicked() {
   CommandDialog dialog(&command, _controller);
   // command have to be set in collection from model
   if (dialog.exec() == QDialog::Rejected) return;
-  _box_combatants->updateContent(command->getReciever());
+  _box_combatants->updateContent();
 
   _box_commands->addCommand(command);
 }

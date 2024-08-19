@@ -3,6 +3,9 @@
 
 #include <QComboBox>
 #include <QDialog>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QRadioButton>
 
 #include "../Model/Controller.h"
 
@@ -30,5 +33,7 @@ class CommandDialog : public QDialog {
 
   pf2e_manager::Controller *_controller;
   pf2e_manager::CommandBase **_command;
+
+  QGridLayout *layout_to = nullptr;
 };
 #endif  // COMMANDDIALOG_H

@@ -15,17 +15,28 @@ class CommandsCreator {
  public:
   CommandsCreator(MediatorInterface* mediator);
 
-  CommandBase* createCommandByName(SubjectBase* sender, SubjectBase* reciever,
-                                   int value, const std::string name);
+  CommandBase* createCommandByName(
+      SubjectBase* sender, const std::string& name,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
 
-  CommandBase* createHarm(SubjectBase* sender, SubjectBase* reciever,
-                          int value);
-  CommandBase* createHeal(SubjectBase* sender, SubjectBase* reciever,
-                          int value);
+  CommandBase* createHarm(
+      SubjectBase* sender,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
+  CommandBase* createHeal(
+      SubjectBase* sender,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
+  CommandBase* createMassHarm(
+      SubjectBase* sender,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
+  CommandBase* createMassHeal(
+      SubjectBase* sender,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
 
  private:
   std::map<const std::string,
-           std::function<CommandBase*(SubjectBase*, SubjectBase*, int)>>
+           std::function<CommandBase*(
+               SubjectBase*,
+               std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info)>>
       _commands_dictionary;
 
   MediatorInterface* _mediator;

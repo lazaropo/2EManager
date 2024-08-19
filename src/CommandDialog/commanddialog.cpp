@@ -15,16 +15,51 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
   std::list<pf2e_manager::Combatant *> *combatants =
       _controller->getCombatants();
   ui->comboBox_from->addItem(QIcon(), "<user>");
+
+  /*auto*/ layout_to = new QGridLayout();
+  int count = 0;
   for (auto it : *combatants) {
     _list.push_back(it);
-    ui->comboBox_from->addItem(QIcon(), QString::fromStdString(it->getName()));
-    ui->comboBox_to->addItem(QIcon(), QString::fromStdString(it->getName()));
+    QString name = QString::fromStdString(it->getName());
+
+    ui->comboBox_from->addItem(QIcon(), name);
+
+    QHBoxLayout *h_layout = new QHBoxLayout();
+    QGroupBox *button_group = new QGroupBox();
+    button_group->setStyleSheet("border: none;");
+    QRadioButton *button = new QRadioButton();
+    // button_group->addButton(button);
+    // button->setIcon();
+    button->setChecked(true);
+    h_layout->addWidget(button);  // 0x damage
+    button = new QRadioButton();
+    // button_group->addButton(button);
+    // button->setIcon();
+    h_layout->addWidget(button);  // 0.5x damage
+    button = new QRadioButton();
+    // button_group->addButton(button);
+    // button->setIcon();
+    h_layout->addWidget(button);  // 1x damage
+    button = new QRadioButton();
+    // button_group->addButton(button);
+    // button->setIcon();
+    h_layout->addWidget(button);  // 2x damage
+
+    button_group->setLayout(h_layout);
+    layout_to->addWidget(button_group, count, 0);
+
+    QLabel *text_name = new QLabel();
+    text_name->setText(name);
+    layout_to->addWidget(text_name, count++, 1);
   }
+
+  ui->scrollAreaWidgetContents->setLayout(layout_to);
 }
 
 CommandDialog::~CommandDialog() { delete ui; }
 
 void CommandDialog::on_pushButton_accept_clicked() {
+  int value = ui->lineEdit_value->text().toInt();
   // ind - 1 cause box_from starts from "user" variant
   int ind_sender = ui->comboBox_from->currentIndex() - 1;
   int max_count = ui->comboBox_from->count();
@@ -34,18 +69,39 @@ void CommandDialog::on_pushButton_accept_clicked() {
   else
     sender = _list[ind_sender];
 
-  int ind_reciever = ui->comboBox_to->currentIndex();
-  auto reciever = _list[ind_reciever];
+  std::vector<std::pair<pf2e_manager::SubjectBase *, int>> info;
+  /*QGridLayout*/                   // QLayout *scroll_layout =
+  /*qobject_cast<QGridLayout *>(*/  // ui->scrollArea->widget()->layout();
+  for (auto i = 0, i_end = layout_to->count() / 2; i < i_end; ++i) {
+    auto box = layout_to->itemAt(i * 2 + 0)->widget();
+    auto h_layout = box->layout();
+    for (int j = 1, j_end = h_layout->count(); j < j_end; ++j) {
+      auto check_button =
+          qobject_cast<QRadioButton *>(h_layout->itemAt(j)->widget());
+      if (check_button->isChecked()) {
+        double coeff = 1.;
+        if (j == 1)
+          coeff = 0.5;
+        else if (j == 3)
+          coeff = 2.;
+        info.push_back(std::pair(_list[i], static_cast<int>(value * coeff)));
+        break;
+      }
+    }
+  }
+  // info = _list[i];
 
-  if (reciever && (QString::fromStdString(reciever->getName()) !=
-                   ui->comboBox_to->currentText()))
-    throw std::logic_error(
-        "CommandDialog: reciever by index and by next is not the same.");
+  // if (reciever && (QString::fromStdString(reciever->getName()) !=
+  //                  ui->comboBox_to->currentText()))
+  //   throw std::logic_error(
+  //       "CommandDialog: reciever by index and by next is not the same.");
 
-  *_command = _controller->makeCommand(
-      sender, reciever,
-      "command:" + ui->comboBox_command->currentText().toStdString(),
-      ui->lineEdit_value->text().toInt());
+  std::string command_name = "command:";
+  if (info.size() > 1) command_name += "mass";
+
+  command_name += ui->comboBox_command->currentText().toStdString();
+
+  *_command = _controller->makeCommand(sender, command_name, info);
 
   accept();
 }

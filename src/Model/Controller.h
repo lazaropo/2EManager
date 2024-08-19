@@ -58,9 +58,10 @@ class Controller {
     _model->setEffectDurationOnGroup(duration, collection);
   }
 
-  CommandBase* makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                           const std::string& name, int value) {
-    return _model->makeCommand(sender, reciever, name, value);
+  CommandBase* makeCommand(
+      SubjectBase* sender, const std::string& name,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) {
+    return _model->makeCommand(sender, name, info);
   }
 
   void sortByInit() { _model->sortByInit(); }

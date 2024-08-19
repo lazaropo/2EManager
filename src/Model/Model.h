@@ -41,8 +41,9 @@ class Model {
 
   // void addCommand(CommandBase* cmd) { _mediator->makeCommand(cmd); }
   // void addAndDoCommand(CommandBase* cmd) { _mediator->addAndDoCommand(cmd); }
-  CommandBase* makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                           const std::string& name, int value);
+  CommandBase* makeCommand(
+      SubjectBase* sender, const std::string& name,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
   // void removeCommand(Mediator::t_pos_cmd pos) { _mediator->undoCommand(pos);
   // }
   void removeCombatant(t_pos_comb it) { _combatants->erase(it); }

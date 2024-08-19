@@ -18,8 +18,9 @@ class MediatorInterface {
                           const std::string& name, const int duration = 0,
                           const int value = 0) = 0;
 
-  virtual CommandBase* makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                                   const std::string& name, int value) = 0;
+  virtual CommandBase* makeCommand(
+      SubjectBase* sender, const std::string& name,
+      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) = 0;
 
   virtual void undoEffect(SubjectBase* sender, SubjectBase* reciever,
                           const std::string& name) = 0;

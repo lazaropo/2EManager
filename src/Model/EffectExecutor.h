@@ -30,11 +30,12 @@ class EffectExecutor {
         }
       } else if (it.find("command:") == 0) {
         int value = _mediator->getConfirmation(sender, reciever, it);
+        auto info = std::vector{std::make_pair(reciever, value)};
         if (value)
-          _mediator->makeCommand(sender, reciever, it, value);
+          _mediator->makeCommand(sender, it, info);
         else {
-          auto effect = dynamic_cast<EffectBase*>(sender);
-          if (effect) effect->removeEffect();
+          auto command = dynamic_cast<CommandBase*>(sender);
+          if (command) command->undo();
         }
       }
     }

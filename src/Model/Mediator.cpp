@@ -42,10 +42,11 @@ void Mediator::makeEffect(SubjectBase* sender, SubjectBase* reciever,
   if (!_combatants || _combatants->size()) return;
 }
 
-CommandBase* Mediator::makeCommand(SubjectBase* sender, SubjectBase* reciever,
-                                   const std::string& name, int value) {
+CommandBase* Mediator::makeCommand(
+    SubjectBase* sender, const std::string& name,
+    std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) {
   CommandBase* command =
-      _commands_creator->createCommandByName(sender, reciever, value, name);
+      _commands_creator->createCommandByName(sender, name, info);
   doCommand(command);
   return command;
 }

@@ -32,10 +32,7 @@ class DragNDropQWidget : public QWidget {
     _widgets_collection = widgets_list;
   }
 
-  void setArea(QScrollArea* area) {
-    _area = area;
-    _area_heigth = _area->height();
-  }
+  void setArea(QScrollArea* area) { _area = area; }
 
   void setModelCurrentComatant(pf2e_manager::Combatant* combatant) {
     if (_model_current_widget) {
@@ -74,7 +71,7 @@ class DragNDropQWidget : public QWidget {
 
   CombatantWidget* _current_widget = nullptr;
   CombatantWidget* _model_current_widget = nullptr;
-  int _area_heigth = 0;
+  int _current_widget_count = 0;
 };
 
 #endif  // DRAGNDROPQWidget_H

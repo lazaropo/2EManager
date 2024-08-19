@@ -26,12 +26,12 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
   if (dynamic_cast<HarmCommand *>(_command)) {
     base_style =
         "QWidget#CommandIcon {"
-        "background: url(:/images/sword.png) center;"
+        "background: url(:/images/harm.png) center;"
         "border-radius: 10px; "
         " }";
     highligth_style =
         "QWidget#CommandIcon {"
-        "background: url(:/images/sword_small.png) center;"
+        "background: url(:/images/harm_small.png) center;"
         // "background-clip: content;"
         "border: none;"
         "border-radius: 9px; "
@@ -40,12 +40,41 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
   } else if (dynamic_cast<HealCommand *>(_command)) {
     base_style =
         "QWidget#CommandIcon {"
-        "background: url(:/images/leaf.png) center;"
+        "background: url(:/images/heal.png) center;"
         "border-radius: 10px; "
         " }";
     highligth_style =
         "QWidget#CommandIcon {"
-        "background: url(:/images/leaf_small.png) center;"
+        "background: url(:/images/heal_small.png) center;"
+        "background-clip: content;"
+        "border: none;"
+        "border-radius: 9px; "
+        // "border-image: solid 10px red;"
+        "margin-top: 3px; "
+        "}";
+  } else if (dynamic_cast<MassHarmCommand *>(_command)) {
+    base_style =
+        "QWidget#CommandIcon {"
+        "background: url(:/images/massharm.png) center;"
+        "border-radius: 10px; "
+        " }";
+    highligth_style =
+        "QWidget#CommandIcon {"
+        "background: url(:/images/massharm_small.png) center;"
+        // "background-clip: content;"
+        "border: none;"
+        "border-radius: 9px; "
+        "margin: 7px 3px 3px 3px; "
+        "}";
+  } else if (dynamic_cast<MassHealCommand *>(_command)) {
+    base_style =
+        "QWidget#CommandIcon {"
+        "background: url(:/images/massheal.png) center;"
+        "border-radius: 10px; "
+        " }";
+    highligth_style =
+        "QWidget#CommandIcon {"
+        "background: url(:/images/massheal_small.png) center;"
         "background-clip: content;"
         "border: none;"
         "border-radius: 9px; "

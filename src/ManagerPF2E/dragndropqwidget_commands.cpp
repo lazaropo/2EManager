@@ -41,26 +41,61 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
     if (_current_icon) _current_icon->setBaseStyle();
 
     _current_icon = static_cast<CommandIcon *>(sender());
-    if (!_current_icon && _description) {
-      _description->hide();
+    if (!_current_icon) {
       // delete _description;
       return;
-    }
+    } else if (_description)
+      _description->hide();
 
     _current_icon->setHighligthStyle();
-
-    // if (_description) delete _description;
 
     if (!_description) _description = new QTextBrowser();
     auto invoker = _current_icon->getCommand()->getInvoker();
     auto reciever = _current_icon->getCommand()->getReciever();
-    _description->setText(
-        QString("Invoker:\t%1\tReciever:\t%2\tValue:%3")
-            .arg(QString::fromStdString(invoker ? invoker->getName() : "User"))
-            .arg(QString::fromStdString(reciever ? reciever->getName()
-                                                 : "nullptr!!!"))
-            .arg(QString::number(_current_icon->getCommand()->value())));
-    _description->setMinimumWidth(400);
+
+    QString text;
+
+    pf2e_manager::MassHarmCommand *mass_harm_cmd =
+        dynamic_cast<pf2e_manager::MassHarmCommand *>(
+            _current_icon->getCommand());
+    pf2e_manager::MassHealCommand *mass_heal_cmd =
+        dynamic_cast<pf2e_manager::MassHealCommand *>(
+            _current_icon->getCommand());
+
+    if (mass_harm_cmd) {
+      for (auto cmd : mass_harm_cmd->getInfo()) {
+        invoker = cmd->getInvoker();
+        reciever = cmd->getReciever();
+        text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                    .arg(QString::fromStdString(invoker ? invoker->getName()
+                                                        : "User"))
+                    .arg(QString::fromStdString(reciever ? reciever->getName()
+                                                         : "nullptr!!!"))
+                    .arg(QString::number(cmd->value()));
+      }
+    } else if (mass_heal_cmd) {
+      for (auto cmd : mass_heal_cmd->getInfo()) {
+        invoker = cmd->getInvoker();
+        reciever = cmd->getReciever();
+        text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                    .arg(QString::fromStdString(invoker ? invoker->getName()
+                                                        : "User"))
+                    .arg(QString::fromStdString(reciever ? reciever->getName()
+                                                         : "nullptr!!!"))
+                    .arg(QString::number(cmd->value()));
+      }
+    } else {
+      text = QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                 .arg(QString::fromStdString(invoker ? invoker->getName()
+                                                     : "User"))
+                 .arg(QString::fromStdString(reciever ? reciever->getName()
+                                                      : "nullptr!!!"))
+                 .arg(QString::number(_current_icon->getCommand()->value()));
+    }
+
+    _description->setText(text);
+
+    _description->setMinimumWidth(500);
     _description->setWindowFlag(Qt::WindowStaysOnTopHint);
     _description->show();
     _description->raise();

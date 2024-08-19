@@ -3,5 +3,7 @@
 
 #include "CommandsImplementation/HarmCommand.h"
 #include "CommandsImplementation/HealCommand.h"
+#include "CommandsImplementation/MassHarmCommand.h"
+#include "CommandsImplementation/MassHealCommand.h"
 
 #endif

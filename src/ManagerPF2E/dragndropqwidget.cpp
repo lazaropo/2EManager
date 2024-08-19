@@ -63,6 +63,7 @@ void DragNDropQWidget::mousePressEvent(QMouseEvent *event) {
     if (_current_widget) _current_widget->setBaseStyle();
 
     _current_widget = static_cast<CombatantWidget *>(sender());
+    _current_widget_count = _combatants_layout->indexOf(_current_widget);
     if (_current_widget) {
       _current_widget->setHighlightStyle();
 
@@ -82,12 +83,12 @@ void DragNDropQWidget::mouseMoveEvent(QMouseEvent *event) {
     QDrag *drag = new QDrag(widget);
     drag->setMimeData(new QMimeData());
 
-    if (/*!_drag_started &&*/ _current_widget) {
-      _combatants_layout->removeWidget(_current_widget);
-      _current_widget->hide();
+    //    if (/*!_drag_started &&*/ _current_widget) {
+    //      _combatants_layout->removeWidget(_current_widget);
+    //      _current_widget->hide();
 
-      //_drag_started = true;
-    }
+    //      //_drag_started = true;
+    //    }
 
     drag->exec(Qt::CopyAction | Qt::MoveAction);
 
@@ -98,6 +99,12 @@ void DragNDropQWidget::mouseMoveEvent(QMouseEvent *event) {
 void DragNDropQWidget::mouseReleaseEvent(QMouseEvent *event) {
   if (event->buttons() & Qt::LeftButton && _current_widget) {
     dropEvent(nullptr);
+
+    if (_current_widget) {
+      _combatants_layout->insertWidget(_current_widget_count, _current_widget);
+      _current_widget->setBaseStyle();
+      _current_widget->show();
+    }
   }
 }
 
@@ -129,11 +136,15 @@ void DragNDropQWidget::dragLeaveEvent(QDragLeaveEvent *event) {
 void DragNDropQWidget::dragMoveEvent(QDragMoveEvent *event) {
   if (event->buttons() & Qt::LeftButton) {
     QPoint n_coordinates = QPoint(event->position().x(), event->position().y());
-    int delta = n_coordinates.y() - _mouseStartPosition.y();
-    if (delta < 0)
+    // int delta = n_coordinates.y() - _mouseStartPosition.y();
+    if (/*delta < 0 && */ /*-delta*/ n_coordinates.y() /
+            (double)_area->height() <
+        0.3)
       _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() -
                                            2);
-    else if (delta > 0)
+    else if (/*delta > 0 && delta*/ n_coordinates.y() /
+                 (double)_area->height() >
+             0.7)
       _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() +
                                            2);
   }
@@ -149,7 +160,14 @@ void DragNDropQWidget::dropEvent(QDropEvent *event) {
   if (!event || event->buttons() & Qt::LeftButton) {
     auto widget = qobject_cast<CombatantWidget *>(sender());
 
-    if (!widget || !_current_widget) return;
+    if (!_current_widget)
+      return;
+    else if (!widget) {
+      _combatants_layout->insertWidget(_current_widget_count, _current_widget);
+      _current_widget->setBaseStyle();
+      _current_widget->show();
+      _current_widget = nullptr;
+    }
 
     auto it = std::find(_combatants_list->begin(), _combatants_list->end(),
                         _current_widget->getCombatant());
@@ -164,6 +182,7 @@ void DragNDropQWidget::dropEvent(QDropEvent *event) {
       _controller->moveCombatant(it, it_before);
       _combatants_layout->removeWidget(_current_widget);
       _combatants_layout->insertWidget(ind, _current_widget);
+      _current_widget->setBaseStyle();
       _current_widget->show();
       _current_widget = nullptr;
       //  _mouseStartPosition -= QPoint(0, _current_widget->height());

@@ -136,18 +136,18 @@ void DragNDropQWidget::dragLeaveEvent(QDragLeaveEvent *event) {
 void DragNDropQWidget::dragMoveEvent(QDragMoveEvent *event) {
   if (event->buttons() & Qt::LeftButton) {
     QPoint n_coordinates = QPoint(event->position().x(), event->position().y());
-    // int delta = n_coordinates.y() - _mouseStartPosition.y();
-    if (/*delta < 0 && */ /*-delta*/ n_coordinates.y() /
-            (double)_area->height() <
-        0.3)
+    int delta = n_coordinates.y() - _mouseStartPosition.y();
+    if (delta < 0 /*&&
+        (n_coordinates.y() - _area->y()) / (double)_area->height() < 0.3*/)
       _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() -
                                            2);
-    else if (/*delta > 0 && delta*/ n_coordinates.y() /
-                 (double)_area->height() >
-             0.7)
+    else if (delta > 0 /*&&
+             (n_coordinates.y() - _area->y()) / (double)_area->height() > 0.7*/)
       _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() +
                                            2);
+    _mouseStartPosition = event->position().toPoint();
   }
+
   //  QPixmap pixmap = _current_widget->grab();
   //  QPainter painter(this->parentWidget());
   //  painter.drawPixmap(event->position().x(), event->position().y(),

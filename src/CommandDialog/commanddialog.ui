@@ -6,18 +6,52 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
+    <width>487</width>
     <height>275</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CommandDialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog#CommandDialog{
+background-color: rgb(234,224,200);
+}
+
+QComboBox {
+background-color: rgb(244,232,201);
+font: bold 18px;
+color: black;
+}
+
+QLineEdit {
+background-color: rgb(244,232,201);
+font: 16px bold;
+color: black;
+}
+
+QPushButton {
+background-color: rgb(244,232,201);
+font: bold 28px;
+color: black;
+}
+
+QWidget#scrollAreaWidgetContents {
+background-color: rgb(244,232,201);
+color: black;
+}
+
+QLabel {
+font: bold;
+color: black;
+}
+</string>
+  </property>
   <widget class="QPushButton" name="pushButton_accept">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>200</y>
+     <x>380</x>
+     <y>210</y>
      <width>101</width>
      <height>61</height>
     </rect>
@@ -31,7 +65,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>321</width>
+     <width>361</width>
      <height>261</height>
     </rect>
    </property>
@@ -59,6 +93,7 @@
       <property name="font">
        <font>
         <pointsize>16</pointsize>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -100,6 +135,7 @@
       <property name="font">
        <font>
         <pointsize>16</pointsize>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -125,6 +161,7 @@
       <property name="font">
        <font>
         <pointsize>16</pointsize>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -169,7 +206,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>200</width>
+        <width>300</width>
         <height>16777215</height>
        </size>
       </property>
@@ -181,7 +218,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>198</width>
+         <width>257</width>
          <height>131</height>
         </rect>
        </property>
@@ -193,7 +230,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>380</x>
      <y>10</y>
      <width>101</width>
      <height>91</height>
@@ -205,6 +242,7 @@
       <property name="font">
        <font>
         <pointsize>16</pointsize>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>

@@ -12,7 +12,9 @@ class EffectListWidgetItem : public QListWidgetItem {
  public:
   explicit EffectListWidgetItem(pf2e_manager::EffectBase* pos,
                                 QListWidget* listview = nullptr)
-      : QListWidgetItem(listview), _effect(pos) {}
+      : QListWidgetItem(listview), _effect(pos) {
+    setText(QString());
+  }
 
   explicit EffectListWidgetItem(pf2e_manager::EffectBase* pos,
                                 const QString& text,

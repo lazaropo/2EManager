@@ -57,10 +57,10 @@ void ManagerWidget::on_pushButton_create_effect_clicked() {
 void ManagerWidget::on_pushButton_create_combatant_clicked() {
   pf2e_manager::Combatant *body;
   CombatantDialog dialog(&body);
-  dialog.exec();
-  _controller->addCombatant(body);
-
-  _box_combatants->addWidget(body);
+  if (dialog.exec() == QDialog::Accepted) {
+    _controller->addCombatant(body);
+    _box_combatants->addWidget(body);
+  }
 }
 
 void ManagerWidget::on_pushButton_create_command_clicked() {

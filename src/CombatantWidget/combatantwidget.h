@@ -152,13 +152,15 @@ class CombatantWidget : public QWidget {
 
   QString _label_active_style{
       "QLabel{"
+      "border-radius: 6px;"
       "font: 16px black;"
-      "background-color: rgba(113, 237, 255, 1);"
+      "background-color: rgb(113, 237, 255);"
       "}"};
   QString _label_disable_style{
       "QLabel{"
+      "border-radius: 6px;"
       "font: 16px black;"
-      "background-color: rgba(3, 70, 128, 0.4);"
+      "background-color: rgb(3, 70, 128);"
       "}"};
 };
 #endif  // COMBATANTWIDGET_H

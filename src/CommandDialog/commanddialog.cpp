@@ -89,19 +89,12 @@ void CommandDialog::on_pushButton_accept_clicked() {
       }
     }
   }
-  // info = _list[i];
-
-  // if (reciever && (QString::fromStdString(reciever->getName()) !=
-  //                  ui->comboBox_to->currentText()))
-  //   throw std::logic_error(
-  //       "CommandDialog: reciever by index and by next is not the same.");
-
   std::string command_name = "command:";
   if (info.size() > 1) command_name += "mass";
 
   command_name += ui->comboBox_command->currentText().toStdString();
-
-  *_command = _controller->makeCommand(sender, command_name, info);
+  if (info.size())
+    *_command = _controller->makeCommand(sender, command_name, info);
 
   accept();
 }

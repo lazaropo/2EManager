@@ -3,7 +3,7 @@
 
 #include "MyMenuWidget.h"
 
-MyMenuWidget::MyMenuWidget(QWidget* item) : QListWidget(item) {}
+MyMenuWidget::MyMenuWidget(QWidget* item) : QListWidget(item) { setSpacing(1); }
 
 MyMenuWidget::~MyMenuWidget() {
   if (_item) delete _item;

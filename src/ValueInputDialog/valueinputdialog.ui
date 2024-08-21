@@ -13,6 +13,46 @@
   <property name="windowTitle">
    <string>ValueInputDialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog#ValueInputDialog{
+background-color: rgb(159,226,191);
+}
+
+QLabel#label_from, QLabel#label_to, QLabel#label_value {
+font: bold 20px;
+color: black;
+}
+
+QLabel#label_from_name, QLabel#label_to_name {
+border-radius: 4px;
+background-color: rgb(62,180,137);
+font: bold 20px;
+color: black;
+}
+
+QLabel#label_name{
+border-radius: 6px;
+background-color: rgb(62,180,137);
+font: bold 20px;
+color: black;
+}
+
+QPushButton#pushButton_accept{
+background-color: rgb(172,225,175);
+font: bold 20px;
+color: black;
+}
+
+QPushButton#pushButton_finish{
+background-color: rgb(228,113,122);
+font: bold 20px;
+color: black;
+}
+
+QLineEdit {
+background-color: rgb(113,188,120);
+}</string>
+  </property>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
@@ -21,6 +61,9 @@
      <width>101</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_name">
@@ -33,12 +76,13 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel{
-	background-color: rgba(198, 243, 69, 0.6);
-}</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_value">
@@ -52,7 +96,9 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
+     <family>Ubuntu</family>
+     <pointsize>-1</pointsize>
+     <italic>false</italic>
      <bold>true</bold>
     </font>
    </property>
@@ -63,9 +109,9 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>132</x>
      <y>170</y>
-     <width>231</width>
+     <width>261</width>
      <height>41</height>
     </rect>
    </property>
@@ -118,6 +164,9 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item row="0" column="0">
      <widget class="QLabel" name="label_from">
       <property name="maximumSize">
@@ -128,7 +177,8 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -141,11 +191,16 @@
      <widget class="QLabel" name="label_from_name">
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
        </font>
       </property>
       <property name="text">
        <string>TextLabel</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -159,7 +214,8 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -172,11 +228,16 @@
      <widget class="QLabel" name="label_to_name">
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
        </font>
       </property>
       <property name="text">
        <string>TextLabel</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>

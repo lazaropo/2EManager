@@ -13,10 +13,7 @@ class SubjectBase {
 
   virtual ~SubjectBase() = default;
 
-  const std::string getName() const {
-    std::cout << _name << std::endl;
-    return _name;
-  }
+  const std::string getName() const { return _name; }
   SubjectBase* getSubject() const { return _subject; }
   SubjectBase* getReciever() const { return _reciever; }
   SubjectBase* getInvoker() const { return _invoker; }

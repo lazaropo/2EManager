@@ -28,6 +28,7 @@ EffectDialog::EffectDialog(pf2e_manager::Controller* unit,
   ui->comboBox_effect->addItem("Frightened");
   ui->comboBox_effect->addItem("Grabbed");
   ui->comboBox_effect->addItem("Hidden");
+  ui->comboBox_effect->addItem("Malevolence");
   ui->comboBox_effect->addItem("Immobilized");
   ui->comboBox_effect->addItem("Indifferent");
   ui->comboBox_effect->addItem("Invisible");

@@ -15,7 +15,6 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   ui->label_name->setText(QString::fromStdString(_combatant->getName()));
   ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPCurr()));
   ui->lineEdit_hp_max->setText(QString::number(_combatant->getHPMax()));
-  ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));
 
   ui->label_side->setText(
       QString::fromStdString(pf2e_manager::Combatant::formattingSide(
@@ -27,7 +26,15 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   updateContent();
 
-  _listWidget_effect->setGeometry(QRect(500, 20, 600, 140));
+  _listWidget_effect->setGeometry(QRect(500, 7, 600, 140));
+  _listWidget_effect->setStyleSheet(
+      "QListWidget{"
+      "font: 16px;"
+      "color: black;"
+      "border-radius: 5px;"
+      "background-color: rgb(162, 162, 208);"
+      "}");
+
   setAttribute(Qt::WA_StyledBackground);
   setFocusPolicy(Qt::NoFocus);
   setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -41,6 +48,8 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
       });
 
   setAcceptDrops(true);
+
+  setBaseStyle();
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }
@@ -51,7 +60,6 @@ void CombatantWidget::updateContent() {
   ui->label_name->setText(QString::fromStdString(_combatant->getName()));
   ui->lineEdit_hp_curr->setText(QString::number(_combatant->getHPCurr()));
   ui->lineEdit_hp_max->setText(QString::number(_combatant->getHPMax()));
-  ui->lineEdit_hp_tmp->setText(QString::number(_combatant->getHPTmp()));
 
   ui->lineEdit_initiative->setText(
       QString::number(_combatant->getInitiative()));
@@ -66,14 +74,13 @@ void CombatantWidget::updateContent() {
     _listWidget_effect->addItem(item);
     QLabel* l = new QLabel();
     l->setText(
-        QString("%1 from\t%2"
-                // "on %3\t"
+        QString("%1from %2"
                 "Duration:%3Value:%4")
-            .arg(QString::fromStdString((it_eff)->getName()), -30)
+            .arg(QString::fromStdString((it_eff)->getName()), -25)
             .arg(QString::fromStdString((it_eff)->getInvoker()
                                             ? (it_eff)->getInvoker()->getName()
                                             : "User"),
-                 -30)
+                 -25)
             .arg(QString::number((it_eff)->getDuration()), -12)
             .arg(QString::number((it_eff)->getValue()), -12));
 

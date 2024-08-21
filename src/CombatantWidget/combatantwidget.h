@@ -94,21 +94,33 @@ class CombatantWidget : public QWidget {
   QString _base_style{
       "QWidget#CombatantWidget {"
       "border-radius: 30px;"
-      "background-color: rgb(0,0,0);"
+      "background-color: rgb(255,209,220);"
       "}"
       "QLabel{"
       "font: bold 20px;"
-      "color: white;"
+      "color: black;"
+      "}"
+      "QLineEdit{"
+      "border-radius: 10px;"
+      "color: black;"
+      "font: bold 16px;"
+      "background-color: rgb(162, 162, 208);"
       "}"};
 
   QString _highlight_style{
       "QWidget#CombatantWidget {"
       "border-radius: 30px;"
-      " background-color: red; "
+      " background-color: rgb(228, 113, 122); "
       "}"
       "QLabel{"
       "font: bold 20px;"
-      "color: white;"
+      "color: black;"
+      "}"
+      "QLineEdit{"
+      "border-radius: 10px;"
+      "font: bold 16px;"
+      "color: black;"
+      "background-color: rgb(162, 162, 208);"
       "}"};
 
   QString _hover_style{
@@ -133,15 +145,19 @@ class CombatantWidget : public QWidget {
       "QLabel{"
       "font: bold 20px;"
       "color: black;"
+      "}"
+      "QLineEdit {"
+      "border-radius: 10px;"
       "}"};
 
   QString _label_active_style{
       "QLabel{"
-      // "font: bold;"
+      "font: 16px black;"
       "background-color: rgba(113, 237, 255, 1);"
       "}"};
   QString _label_disable_style{
       "QLabel{"
+      "font: 16px black;"
       "background-color: rgba(3, 70, 128, 0.4);"
       "}"};
 };

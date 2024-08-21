@@ -34,6 +34,10 @@ DragNDropQWidget::DragNDropQWidget(
     it.second->setAttribute(Qt::WA_StyledBackground);
   }
   setAcceptDrops(true);
+  // setAutoFillBackground(true);
+
+  setAttribute(Qt::WA_StyledBackground);
+  setPalette(QPalette(QColor(204, 204, 255)));
 }
 
 void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {

@@ -23,6 +23,8 @@ DragNDropQWidgetCommands::DragNDropQWidgetCommands(
 
     it->setAttribute(Qt::WA_StyledBackground);
   }
+  setAttribute(Qt::WA_StyledBackground);
+  setPalette(QPalette(QColor(250, 238, 221)));
 }
 
 void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {

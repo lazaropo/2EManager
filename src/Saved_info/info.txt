@@ -1,5 +1,5 @@
-combatant:name:Vulphi/hpmax:233/initiative:42/side:team/vitality:alive/
 combatant:name:Zalayla/hpmax:186/initiative:36/side:team/vitality:alive/
 combatant:name:Aksel/hpmax:161/initiative:26/side:team/vitality:alive/
+combatant:name:Vulphi/hpmax:233/initiative:42/side:team/vitality:alive/
 combatant:name:Shell/hpmax:237/initiative:24/side:team/vitality:alive/
 combatant:name:ttt/hpmax:123/initiative:1/side:team/vitality:alive/

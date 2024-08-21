@@ -47,7 +47,8 @@ void TXTReader::writeCombatants(const std::string& path,
 
   for (auto it : *collection) {
     for (auto eff : it->getEffects()) {
-      if (eff && eff->isActive())
+      if (eff && eff->isActive() &&
+          !(dynamic_cast<EffectBase*>(eff->getInvoker())))
         file << eff->getName() /*starts with "effect:"*/ << '/' << "invoker:"
              << (eff->getInvoker() ? eff->getInvoker()->getName() : "<user>")
              << '/' << "reciever:" << it->getName() << '/'
@@ -144,12 +145,12 @@ void TXTReader::setEffect(const std::string& buff) {
   first = buff.find("invoker:");
   if (first != std::string::npos) last = buff.find('/', first);
   if (first != std::string::npos && last != std::string::npos)
-    invoker = std::string(buff.begin() + first, buff.begin() + last);
+    invoker = std::string(buff.begin() + first + 8, buff.begin() + last);
 
   first = buff.find("reciever:");
   if (first != std::string::npos) last = buff.find('/', first);
   if (first != std::string::npos && last != std::string::npos)
-    reciever = std::string(buff.begin() + first, buff.begin() + last);
+    reciever = std::string(buff.begin() + first + 9, buff.begin() + last);
 
   //  first = buff.find("is_active:", last + 1);
   //  if (first != std::string::npos) last = buff.find('/', first);
@@ -161,30 +162,30 @@ void TXTReader::setEffect(const std::string& buff) {
   first = buff.find("duration:", last + 1);
   if (first != std::string::npos) last = buff.find('/', first);
   if (first != std::string::npos && last != std::string::npos)
-    duration = std::stoi(std::string(buff.begin() + first, buff.begin() + last),
-                         &count);
+    duration = std::stoi(
+        std::string(buff.begin() + first + 9, buff.begin() + last), &count);
 
   first = buff.find("value:", last + 1);
   if (first != std::string::npos) last = buff.find('/', first);
   if (first != std::string::npos && last != std::string::npos)
-    value = std::stoi(std::string(buff.begin() + first, buff.begin() + last),
-                      &count);
+    value = std::stoi(
+        std::string(buff.begin() + first + 6, buff.begin() + last), &count);
 
   _director->buildEffectByName(name, duration, value);
 
-  auto from = std::find_if(
-      _ret_list->begin(), _ret_list->end(),
-      [&](Combatant* body) { return body->getName() == "invoker:"; });
+  auto from =
+      std::find_if(_ret_list->begin(), _ret_list->end(),
+                   [&](Combatant* body) { return body->getName() == invoker; });
   if (from == _ret_list->end())
-    _builder->setInvoker(*from);
+    _builder->setInvoker(nullptr);
   else
     _builder->setInvoker(*from);
 
   auto to = std::find_if(
       _ret_list->begin(), _ret_list->end(),
-      [&](Combatant* body) { return body->getName() == "reciever:"; });
-  if (from == _ret_list->end())
-    _builder->setReciever(*to);
+      [&](Combatant* body) { return body->getName() == reciever; });
+  if (to == _ret_list->end())
+    throw std::logic_error("TXTReader: setEffect(): reciever is not found.");
   else
     _builder->setReciever(*to);
 

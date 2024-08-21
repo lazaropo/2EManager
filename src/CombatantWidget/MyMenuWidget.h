@@ -31,6 +31,13 @@ class MyMenuWidget : public QListWidget {
   QTextBrowser* _item = nullptr;
   QLayout* _frame = nullptr;
   std::function<void(QLayout*)> addTextBrowser;
+
+  QString _item_base_style =
+      "font: 14px;"
+      "QTextBrowser{"
+      "border-radius: 5px;"
+      "background-color: rgb(250, 218, 221);"
+      "}";
 };
 
 #endif  // MYMENUWIDGET_H

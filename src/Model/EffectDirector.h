@@ -84,6 +84,8 @@ class EffectDirector {
   void buildUnnoticedEffect(int duration, int value);
   void buildWoundedEffect(int duration, int value);
 
+  void buildMalevolenceEffect(int duration, int value);
+
  private:
   SimpleEffectBuilder* _builder;
   // std::any is purposed only to void(int, int)

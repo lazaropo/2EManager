@@ -13,6 +13,14 @@
   <property name="windowTitle">
    <string/>
   </property>
+  <property name="styleSheet">
+   <string notr="true">ManagerWidget{
+background-color: rgb(175,218,252);
+}
+QWidget#scrollAreaWidgetContents {
+background-color: rgb(175,218,252);
+}</string>
+  </property>
   <widget class="QScrollArea" name="scrollArea_combatants">
    <property name="geometry">
     <rect>
@@ -37,7 +45,7 @@
    <property name="widgetResizable">
     <bool>true</bool>
    </property>
-   <widget class="QWidget" name="scrollAreaWidgetContents">
+   <widget class="DragNDropQWidget" name="scrollAreaWidgetContents">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -69,6 +77,13 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+color: black;
+font: 16px;
+background-color: rgb(230, 230, 250);
+}</string>
+      </property>
       <property name="text">
        <string>Create Combatant</string>
       </property>
@@ -81,6 +96,13 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+color: black;
+font: 16px;
+background-color: rgb(230, 230, 250);
+}</string>
       </property>
       <property name="text">
        <string>Create Effect</string>
@@ -95,6 +117,13 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+color: black;
+font: 16px;
+background-color: rgb(230, 230, 250);
+}</string>
+      </property>
       <property name="text">
        <string>Create Command</string>
       </property>
@@ -107,6 +136,13 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+color: black;
+font: 16px;
+background-color: rgb(230, 230, 250);
+}</string>
       </property>
       <property name="text">
        <string>Create Comatants 
@@ -123,7 +159,11 @@ Order</string>
        </sizepolicy>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">QPushButton{
+color: black;
+font: 16px;
+background-color: rgb(230, 230, 250);
+}</string>
       </property>
       <property name="text">
        <string>Remove combatant</string>
@@ -182,6 +222,14 @@ background-color: rgb(143, 240, 164);
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DragNDropQWidget</class>
+   <extends>QWidget</extends>
+   <header>dragndropqwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

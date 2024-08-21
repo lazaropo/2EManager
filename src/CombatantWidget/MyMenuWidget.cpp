@@ -49,37 +49,16 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
     emit itemChanged(currentItem());
   });
 
-  //  QAbstractItemDelegate::connect(heal_command, &QAction::triggered, [=]() {
-  //    if (!_item) setTextBrowser();
-  //    _item->setText(QString::fromStdString("HEAL COMMAND"));
-  //    this->parentWidget()->layout()->addWidget(_item);
-  //  });
-
-  //  QAbstractItemDelegate::connect(make_clumsy, &QAction::triggered, [=]() {
-  //    if (!_item) setTextBrowser();
-
-  // _item->setText(QString::fromStdString(
-  //     (*(dynamic_cast<EffectListWidgetItem*>(currentItem())
-  //            ->getEffect()))
-  //         ->what()));
-  // this->parentWidget()->layout()->addWidget(_item);
-  //});
-
   menu.exec(event->globalPos());
 }
 
 void MyMenuWidget::setTextBrowser() {
-  if (_item /*|| _layout*/) return;
+  if (_item) return;
 
-  // _frame = new QVBoxLayout(this->parentWidget());
-  // _layout->setGeometry(_frame->geometry());
-  // _layout->setContentsMargins(_frame->contentsMargins());
   _item = new QTextBrowser(this->parentWidget());
   _item->setGeometry(QRect(600, 10, 400, 140));
+  _item->setStyleSheet(_item_base_style);
   _item->show();
-
-  //  QObject::connect(_item, &QTextBrowser::keyPressed, _item,
-  //                   &QTextBrowser::onKeyPressed);
 }
 
 #endif

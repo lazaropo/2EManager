@@ -25,24 +25,22 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
     ui->comboBox_from->addItem(QIcon(), name);
 
     QHBoxLayout *h_layout = new QHBoxLayout();
+    h_layout->setSpacing(0);
+    h_layout->setContentsMargins(0, 0, 0, 0);
     QGroupBox *button_group = new QGroupBox();
     button_group->setStyleSheet("border: none;");
     QRadioButton *button = new QRadioButton();
-    // button_group->addButton(button);
-    // button->setIcon();
     button->setChecked(true);
+    button->setText("0x");
     h_layout->addWidget(button);  // 0x damage
     button = new QRadioButton();
-    // button_group->addButton(button);
-    // button->setIcon();
+    button->setText("0.5x");
     h_layout->addWidget(button);  // 0.5x damage
     button = new QRadioButton();
-    // button_group->addButton(button);
-    // button->setIcon();
+    button->setText("1x");
     h_layout->addWidget(button);  // 1x damage
     button = new QRadioButton();
-    // button_group->addButton(button);
-    // button->setIcon();
+    button->setText("2x");
     h_layout->addWidget(button);  // 2x damage
 
     button_group->setLayout(h_layout);

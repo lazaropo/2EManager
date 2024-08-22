@@ -36,8 +36,29 @@ background-color: rgb(175,218,252);
    <property name="acceptDrops">
     <bool>true</bool>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QScrollArea#scrollArea_combatants QScrollBar:vertical{
+border-radius: 4px;
+background-color: rgb(250,218, 221);
+}
+
+QScrollArea#scrollArea_combatants QScrollBar::handle:vertical{
+border-radius: 6px;
+background-color: rgb(162,162, 208);
+}
+
+QScrollArea#scrollArea_commands QScrollBar:vertical{
+border-radius: 4px;
+background-color: rgb(250,218, 221);
+}
+
+QScrollArea#scrollArea_commands QScrollBar::handle:vertical{
+border-radius: 6px;
+background-color: rgb(162,162, 208);
+}</string>
+   </property>
    <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
+    <enum>QFrame::NoFrame</enum>
    </property>
    <property name="frameShadow">
     <enum>QFrame::Plain</enum>
@@ -50,8 +71,8 @@ background-color: rgb(175,218,252);
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1148</width>
-      <height>519</height>
+      <width>1150</width>
+      <height>521</height>
      </rect>
     </property>
    </widget>
@@ -181,6 +202,9 @@ background-color: rgb(230, 230, 250);
      <height>150</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
    <property name="widgetResizable">
     <bool>true</bool>
    </property>
@@ -189,8 +213,8 @@ background-color: rgb(230, 230, 250);
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1148</width>
-      <height>148</height>
+      <width>1150</width>
+      <height>150</height>
      </rect>
     </property>
    </widget>

@@ -26,7 +26,7 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   updateContent();
 
-  _listWidget_effect->setGeometry(QRect(500, 7, 600, 140));
+  _listWidget_effect->setGeometry(QRect(480, 7, 610, 140));
   _listWidget_effect->setStyleSheet(
       "QListWidget{"
       "font: 16px;"
@@ -37,6 +37,7 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   setAttribute(Qt::WA_StyledBackground);
   setFocusPolicy(Qt::NoFocus);
+  setFixedSize(1110, 155);
   setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
   QObject::connect(_listWidget_effect, &MyMenuWidget::itemChanged, this,

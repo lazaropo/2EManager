@@ -25,10 +25,12 @@ class DragNDropQWidgetCommands : public QWidget {
 
   void addCommand(pf2e_manager::CommandBase* command);
 
+  // void updateContent();
+
  public slots:
   void mousePressEvent(QMouseEvent* event) override;
   // void mouseMoveEvent(QMouseEvent* event) override;
-  void mouseReleaseEvent(QMouseEvent* event) override;
+  // void mouseReleaseEvent(QMouseEvent* event) override;
   //    void dragEnterEvent(QDragEnterEvent* event);
   //    void dragLeaveEvent(QDragLeaveEvent* event);
   // void dropEvent(QDropEvent* event);
@@ -38,7 +40,7 @@ class DragNDropQWidgetCommands : public QWidget {
   std::vector<pf2e_manager::CommandBase*>* _commands_list;
 
   QList<CommandIcon*> _widgets_collection;
-  QLayout* _commands_layout;
+  QBoxLayout* _commands_layout;
 
   QPoint _mouseStartPosition = QPoint();
 

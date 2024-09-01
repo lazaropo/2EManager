@@ -100,6 +100,7 @@ class Model {
       }
       return ret;
     });
+    _curr_pos = _combatants->begin();
   }
 
   void startTurn();

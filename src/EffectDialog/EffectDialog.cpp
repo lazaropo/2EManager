@@ -51,7 +51,7 @@ EffectDialog::EffectDialog(pf2e_manager::Controller* unit,
   ui->comboBox_effect->addItem("Unnoticed");
   ui->comboBox_effect->addItem("Wounded");
 
-  ui->comboBox_effect->addItem("Other effect");
+  // ui->comboBox_effect->addItem("Other effect");
 
   //    ui->comboBox_effect->setEditable(true);
   // ui->comboBox_effect->setStyle(QStyle::SH_ComboBox_ListMouseTracking);
@@ -64,13 +64,16 @@ void EffectDialog::on_button_set_clicked() {
   if (!_controller || !_combatant) return;
   int duration = ui->lineEdit_duration->text().toInt();
   int value = ui->lineEdit_value->text().toInt();
+  std::string effect_name;
+  if (ui->comboBox_effect->currentText() == "Persistent Damage")
+    effect_name = "effect:persistentdamage";
+  else
+    effect_name =
+        "effect:" + ui->comboBox_effect->currentText().toLower().toStdString();
 
   if (!duration && !value) return;
 
-  _controller->makeEffect(
-      nullptr, _combatant,
-      "effect:" + ui->comboBox_effect->currentText().toLower().toStdString(),
-      duration, value);
+  _controller->makeEffect(nullptr, _combatant, effect_name, duration, value);
   // _controller = nullptr;
   accept();
   // closeDialog();

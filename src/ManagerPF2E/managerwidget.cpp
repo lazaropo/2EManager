@@ -31,6 +31,8 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   ui->scrollArea_commands->setBackgroundRole(QPalette::Window);
 
   _box_combatants->updateContent();
+
+  _box_combatants->setModelCurrentComatant(_controller->getCurrent());
 }
 
 ManagerWidget::~ManagerWidget() {
@@ -75,36 +77,38 @@ void ManagerWidget::on_pushButton_create_command_clicked() {
 
 void ManagerWidget::on_pushButton_create_order_clicked() {
   _controller->sortByInit();
+  _box_combatants->setModelCurrentComatant(_controller->getCurrent());
   _box_combatants->updateContent();
 }
 
 void ManagerWidget::on_pushButton_turn_clicked() {
-  if (_button_start_flag) {
-    _controller->nextTurn();
+  //  if (_button_start_flag) {
+  //    _controller->nextTurn();
 
-    ui->pushButton_turn->setText("Start of Turn");
-    ui->pushButton_turn->setStyleSheet(
-        "QPushButton{"
-        "font: bold 28px;"
-        "color: black; "
-        "background-color: rgb(246, 97, 81);"
-        "}");
-  } else {
-    _controller->startTurn();
-    _box_combatants->setModelCurrentComatant(_controller->getCurrent());
+  //    ui->pushButton_turn->setText("Start of Turn");
+  //    ui->pushButton_turn->setStyleSheet(
+  //        "QPushButton{"
+  //        "font: bold 28px;"
+  //        "color: black; "
+  //        "background-color: rgb(246, 97, 81);"
+  //        "}");
+  //  } else {
+  _controller->nextTurn();
+  _box_combatants->setModelCurrentComatant(_controller->getCurrent());
 
-    ui->pushButton_turn->setText("End of Turn");
-    ui->pushButton_turn->setStyleSheet(
-        "QPushButton {"
-        "font: bold 28px; "
-        "color: black;"
-        "background-color: rgb(143, 240, 164);"
-        "}");
-  }
+  // ui->pushButton_turn->setText("Next Turn");
+  //  ui->pushButton_turn->setStyleSheet(
+  //      "QPushButton {"
+  //      "font: bold 28px; "
+  //      "color: black;"
+  //      "background-color: rgb(143, 240, 164);"
+  //      "}");
+  // }
 
   _button_start_flag = !_button_start_flag;
 
   _box_combatants->updateContent();
+  _box_commands->updateContent();
 }
 
 void ManagerWidget::on_pushButton_create_remove_clicked() {
@@ -113,6 +117,7 @@ void ManagerWidget::on_pushButton_create_remove_clicked() {
   if (widget.mapped() && widget.mapped()->getCombatant()) {
     _controller->removeCombatant(widget.mapped()->getCombatant());
     delete widget.mapped();
+    _box_combatants->updateContent();
   }
 }
 
@@ -126,5 +131,8 @@ int ManagerWidget::getActionConfirmation(pf2e_manager::SubjectBase *sender,
         "ManagerWidget: getActionConfirmation: Reciever is null.");
   ValueInputDialog dialog(&ret, sender_name, reciever->getName(), name);
   dialog.exec();
+
+  // _box_commands->addCommand(_controller->getCommands().back());
+
   return ret;
 }

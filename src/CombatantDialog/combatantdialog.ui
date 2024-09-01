@@ -20,7 +20,7 @@ background-color: rgb(249,248,187);
 
 QLabel{
 font:  bold  22px;
-color: black
+color: black;
 }
 
 QPushButton {
@@ -37,7 +37,13 @@ color: black;
 QComboBox{
 background-color: rgb(230,214,144);
 font:  bold  16px;
-color: black
+color: black;
+}
+
+QComboBox QAbstractItemView {
+background-color: rgb(230,214,144);
+font: bold 16px;
+color: black;
 }
 
 QPushButton {
@@ -48,7 +54,7 @@ background-color: rgb(230,214,144);
    <property name="geometry">
     <rect>
      <x>270</x>
-     <y>150</y>
+     <y>160</y>
      <width>121</width>
      <height>51</height>
     </rect>
@@ -60,10 +66,10 @@ background-color: rgb(230,214,144);
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>267</x>
+     <x>270</x>
      <y>10</y>
      <width>121</width>
-     <height>131</height>
+     <height>141</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -161,7 +167,7 @@ background-color: rgb(230,214,144);
      <x>10</x>
      <y>10</y>
      <width>251</width>
-     <height>191</height>
+     <height>201</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">

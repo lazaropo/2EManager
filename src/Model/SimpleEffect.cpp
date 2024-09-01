@@ -14,6 +14,7 @@ SimpleEffect::SimpleEffect(const SimpleEffect &other)
 }
 
 void SimpleEffect::execute() {
+  if (!_is_active) return;
   --_duration;
   if (_execute_actions.size())
     _executor->execute(getSubject(), getReciever(), _execute_actions);

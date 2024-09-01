@@ -38,15 +38,36 @@ void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {
   this->setFixedWidth(width() + _commands_layout->spacing() + obj->width());
 }
 
+void DragNDropQWidgetCommands::updateContent() {
+  int count = 0;
+  QList<CommandIcon *>::iterator widget = _widgets_collection.end();
+  for (auto it : *_commands_list) {
+    widget = std::find_if(
+        _widgets_collection.begin(), _widgets_collection.end(),
+        [&](CommandIcon *icon) { return icon->getCommand() == it; });
+    // (*_widgets_collection)[it];
+    if (widget != _widgets_collection.end()) {
+      _commands_layout->removeWidget(*widget);
+      _commands_layout->insertWidget(count++, *widget);
+    } else
+      addCommand(it);
+
+    //    if (count >  && widget != _widgets_collection.end())
+    //      this->setFixedWidth();
+    //          _commands_layout->count() *
+    //              ((*widget)->height() + _commands_layout->spacing()) -
+    //          _commands_layout->spacing());
+  }
+}
+
 void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
   if (event->button() & Qt::LeftButton) {
     if (_current_icon) _current_icon->setBaseStyle();
 
     _current_icon = static_cast<CommandIcon *>(sender());
-    if (!_current_icon) {
-      // delete _description;
+    if (!_current_icon)
       return;
-    } else if (_description)
+    else if (_description)
       _description->hide();
 
     _current_icon->setHighligthStyle();
@@ -104,8 +125,8 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
   }
 }
 
-void DragNDropQWidgetCommands::mouseReleaseEvent(QMouseEvent *event) {
-  Q_UNUSED(event);
+// void DragNDropQWidgetCommands::mouseReleaseEvent(QMouseEvent *event) {
+//   Q_UNUSED(event);
 
-  setCursor(Qt::ArrowCursor);
-}
+//  setCursor(Qt::ArrowCursor);
+//}

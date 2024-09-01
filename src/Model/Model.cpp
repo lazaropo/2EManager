@@ -8,7 +8,7 @@ Model::Model(
       _reader(new TXTReader(_mediator)) {
   _combatants = _reader->readCombatants(_path);
   if (!_combatants) _combatants = new std::list<Combatant*>();
-  _curr_pos = --_combatants->end();
+  _curr_pos = _combatants->end();
 }
 
 Model::~Model() {
@@ -22,8 +22,9 @@ Model::~Model() {
 void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {
   if (--before == from) return;
   if (_curr_pos == from) {
-    startTurn();
-    nextTurn();
+    //    (*from)->notifyTrigger(SimpleEffect::Trigger::START_TURN);
+    //    (*from)->notifyTrigger(SimpleEffect::Trigger::END_TURN);
+    ++_curr_pos;
   }
   _combatants->splice(++before, *_combatants, from);
 }
@@ -44,17 +45,20 @@ CommandBase* Model::makeCommand(
 void Model::startTurn() {
   if (!_combatants || _combatants->empty())
     throw std::runtime_error("There are not any combatants!");
-
-  if (++_curr_pos == _combatants->end()) _curr_pos = _combatants->begin();
-
-  (*_curr_pos)->notifyTrigger(SimpleEffect::Trigger::START_TURN);
 }
 
 void Model::nextTurn() {
   if (!_combatants || _combatants->empty())
     throw std::runtime_error("There are not any combatants!");
 
-  (*_curr_pos)->notifyTrigger(SimpleEffect::Trigger::END_TURN);
+  if (_curr_pos == _combatants->end())
+    _curr_pos = _combatants->begin();
+  else
+    (*_curr_pos++)->notifyTrigger(SimpleEffect::Trigger::END_TURN);
+
+  // if (++_curr_pos == _combatants->end()) _curr_pos = _combatants->begin();
+  if (_curr_pos == _combatants->end()) _curr_pos = _combatants->begin();
+  (*_curr_pos)->notifyTrigger(SimpleEffect::Trigger::START_TURN);
 }
 
 }  // namespace pf2e_manager

@@ -17,7 +17,13 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
   ui->comboBox_from->addItem(QIcon(), "<user>");
 
   /*auto*/ layout_to = new QGridLayout();
-  int count = 0;
+
+  QLabel *text_coeffs = new QLabel();
+  text_coeffs->setText("0x 0.5x 1x   2x");
+  text_coeffs->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+  layout_to->addWidget(text_coeffs, 0, 0);
+
+  int count = 1;
   for (auto it : *combatants) {
     _list.push_back(it);
     QString name = QString::fromStdString(it->getName());
@@ -25,22 +31,26 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
     ui->comboBox_from->addItem(QIcon(), name);
 
     QHBoxLayout *h_layout = new QHBoxLayout();
-    h_layout->setSpacing(0);
+    h_layout->setSpacing(5);
     h_layout->setContentsMargins(0, 0, 0, 0);
     QGroupBox *button_group = new QGroupBox();
     button_group->setStyleSheet("border: none;");
     QRadioButton *button = new QRadioButton();
     button->setChecked(true);
-    button->setText("0x");
+    button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    // button->setText("0x");
     h_layout->addWidget(button);  // 0x damage
     button = new QRadioButton();
-    button->setText("0.5x");
+    button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    // button->setText("0.5x");
     h_layout->addWidget(button);  // 0.5x damage
     button = new QRadioButton();
-    button->setText("1x");
+    button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    // button->setText("1x");
     h_layout->addWidget(button);  // 1x damage
     button = new QRadioButton();
-    button->setText("2x");
+    button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    // button->setText("2x");
     h_layout->addWidget(button);  // 2x damage
 
     button_group->setLayout(h_layout);
@@ -48,6 +58,7 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
 
     QLabel *text_name = new QLabel();
     text_name->setText(name);
+    text_name->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     layout_to->addWidget(text_name, count++, 1);
   }
 
@@ -70,9 +81,10 @@ void CommandDialog::on_pushButton_accept_clicked() {
   std::vector<std::pair<pf2e_manager::SubjectBase *, int>> info;
   /*QGridLayout*/                   // QLayout *scroll_layout =
   /*qobject_cast<QGridLayout *>(*/  // ui->scrollArea->widget()->layout();
-  for (auto i = 0, i_end = layout_to->count() / 2; i < i_end; ++i) {
-    auto box = layout_to->itemAt(i * 2 + 0)->widget();
+  for (auto i = 1, i_end = layout_to->count() / 2; i < i_end; ++i) {
+    auto box = layout_to->itemAt(i * 2 + 1)->widget();
     auto h_layout = box->layout();
+    // if (!h_layout) continue;
     for (int j = 1, j_end = h_layout->count(); j < j_end; ++j) {
       auto check_button =
           qobject_cast<QRadioButton *>(h_layout->itemAt(j)->widget());

@@ -40,8 +40,10 @@ class DragNDropQWidget : public QWidget {
       _model_current_widget->setBaseStyle();
     }
     _model_current_widget = (*_widgets_collection)[combatant];
-    _model_current_widget->setModelCurrentStyle();
-    _model_current_widget->_fixe_style = true;
+    if (_model_current_widget) {
+      _model_current_widget->setModelCurrentStyle();
+      _model_current_widget->_fixe_style = true;
+    }
   }
 
   CombatantWidget* getCurrentWidget() { return _current_widget; }

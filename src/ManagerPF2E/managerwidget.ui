@@ -47,14 +47,8 @@ border-radius: 6px;
 background-color: rgb(162,162, 208);
 }
 
-QScrollArea#scrollArea_commands QScrollBar:vertical{
-border-radius: 4px;
-background-color: rgb(250,218, 221);
-}
-
-QScrollArea#scrollArea_commands QScrollBar::handle:vertical{
-border-radius: 6px;
-background-color: rgb(162,162, 208);
+QScrollArea#scrollArea_combatants QScrollBar::add-line:vertical, QScrollArea#scrollArea_combatants QScrollBar::sub-line:vertical {
+height: 0px;
 }</string>
    </property>
    <property name="frameShape">
@@ -202,6 +196,21 @@ background-color: rgb(230, 230, 250);
      <height>150</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QScrollArea#scrollArea_commands QScrollBar:horizontal{
+border-radius: 4px;
+background-color: rgb(250,218, 221);
+}
+
+QScrollArea#scrollArea_commands QScrollBar::handle:horizontal{
+border-radius: 6px;
+background-color: rgb(162,162, 208);
+}
+
+QScrollArea#scrollArea_combatants QScrollBar::add-line:horizontal, QScrollArea#scrollArea_combatants QScrollBar::sub-line:horizontal {
+wigth: 0px;
+}</string>
+   </property>
    <property name="frameShape">
     <enum>QFrame::NoFrame</enum>
    </property>
@@ -235,14 +244,14 @@ background-color: rgb(230, 230, 250);
     </sizepolicy>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton{
-font: bold 28px; 
-color: black;
-background-color: rgb(143, 240, 164);
+    <string notr="true">QPushButton {
+  font: bold 28px; 
+  color: black;
+  background-color: rgb(143, 240, 164);
 }</string>
    </property>
    <property name="text">
-    <string>Start of Turn</string>
+    <string>Next Turn</string>
    </property>
   </widget>
  </widget>

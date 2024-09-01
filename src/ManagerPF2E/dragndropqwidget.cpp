@@ -28,13 +28,9 @@ DragNDropQWidget::DragNDropQWidget(
                      &DragNDropQWidget::dragLeaveEvent);
     QObject::connect(it.second, &CombatantWidget::droped, this,
                      &DragNDropQWidget::dropEvent);
-    // _combatants_layout->addWidget(it.second);
-    //    QObject::connect(it, &CombatantWidget::clicked, this,
-    //                     &ManagerWidget::on_widget_drag);
     it.second->setAttribute(Qt::WA_StyledBackground);
   }
   setAcceptDrops(true);
-  // setAutoFillBackground(true);
 
   setAttribute(Qt::WA_StyledBackground);
   setPalette(QPalette(QColor(204, 204, 255)));
@@ -44,7 +40,7 @@ void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {
   CombatantWidget *obj = new CombatantWidget(combatant);
   _widgets_collection->insert(std::pair(obj->getCombatant(), obj));
 
-  _combatants_layout->insertWidget(_widgets_collection->size() - 1, obj);
+  _combatants_layout->addWidget(/*_widgets_collection->size() - 1,*/ obj);
   QObject::connect(obj, &CombatantWidget::mousePressed, this,
                    &DragNDropQWidget::mousePressEvent);
   QObject::connect(obj, &CombatantWidget::mouseMoved, this,
@@ -57,9 +53,10 @@ void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {
                    &DragNDropQWidget::dragLeaveEvent);
   QObject::connect(obj, &CombatantWidget::droped, this,
                    &DragNDropQWidget::dropEvent);
-  obj->setAttribute(Qt::WA_StyledBackground);
-  this->setFixedHeight(height() + _combatants_layout->spacing() +
-                       obj->height());
+  // obj->setAttribute(Qt::WA_StyledBackground);
+  this->setFixedHeight(_combatants_layout->count() *
+                           (obj->height() + _combatants_layout->spacing()) -
+                       _combatants_layout->spacing());
 }
 
 void DragNDropQWidget::mousePressEvent(QMouseEvent *event) {
@@ -87,16 +84,7 @@ void DragNDropQWidget::mouseMoveEvent(QMouseEvent *event) {
     QDrag *drag = new QDrag(widget);
     drag->setMimeData(new QMimeData());
 
-    //    if (/*!_drag_started &&*/ _current_widget) {
-    //      _combatants_layout->removeWidget(_current_widget);
-    //      _current_widget->hide();
-
-    //      //_drag_started = true;
-    //    }
-
     drag->exec(Qt::CopyAction | Qt::MoveAction);
-
-    // setCursor(Qt::ClosedHandCursor);
   }
 }
 
@@ -107,19 +95,26 @@ void DragNDropQWidget::mouseReleaseEvent(QMouseEvent *event) {
     if (_current_widget) {
       _combatants_layout->insertWidget(_current_widget_count, _current_widget);
       _current_widget->setBaseStyle();
-      _current_widget->show();
+      // _current_widget->show();
     }
   }
 }
 
 void DragNDropQWidget::updateContent() {
   int count = 0;
+  CombatantWidget *widget = nullptr;
   for (auto it : *_combatants_list) {
-    auto widget = (*_widgets_collection)[it];
+    widget = (*_widgets_collection)[it];
     _combatants_layout->removeWidget(widget);
     _combatants_layout->insertWidget(count++, widget);
     widget->updateContent();
   }
+
+  if (count > 4 && widget)
+    this->setFixedHeight(
+        _combatants_layout->count() *
+            (widget->height() + _combatants_layout->spacing()) -
+        _combatants_layout->spacing());
 }
 
 void DragNDropQWidget::updateContent(pf2e_manager::SubjectBase *combatant) {
@@ -141,22 +136,15 @@ void DragNDropQWidget::dragMoveEvent(QDragMoveEvent *event) {
   if (event->buttons() & Qt::LeftButton) {
     QPoint n_coordinates = QPoint(event->position().x(), event->position().y());
     int delta = n_coordinates.y() - _mouseStartPosition.y();
-    if (delta < 0 /*&&
-        (n_coordinates.y() - _area->y()) / (double)_area->height() < 0.3*/)
+    if (delta < 0)
       _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() -
                                            2);
-    else if (delta > 0 /*&&
-             (n_coordinates.y() - _area->y()) / (double)_area->height() > 0.7*/)
+    else if (delta > 0)
       _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() +
                                            2);
     _mouseStartPosition = event->position().toPoint();
   }
 
-  //  QPixmap pixmap = _current_widget->grab();
-  //  QPainter painter(this->parentWidget());
-  //  painter.drawPixmap(event->position().x(), event->position().y(),
-  //                     _current_widget->width(), _current_widget->height(),
-  //                     pixmap);
   event->accept();
 }
 
@@ -169,7 +157,7 @@ void DragNDropQWidget::dropEvent(QDropEvent *event) {
     else if (!widget) {
       _combatants_layout->insertWidget(_current_widget_count, _current_widget);
       _current_widget->setBaseStyle();
-      _current_widget->show();
+      // _current_widget->show();
       _current_widget = nullptr;
     }
 
@@ -179,7 +167,8 @@ void DragNDropQWidget::dropEvent(QDropEvent *event) {
                                _combatants_list->end(), widget->getCombatant());
 
     int ind = _combatants_layout->indexOf(widget);
-    // int ind = _combatants_layout->indexOf(*it_before);
+    if (ind > _combatants_layout->indexOf(_current_widget)) --ind;
+
     if (ind == -1) return;
 
     if (it != it_before) {
@@ -187,35 +176,18 @@ void DragNDropQWidget::dropEvent(QDropEvent *event) {
       _combatants_layout->removeWidget(_current_widget);
       _combatants_layout->insertWidget(ind, _current_widget);
       _current_widget->setBaseStyle();
-      _current_widget->show();
+      // _current_widget->show();
       _current_widget = nullptr;
-      //  _mouseStartPosition -= QPoint(0, _current_widget->height());
     }
 
-    update();
-    QVBoxLayout *new_layout = qobject_cast<QVBoxLayout *>(_combatants_layout
-                                                          /*this->layout()*/);
-    new_layout->update();
+    setModelCurrentComatant(_controller->getCurrent());
+
+    //    update();
+    //    QVBoxLayout *new_layout = qobject_cast<QVBoxLayout
+    //    *>(_combatants_layout);
+    //        new_layout->update();
     this->saveGeometry();
 
     if (event) event->accept();
   }
 }
-
-// void DragNDropQWidget::updateContent() {
-//   int count = 0;
-//   for (auto it : *_combatants_list) {
-//     auto widget = (*_widgets_collection)[it];
-//     _combatants_layout->removeWidget(widget);
-//     _combatants_layout->insertWidget(count++, widget);
-//     widget->updateContent();
-//   }
-// }
-
-// void DragNDropQWidget::updateContent(pf2e_manager::SubjectBase *combatant) {
-//   pf2e_manager::Combatant *body =
-//       dynamic_cast<pf2e_manager::Combatant *>(combatant);
-//   if (!body) return;
-//   auto widget = (*_widgets_collection)[body];
-//   if (widget) widget->updateContent();
-// }

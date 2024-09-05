@@ -1,7 +1,5 @@
 #include "managerwidget.h"
 
-#include <iostream>  // <-----------------------------
-
 #include "ui_managerwidget.h"
 
 ManagerWidget::ManagerWidget(QWidget *parent)
@@ -51,10 +49,6 @@ void ManagerWidget::on_pushButton_create_effect_clicked() {
   current_widget->updateContent();
 }
 
-// void ManagerWidget::setCurrent(QMouseEvent *event) {
-//   Q_UNUSED(event);
-
-//}
 
 void ManagerWidget::on_pushButton_create_combatant_clicked() {
   pf2e_manager::Combatant *body;

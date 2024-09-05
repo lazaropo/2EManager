@@ -126,7 +126,11 @@ class Model {
   t_pos_comb _curr_pos;
 
   FileReaderBase* _reader;
+#ifdef __CMAKE_IS_USED__
+  const std::string _path = (__CMAKE_IS_USED__ );
+#else
   const std::string _path = ("../Saved_info/info.txt");
+#endif
 };
 }  // namespace pf2e_manager
 #endif

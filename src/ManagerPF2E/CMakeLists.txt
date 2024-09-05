@@ -9,6 +9,7 @@ qt_add_library(ManagerPF2E_static STATIC
     dragndropqwidget.cpp
     dragndropqwidget_commands.cpp
     managerwidget.cpp
+     managerwidget.ui
 )
 target_link_libraries(ManagerPF2E_static
     PRIVATE

@@ -9,6 +9,7 @@
 #include <QMouseEvent>
 #include <QTextBrowser>
 #include <QWidget>
+#include <QScrollArea>
 //+++++++++++STL+++++++++++
 #include <vector>
 //+++++++++++CUSTOM+++++++++++
@@ -25,6 +26,8 @@ class DragNDropQWidgetCommands : public QWidget {
 
   void addCommand(pf2e_manager::CommandBase* command);
 
+  void setArea(QScrollArea* area) { _area = area;}
+
   // void updateContent();
 
  public slots:
@@ -36,6 +39,8 @@ class DragNDropQWidgetCommands : public QWidget {
   // void dropEvent(QDropEvent* event);
 
  private:
+   QScrollArea* _area = nullptr;
+
   pf2e_manager::Controller* _controller;
   std::vector<pf2e_manager::CommandBase*>* _commands_list;
 

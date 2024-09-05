@@ -8,11 +8,6 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
   QBoxLayout *layout = new QBoxLayout(QBoxLayout::LeftToRight);
   layout->setAlignment(Qt::AlignCenter);
   setLayout(layout);
-  //  QPalette palette(this->palette());
-  //  QImage image(":/images/sword.png");
-  //  // image.scaled(size(), Qt::KeepAspectRatio);
-  //  palette.setBrush(QPalette::Window, image);
-  //  setPalette(palette);
 
   setAutoFillBackground(true);
 
@@ -32,7 +27,6 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
     highligth_style =
         "QWidget#CommandIcon {"
         "background: url(:/images/harm_small.png) center;"
-        // "background-clip: content;"
         "border: none;"
         "border-radius: 9px; "
         "margin: 7px 3px 3px 3px; "
@@ -49,7 +43,6 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
         "background-clip: content;"
         "border: none;"
         "border-radius: 9px; "
-        // "border-image: solid 10px red;"
         "margin-top: 3px; "
         "}";
   } else if (dynamic_cast<MassHarmCommand *>(_command)) {
@@ -61,7 +54,6 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
     highligth_style =
         "QWidget#CommandIcon {"
         "background: url(:/images/massharm_small.png) center;"
-        // "background-clip: content;"
         "border: none;"
         "border-radius: 9px; "
         "margin: 7px 3px 3px 3px; "

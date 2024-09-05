@@ -147,8 +147,11 @@ class CombatantWidget : public QWidget {
       "font: bold 20px;"
       "color: black;"
       "}"
-      "QLineEdit {"
+      "QLineEdit{"
       "border-radius: 10px;"
+      "font: bold 16px;"
+      "color: black;"
+      "background-color: rgb(162, 162, 208);"
       "}"};
 
   QString _label_active_style{

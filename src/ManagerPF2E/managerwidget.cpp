@@ -16,6 +16,7 @@ ManagerWidget::ManagerWidget(QWidget *parent)
   using namespace pf2e_manager;
 
   _box_combatants->setArea(ui->scrollArea_combatants);
+  _box_commands->setArea(ui->scrollArea_commands);
 
   for (auto it : *_controller->getCombatants()) _box_combatants->addWidget(it);
 

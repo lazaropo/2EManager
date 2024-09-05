@@ -13,12 +13,20 @@
   <property name="windowTitle">
    <string/>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <property name="styleSheet">
-   <string notr="true">ManagerWidget{
+   <string notr="true">QWidget#ManagerWidget{
 background-color: rgb(175,218,252);
 }
-QWidget#scrollAreaWidgetContents {
-background-color: rgb(175,218,252);
+
+QScrollArea#scrollArea_combatants {
+background-color: rgb(216,191,216);
+}
+
+QScrollArea#scrollArea_commands {
+background-color: rgb(250, 238, 221);
 }</string>
   </property>
   <widget class="QScrollArea" name="scrollArea_combatants">
@@ -34,6 +42,9 @@ background-color: rgb(175,218,252);
     <bool>false</bool>
    </property>
    <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+   <property name="autoFillBackground">
     <bool>true</bool>
    </property>
    <property name="styleSheet">
@@ -52,10 +63,10 @@ height: 0px;
 }</string>
    </property>
    <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
+    <enum>QFrame::Shape::NoFrame</enum>
    </property>
    <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
+    <enum>QFrame::Shadow::Plain</enum>
    </property>
    <property name="widgetResizable">
     <bool>true</bool>
@@ -68,6 +79,9 @@ height: 0px;
       <width>1150</width>
       <height>521</height>
      </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
@@ -193,8 +207,11 @@ background-color: rgb(230, 230, 250);
      <x>10</x>
      <y>630</y>
      <width>1150</width>
-     <height>150</height>
+     <height>130</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
    </property>
    <property name="styleSheet">
     <string notr="true">QScrollArea#scrollArea_commands QScrollBar:horizontal{
@@ -207,12 +224,12 @@ border-radius: 6px;
 background-color: rgb(162,162, 208);
 }
 
-QScrollArea#scrollArea_combatants QScrollBar::add-line:horizontal, QScrollArea#scrollArea_combatants QScrollBar::sub-line:horizontal {
+QScrollArea#scrollArea_commands QScrollBar::add-line:horizontal, QScrollArea#scrollArea_commands QScrollBar::sub-line:horizontal {
 wigth: 0px;
 }</string>
    </property>
    <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
+    <enum>QFrame::Shape::NoFrame</enum>
    </property>
    <property name="widgetResizable">
     <bool>true</bool>
@@ -223,8 +240,11 @@ wigth: 0px;
       <x>0</x>
       <y>0</y>
       <width>1150</width>
-      <height>150</height>
+      <height>130</height>
      </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

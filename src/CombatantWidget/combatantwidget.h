@@ -9,6 +9,7 @@
 
 // #include "EffectListWidgetItem.h"
 #include "../CombatantWidget/MyMenuWidget.h"
+#include "../Model/CommandsImplementation.h"
 #include "../Model/Controller.h"
 
 QT_BEGIN_NAMESPACE

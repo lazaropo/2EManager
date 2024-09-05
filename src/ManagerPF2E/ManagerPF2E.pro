@@ -77,4 +77,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     ../CommandIcon/resource.qrc
 
+DISTFILES += \
+    ../../CMakeList.txt \
+    CMakeList.txt
+
 

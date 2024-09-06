@@ -11,14 +11,16 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Gui)
 qt_standard_project_setup()
 
-add_subdirectory(src/ManagerPF2E)
+add_subdirectory(src/Model)
+add_subdirectory(src/ReversePolishNotation)
 add_subdirectory(src/CombatantDialog)
 add_subdirectory(src/CombatantWidget)
 add_subdirectory(src/CommandDialog)
-add_subdirectory(src/CommandIcon)
 add_subdirectory(src/EffectDialog)
 add_subdirectory(src/ValueInputDialog)
-add_subdirectory(src/Model)
+add_subdirectory(src/CommandIcon)
+add_subdirectory(src/ManagerPF2E)
 
-#qt_add_executable(Manager main.cpp)
+#install(EXPORT ReversePolishNotationTargets DESTINATION src/CommandDialog/)
+
 

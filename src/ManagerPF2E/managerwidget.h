@@ -1,7 +1,6 @@
 #ifndef MANAGERWIDGET_H
 #define MANAGERWIDGET_H
 
-// #include <QList>
 #include <QListWidget>
 #include <QWidget>
 #include <list>

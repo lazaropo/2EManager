@@ -16,7 +16,7 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
       _controller->getCombatants();
   ui->comboBox_from->addItem(QIcon(), "<user>");
 
-  /*auto*/ layout_to = new QGridLayout();
+  layout_to = new QGridLayout();
 
   QLabel *text_coeffs = new QLabel();
   text_coeffs->setText("0x 0.5x 1x   2x");
@@ -68,7 +68,13 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
 CommandDialog::~CommandDialog() { delete ui; }
 
 void CommandDialog::on_pushButton_accept_clicked() {
-  int value = ui->lineEdit_value->text().toInt();
+  double value = 0;
+  wchar_t* w_arr = nullptr;
+  ui->lineEdit_value->text().toWCharArray(w_arr);
+  if(s21_is_expression_correct(w_arr) == OK)
+      s21_main_calc_function(w_arr, &value, 0);
+  else
+      return;
   // ind - 1 cause box_from starts from "user" variant
   int ind_sender = ui->comboBox_from->currentIndex() - 1;
   int max_count = ui->comboBox_from->count();
@@ -94,7 +100,7 @@ void CommandDialog::on_pushButton_accept_clicked() {
           coeff = 0.5;
         else if (j == 3)
           coeff = 2.;
-        info.push_back(std::pair(_list[i], static_cast<int>(value * coeff)));
+        info.push_back(std::pair(_list[i], static_cast<int>(static_cast<int>(value) * coeff)));
         break;
       }
     }

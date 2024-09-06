@@ -6,17 +6,21 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 qt_add_library(ManagerPF2E_static STATIC
+    managerwidget.h
+    dragndropqwidget.h
+    dragndropqwidget_commands.h
     dragndropqwidget.cpp
     dragndropqwidget_commands.cpp
     managerwidget.cpp
-     managerwidget.ui
+    managerwidget.ui
 )
 target_link_libraries(ManagerPF2E_static
     PRIVATE
     Qt6::Core
-   Qt6::Widgets
-   Qt6::Gui
-   model
+    Qt6::Widgets
+    Qt6::Gui
+    model
+    ReversePolishNotation
     combatantdialog
     combatantwidget
     commanddialog
@@ -36,6 +40,7 @@ target_link_libraries(ManagerPF2E
 
 target_include_directories(ManagerPF2E_static
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} )
+
 set_target_properties(ManagerPF2E PROPERTIES
     WIN32_EXECUTABLE ON
     MACOSX_BUNDLE ON

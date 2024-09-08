@@ -1,4 +1,5 @@
 qt_add_library(combatantdialog STATIC
+    combatantdialog.h
     combatantdialog.cpp
     combatantdialog.ui
 )

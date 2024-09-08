@@ -12,7 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS Gui)
 qt_standard_project_setup()
 
 add_subdirectory(src/Model)
-add_subdirectory(src/ReversePolishNotation)
+#add_subdirectory(src/ReversePolishNotation)
 add_subdirectory(src/CombatantDialog)
 add_subdirectory(src/CombatantWidget)
 add_subdirectory(src/CommandDialog)

@@ -19,7 +19,7 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
   layout_to = new QGridLayout();
 
   QLabel *text_coeffs = new QLabel();
-  text_coeffs->setText("0x 0.5x 1x   2x");
+  text_coeffs->setText("0x   0.5x   1x   2x");
   text_coeffs->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
   layout_to->addWidget(text_coeffs, 0, 0);
 
@@ -69,10 +69,9 @@ CommandDialog::~CommandDialog() { delete ui; }
 
 void CommandDialog::on_pushButton_accept_clicked() {
   double value = 0;
-  wchar_t* w_arr = nullptr;
-  ui->lineEdit_value->text().toWCharArray(w_arr);
-  if(s21_is_expression_correct(w_arr) == OK)
-      s21_main_calc_function(w_arr, &value, 0);
+  std::wstring w_arr = ui->lineEdit_value->text().toStdWString();
+  if(s21_is_expression_correct(w_arr.c_str()) == OK)
+      s21_main_calc_function(w_arr.c_str(), &value, 0);
   else
       return;
   // ind - 1 cause box_from starts from "user" variant

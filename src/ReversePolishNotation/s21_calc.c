@@ -34,9 +34,18 @@ node_t* s21_div(node_t** head) {
 
 node_t* s21_dice_mult(node_t** head) {
   if (!(*head)->prev) return *head;
+  // node_t* tmp = *head;
+  // FILE* file = fopen("output_calc.txt", "w");
+
+  // while(tmp) {
+  //     fprintf(fopen, "+++++++ %c %d ", tmp->ch, tmp->num);
+  //     tmp = tmp->prev;
+  // }
+  // fclose(file);
+
   double num1 = 0;
   s21_pop(head, &num1);
-  (*head)->num *= (rand() % num1 + 1);
+  (*head)->num *= (rand() % (int)num1 + 1);
   return *head;
 }
 
@@ -54,7 +63,7 @@ node_t* s21_func_calc_two_operands(node_t** head,
   return *head;
 }
 
-void s21_calculate_by_rule(node_t** head, char ch) {
+void s21_calculate_by_rule(node_t** head, wchar_t ch) {
   int operator_code = s21_is_func(ch);
   operator_code = operator_code ? operator_code : s21_is_operator(ch);
   switch (operator_code) {
@@ -91,9 +100,9 @@ void s21_calculate_by_rule(node_t** head, char ch) {
     }
     case DICE_MULTIPLYING_d:
     case DICE_MULTIPLYING_D:
-    case DICE_MULTIPLYING_d:
-    case DICE_MULTIPLYING_D:{
-      *head = s21_dice_mult(head, fmod);
+    case DICE_MULTIPLYING_b:
+    case DICE_MULTIPLYING_B:{
+      *head = s21_dice_mult(head);
       break;
     }
     case COS_FUNC_CH: {

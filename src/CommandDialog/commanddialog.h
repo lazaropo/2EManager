@@ -1,5 +1,5 @@
-#ifndef COMMANDDIALOG_H
-#define COMMANDDIALOG_H
+#ifndef _COMMANDDIALOG_H_
+#define _COMMANDDIALOG_H_
 
 #include <QComboBox>
 #include <QDialog>

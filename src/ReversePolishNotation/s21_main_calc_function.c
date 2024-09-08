@@ -10,6 +10,13 @@ int s21_main_calc_function(const wchar_t* expression, double* result,
   queue_t* queue = s21_enqueue(NULL, '0', NAN);
   int e_code = s21_parser_postfix_notation(queue, proccessed_expression);
 
+  queue_t* tmp = queue;
+
+  while(tmp) {
+      printf( "+++++++ %c %d ", tmp->ch, tmp->num);
+      tmp = tmp->next;
+  }
+
   if (!result)
     result = (double*)calloc(1, sizeof(double));
   else

@@ -5,12 +5,12 @@ typedef enum { OK, ERROR } def_e_code;
 
 #ifndef _S21_SMARTCALC_H_FA68C275_D180_43EB_9AAC_F1C629F79E74_
 #define _S21_SMARTCALC_H_FA68C275_D180_43EB_9AAC_F1C629F79E74_
-// #include <ctype.h>
+#include <wchar.h>
 #include <math.h>
 #include <stdbool.h>
-// #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-// #include <string.h>
+#include <string.h>
 
 #define BUFF_SIZE 512
 

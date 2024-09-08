@@ -1,15 +1,19 @@
 #set(__PATH_REVERSE_POLISH_NOTATION__ = "${CMAKE_CURRENT_SOURCE_DIR}/h")
 
 add_library(ReversePolishNotation STATIC
-#    s21_calc.h
+#combatantdialog.cpp    s21_calc.h
     s21_list_funcs.c
     s21_parsers_definisions.c
     s21_calc.c
     s21_main_calc_function.c
 )
 
+# set(CMAKE_C_COMPILE_OBJECT s21_list_funcs.c
+#     s21_parsers_definisions.c
+#     s21_calc.c
+#     s21_main_calc_function.c)
 
-include(GNUInstallDirs)
+#include(GNUInstallDirs)
 target_sources(ReversePolishNotation PUBLIC s21_calc.h)
 
 target_link_directories(ReversePolishNotation INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

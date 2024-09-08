@@ -52,7 +52,7 @@ int s21_is_operator(const wchar_t ch) {
 
 int s21_what_is_token(const wchar_t ch) {
   int e_code = 0;
-  if (isdigit(ch) || ch == VARIABLE_CH)
+  if (iswdigit(ch) || ch == VARIABLE_CH)
     e_code = NUMBER_CASE;
   else if (s21_is_func(ch) || ch == BRA_CH)
     e_code = FUNCTION_OR_BRA_CASE;
@@ -164,9 +164,9 @@ int s21_parser_postfix_notation(queue_t* root, const wchar_t* from) {
           head = s21_enqueue(head, VARIABLE_CH, NAN);
         else {
           wchar_t* tmp;
-          tmp_num = strtod(from, &tmp);
+          tmp_num = wcstold(from, &tmp);
           from = tmp;
-          from--;
+          from-=sizeof(wchar_t);
           head = s21_enqueue(head, '\0', tmp_num);
         }
         is_unary = false;
@@ -219,7 +219,7 @@ int s21_parser_postfix_notation(queue_t* root, const wchar_t* from) {
       default:
         break;
     }
-    from++;
+    from+=sizeof(wchar_t);
   }
   if (!(*from)) {
     if (stack && (stack->ch == BRA_CH || stack->ch == KET_CH))
@@ -238,18 +238,21 @@ int s21_parser_postfix_notation(queue_t* root, const wchar_t* from) {
 int s21_is_func_str(const wchar_t** from) {
   wchar_t ret_ch = 0;
   for (int i = 0; i < 10 && !ret_ch; ++i)
-    if (!strncmp(*from, map_with_strings[i], strlen(map_with_strings[i]))) {
+    if (!wcscmp(*from, map_with_strings[i])) {
       ret_ch = map_with_chars[i];
-      *from += strlen(map_with_strings[i]);
+      *from += sizeof(wchar_t) * wcsnlen(map_with_strings[i], BUFF_SIZE);
     }
   return ret_ch;
 }
 
 void s21_parser_from_infix_to_postfix(wchar_t* to, const wchar_t* from) {
   while (*from) {
-    if (*from == VARIABLE_CH || *from == LOWER_EXP_CH || *from == UPPER_EXP_CH)
-      *to++ = *from++;
-    else if (isalpha(*from)) {
+        if (*from == VARIABLE_CH || *from == LOWER_EXP_CH || *from == UPPER_EXP_CH) {
+          *to = *from;
+            to+=sizeof(wchar_t);
+          from+=sizeof(wchar_t);
+        }
+    else if (iswalpha(*from)) {
       int ch = s21_is_func_str(&from);
       switch (ch) {
         case MOD_FUNC_CH:
@@ -262,16 +265,20 @@ void s21_parser_from_infix_to_postfix(wchar_t* to, const wchar_t* from) {
         case SQRT_FUNC_CH:
         case LN_FUNC_CH:
         case LOG_FUNC_CH: {
-          *to++ = ch;
+          *to = ch;
+            to+=sizeof(wchar_t);
           break;
         }
         default: {
-          from++;
+          from+=sizeof(wchar_t);
           break;
         }
       }
-    } else
-      *to++ = *from++;
+        } else{
+            *to = *from;
+            to+=sizeof(wchar_t);
+            from+=sizeof(wchar_t);
+        }
   }
 }
 

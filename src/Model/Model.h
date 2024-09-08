@@ -127,7 +127,7 @@ class Model {
 
   FileReaderBase* _reader;
 #ifdef __CMAKE_IS_USED__
-  const std::string _path = (__CMAKE_IS_USED__ );
+  const std::string _path = (__CMAKE_IS_USED__);
 #else
   const std::string _path = ("../Saved_info/info.txt");
 #endif

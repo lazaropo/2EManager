@@ -1,6 +1,6 @@
 #include "s21_calc.h"
 
-node_t* s21_sum(node_t** head) {
+node_t *s21_sum(node_t **head) {
   if (!(*head)->prev) return *head;
   double num1 = 0;
   s21_pop(head, &num1);
@@ -8,7 +8,7 @@ node_t* s21_sum(node_t** head) {
   return *head;
 }
 
-node_t* s21_sub(node_t** head) {
+node_t *s21_sub(node_t **head) {
   if (!(*head)->prev) return *head;
   double num1 = 0;
   s21_pop(head, &num1);
@@ -16,7 +16,7 @@ node_t* s21_sub(node_t** head) {
   return *head;
 }
 
-node_t* s21_mul(node_t** head) {
+node_t *s21_mul(node_t **head) {
   if (!(*head)->prev) return *head;
   double num1 = 0;
   s21_pop(head, &num1);
@@ -24,7 +24,7 @@ node_t* s21_mul(node_t** head) {
   return *head;
 }
 
-node_t* s21_div(node_t** head) {
+node_t *s21_div(node_t **head) {
   if (!(*head)->prev) return *head;
   double num1 = 0;
   s21_pop(head, &num1);
@@ -32,29 +32,32 @@ node_t* s21_div(node_t** head) {
   return *head;
 }
 
-node_t* s21_dice_mult(node_t** head) {
+node_t *s21_dice_mult(node_t **head) {
   if (!(*head)->prev) return *head;
-  // node_t* tmp = *head;
-  // FILE* file = fopen("output_calc.txt", "w");
+  node_t *tmp = *head;
 
-  // while(tmp) {
-  //     fprintf(fopen, "+++++++ %c %d ", tmp->ch, tmp->num);
-  //     tmp = tmp->prev;
-  // }
-  // fclose(file);
+  while (tmp) {
+    printf("+++++++ %c %f ", tmp->ch, tmp->num);
+    tmp = tmp->prev;
+  }
 
   double num1 = 0;
   s21_pop(head, &num1);
-  (*head)->num *= (rand() % (int)num1 + 1);
+  int len = (*head)->num;
+  (*head)->num = 0;
+  srand(time(NULL));
+  for (int i = 0; i < len; ++i) {
+    (*head)->num += (rand() % (int)num1 + 1);
+  }
   return *head;
 }
 
-node_t* s21_func_calc(node_t** head, double(math_func(double))) {
+node_t *s21_func_calc(node_t **head, double(math_func(double))) {
   (*head)->num = math_func((*head)->num);
   return *head;
 }
 
-node_t* s21_func_calc_two_operands(node_t** head,
+node_t *s21_func_calc_two_operands(node_t **head,
                                    double(math_func(double a, double b))) {
   if (!(*head)->prev) return *head;
   double num1 = 0;
@@ -63,7 +66,7 @@ node_t* s21_func_calc_two_operands(node_t** head,
   return *head;
 }
 
-void s21_calculate_by_rule(node_t** head, wchar_t ch) {
+void s21_calculate_by_rule(node_t **head, wchar_t ch) {
   int operator_code = s21_is_func(ch);
   operator_code = operator_code ? operator_code : s21_is_operator(ch);
   switch (operator_code) {
@@ -101,7 +104,7 @@ void s21_calculate_by_rule(node_t** head, wchar_t ch) {
     case DICE_MULTIPLYING_d:
     case DICE_MULTIPLYING_D:
     case DICE_MULTIPLYING_b:
-    case DICE_MULTIPLYING_B:{
+    case DICE_MULTIPLYING_B: {
       *head = s21_dice_mult(head);
       break;
     }
@@ -147,10 +150,10 @@ void s21_calculate_by_rule(node_t** head, wchar_t ch) {
   }
 }
 
-int s21_calculate(queue_t* head, double* result, double x_value) {
+int s21_calculate(queue_t *head, double *result, double x_value) {
   if (!head) return ERROR;
-  node_t* stack = NULL;
-  queue_t* ptr = head;
+  node_t *stack = NULL;
+  queue_t *ptr = head;
 
   ptr = head;
   do {

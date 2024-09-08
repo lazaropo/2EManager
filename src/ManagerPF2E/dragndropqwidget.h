@@ -12,7 +12,6 @@
 //+++++++++++CUSTOM+++++++++++
 #include "../CombatantWidget/combatantwidget.h"
 
-
 class DragNDropQWidget : public QWidget {
  public:
   DragNDropQWidget(QWidget* parent = nullptr)

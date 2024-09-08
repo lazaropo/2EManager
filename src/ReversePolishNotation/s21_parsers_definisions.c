@@ -147,15 +147,15 @@ int s21_get_priority(const wchar_t ch) {
   return e_code;
 }
 
-int s21_parser_postfix_notation(queue_t* root, const wchar_t* from) {
+int s21_parser_postfix_notation(queue_t *root, const wchar_t *from) {
   if (!from || !root) return ERROR;
 
   setlocale(LC_ALL, "en_US.UTF-8");
 
   int e_code = OK;
   bool is_unary = true;
-  queue_t* head = root;
-  node_t* stack = NULL;
+  queue_t *head = root;
+  node_t *stack = NULL;
   double tmp_num = 0;
   while (*from && *from != EQUALITY_CH && e_code == OK) {
     switch (s21_what_is_token(*from)) {
@@ -163,10 +163,10 @@ int s21_parser_postfix_notation(queue_t* root, const wchar_t* from) {
         if (*from == VARIABLE_CH)
           head = s21_enqueue(head, VARIABLE_CH, NAN);
         else {
-          wchar_t* tmp;
+          wchar_t *tmp;
           tmp_num = wcstold(from, &tmp);
           from = tmp;
-          from-=sizeof(wchar_t);
+          from--;
           head = s21_enqueue(head, '\0', tmp_num);
         }
         is_unary = false;
@@ -219,7 +219,7 @@ int s21_parser_postfix_notation(queue_t* root, const wchar_t* from) {
       default:
         break;
     }
-    from+=sizeof(wchar_t);
+    from++;
   }
   if (!(*from)) {
     if (stack && (stack->ch == BRA_CH || stack->ch == KET_CH))
@@ -235,25 +235,27 @@ int s21_parser_postfix_notation(queue_t* root, const wchar_t* from) {
   return e_code;
 }
 
-int s21_is_func_str(const wchar_t** from) {
+int s21_is_func_str(const wchar_t **from) {
   wchar_t ret_ch = 0;
   for (int i = 0; i < 10 && !ret_ch; ++i)
-    if (!wcscmp(*from, map_with_strings[i])) {
+    if (wcsstr(*from, map_with_strings[i]) == *from) {
       ret_ch = map_with_chars[i];
-      *from += sizeof(wchar_t) * wcsnlen(map_with_strings[i], BUFF_SIZE);
+      *from += wcslen(map_with_strings[i]);
     }
   return ret_ch;
 }
 
-void s21_parser_from_infix_to_postfix(wchar_t* to, const wchar_t* from) {
+void s21_parser_from_infix_to_postfix(wchar_t *to, const wchar_t *from) {
   while (*from) {
-        if (*from == VARIABLE_CH || *from == LOWER_EXP_CH || *from == UPPER_EXP_CH) {
-          *to = *from;
-            to+=sizeof(wchar_t);
-          from+=sizeof(wchar_t);
-        }
-    else if (iswalpha(*from)) {
+    if (*from == VARIABLE_CH || *from == LOWER_EXP_CH ||
+        *from == UPPER_EXP_CH) {
+      *to++ = *from++;
+    } else if (*from == DICE_MULTIPLYING_d || *from == DICE_MULTIPLYING_D ||
+               *from == DICE_MULTIPLYING_b || *from == DICE_MULTIPLYING_B) {
+      *to++ = *from++;
+    } else if (iswalpha(*from)) {
       int ch = s21_is_func_str(&from);
+      // printf("%d   .....  %c <<<<<<<\n", ch, ch);
       switch (ch) {
         case MOD_FUNC_CH:
         case COS_FUNC_CH:
@@ -265,28 +267,25 @@ void s21_parser_from_infix_to_postfix(wchar_t* to, const wchar_t* from) {
         case SQRT_FUNC_CH:
         case LN_FUNC_CH:
         case LOG_FUNC_CH: {
-          *to = ch;
-            to+=sizeof(wchar_t);
+          *to++ = (wchar_t)ch;
           break;
         }
         default: {
-          from+=sizeof(wchar_t);
+          from++;
           break;
         }
       }
-        } else{
-            *to = *from;
-            to+=sizeof(wchar_t);
-            from+=sizeof(wchar_t);
-        }
+    } else {
+      *to++ = *from++;
+    }
   }
 }
 
-int s21_is_expression_correct(const wchar_t* from) {
+int s21_is_expression_correct(const wchar_t *from) {
   wchar_t proccessed_expression[BUFF_SIZE];
-  memset(proccessed_expression, '\0', BUFF_SIZE);
+  memset(proccessed_expression, '\0', BUFF_SIZE * sizeof(wchar_t));
   s21_parser_from_infix_to_postfix(proccessed_expression, from);
-  queue_t* queue = s21_enqueue(NULL, '0', 0.);
+  queue_t *queue = s21_enqueue(NULL, '0', 0.);
   int e_code = s21_parser_postfix_notation(queue, from);
   s21_remove_list_q(&queue);
   return e_code;

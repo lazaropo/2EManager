@@ -39,10 +39,9 @@ DragNDropQWidget::DragNDropQWidget(
   //               "background-color: rgb(216,191,216);"
   //               "border-radius: 6px;"
   //               "}");
-  auto palette = QPalette(QColor(216,191,216));
+  auto palette = QPalette(QColor(216, 191, 216));
   setPalette(palette);
-  if(_area)
-      _area->setPalette(palette);
+  if (_area) _area->setPalette(palette);
 }
 
 void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {

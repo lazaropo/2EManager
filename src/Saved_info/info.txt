@@ -1,5 +1,5 @@
-combatant:name:Zalayla/hpmax:186/initiative:36/side:team/vitality:alive/
-combatant:name:Aksel/hpmax:161/initiative:26/side:team/vitality:alive/
-combatant:name:Vulphi/hpmax:233/initiative:42/side:team/vitality:alive/
-combatant:name:Shell/hpmax:237/initiative:24/side:team/vitality:alive/
-combatant:name:ttt/hpmax:123/initiative:1/side:team/vitality:alive/
+combatant:name:Bruford/hpmax:100/initiative:22/side:team/vitality:alive/
+combatant:name:Railag/hpmax:100/initiative:16/side:team/vitality:alive/
+combatant:name:Roxana/hpmax:100/initiative:17/side:team/vitality:alive/
+combatant:name:Torfit/hpmax:100/initiative:10/side:team/vitality:alive/
+combatant:name:ttt/hpmax:345/initiative:45/side:eneamy/vitality:construct/

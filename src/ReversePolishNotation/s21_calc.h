@@ -5,12 +5,14 @@ typedef enum { OK, ERROR } def_e_code;
 
 #ifndef _S21_SMARTCALC_H_FA68C275_D180_43EB_9AAC_F1C629F79E74_
 #define _S21_SMARTCALC_H_FA68C275_D180_43EB_9AAC_F1C629F79E74_
-#include <wchar.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>  // time as sedd for rand()
+#include <wchar.h>
+#include <wctype.h>
 
 #define BUFF_SIZE 512
 
@@ -72,7 +74,8 @@ typedef enum {
 } set_of_funcs_for_calc;
 
 static const wchar_t map_with_strings[][5] = {
-    L"mod", L"cos", L"sin", L"tan", L"acos", L"asin", L"atan", L"sqrt", L"ln", L"log"};
+    L"mod",  L"cos",  L"sin",  L"tan", L"acos",
+    L"asin", L"atan", L"sqrt", L"ln",  L"log"};
 static const wchar_t map_with_chars[] = {
     MOD_FUNC_CH,  COS_FUNC_CH,  SIN_FUNC_CH,  TAN_FUNC_CH, ACOS_FUNC_CH,
     ASIN_FUNC_CH, ATAN_FUNC_CH, SQRT_FUNC_CH, LN_FUNC_CH,  LOG_FUNC_CH};

@@ -50,7 +50,6 @@ void ManagerWidget::on_pushButton_create_effect_clicked() {
   current_widget->updateContent();
 }
 
-
 void ManagerWidget::on_pushButton_create_combatant_clicked() {
   pf2e_manager::Combatant *body;
   CombatantDialog dialog(&body);

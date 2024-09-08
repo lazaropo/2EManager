@@ -11,10 +11,10 @@
 
 extern "C" {
 // #ifndef MYLIB_STATIC_DEFINE
-// #include "../ReversePolishNotation/s21_calc_static.h" // __PATH_REVERSE_POLISH_NOTATION__
-// #else
-// #include "../ReversePolishNotation/s21_calc_shared.h" // __PATH_REVERSE_POLISH_NOTATION__
-// #endif
+// #include "../ReversePolishNotation/s21_calc_static.h" //
+// __PATH_REVERSE_POLISH_NOTATION__ #else #include
+// "../ReversePolishNotation/s21_calc_shared.h" //
+// __PATH_REVERSE_POLISH_NOTATION__ #endif
 #include "../ReversePolishNotation/s21_calc.h"
 }
 

@@ -70,10 +70,10 @@ CommandDialog::~CommandDialog() { delete ui; }
 void CommandDialog::on_pushButton_accept_clicked() {
   double value = 0;
   std::wstring w_arr = ui->lineEdit_value->text().toStdWString();
-  if(s21_is_expression_correct(w_arr.c_str()) == OK)
-      s21_main_calc_function(w_arr.c_str(), &value, 0);
+  if (s21_is_expression_correct(w_arr.c_str()) == OK)
+    s21_main_calc_function(w_arr.c_str(), &value, 0);
   else
-      return;
+    return;
   // ind - 1 cause box_from starts from "user" variant
   int ind_sender = ui->comboBox_from->currentIndex() - 1;
   int max_count = ui->comboBox_from->count();
@@ -99,7 +99,8 @@ void CommandDialog::on_pushButton_accept_clicked() {
           coeff = 0.5;
         else if (j == 3)
           coeff = 2.;
-        info.push_back(std::pair(_list[i], static_cast<int>(static_cast<int>(value) * coeff)));
+        info.push_back(std::pair(
+            _list[i], static_cast<int>(static_cast<int>(value) * coeff)));
         break;
       }
     }

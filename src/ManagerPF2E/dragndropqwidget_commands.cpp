@@ -27,8 +27,7 @@ DragNDropQWidgetCommands::DragNDropQWidgetCommands(
   // This widget should be filled by color with code, not with qt designer
   auto palette = QPalette(QColor(250, 238, 221));
   setPalette(palette);
-  if(_area)
-      _area->setPalette(palette);
+  if (_area) _area->setPalette(palette);
 }
 
 void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {

@@ -5,5 +5,3 @@ qt_add_library(combatantwidget STATIC
 )
 target_link_libraries(combatantwidget PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui)
 target_include_directories(combatantwidget INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
-
-

@@ -7,6 +7,13 @@
 #include <string>
 #include <vector>
 
+#ifdef _USE_BOOST_SERIALIZE_
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#endif
+
 #include "EffectBase.h"
 #include "SubjectBase.h"
 
@@ -27,10 +34,8 @@ class Combatant : public SubjectBase {
         _hp_curr(hp),
         _initiative(initiative),
         _side(side),
-        // _name(name),
         _vitality(vit) {
     setName(name);
-    //_effects.clear();
   }
 
   ~Combatant() {
@@ -95,7 +100,21 @@ class Combatant : public SubjectBase {
 
   void setInitiative(int initiavite) { _initiative = initiavite; }
 
-  // friend class SimpleEffect;
+#ifdef _USE_BOOST_SERIALIZE_
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const size_t version) {
+    ar & boost::serialization::base_object<SubjectBase>(*this);
+    ar & _hp_max;
+    ar & _hp_tmp;
+    ar & _hp_curr;
+    ar & _initiative;
+    ar & _level;
+    ar & _side;
+    ar & _vitality;
+    ar & _effects;
+  }
+#endif
 
  private:
   int _hp_max;

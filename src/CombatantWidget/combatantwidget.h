@@ -1,5 +1,5 @@
-#ifndef COMBATANTWIDGET_H
-#define COMBATANTWIDGET_H
+#ifndef _COMBATANTWIDGET_H
+#define _COMBATANTWIDGET_H
 
 #include <QDrag>
 #include <QListWidget>
@@ -78,15 +78,7 @@ class CombatantWidget : public QWidget {
     updateContent();
   }
 
-  //  void enterEvent(QEnterEvent *event) override;
-  //  void leaveEvent(QEvent *event) override;
-
- private slots:
-  // void lineEditCurrHPFinished();
-
-  // void mouseMoved(QMouseEvent *event = nullptr);
-
- private:
+  private:
   Ui::CombatantWidget *ui;
 
   MyMenuWidget *_listWidget_effect = new MyMenuWidget(this);

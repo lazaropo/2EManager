@@ -20,7 +20,6 @@ target_link_libraries(ManagerPF2E_static
     Qt6::Widgets
     Qt6::Gui
     model
-#    ReversePolishNotation
     combatantdialog
     combatantwidget
     commanddialog

@@ -4,6 +4,12 @@
 #include <iostream>
 #include <string>
 
+#ifdef _USE_BOOST_SERIALIZE_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/string.hpp>
+#endif
+
 namespace pf2e_manager {
 class SubjectBase {
  public:
@@ -21,6 +27,20 @@ class SubjectBase {
   void setName(const std::string name) { _name = name; }
   void setReciever(SubjectBase* reciever) { _reciever = reciever; }
   void setInvoker(SubjectBase* invoker) { _invoker = invoker; }
+
+#ifdef _USE_BOOST_SERIALIZE_
+  friend class boost::serialization::access;
+
+  private:
+  template <class Archive>
+  void serialize(Archive & ar, const size_t version) {
+      ar & boost::serialization::base_object<SubjectBase>(*this);
+      ar & _name;
+      ar & _subject;
+      ar & _reciever;
+      ar & _invoker;
+  }
+#endif
 
  protected:
   std::string _name = "";

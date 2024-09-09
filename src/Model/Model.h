@@ -10,8 +10,18 @@
 
 #include "Combatant.h"
 #include "Mediator.h"
+#ifdef _USE_TXT_READER_
 #include "TXTReader.h"
+#endif
 // #include "SimpleEffectBuilder.h"
+
+#ifdef _USE_BOOST_SERIALIZE_
+#include <boost/serialization/list.hpp>
+#include <boost/serialization/version.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#endif
 
 namespace pf2e_manager {
 class Model {
@@ -119,18 +129,29 @@ class Model {
 
   Combatant* getCurrent() { return *_curr_pos; }
 
+#ifdef _USE_BOOST_SERIALIZE_
+  friend class boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive & ar, const size_t version) {
+    if(version>0) {
+      ar & *_combatants;
+      // ar & _mediator;
+      ar & _curr_pos;
+    }
+  }
+#endif
+
  private:
   std::list<Combatant*>* _combatants = nullptr;
   MediatorInterface* _mediator;
 
   t_pos_comb _curr_pos;
-
+#ifdef _USE_TXT_READER_
   FileReaderBase* _reader;
-#ifdef __CMAKE_IS_USED__
-  const std::string _path = (__CMAKE_IS_USED__);
-#else
   const std::string _path = ("../Saved_info/info.txt");
 #endif
+
+
 };
 }  // namespace pf2e_manager
 #endif

@@ -1,5 +1,5 @@
-#ifndef COMBATANTDIALOG_H
-#define COMBATANTDIALOG_H
+#ifndef _COMBATANTDIALOG_H_
+#define _COMBATANTDIALOG_H_
 
 #include <QDialog>
 

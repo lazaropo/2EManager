@@ -4,6 +4,13 @@
 #include <string>
 #include <vector>
 
+#ifdef _USE_BOOST_SERIALIZE_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/base_object.hpp>
+#endif
+
 #include "SubjectBase.h"
 
 namespace pf2e_manager {
@@ -65,6 +72,22 @@ class EffectBase : public SubjectBase {
   int getDuration() const { return _duration; }
   int isActive() const { return _is_active; }
   const std::string &getDescription() const { return _description; }
+
+#ifdef _USE_BOOST_SERIALIZE_
+  friend class boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive & ar, const size_t version) {
+    if(_is_active) {
+        ar & boost::serialization::base_object<SubjectBase>(*this);
+    ar & _duration;
+    ar & _is_active;
+    ar & _type;
+    ar & _value;
+    ar & _trigger;
+    ar & _description;
+    }
+  }
+#endif
 
  protected:
   int _duration = 0;  // per round

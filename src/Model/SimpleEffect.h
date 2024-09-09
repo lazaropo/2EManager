@@ -9,6 +9,15 @@
 #include "MediatorInterface.h"
 // #include "SubjectBase.h"
 
+#ifdef _USE_BOOST_SERIALIZE_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/base_object.hpp>
+#endif
+
+
+
 namespace pf2e_manager {
 // class Combatant;
 // class Mediator;
@@ -56,7 +65,17 @@ class SimpleEffect : public EffectBase {
   friend class Combatant;
   friend class SimpleEffectBuilder;
 
-  // const Trigger _trigger;
+#ifdef _USE_BOOST_SERIALIZE_
+  friend class boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive & ar, const size_t version) {
+      ar & boost::serialization::base_object<EffectBase>(*this);
+      ar & _is_associated_provided;
+      ar & _associated_actions;
+      ar & _execute_actions;
+
+  }
+#endif
 
  protected:
   bool _is_associated_provided = false;

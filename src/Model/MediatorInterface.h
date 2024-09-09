@@ -6,6 +6,7 @@
 #include "CommandBase.h"
 #include "SubjectBase.h"
 
+
 namespace pf2e_manager {
 class MediatorInterface {
  public:

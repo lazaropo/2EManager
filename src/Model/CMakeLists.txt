@@ -1,4 +1,7 @@
-add_compile_definitions(model PRIVATE __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt")
+add_compile_definitions(model PRIVATE _USE_BOOST_SERIALIZE_=1)
+# Define these macro to use saves
+# _USE_BOOST_SERIALIZE_ macro
+# _USE_TXT_READER_ macro
 
 add_library(model STATIC
     Combatant.cpp

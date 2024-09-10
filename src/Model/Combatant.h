@@ -12,10 +12,14 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+
+std::stringstream ss;
 #endif
 
 #include "EffectBase.h"
 #include "SubjectBase.h"
+
+
 
 namespace pf2e_manager {
 
@@ -74,7 +78,7 @@ class Combatant : public SubjectBase {
     for (auto it : _effects) it->notifyTrigger(trigger);
   }
 
-  static std::string formattingSide(Side side, bool is_first_upper,
+   static  std::string formattingSide(Side side, bool is_first_upper,
                                     bool with_colon);
   static Side formattingSide(const std::string& string);
 
@@ -118,7 +122,7 @@ class Combatant : public SubjectBase {
 
  private:
   int _hp_max;
-  int _hp_tmp;
+  int _hp_tmp = 0;
   int _hp_curr;
   int _initiative;
   int _level;

@@ -83,7 +83,15 @@ class Controller {
   std::vector<CommandBase*>& getCommands() { return _model->getCommands(); }
 
   Combatant* getCurrent() { return _model->getCurrent(); }
+#ifdef _USE_BOOST_SERIALIZE_
+  void save() {
+      return _model->save();
+  }
 
+  void load() {
+      return _model->load();
+  }
+#endif
  private:
   Model* _model;
 };

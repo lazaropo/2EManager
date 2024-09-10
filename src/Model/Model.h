@@ -128,17 +128,29 @@ class Model {
   std::vector<CommandBase*>& getCommands() { return _mediator->getCommands(); }
 
   Combatant* getCurrent() { return *_curr_pos; }
-
 #ifdef _USE_BOOST_SERIALIZE_
+  private:
+
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive & ar, const size_t version) {
-    if(version>0) {
-      ar & *_combatants;
+    //if(version>0) {
+      ar & _combatants;
       // ar & _mediator;
       ar & _curr_pos;
-    }
+    //}
   }
+  public:
+  void save() {
+      boost::archive::xml_oarchive oa { ss };
+      oa << *this;
+  }
+
+  void load() {
+      boost::archive::xml_iarchive ia { ss };
+      ia >> *this;
+  }
+
 #endif
 
  private:
@@ -153,5 +165,122 @@ class Model {
 
 
 };
+
 }  // namespace pf2e_manager
 #endif
+
+/*
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+
+#include <boost/serialization/export.hpp>
+#include <iostream>
+#include <fstream>
+
+//base class
+struct base
+{
+  base(double d) : m_d(d) {}
+  virtual double run() = 0;
+private:
+
+  friend class boost::serialization::access;
+  double m_d;
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version)
+  {
+    ar & m_d;
+  }
+};
+
+//forward declare the save construct data before friending it
+// (something about friend being in a different namespace)
+class derived;
+namespace boost { namespace serialization {
+template<class Archive>
+inline void save_construct_data(Archive & ar, const derived * t, const unsigned int file_version);
+}}
+
+
+//derived class with non-default constructor
+struct derived : public base
+{
+  derived(double a , double b) :
+    base(a+b),
+    m_a(a),m_b(b),m_c(a*b)
+  {}
+  //some checks
+  double get_a() const {return m_a;}
+  double get_b() const {return m_b;}
+  double get_c() const {return m_c;}
+
+  double run(){return 1.0;}
+private:
+
+  friend class boost::serialization::access;
+  template<class Archive>
+  friend void boost::serialization::save_construct_data(Archive & ar, const derived * t, const unsigned int file_version);
+
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version)
+  {
+    ar & boost::serialization::base_object<base>(*this);
+    //only need to return c, a and b already done for constructor
+    ar & m_c;
+  }
+  double m_a, m_b, m_c;
+ };
+
+//Save and load the data required for the constructor.
+namespace boost { namespace serialization {
+  template <class Archive>
+    inline void save_construct_data(
+                    Archive & ar,const derived* d,const unsigned int file_version
+                    )
+    {
+      // save data required to construct instance
+      ar << d->m_a;
+      ar << d->m_b;
+    }
+    template <class Archive>
+    inline void load_construct_data(
+                        Archive & ar, derived* d,const unsigned int file_version
+                        )
+    {
+      double a,b;
+      ar >> a;
+      ar >> b;
+    // invoke inplace constructor to initialize instance of my_class
+      ::new(d) derived(a,b);
+    }
+
+  }
+}
+
+//register the derived class with boost.
+BOOST_CLASS_EXPORT_GUID(derived, "derived")
+
+int main  (int ac, char **av)
+{
+  std::ofstream ofs("filename");
+  base* p = new derived(2,3);
+
+  // save data to archive
+  {
+    boost::archive::text_oarchive oa(ofs);
+    oa << p;
+  }
+
+  // ... some time later restore the class instance to its orginal state
+  base* p2;
+  {
+     std::ifstream ifs("filename");
+     boost::archive::text_iarchive ia(ifs);
+     ia >> p2;
+  }
+
+  derived* d = static_cast<derived*>(p2);
+  std::cout<<"p2 vals are: "<<d->get_a()<<" "<<d->get_b()<<" "<<d->get_c()<<std::endl;
+
+}*/
+

@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
+
+
 project(ManagerPF2E VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 qt_add_library(ManagerPF2E_static STATIC
     managerwidget.h
@@ -27,6 +30,8 @@ target_link_libraries(ManagerPF2E_static
     EffectDialog
     valueinputdialog
     )
+
+
 
 qt_add_executable(ManagerPF2E
     main.cpp)

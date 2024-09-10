@@ -15,6 +15,10 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
   using namespace pf2e_manager;
 
+#ifdef _USE_BOOST_SERIALIZE_
+  _controller->load();
+#endif
+
   _box_combatants->setArea(ui->scrollArea_combatants);
   _box_commands->setArea(ui->scrollArea_commands);
 
@@ -35,6 +39,9 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 }
 
 ManagerWidget::~ManagerWidget() {
+#ifdef _USE_BOOST_SERIALIZE_
+    _controller->save();
+#endif
   delete ui;
   delete _controller;
 }

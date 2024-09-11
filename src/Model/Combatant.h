@@ -8,12 +8,12 @@
 #include <vector>
 
 #ifdef _USE_BOOST_SERIALIZE_
-#include <boost/serialization/base_object.hpp>
-#include <boost/serialization/vector.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/vector.hpp>
 
-std::stringstream ss;
+inline std::stringstream ss;
 #endif
 
 #include "EffectBase.h"
@@ -106,6 +106,8 @@ class Combatant : public SubjectBase {
 
 #ifdef _USE_BOOST_SERIALIZE_
   friend class boost::serialization::access;
+  friend std::ostream &operator<<(std::ostream &os, const Combatant &combatant);
+
   template<class Archive>
   void serialize(Archive & ar, const size_t version) {
     ar & boost::serialization::base_object<SubjectBase>(*this);
@@ -132,7 +134,33 @@ class Combatant : public SubjectBase {
 
   std::vector<EffectBase*> _effects = {};
 };
+#ifdef _USE_BOOST_SERIALIZE_
+inline std::ostream &operator<<(std::ostream &os, const Combatant::Side &side)
+{
+  os << ' ' << side;
+  return os;
+}
 
+inline std::ostream &operator<<(std::ostream &os, const Combatant::Vitality &vitality)
+{
+  os << ' ' << vitality;
+  return os;
+}
+
+inline std::ostream &operator<<(std::ostream &os, const Combatant &combatant)
+{
+  os << ' ' << combatant._hp_max << ' ' << combatant._hp_tmp << ' ' << combatant._hp_curr << ' '
+     << combatant._initiative << ' ' << combatant._level << ' ' << combatant._side << ' '
+     << combatant._vitality;
+
+  for (std::vector<EffectBase *>::const_iterator it = combatant._effects.begin(),
+                                                 it_end = combatant._effects.end();
+       it != it_end;
+       ++it)
+    os << ' ' << std::hex << "0x" << *it << std::dec << ' ' << **it;
+  return os;
+}
+#endif
 // inline bool operator<(const Combatant& fisrt, const Combatant& second) {
 //   return fisrt._initiative < second._initiative;
 // }

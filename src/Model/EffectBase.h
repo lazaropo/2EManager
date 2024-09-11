@@ -87,9 +87,11 @@ class EffectBase : public SubjectBase {
     ar & _description;
     }
   }
+  friend inline std::ostream &operator<<(std::ostream &os, const EffectBase &effect);
+
 #endif
 
- protected:
+  protected:
   int _duration = 0;  // per round
   bool _is_active = false;
   int _type = 0;  // bit field
@@ -98,6 +100,21 @@ class EffectBase : public SubjectBase {
 
   std::string _description = "";
 };
+
+#ifdef _USE_BOOST_SERIALIZE_
+inline std::ostream &operator<<(std::ostream &os, const EffectBase::Trigger &trigger)
+{
+  os << ' ' << trigger;
+  return os;
+}
+
+inline std::ostream &operator<<(std::ostream &os, const EffectBase &effect)
+{
+  os << ' ' << effect._duration << ' ' << effect._is_active << ' ' << effect._type << ' '
+     << effect._value << ' ' << effect._trigger << ' ' << effect._description << '\n';
+  return os;
+}
+#endif
 }  // namespace pf2e_manager
 
 #endif  // EFFECTBASE_H

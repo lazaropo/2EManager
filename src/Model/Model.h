@@ -21,6 +21,8 @@
 #include <boost/serialization/string.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+
+#include <iostream> // ostream for boost::serialize
 #endif
 
 namespace pf2e_manager {
@@ -129,27 +131,44 @@ class Model {
 
   Combatant* getCurrent() { return *_curr_pos; }
 #ifdef _USE_BOOST_SERIALIZE_
-  private:
 
   friend class boost::serialization::access;
-  template <class Archive>
-  void serialize(Archive & ar, const size_t version) {
+  friend inline std::ostream &operator<<(std::ostream &os, const Model &object);
+
+  private:
+  template<class Archive>
+  void serialize(Archive &ar, const size_t version)
+  {
     //if(version>0) {
       ar & _combatants;
       // ar & _mediator;
-      ar & _curr_pos;
-    //}
-  }
-  public:
-  void save() {
-      boost::archive::xml_oarchive oa { ss };
-      oa << *this;
+      ar &_curr_pos;
+      //}
   }
 
-  void load() {
-      boost::archive::xml_iarchive ia { ss };
-      ia >> *this;
+  public:
+  //  void save() {
+  //      boost::archive::xml_oarchive oa { ss };
+  //      oa << *this;
+  //  }
+
+  //  void load() {
+  //      boost::archive::xml_iarchive ia { ss };
+  //      ia >> *this;
+  //  }
+  template<class Archive>
+  friend void boost::serialization::save_construct_data(Archive &ar,
+                                                        const Model *t,
+                                                        const unsigned int file_version);
+
+  private:
+  void setCombatants(std::list<Combatant *> *list)
+  {
+      delete _combatants;
+      _combatants = list;
   }
+
+  void setCurrentPosition(t_pos_comb pos) { _curr_pos = pos; }
 
 #endif
 
@@ -166,6 +185,44 @@ class Model {
 
 };
 
+//inline void boost::serialization::save_construct_data(Archive & ar, const Model * t, const unsigned int file_version) {
+//  ar << t->_combatants;
+//  ar << t->_curr_pos;
+//}
+#ifdef _USE_BOOST_SERIALIZE_
+namespace boost {
+namespace serialization {
+template<class Archive>
+inline void save_construct_data(Archive &ar, const Model *d, const unsigned int file_version)
+{
+  // save data required to construct instance
+  ar << d->_combatants;
+  ar << d->_curr_pos;
+}
+template<class Archive>
+inline void load_construct_data(Archive &ar, Model *d, const unsigned int file_version)
+{
+  std::list<Combatant *> *_combatants;
+  pf2e_manager::Model::t_pos_comb _curr_pos;
+  double a, b;
+  ar >> _combatants;
+  ar >> _curr_pos;
+  // invoke inplace constructor to initialize instance of my_class
+  d->setCombatants(_combatants);
+  d->setCurrentPosition(_curr_pos);
+}
+
+} // namespace serialization
+} // namespace boost
+inline std::ostream &operator<<(std::ostream &os, const Model &object)
+{
+  for (auto it : *object._combatants)
+      os << ' ' << std::hex << it << std::dec << ' ' << *it;
+  os << *object._curr_pos;
+  return os;
+}
+
+#endif
 }  // namespace pf2e_manager
 #endif
 
@@ -283,4 +340,3 @@ int main  (int ac, char **av)
   std::cout<<"p2 vals are: "<<d->get_a()<<" "<<d->get_b()<<" "<<d->get_c()<<std::endl;
 
 }*/
-

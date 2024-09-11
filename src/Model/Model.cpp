@@ -12,8 +12,13 @@ Model::Model(
 #ifdef _USE_TXT_READER_
   _combatants = _reader->readCombatants(_path);
 #endif
-  if (!_combatants) _combatants = new std::list<Combatant*>();
-  _curr_pos = _combatants->end();
+#ifdef _USE_BOOST_SERIALIZE_
+  restore_model(*this, "data.xml");
+#else
+    if (!_combatants)
+        _combatants = new std::list<Combatant *>();
+    _curr_pos = _combatants->end();
+#endif
 }
 
 Model::~Model() {
@@ -21,9 +26,14 @@ Model::~Model() {
   _reader->writeCombatants(_path, _combatants);
   delete _reader;
 #endif
-  for (auto it : *_combatants) delete it;
-  delete _combatants;
-  delete _mediator;
+#ifdef _USE_BOOST_SERIALIZE_
+  save_model(*this, "data.xml");
+#else
+    for (auto it : *_combatants)
+        delete it;
+    delete _combatants;
+    delete _mediator;
+#endif
 }
 
 void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {

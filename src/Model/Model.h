@@ -16,13 +16,21 @@
 // #include "SimpleEffectBuilder.h"
 
 #ifdef _USE_BOOST_SERIALIZE_
-#include <boost/serialization/list.hpp>
-#include <boost/serialization/version.hpp>
-#include <boost/serialization/string.hpp>
+#include <boost/archive/tmpdir.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/list.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/version.hpp>
 
-#include <iostream> // ostream for boost::serialize
+#include <fstream> // ostream for boost::serialize
+
+#if defined(BOOST_NO_STD_NAMESPACE)
+namespace std {
+using ::remove;
+}
+#endif
+
 #endif
 
 namespace pf2e_manager {
@@ -185,6 +193,8 @@ class Model {
 
 };
 
+} // namespace pf2e_manager
+#endif
 //inline void boost::serialization::save_construct_data(Archive & ar, const Model * t, const unsigned int file_version) {
 //  ar << t->_combatants;
 //  ar << t->_curr_pos;
@@ -214,6 +224,7 @@ inline void load_construct_data(Archive &ar, Model *d, const unsigned int file_v
 
 } // namespace serialization
 } // namespace boost
+
 inline std::ostream &operator<<(std::ostream &os, const Model &object)
 {
   for (auto it : *object._combatants)
@@ -222,10 +233,28 @@ inline std::ostream &operator<<(std::ostream &os, const Model &object)
   return os;
 }
 
-#endif
-}  // namespace pf2e_manager
-#endif
+inline void save_model(const pf2e_manager::Model &object, const char *filename)
+{
+  using namespace pf2e_manager;
+  using namespace ::boost;
 
+  std::ofstream os(filename);
+  assert(os.good());
+  ::boost::archive::xml_oarchive oa(os);
+  //oa << object;
+  oa << BOOST_SERIALIZATION_NVP(object);
+}
+
+inline void restore_model(const pf2e_manager::Model &object, const char *filename)
+{
+  using namespace pf2e_manager;
+
+  std::ifstream is(filename);
+  assert(is.good());
+  ::boost::archive::xml_iarchive ia(is);
+  ia >> BOOST_SERIALIZATION_NVP(object);
+}
+#endif
 /*
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>

@@ -1,19 +1,21 @@
 #ifndef _SUBJECT_BASE_H_791C1EED_FB8B_499A_BA92_7A2D81BE58C0
 #define _SUBJECT_BASE_H_791C1EED_FB8B_499A_BA92_7A2D81BE58C0
 
-#include <iostream>
+// #include <iostream>
 #include <string>
 
 #ifdef _USE_BOOST_SERIALIZE_
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/string.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/assume_abstract.hpp>
 #endif
 
 namespace pf2e_manager {
 class SubjectBase {
  public:
-  SubjectBase() = delete;
+    SubjectBase() {};
   SubjectBase(SubjectBase* subject, SubjectBase* reciever = nullptr)
       : _subject(subject), _reciever(reciever) {}
 
@@ -34,11 +36,10 @@ class SubjectBase {
   private:
   template <class Archive>
   void serialize(Archive & ar, const size_t version) {
-      ar & boost::serialization::base_object<SubjectBase>(*this);
-      ar & _name;
-      ar & _subject;
-      ar & _reciever;
-      ar & _invoker;
+      ar & BOOST_SERIALIZATION_NVP(_name);
+      ar & BOOST_SERIALIZATION_NVP(_subject);
+      ar & BOOST_SERIALIZATION_NVP(_reciever);
+      ar & BOOST_SERIALIZATION_NVP(_invoker);
   }
 #endif
 
@@ -49,5 +50,8 @@ class SubjectBase {
   SubjectBase* _invoker = nullptr;   // exertion from whom
 };
 }  // namespace pf2e_manager
-
+#ifdef _USE_BOOST_SERIALIZE_
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(pf2e_manager::SubjectBase)
+#endif
+;
 #endif

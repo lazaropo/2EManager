@@ -69,14 +69,16 @@ class SimpleEffect : public EffectBase {
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive & ar, const size_t version) {
-      ar & boost::serialization::base_object<EffectBase>(*this);
-      ar & _is_associated_provided;
-      ar & _associated_actions;
-      ar & _execute_actions;
+      ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(EffectBase);
+      ar & BOOST_SERIALIZATION_NVP(_is_associated_provided);
+      ar & BOOST_SERIALIZATION_NVP(_associated_actions);
+      ar & BOOST_SERIALIZATION_NVP(_execute_actions);
 
   }
-#endif
 
+  friend inline std::ostream &operator<<(std::ostream &os, const SimpleEffect &effect);
+
+#endif
  protected:
   bool _is_associated_provided = false;
 
@@ -87,5 +89,21 @@ class SimpleEffect : public EffectBase {
 
   MediatorInterface* _mediator = nullptr;
 };
+
+#ifdef _USE_BOOST_SERIALIZE_
+
+
+inline std::ostream &operator<<(std::ostream &os, const SimpleEffect &effect)
+{
+    os << ' ' << effect._is_associated_provided;
+    for(auto it : effect._associated_actions)
+        os << ' ' << it;
+    os  << ' ' << effect._type;
+    for(auto it : effect._execute_actions)
+        os << ' ' << it;
+       os << '\n';
+    return os;
+}
+#endif
 }  // namespace pf2e_manager
 #endif

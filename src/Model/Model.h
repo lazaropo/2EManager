@@ -16,12 +16,17 @@
 // #include "SimpleEffectBuilder.h"
 
 #ifdef _USE_BOOST_SERIALIZE_
+#include <boost/config.hpp>
+#include <boost/serialization/list.hpp>
+#include <boost/serialization/string.hpp>
 #include <boost/archive/tmpdir.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
-#include <boost/serialization/list.hpp>
-#include <boost/serialization/string.hpp>
+
 #include <boost/serialization/version.hpp>
+#include <boost/serialization/split_member.hpp>
+#include <boost/serialization/nvp.hpp>
+
 
 #include <fstream> // ostream for boost::serialize
 
@@ -32,12 +37,33 @@ using ::remove;
 #endif
 
 #endif
+#ifdef _USE_BOOST_SERIALIZE_
+namespace pf2e_manager {
+class Model;
+}
+BOOST_CLASS_IMPLEMENTATION(pf2e_manager::Model,boost::serialization::object_class_info )
+BOOST_CLASS_IMPLEMENTATION(pf2e_manager::Combatant,boost::serialization::object_class_info )
+//BOOST_CLASS_IMPLEMENTATION(pf2e_manager::EffectBase,boost::serialization::object_class_info )
+BOOST_CLASS_IMPLEMENTATION(pf2e_manager::SimpleEffect, boost::serialization::object_class_info )
+
+BOOST_CLASS_TRACKING(pf2e_manager::Model, boost::serialization::track_selectively )
+BOOST_CLASS_TRACKING(pf2e_manager::Combatant, boost::serialization::track_selectively )
+//BOOST_CLASS_TRACKING(pf2e_manager::EffectBase, boost::serialization::track_selectively )
+BOOST_CLASS_TRACKING(pf2e_manager::SimpleEffect, boost::serialization::track_selectively )
+
+BOOST_CLASS_VERSION(pf2e_manager::Model, 1)
+#endif
 
 namespace pf2e_manager {
 class Model {
  public:
   using t_pos_comb = std::list<Combatant*>::iterator;
   using t_pair_comb_with_effect = std::pair<t_pos_comb, Combatant::t_pos_eff>;
+
+  Model() {
+      if(!_combatants)
+          _combatants = new std::list<Combatant*>;
+  }
 
   Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp);
 
@@ -141,33 +167,46 @@ class Model {
 #ifdef _USE_BOOST_SERIALIZE_
 
   friend class boost::serialization::access;
-  friend inline std::ostream &operator<<(std::ostream &os, const Model &object);
+  friend inline std::ostream& operator<<(std::ostream &os, const Model &object);
+
+  // template<class Archive>
+  // friend inline void ::boost::serialization::save_construct_data(Archive &ar, const pf2e_manager::Model *d, const unsigned int file_version);
+  // template<class Archive>
+  // friend inline void ::boost::serialization::load_construct_data(Archive &ar, pf2e_manager::Model *d, const unsigned int file_version);
 
   private:
   template<class Archive>
   void serialize(Archive &ar, const size_t version)
   {
+
+      ar.register_type(static_cast<Combatant *>(nullptr));
+      // ar.register_type(static_cast<EffectBase *>(nullptr));
+      ar.register_type(static_cast<SimpleEffect *>(nullptr));
     //if(version>0) {
-      ar & _combatants;
+      ar & BOOST_SERIALIZATION_NVP(*_combatants);
       // ar & _mediator;
-      ar &_curr_pos;
+      //  & BOOST_SERIALIZATION_NVP(_curr_pos);
       //}
   }
 
-  public:
-  //  void save() {
-  //      boost::archive::xml_oarchive oa { ss };
-  //      oa << *this;
-  //  }
-
-  //  void load() {
-  //      boost::archive::xml_iarchive ia { ss };
-  //      ia >> *this;
-  //  }
   template<class Archive>
-  friend void boost::serialization::save_construct_data(Archive &ar,
-                                                        const Model *t,
-                                                        const unsigned int file_version);
+  void save(Archive & ar, const unsigned int version) const
+  {
+      // note, version is always the latest when saving
+      ar & _combatants;
+      ar &_curr_pos;
+  }
+  template<class Archive>
+  void load(Archive & ar, const unsigned int version)
+  {
+      if(version > 0) {
+          ar & _combatants;
+      ar &_curr_pos;
+      }
+      if(!_combatants)
+          _combatants = new std::list<Combatant*>;
+  }
+  // BOOST_SERIALIZATION_SPLIT_MEMBER()
 
   private:
   void setCombatants(std::list<Combatant *> *list)
@@ -193,39 +232,21 @@ class Model {
 
 };
 
+
+
 } // namespace pf2e_manager
+// using namespace pf2e_manager;
+
+
 #endif
 //inline void boost::serialization::save_construct_data(Archive & ar, const Model * t, const unsigned int file_version) {
 //  ar << t->_combatants;
 //  ar << t->_curr_pos;
 //}
 #ifdef _USE_BOOST_SERIALIZE_
-namespace boost {
-namespace serialization {
-template<class Archive>
-inline void save_construct_data(Archive &ar, const Model *d, const unsigned int file_version)
-{
-  // save data required to construct instance
-  ar << d->_combatants;
-  ar << d->_curr_pos;
-}
-template<class Archive>
-inline void load_construct_data(Archive &ar, Model *d, const unsigned int file_version)
-{
-  std::list<Combatant *> *_combatants;
-  pf2e_manager::Model::t_pos_comb _curr_pos;
-  double a, b;
-  ar >> _combatants;
-  ar >> _curr_pos;
-  // invoke inplace constructor to initialize instance of my_class
-  d->setCombatants(_combatants);
-  d->setCurrentPosition(_curr_pos);
-}
+namespace pf2e_manager {
 
-} // namespace serialization
-} // namespace boost
-
-inline std::ostream &operator<<(std::ostream &os, const Model &object)
+inline std::ostream &operator<<(std::ostream &os, const pf2e_manager::Model &object)
 {
   for (auto it : *object._combatants)
       os << ' ' << std::hex << it << std::dec << ' ' << *it;
@@ -233,28 +254,32 @@ inline std::ostream &operator<<(std::ostream &os, const Model &object)
   return os;
 }
 
-inline void save_model(const pf2e_manager::Model &object, const char *filename)
+inline void save_model(const Model &object, const char *filename)
 {
-  using namespace pf2e_manager;
-  using namespace ::boost;
+    //using namespace ::pf2e_manager;
+    using namespace ::boost;
 
-  std::ofstream os(filename);
-  assert(os.good());
-  ::boost::archive::xml_oarchive oa(os);
-  //oa << object;
-  oa << BOOST_SERIALIZATION_NVP(object);
+    std::ofstream os(filename);
+    assert(os.good());
+    ::boost::archive::xml_oarchive oa(os);
+    //oa << object;
+    oa << BOOST_SERIALIZATION_NVP(object);
 }
 
-inline void restore_model(const pf2e_manager::Model &object, const char *filename)
+inline void restore_model(Model &object, const char *filename)
 {
-  using namespace pf2e_manager;
+    //using namespace ::pf2e_manager;
+    using namespace ::boost;
 
-  std::ifstream is(filename);
-  assert(is.good());
-  ::boost::archive::xml_iarchive ia(is);
-  ia >> BOOST_SERIALIZATION_NVP(object);
+    std::ifstream is(filename);
+    assert(is.good());
+    ::boost::archive::xml_iarchive ia(is);
+    ia >> BOOST_SERIALIZATION_NVP(object);
+}
+
 }
 #endif
+
 /*
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>

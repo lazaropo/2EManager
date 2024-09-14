@@ -15,14 +15,16 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
   using namespace pf2e_manager;
 
-#ifdef _USE_BOOST_SERIALIZE_
-  _controller->load();
-#endif
+
 
   _box_combatants->setArea(ui->scrollArea_combatants);
   _box_commands->setArea(ui->scrollArea_commands);
+#ifdef _USE_BOOST_SERIALIZE_
+  _controller->load();
+  assert(_controller->getCombatants())
+#endif
 
-  for (auto it : *_controller->getCombatants()) _box_combatants->addWidget(it);
+    for (auto it : *_controller->getCombatants()) _box_combatants->addWidget(it);
 
   ui->scrollArea_combatants->setWidget(_box_combatants);
   ui->scrollArea_commands->setWidget(_box_commands);

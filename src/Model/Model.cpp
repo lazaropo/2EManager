@@ -13,7 +13,9 @@ Model::Model(
   _combatants = _reader->readCombatants(_path);
 #endif
 #ifdef _USE_BOOST_SERIALIZE_
-  restore_model(*this, "data.xml");
+  std::string filename(boost::archive::tmpdir());
+  filename += "/data.xml";
+ restore_model(*this, filename.c_str());
 #else
     if (!_combatants)
         _combatants = new std::list<Combatant *>();
@@ -27,7 +29,9 @@ Model::~Model() {
   delete _reader;
 #endif
 #ifdef _USE_BOOST_SERIALIZE_
-  save_model(*this, "data.xml");
+  std::string filename(boost::archive::tmpdir());
+  filename += "/data.xml";
+   save_model(*this, filename.c_str());
 #else
     for (auto it : *_combatants)
         delete it;

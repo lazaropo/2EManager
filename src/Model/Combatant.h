@@ -2,22 +2,23 @@
 #define _COMBATANT_H_E1381FAB_5D83_4BD1_AFB3_CE0C044AF33E_
 
 #include <algorithm>  //provides std::includes for effect instantiation in collection
-#include <list>
+// #include <list>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 #ifdef _USE_BOOST_SERIALIZE_
+#include <boost/serialization/vector.hpp>
+
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/base_object.hpp>
-#include <boost/serialization/vector.hpp>
 
-inline std::stringstream ss;
 #endif
 
-#include "EffectBase.h"
+
 #include "SubjectBase.h"
+#include "EffectBase.h"
 
 
 
@@ -29,6 +30,8 @@ class Combatant : public SubjectBase {
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
+
+  Combatant() {}
 
   Combatant(int hp, int initiative, Side side, std::string name,
             Vitality vit = Vitality::ALIVE)
@@ -110,16 +113,55 @@ class Combatant : public SubjectBase {
 
   template<class Archive>
   void serialize(Archive & ar, const size_t version) {
-    ar & boost::serialization::base_object<SubjectBase>(*this);
-    ar & _hp_max;
-    ar & _hp_tmp;
-    ar & _hp_curr;
-    ar & _initiative;
-    ar & _level;
-    ar & _side;
-    ar & _vitality;
-    ar & _effects;
+    // ar & boost::serialization::base_object<SubjectBase>(*this);
+    ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+    ar & BOOST_SERIALIZATION_NVP(_hp_max);
+    ar & BOOST_SERIALIZATION_NVP(_hp_tmp);
+    ar & BOOST_SERIALIZATION_NVP(_hp_curr);
+    ar & BOOST_SERIALIZATION_NVP(_initiative);
+    ar & BOOST_SERIALIZATION_NVP(_level);
+    ar & BOOST_SERIALIZATION_NVP(_side);
+    ar & BOOST_SERIALIZATION_NVP(_vitality);
+    ar & BOOST_SERIALIZATION_NVP(_effects);
   }
+
+  template<class Archive>
+  void save(Archive & ar, const unsigned int version) const
+  {
+      ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+      ar & BOOST_SERIALIZATION_NVP(_hp_max);
+      ar & BOOST_SERIALIZATION_NVP(_hp_tmp);
+      ar & BOOST_SERIALIZATION_NVP(_hp_curr);
+      ar & BOOST_SERIALIZATION_NVP(_initiative);
+      ar & BOOST_SERIALIZATION_NVP(_level);
+      const std::string side = formattingSide(_side, false, false);
+      ar & BOOST_SERIALIZATION_NVP(side);
+      const std::string vitality = formattingVitality(_vitality, false, false);
+      ar & BOOST_SERIALIZATION_NVP(vitality);
+      ar & BOOST_SERIALIZATION_NVP(_effects);
+      //  = labels[static_cast<int>(a_)];
+      // ar & boost::serialization::make_nvp("label", label);
+  }
+  template<class Archive>
+  void load(Archive & ar, const unsigned int version)
+  {
+      ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+      ar & BOOST_SERIALIZATION_NVP(_hp_max);
+      ar & BOOST_SERIALIZATION_NVP(_hp_tmp);
+      ar & BOOST_SERIALIZATION_NVP(_hp_curr);
+      ar & BOOST_SERIALIZATION_NVP(_initiative);
+      ar & BOOST_SERIALIZATION_NVP(_level);
+      std::string side;
+      ar & BOOST_SERIALIZATION_NVP(side);
+      _side = formattingSide(side);
+      std::string vitality;
+      ar & BOOST_SERIALIZATION_NVP(vitality);
+      _vitality = formattingVitality(vitality);
+      ar & BOOST_SERIALIZATION_NVP(_effects);
+      //  = labels[static_cast<int>(a_)];
+      // ar & boost::serialization::make_nvp("label", label);
+  }
+  BOOST_SERIALIZATION_SPLIT_MEMBER();
 #endif
 
  private:
@@ -128,9 +170,9 @@ class Combatant : public SubjectBase {
   int _hp_curr;
   int _initiative;
   int _level;
-  Side _side;
+  Side _side = Side::OTHER;
   // std::string _name = "";
-  const Vitality _vitality;
+  Vitality _vitality = Vitality::CONSTRUCT;
 
   std::vector<EffectBase*> _effects = {};
 };

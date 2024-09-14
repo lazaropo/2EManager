@@ -9,6 +9,8 @@
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/base_object.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/assume_abstract.hpp>
 #endif
 
 #include "SubjectBase.h"
@@ -53,7 +55,32 @@ class EffectBase : public SubjectBase {
     int _ac = 0;
     int _dc = 0;  // class DC
     int _init = 0;
+
+#ifdef _USE_BOOST_SERIALIZE_
+    friend class boost::serialization::access;
+    template <class Archive>
+    void serialize(Archive & ar, const size_t version) {
+            ar & BOOST_SERIALIZATION_NVP(_str);
+            ar & BOOST_SERIALIZATION_NVP(_dex);
+            ar & BOOST_SERIALIZATION_NVP(_con );
+            ar & BOOST_SERIALIZATION_NVP(_mind);
+            ar & BOOST_SERIALIZATION_NVP(_fort);
+            ar & BOOST_SERIALIZATION_NVP(_refl);
+ar & BOOST_SERIALIZATION_NVP(_will);
+ar & BOOST_SERIALIZATION_NVP(_skills);
+ar & BOOST_SERIALIZATION_NVP(_perc);
+ar & BOOST_SERIALIZATION_NVP(_atk );
+ar & BOOST_SERIALIZATION_NVP(_ac );
+ar & BOOST_SERIALIZATION_NVP(_dc );
+ar & BOOST_SERIALIZATION_NVP(_init);
+
+    }
+    friend inline std::ostream &operator<<(std::ostream &os, const Value &value);
+
+#endif
+
   };
+  EffectBase() {}
   EffectBase(EffectBase *child) : SubjectBase(child) {}
   EffectBase(EffectBase *child, SubjectBase *reciever)
       : SubjectBase(child, reciever) {}
@@ -78,13 +105,13 @@ class EffectBase : public SubjectBase {
   template <class Archive>
   void serialize(Archive & ar, const size_t version) {
     if(_is_active) {
-        ar & boost::serialization::base_object<SubjectBase>(*this);
-    ar & _duration;
-    ar & _is_active;
-    ar & _type;
-    ar & _value;
-    ar & _trigger;
-    ar & _description;
+        ar &BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+    ar & BOOST_SERIALIZATION_NVP(_duration);
+    ar & BOOST_SERIALIZATION_NVP(_is_active);
+    ar & BOOST_SERIALIZATION_NVP(_type);
+    ar & BOOST_SERIALIZATION_NVP(_value);
+    ar & BOOST_SERIALIZATION_NVP(_trigger);
+    ar & BOOST_SERIALIZATION_NVP(_description);
     }
   }
   friend inline std::ostream &operator<<(std::ostream &os, const EffectBase &effect);
@@ -101,6 +128,7 @@ class EffectBase : public SubjectBase {
   std::string _description = "";
 };
 
+
 #ifdef _USE_BOOST_SERIALIZE_
 inline std::ostream &operator<<(std::ostream &os, const EffectBase::Trigger &trigger)
 {
@@ -116,5 +144,8 @@ inline std::ostream &operator<<(std::ostream &os, const EffectBase &effect)
 }
 #endif
 }  // namespace pf2e_manager
+#ifdef _USE_BOOST_SERIALIZE_
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(pf2e_manager::EffectBase)
+#endif
 
 #endif  // EFFECTBASE_H

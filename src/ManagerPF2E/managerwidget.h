@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <list>
 
+#include <cassert>
+
 #include "../CombatantDialog/combatantdialog.h"
 #include "../CombatantWidget/combatantwidget.h"
 #include "../EffectDialog/EffectDialog.h"

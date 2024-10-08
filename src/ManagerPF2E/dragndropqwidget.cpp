@@ -157,7 +157,8 @@ void DragNDropQWidget::dragMoveEvent(QDragMoveEvent *event) {
 }
 
 void DragNDropQWidget::dropEvent(QDropEvent *event) {
-  if (!event || event->buttons() & Qt::LeftButton) {
+    // auto button = event->buttons();
+  if (event /*&& button & Qt::LeftButton*/) {
     auto widget = qobject_cast<CombatantWidget *>(sender());
 
     if (!_current_widget)
@@ -196,6 +197,6 @@ void DragNDropQWidget::dropEvent(QDropEvent *event) {
     //        new_layout->update();
     this->saveGeometry();
 
-    if (event) event->accept();
+    /*if (event)*/ event->accept();
   }
 }

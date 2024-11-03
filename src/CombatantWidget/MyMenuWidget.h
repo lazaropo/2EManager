@@ -32,12 +32,23 @@ class MyMenuWidget : public QListWidget {
   QLayout* _frame = nullptr;
   std::function<void(QLayout*)> addTextBrowser;
 
-  QString _item_base_style =
-      "font: 14px;"
-      "QTextBrowser{"
-      "border-radius: 5px;"
-      "background-color: rgb(250, 218, 221);"
-      "}";
+  const QString _item_base_style = "font: 14px;"
+                                   "QTextBrowser{"
+                                   "border-radius: 5px;"
+                                   "background-color: rgb(250, 218, 221);"
+                                   "}";
+  const QString _text_browser_style = "QTextBrowser {"
+                                      "background-color: rgb(250, 238, 221);"
+                                      "font: 14px 'Arial';"
+                                      "color: black;"
+                                      "border-radius: 8px;"
+                                      "}";
+  const QString _menu_style = "QMenu {"
+                              "background-color: rgb(161,133,148);"
+                              "font: 16px 'Arial';"
+                              "color: black;"
+                              //          "border-radius: 8px;"
+                              "}";
 };
 
 #endif  // MYMENUWIDGET_H

@@ -25,6 +25,7 @@ void MyMenuWidget::keyPressEvent(QKeyEvent* event) {
 
 void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   QMenu menu(this->parentWidget());
+  menu.setStyleSheet(_menu_style);
   QAction* show_description = menu.addAction("Get Discription");
   QListWidgetItem* instance = currentItem();
   pf2e_manager::EffectBase* picked_effect = nullptr;
@@ -63,6 +64,7 @@ void MyMenuWidget::setTextBrowser() {
   _item->setGeometry(QRect(600, 10, 400, 140));
   _item->setStyleSheet(_item_base_style);
   _item->show();
+  _item->setStyleSheet(_text_browser_style);
 }
 
 #endif

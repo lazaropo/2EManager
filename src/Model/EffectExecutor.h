@@ -21,9 +21,11 @@ class EffectExecutor {
     for (auto it : name) {
       if (it.find("effect:") == 0) {
         int value = _mediator->getConfirmation(sender, reciever, it);
+        int duration = 420000; /* just big number*/
+        if (auto effect = static_cast<EffectBase*>(sender))
+            duration = effect->getDuration();
         if (value >= 0)
-          _mediator->makeEffect(sender, reciever, it,
-                                420000 /*just big number*/, value);
+            _mediator->makeEffect(sender, reciever, it, duration, value);
         else {
           auto effect = dynamic_cast<EffectBase*>(sender);
           if (effect) effect->removeEffect();

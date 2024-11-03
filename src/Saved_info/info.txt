@@ -5,3 +5,7 @@ combatant:name:bee/hpmax:43/initiative:36/side:eneamy/vitality:alive/
 combatant:name:Peppa/hpmax:100/initiative:36/side:team/vitality:alive/
 combatant:name:IG-500/hpmax:128/initiative:28/side:team/vitality:alive/
 combatant:name:Ricky/hpmax:50/initiative:16/side:team/vitality:dead/
+effect:clumsy/invoker:<user>/reciever:Sun Child/duration:1/value:0/
+effect:confused/invoker:<user>/reciever:Sun Child/duration:2/value:0/
+effect:confused/invoker:<user>/reciever:Stone/duration:2/value:0/
+effect:unconscious/invoker:<user>/reciever:puppy/duration:5/value:4/

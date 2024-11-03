@@ -66,15 +66,13 @@ void DragNDropQWidgetCommands::updateContent() {
 
 void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
   if (event->button() & Qt::LeftButton) {
+      _current_icon = static_cast<CommandIcon *>(sender());
       if (!_current_icon)
           return;
-      _current_icon->setBaseStyle();
-
-      _current_icon = static_cast<CommandIcon *>(sender());
-      // if (!_current_icon)
-      //     return;
-      if (_description)
+      else if (_description)
           _description->hide();
+
+      _current_icon->setBaseStyle();
 
       _current_icon->setHighligthStyle();
 
@@ -83,11 +81,12 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
       auto invoker = _current_icon->getCommand()->getInvoker();
       auto reciever = _current_icon->getCommand()->getReciever();
 
-      // _description->setStyleSheet("QTextBrowser {"
-      //                             "background-color: rgb(250, 238, 221);"
-      //                             "font: 'Arial' 14pt;"
-      //                             "}"
-      //                             "");
+      _description->setStyleSheet("QTextBrowser {"
+                                  "background-color: rgb(250, 238, 221);"
+                                  "font: 14px 'Arial';"
+                                  "color: black;"
+                                  "}"
+                                  "");
 
       QString text;
 

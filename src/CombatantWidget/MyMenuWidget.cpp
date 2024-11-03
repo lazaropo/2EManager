@@ -25,27 +25,31 @@ void MyMenuWidget::keyPressEvent(QKeyEvent* event) {
 
 void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   QMenu menu(this->parentWidget());
-  QAction* show_description = menu.addAction("Get Discripttion");
-  auto eff = dynamic_cast<EffectListWidgetItem*>(currentItem())->getEffect();
+  QAction* show_description = menu.addAction("Get Discription");
+  QListWidgetItem* instance = currentItem();
+  pf2e_manager::EffectBase* picked_effect = nullptr;
+  if(instance)
+      picked_effect = dynamic_cast<EffectListWidgetItem*>(instance)->getEffect();
+  else return;
 
-  bool is_active = false;
-  if (eff)
-    is_active = eff->isActive();
-  else
-    return;
+  bool is_active = picked_effect->isActive();
+  //if (picked_effect)
+  //  is_active = picked_effect->isActive();
+  // else
+  //   return;
 
   QAction* do_undo_effect =
       menu.addAction(is_active ? "Remove Effect" : "Activate Effect");
 
   QAbstractItemDelegate::connect(show_description, &QAction::triggered, [=]() {
     if (!_item) setTextBrowser();
-    _item->setText(QString::fromStdString((eff->getDescription())));
+    _item->setText(QString::fromStdString((picked_effect->getDescription())));
   });
   QAbstractItemDelegate::connect(do_undo_effect, &QAction::triggered, [=]() {
     if (is_active)
-      eff->removeEffect();
+      picked_effect->removeEffect();
     else
-      eff->activateEffect();
+      picked_effect->activateEffect();
     emit itemChanged(currentItem());
   });
 

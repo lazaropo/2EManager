@@ -3,124 +3,98 @@
 namespace pf2e_manager {
 EffectDirector::EffectDirector(SimpleEffectBuilder* builder)
     : _builder(builder) {
-  // TODO: fill the constructor by all effect names and funcs pointers pairs
   using namespace std::placeholders;
+  using std::bind;
+  using std::pair;
 
   _effects_dictionary.insert(
-      std::pair("effect:blinded",
-                std::bind(&EffectDirector::buildBlindedEffect, this, _1, _2)));
+      std::pair("effect:blinded", std::bind(&EffectDirector::buildBlindedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:clumsy",
-                std::bind(&EffectDirector::buildClumsyEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:concealed",
-      std::bind(&EffectDirector::buildConcealedEffect, this, _1, _2)));
+      std::pair("effect:clumsy", std::bind(&EffectDirector::buildClumsyEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:confused",
-                std::bind(&EffectDirector::buildConfusedEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:cotrolled",
-      std::bind(&EffectDirector::buildControlledEffect, this, _1, _2)));
+      std::pair("effect:concealed", std::bind(&EffectDirector::buildConcealedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:dazzled",
-                std::bind(&EffectDirector::buildDazzledEffect, this, _1, _2)));
+      std::pair("effect:confused", std::bind(&EffectDirector::buildConfusedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:deafened",
-                std::bind(&EffectDirector::buildDeafenedEffect, this, _1, _2)));
+      std::pair("effect:cotrolled",
+                std::bind(&EffectDirector::buildControlledEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:doomed",
-                std::bind(&EffectDirector::buildDoomedEffect, this, _1, _2)));
+      std::pair("effect:dazzled", std::bind(&EffectDirector::buildDazzledEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:drained",
-                std::bind(&EffectDirector::buildDrainedEffect, this, _1, _2)));
+      std::pair("effect:deafened", std::bind(&EffectDirector::buildDeafenedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:dying",
-                std::bind(&EffectDirector::buildDyingEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:encumbered",
-      std::bind(&EffectDirector::buildEncumberedEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:enfeebled",
-      std::bind(&EffectDirector::buildEnfeebledEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:fascinated",
-      std::bind(&EffectDirector::buildFascinatedEffect, this, _1, _2)));
+      std::pair("effect:doomed", std::bind(&EffectDirector::buildDoomedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:fatigued",
-                std::bind(&EffectDirector::buildFatiguedEffect, this, _1, _2)));
+      std::pair("effect:drained", std::bind(&EffectDirector::buildDrainedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:fleeing",
-                std::bind(&EffectDirector::buildFleeingEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:frightened",
-      std::bind(&EffectDirector::buildFrightenedEffect, this, _1, _2)));
+      std::pair("effect:dying", std::bind(&EffectDirector::buildDyingEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:grabbed",
-                std::bind(&EffectDirector::buildGrabbedEffect, this, _1, _2)));
+      std::pair("effect:encumbered",
+                std::bind(&EffectDirector::buildEncumberedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:hidden",
-                std::bind(&EffectDirector::buildHiddenEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:immobilized",
-      std::bind(&EffectDirector::buildImmobilizedEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:indifferent",
-      std::bind(&EffectDirector::buildIndifferentEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:invisible",
-      std::bind(&EffectDirector::buildInvisibleEffect, this, _1, _2)));
+      std::pair("effect:enfeebled", std::bind(&EffectDirector::buildEnfeebledEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:observed",
-                std::bind(&EffectDirector::buildObservedEffect, this, _1, _2)));
+      std::pair("effect:fascinated",
+                std::bind(&EffectDirector::buildFascinatedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:off-guard",
-                std::bind(&EffectDirector::buildOffGuardEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:paralyzed",
-      std::bind(&EffectDirector::buildParalyzedEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:persistentdamage",
-      std::bind(&EffectDirector::buildPersistentDamageEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:petrified",
-      std::bind(&EffectDirector::buildPetrifiedEffect, this, _1, _2)));
+      std::pair("effect:fatigued", std::bind(&EffectDirector::buildFatiguedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:prone",
-                std::bind(&EffectDirector::buildProneEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:quickened",
-      std::bind(&EffectDirector::buildQuickenedEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:restrained",
-      std::bind(&EffectDirector::buildRestrainedEffect, this, _1, _2)));
+      std::pair("effect:fleeing", std::bind(&EffectDirector::buildFleeingEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:sickened",
-                std::bind(&EffectDirector::buildSickenedEffect, this, _1, _2)));
+      std::pair("effect:frightened",
+                std::bind(&EffectDirector::buildFrightenedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:slowed",
-                std::bind(&EffectDirector::buildSlowedEffect, this, _1, _2)));
+      std::pair("effect:grabbed", std::bind(&EffectDirector::buildGrabbedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:stunned",
-                std::bind(&EffectDirector::buildStunnedEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:stupified",
-      std::bind(&EffectDirector::buildStupefiedEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:unconscious",
-      std::bind(&EffectDirector::buildUnconsciousEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:undetected",
-      std::bind(&EffectDirector::buildUndetectedEffect, this, _1, _2)));
-  _effects_dictionary.insert(std::pair(
-      "effect:unnoticed",
-      std::bind(&EffectDirector::buildUnnoticedEffect, this, _1, _2)));
+      std::pair("effect:hidden", std::bind(&EffectDirector::buildHiddenEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:wounded",
-                std::bind(&EffectDirector::buildWoundedEffect, this, _1, _2)));
+      std::pair("effect:immobilized",
+                std::bind(&EffectDirector::buildImmobilizedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:indifferent",
+                std::bind(&EffectDirector::buildIndifferentEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:invisible", std::bind(&EffectDirector::buildInvisibleEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:observed", std::bind(&EffectDirector::buildObservedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:off-guard", std::bind(&EffectDirector::buildOffGuardEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:paralyzed", std::bind(&EffectDirector::buildParalyzedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:persistentdamage",
+                std::bind(&EffectDirector::buildPersistentDamageEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:petrified", std::bind(&EffectDirector::buildPetrifiedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:prone", std::bind(&EffectDirector::buildProneEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:quickened", std::bind(&EffectDirector::buildQuickenedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:restrained",
+                std::bind(&EffectDirector::buildRestrainedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:sickened", std::bind(&EffectDirector::buildSickenedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:slowed", std::bind(&EffectDirector::buildSlowedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:stunned", std::bind(&EffectDirector::buildStunnedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:stupified", std::bind(&EffectDirector::buildStupefiedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:unconscious",
+                std::bind(&EffectDirector::buildUnconsciousEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:undetected",
+                std::bind(&EffectDirector::buildUndetectedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:unnoticed", std::bind(&EffectDirector::buildUnnoticedEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:wounded", std::bind(&EffectDirector::buildWoundedEffect, this, _1, _2)));
 
-  _effects_dictionary.insert(std::pair(
-      "effect:malevolence",
-      std::bind(&EffectDirector::buildMalevolenceEffect, this, _1, _2)));
+  _effects_dictionary.insert(
+      std::pair("effect:malevolence",
+                std::bind(&EffectDirector::buildMalevolenceEffect, this, _1, _2)));
 }
 
 void EffectDirector::buildEffectByName(const std::string& name, int duration,

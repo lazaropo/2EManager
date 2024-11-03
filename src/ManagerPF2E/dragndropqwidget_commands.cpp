@@ -38,7 +38,8 @@ void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {
   QObject::connect(obj, &CommandIcon::mousePressed, this,
                    &DragNDropQWidgetCommands::mousePressEvent);
   obj->setAttribute(Qt::WA_StyledBackground);
-  this->setFixedWidth(width() + _commands_layout->spacing() + obj->width());
+  if (_commands_layout->count() * (_commands_layout->spacing() + obj->width()) > width())
+      this->setFixedWidth(width() + _commands_layout->spacing() + obj->width());
 }
 
 void DragNDropQWidgetCommands::updateContent() {
@@ -65,59 +66,60 @@ void DragNDropQWidgetCommands::updateContent() {
 
 void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
   if (event->button() & Qt::LeftButton) {
-    if (_current_icon) _current_icon->setBaseStyle();
+      if (!_current_icon)
+          return;
+      _current_icon->setBaseStyle();
 
-    _current_icon = static_cast<CommandIcon *>(sender());
-    if (!_current_icon)
-      return;
-    else if (_description)
-      _description->hide();
+      _current_icon = static_cast<CommandIcon *>(sender());
+      // if (!_current_icon)
+      //     return;
+      if (_description)
+          _description->hide();
 
-    _current_icon->setHighligthStyle();
+      _current_icon->setHighligthStyle();
 
-    if (!_description) _description = new QTextBrowser();
-    auto invoker = _current_icon->getCommand()->getInvoker();
-    auto reciever = _current_icon->getCommand()->getReciever();
+      if (!_description)
+          _description = new QTextBrowser();
+      auto invoker = _current_icon->getCommand()->getInvoker();
+      auto reciever = _current_icon->getCommand()->getReciever();
 
-    QString text;
+      // _description->setStyleSheet("QTextBrowser {"
+      //                             "background-color: rgb(250, 238, 221);"
+      //                             "font: 'Arial' 14pt;"
+      //                             "}"
+      //                             "");
 
-    pf2e_manager::MassHarmCommand *mass_harm_cmd =
-        dynamic_cast<pf2e_manager::MassHarmCommand *>(
-            _current_icon->getCommand());
-    pf2e_manager::MassHealCommand *mass_heal_cmd =
-        dynamic_cast<pf2e_manager::MassHealCommand *>(
-            _current_icon->getCommand());
+      QString text;
 
-    if (mass_harm_cmd) {
-      for (auto cmd : mass_harm_cmd->getInfo()) {
-        invoker = cmd->getInvoker();
-        reciever = cmd->getReciever();
-        text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
-                    .arg(QString::fromStdString(invoker ? invoker->getName()
-                                                        : "User"))
-                    .arg(QString::fromStdString(reciever ? reciever->getName()
-                                                         : "nullptr!!!"))
-                    .arg(QString::number(cmd->value()));
+      pf2e_manager::MassHarmCommand *mass_harm_cmd = dynamic_cast<pf2e_manager::MassHarmCommand *>(
+          _current_icon->getCommand());
+      pf2e_manager::MassHealCommand *mass_heal_cmd = dynamic_cast<pf2e_manager::MassHealCommand *>(
+          _current_icon->getCommand());
+
+      if (mass_harm_cmd) {
+          for (auto cmd : mass_harm_cmd->getInfo()) {
+              invoker = cmd->getInvoker();
+              reciever = cmd->getReciever();
+              text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                          .arg(QString::fromStdString(invoker ? invoker->getName() : "User"))
+                          .arg(QString::fromStdString(reciever ? reciever->getName() : "nullptr!!!"))
+                          .arg(QString::number(cmd->value()));
+          }
+      } else if (mass_heal_cmd) {
+          for (auto cmd : mass_heal_cmd->getInfo()) {
+              invoker = cmd->getInvoker();
+              reciever = cmd->getReciever();
+              text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                          .arg(QString::fromStdString(invoker ? invoker->getName() : "User"))
+                          .arg(QString::fromStdString(reciever ? reciever->getName() : "nullptr!!!"))
+                          .arg(QString::number(cmd->value()));
+          }
+      } else {
+          text = QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                     .arg(QString::fromStdString(invoker ? invoker->getName() : "User"))
+                     .arg(QString::fromStdString(reciever ? reciever->getName() : "nullptr!!!"))
+                     .arg(QString::number(_current_icon->getCommand()->value()));
       }
-    } else if (mass_heal_cmd) {
-      for (auto cmd : mass_heal_cmd->getInfo()) {
-        invoker = cmd->getInvoker();
-        reciever = cmd->getReciever();
-        text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
-                    .arg(QString::fromStdString(invoker ? invoker->getName()
-                                                        : "User"))
-                    .arg(QString::fromStdString(reciever ? reciever->getName()
-                                                         : "nullptr!!!"))
-                    .arg(QString::number(cmd->value()));
-      }
-    } else {
-      text = QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
-                 .arg(QString::fromStdString(invoker ? invoker->getName()
-                                                     : "User"))
-                 .arg(QString::fromStdString(reciever ? reciever->getName()
-                                                      : "nullptr!!!"))
-                 .arg(QString::number(_current_icon->getCommand()->value()));
-    }
 
     _description->setText(text);
 

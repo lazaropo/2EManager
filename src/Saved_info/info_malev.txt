@@ -1,0 +1,5 @@
+combatant:name:Bruford/hpmax:100/initiative:22/side:team/vitality:alive/
+combatant:name:Railag/hpmax:100/initiative:16/side:team/vitality:alive/
+combatant:name:Roxana/hpmax:100/initiative:17/side:team/vitality:alive/
+combatant:name:Torfit/hpmax:100/initiative:10/side:team/vitality:alive/
+effect:malevolence/invoker:<user>/reciever:Bruford/duration:1000000/value:1/

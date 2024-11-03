@@ -2,13 +2,13 @@
 
 DragNDropQWidget::DragNDropQWidget(
     pf2e_manager::Controller *controller,
-    std::map<pf2e_manager::Combatant *, CombatantWidget *> *_widgets_collection,
+    std::map<pf2e_manager::Combatant *, CombatantWidget *> *widgets_collection,
     QWidget *parent)
-    : QWidget(parent),
-      _controller(controller),
-      _combatants_list(_controller->getCombatants()),
-      _widgets_collection(_widgets_collection),
-      _combatants_layout(new QVBoxLayout(this))
+    : QWidget(parent)
+    , _controller(controller)
+    , _combatants_list(_controller->getCombatants())
+    , _widgets_collection(widgets_collection)
+    , _combatants_layout(new QVBoxLayout(this))
 
 {
   setLayout(_combatants_layout);

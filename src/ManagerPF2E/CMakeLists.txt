@@ -55,11 +55,10 @@ set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows-static/include)
 ## __NEW_END__
 
 
-find_package(Boost COMPONENTS log log_setup REQUIRED)
+find_package(Boost COMPONENTS log log_setup system REQUIRED)
 
 
 #find_package(Boost COMPONENTS log  REQUIRED ) #)OMPONENTS boost_log)
-
 
 
 # if(WIN32)
@@ -97,6 +96,7 @@ target_link_libraries(ManagerPF2E_static
 #    fmt::fmt
     Boost::log
     Boost::log_setup
+    Boost::system
     )
 
 # include(GenerateExportHeader)
@@ -114,6 +114,10 @@ target_link_libraries(ManagerPF2E
     Qt6::Widgets
     Qt6::Gui
     ManagerPF2E_static
+
+    Boost::log
+    Boost::log_setup
+    Boost::system
 )
 
 set_target_properties(ManagerPF2E PROPERTIES

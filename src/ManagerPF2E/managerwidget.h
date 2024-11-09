@@ -13,6 +13,51 @@
 #include "dragndropqwidget.h"
 #include "dragndropqwidget_commands.h"
 
+#include <boost/log/common.hpp>
+#include <boost/log/core/core.hpp>
+#include <boost/log/core/record.hpp>
+#include <boost/log/sinks.hpp>
+#include <boost/log/sources/basic_logger.hpp>
+#include <boost/log/sources/exception_handler_feature.hpp>
+#include <boost/log/sources/global_logger_storage.hpp>
+#include <boost/log/sources/logger.hpp>
+#include <boost/log/utility/exception_handler.hpp>
+#include <boost/shared_ptr.hpp>
+
+#include <exception>
+#include <iostream>
+
+// BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(my_logger, src::logger_mt)
+
+struct my_handler
+{
+    typedef void result_type;
+
+    void operator()(std::runtime_error const &e) const
+    {
+        std::cout << "std::runtime_error: " << e.what() << std::endl;
+    }
+    void operator()(std::logic_error const &e) const
+    {
+        std::cout << "std::logic_error: " << e.what() << std::endl;
+        throw;
+    }
+    void operator()(std::exception const &e) const
+    {
+        std::cout << "std::exception-general: " << e.what() << std::endl;
+        throw;
+    }
+};
+
+inline void init_exception_handler()
+{
+    // Setup a global exception handler that will call my_handler::operator()
+    // for the specified exception types
+    using namespace boost::log;
+    core::get()->set_exception_handler(
+        make_exception_handler<std::runtime_error, std::logic_error>(my_handler()));
+}
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class ManagerWidget;

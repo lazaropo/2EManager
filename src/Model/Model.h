@@ -23,31 +23,21 @@ class Model {
 
   ~Model();
 
-  // void addCombatant(t_pos_comb pos, Combatant new_body) {
-  //   _combatants.insert(pos, std::move(new_body));
-  // }
-
   void addCombatant(Combatant* new_body) { _combatants->push_back(new_body); }
 
   void addCombatant(t_pos_comb pos, Combatant* new_body) {
     _combatants->insert(pos, new_body);
   }
 
-  //  void addCombatantGroup(t_pos_comb pos, std::vector<Combatant>& other) {
-  //    for (auto it : other) addCombatant(pos, std::move(it));
-  //  }
-
   void moveCombatant(t_pos_comb from, t_pos_comb before);
 
-  // void addCommand(CommandBase* cmd) { _mediator->makeCommand(cmd); }
-  // void addAndDoCommand(CommandBase* cmd) { _mediator->addAndDoCommand(cmd); }
   CommandBase* makeCommand(
       SubjectBase* sender, const std::string& name,
       std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
-  // void removeCommand(Mediator::t_pos_cmd pos) { _mediator->undoCommand(pos);
-  // }
+
   void removeCombatant(t_pos_comb it) { _combatants->erase(it); }
   void removeCombatant(Combatant* ptr) { _combatants->remove(ptr); }
+
   void removeCombatantGroup(std::vector<t_pos_comb>& collection) {
     for (auto it : collection) removeCombatant(it);
   }
@@ -117,9 +107,15 @@ class Model {
 
   std::vector<CommandBase*>& getCommands() { return _mediator->getCommands(); }
 
-  Combatant* getCurrent() { return *_curr_pos; }
+  Combatant* getCurrent()
+  {
+      if (_curr_pos == _combatants->end())
+          return nullptr;
+      else
+          return *_curr_pos;
+  }
 
- private:
+  private:
   std::list<Combatant*>* _combatants = nullptr;
   MediatorInterface* _mediator;
 

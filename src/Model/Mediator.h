@@ -40,13 +40,39 @@ class Mediator : public MediatorInterface {
     _commands.push_back(cmd);
   }
 
-  void undoEffect(__attribute__((unused)) SubjectBase* sender,
-                  __attribute__((unused)) SubjectBase* reciever,
-                  __attribute__((unused)) const std::string& name) override {}
+  void undoEffect(
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      SubjectBase* sender,
 
-  void undoCommand(__attribute__((unused)) SubjectBase* sender,
-                   __attribute__((unused)) SubjectBase* reciever,
-                   __attribute__((unused)) const std::string& name) override {}
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      SubjectBase* reciever,
+
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      const std::string& name) override
+  {}
+
+  void undoCommand(
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      SubjectBase* sender,
+
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      SubjectBase* reciever,
+
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      const std::string& name) override
+  {}
 
   void undoCommand(t_pos_cmd pos) { (*pos)->undo(); }
 

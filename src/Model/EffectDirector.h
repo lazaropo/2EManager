@@ -23,43 +23,115 @@ class EffectDirector {
 
   void buildEffectByName(const std::string& name, int duration, int value);
 
-  void buildBlindedEffect(int duration, __attribute__((unused)) int value = 0);
+  void buildBlindedEffect(int duration,
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                          __attribute__((unused))
+#endif
+                          int value
+                          = 0);
 
   void buildClumsyEffect(int duration, int value);
 
   void buildConcealedEffect(int duration,
-                            __attribute__((unused)) int value = 0);
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                            __attribute__((unused))
+#endif
+                            int value
+                            = 0);
 
-  void buildConfusedEffect(int duration, __attribute__((unused)) int value = 0);
+  void buildConfusedEffect(int duration,
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                           __attribute__((unused))
+#endif
+                           int value
+                           = 0);
 
   void buildControlledEffect(int duration,
-                             __attribute__((unused)) int value = 0);
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                             __attribute__((unused))
+#endif
+                             int value
+                             = 0);
 
-  void buildDazzledEffect(int duration, __attribute__((unused)) int value = 0);
+  void buildDazzledEffect(int duration,
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                          __attribute__((unused))
+#endif
+                          int value
+                          = 0);
 
-  void buildDeafenedEffect(int duration, __attribute__((unused)) int value = 0);
+  void buildDeafenedEffect(int duration,
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                           __attribute__((unused))
+#endif
+                           int value
+                           = 0);
 
-  void buildDoomedEffect(__attribute__((unused)) int duration, int value);
+  void buildDoomedEffect(
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      int duration,
+      int value);
 
-  void buildDrainedEffect(__attribute__((unused)) int duration, int value);
+  void buildDrainedEffect(
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      int duration,
+      int value);
 
-  void buildDyingEffect(__attribute__((unused)) int duration, int value);
+  void buildDyingEffect(
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      int duration,
+      int value);
 
   void buildEncumberedEffect(int duration,
-                             __attribute__((unused)) int value = 0);
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                             __attribute__((unused))
+#endif
+                             int value
+                             = 0);
 
   void buildEnfeebledEffect(int duration, int value);
 
   void buildFascinatedEffect(int duration,
-                             __attribute__((unused)) int value = 0);
 
-  void buildFatiguedEffect(int duration, __attribute__((unused)) int value = 0);
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                             __attribute__((unused))
+#endif
+                             int value
+                             = 0);
 
-  void buildFleeingEffect(int duration, __attribute__((unused)) int value = 0);
+  void buildFatiguedEffect(int duration,
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                           __attribute__((unused))
+#endif
+                           int value
+                           = 0);
 
-  void buildFrightenedEffect(__attribute__((unused)) int duration, int value);
+  void buildFleeingEffect(int duration,
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                          __attribute__((unused))
+#endif
+                          int value
+                          = 0);
 
-  void buildGrabbedEffect(int duration, __attribute__((unused)) int value = 0);
+  void buildFrightenedEffect(
+#ifdef __clang__ || __GNUC__ || __GNUG__
+      __attribute__((unused))
+#endif
+      int duration,
+      int value);
+
+  void buildGrabbedEffect(int duration,
+#ifdef __clang__ || __GNUC__ || __GNUG__
+                          __attribute__((unused))
+#endif
+                          int value
+                          = 0);
   // TODO: implement this func and further
 
   void buildHiddenEffect(int duration, int value);

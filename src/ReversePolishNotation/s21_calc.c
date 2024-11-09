@@ -34,7 +34,7 @@ node_t *s21_div(node_t **head) {
 
 node_t *s21_dice_mult(node_t **head) {
   if (!(*head)->prev) return *head;
-  node_t *tmp = *head;
+  // node_t *tmp = *head;
 
   // while (tmp) {
   //   printf("+++++++ %c %f ", tmp->ch, tmp->num);

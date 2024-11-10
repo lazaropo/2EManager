@@ -7,6 +7,35 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
+set(CMAKE_GENERATOR_PLATFORM "x64")
+set(VCPKG_TARGET_TRIPLET "x64-windows")
+
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED      ON)
+set(Boost_USE_STATIC_RUNTIME    OFF)
+#set(Boost_NO_SYSTEM_PATHS ON)
+
+
+set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
+set(Boost_DEBUG ON)
+
+set(BOOST_LOG_DYN_LINK ON)
+set(BOOST_LOG_SETUP_DYN_LINK ON)
+set(BOOST_STACKTRACE_DYN_LINK ON)
+
+
+set(BOOST_STACKTRACE_ENABLE_BACKTRACE OFF)
+set(BOOST_STACKTRACE_USE_WINDBG ON)
+set(boost_stacktrace_from_exception  ON)
+
+include( "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
+set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows-static/include)
+
+#stacktrace
+find_package(Boost COMPONENTS  log log_setup  system  REQUIRED)
+
 # add warnings
 # add_compile_options(
 #         -Wall

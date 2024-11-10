@@ -12,6 +12,8 @@
 #include "../Model/CommandsImplementation.h"
 #include "../Model/Controller.h"
 
+#include <boost/log/trivial.hpp>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class CombatantWidget;
@@ -28,7 +30,12 @@ class CombatantWidget : public QWidget {
                   QWidget *parent = nullptr);
   ~CombatantWidget();
 
-  pf2e_manager::Combatant *getCombatant() { return _combatant; }
+  pf2e_manager::Combatant *getCombatant()
+  {
+      if (!this)
+          throw std::logic_error("CombatantWidget doent exists");
+      return _combatant;
+  }
   void setCombatant(pf2e_manager::Combatant *other) { _combatant = other; }
 
   void setBaseStyle() {

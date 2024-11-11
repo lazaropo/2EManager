@@ -1,4 +1,8 @@
-add_compile_definitions(model PRIVATE __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt")
+add_compile_definitions(model PRIVATE
+    __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt"
+    _BOOST_SERIALIZATION_XML_
+    _BOOST_SERIALIZATION_XML_FILEPATH_="record.xml"
+)
 
 add_library(model STATIC
     Combatant.h
@@ -7,7 +11,6 @@ add_library(model STATIC
     CommandsImplementation.h
     ComplexEffect.h
     ComplexEffectBuilder.h
-
     EffectBase.h
     EffectDirector.h
     EffectExecutor.h
@@ -20,6 +23,7 @@ add_library(model STATIC
     SimpleEffectBuilder.h
     SubjectBase.h
     TXTReader.h
+
     Combatant.cpp
     CommandsCreator.cpp
     EffectDirector.cpp
@@ -34,6 +38,10 @@ add_library(model STATIC
 )
 
 target_include_directories(model INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(model PRIVATE
+#    Boost::archieve
+    Boost::serialization)
 
 qt_add_resources(model textresources
     PREFIX "/Saved_info"

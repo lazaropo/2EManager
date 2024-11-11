@@ -1,15 +1,15 @@
 #include "Mediator.h"
 
 namespace pf2e_manager {
-Mediator::Mediator(
-    std::list<Combatant*>* combatant,
-    std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
-    : _combatants(combatant),
-      _builder(new SimpleEffectBuilder(this)),
-      _director(new EffectDirector(_builder)),
-      _commands_creator(new CommandsCreator(this)),
-      _callback(fp) {
-  _builder->reset();
+Mediator::Mediator(std::vector<Combatant*>* combatant,
+                   std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
+    : _combatants(combatant)
+    , _builder(new SimpleEffectBuilder(this))
+    , _director(new EffectDirector(_builder))
+    , _commands_creator(new CommandsCreator(this))
+    , _callback(fp)
+{
+    _builder->reset();
 }
 
 Mediator::~Mediator() {

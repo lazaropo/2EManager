@@ -23,6 +23,7 @@ set(Boost_DEBUG ON)
 set(BOOST_LOG_DYN_LINK ON)
 set(BOOST_LOG_SETUP_DYN_LINK ON)
 set(BOOST_STACKTRACE_DYN_LINK ON)
+set(BOOST_SERIALIZATION_DYN_LINK ON)
 
 
 set(BOOST_STACKTRACE_ENABLE_BACKTRACE OFF)
@@ -34,7 +35,7 @@ include( "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
 set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows-static/include)
 
 #stacktrace
-find_package(Boost COMPONENTS  log log_setup  system  REQUIRED)
+find_package(Boost COMPONENTS  log log_setup  system serialization REQUIRED)
 
 # add warnings
 # add_compile_options(

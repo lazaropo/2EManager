@@ -91,6 +91,7 @@ namespace sys = boost::system;
 BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(my_logger, src::logger_mt)
 // auto exception_handler_handle = AddVectoredExceptionHandler(1, vectoredExceptionHandler);
 inline void make_logger_record(/*std::exception &ex*/);
+inline void print_log(std::exception &ex);
 
 inline void my_terminate_handler()
 {

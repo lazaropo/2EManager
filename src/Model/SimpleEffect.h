@@ -7,66 +7,108 @@
 #include "EffectBase.h"
 #include "EffectExecutor.h"
 #include "MediatorInterface.h"
-// #include "SubjectBase.h"
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/config.hpp>
+
+#include <boost/archive/tmpdir.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+
+#include <boost/serialization/base_object.hpp>
+
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/vector.hpp>
+#endif
 
 namespace pf2e_manager {
 // class Combatant;
 // class Mediator;
 class SimpleEffect : public EffectBase {
- public:
-  SimpleEffect() : EffectBase(this) {}
+#ifdef _BOOST_SERIALIZATION_XML_
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& ar, const unsigned int version)
+    {
+        // serialize base class information
+        ar& boost::serialization::base_object<EffectBase>(*this);
 
-  SimpleEffect(const SimpleEffect& other);
+        ar & _duration; // per round
+        ar & _is_active;
 
-  SimpleEffect(SimpleEffect&& other) : SimpleEffect(other) {}
+        ar & _is_associated_provided;
 
-  SimpleEffect* copy() { return new SimpleEffect(*this); }
+        ar & _associated_actions;
+        ar & _execute_actions;
 
-  void execute() override;
-
-  void undo() override;
-
-  void removeEffect() override {
-    _is_active = false;
-    Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
-    if (combatant) {
-      auto eff_container = &combatant->getEffects();
-      for (auto it : *eff_container)
-        if (getSubject() == it->getInvoker()) it->removeEffect();
+        ar & _executor;
+        ar & _mediator;
     }
-  }
+#endif
+public:
+    SimpleEffect()
+        : EffectBase(this)
+    {}
 
-  void activateEffect() override {
-    if (_duration) _is_active = true;
-    Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
-    if (combatant) {
-      auto eff_container = &combatant->getEffects();
-      for (auto it : *eff_container)
-        if (getSubject() == it->getInvoker()) it->activateEffect();
+    SimpleEffect(const SimpleEffect& other);
+
+    SimpleEffect(SimpleEffect&& other)
+        : SimpleEffect(other)
+    {}
+
+    SimpleEffect* copy() { return new SimpleEffect(*this); }
+
+    void execute() override;
+
+    void undo() override;
+
+    void removeEffect() override
+    {
+        _is_active = false;
+        Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
+        if (combatant) {
+            auto eff_container = &combatant->getEffects();
+            for (auto it : *eff_container)
+                if (getSubject() == it->getInvoker())
+                    it->removeEffect();
+        }
     }
-  }
 
-  void executeAssociated() override {
-    if (!_is_associated_provided) {
-      _executor->execute(this, getReciever(), _associated_actions);
-      _is_associated_provided = true;
+    void activateEffect() override
+    {
+        if (_duration)
+            _is_active = true;
+        Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
+        if (combatant) {
+            auto eff_container = &combatant->getEffects();
+            for (auto it : *eff_container)
+                if (getSubject() == it->getInvoker())
+                    it->activateEffect();
+        }
     }
-  }
 
-  friend class Combatant;
-  friend class SimpleEffectBuilder;
+    void executeAssociated() override
+    {
+        if (!_is_associated_provided) {
+            _executor->execute(this, getReciever(), _associated_actions);
+            _is_associated_provided = true;
+        }
+    }
 
-  // const Trigger _trigger;
+    friend class Combatant;
+    friend class SimpleEffectBuilder;
 
- protected:
-  bool _is_associated_provided = false;
+    // const Trigger _trigger;
 
-  std::vector<std::string> _associated_actions = std::vector<std::string>();
-  std::vector<std::string> _execute_actions = std::vector<std::string>();
+protected:
+    bool _is_associated_provided = false;
 
-  EffectExecutor* _executor = nullptr;
+    std::vector<std::string> _associated_actions = std::vector<std::string>();
+    std::vector<std::string> _execute_actions = std::vector<std::string>();
 
-  MediatorInterface* _mediator = nullptr;
+    EffectExecutor* _executor = nullptr;
+
+    MediatorInterface* _mediator = nullptr;
 };
 }  // namespace pf2e_manager
 #endif

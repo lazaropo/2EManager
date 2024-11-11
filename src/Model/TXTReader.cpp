@@ -1,7 +1,8 @@
 #include "TXTReader.h"
 
 namespace pf2e_manager {
-std::list<Combatant*>* TXTReader::readCombatants(const std::string& path) {
+std::vector<Combatant*>* TXTReader::readCombatants(const std::string& path)
+{
 #ifdef __APPLE__
   setlocale(LC_ALL, "en_US.UTF-8");
 #else
@@ -12,50 +13,50 @@ std::list<Combatant*>* TXTReader::readCombatants(const std::string& path) {
 
   std::ifstream file(path);
   if (file.is_open()) {
-    _ret_list = new std::list<Combatant*>();
+      _ret_vector = new std::vector<Combatant*>();
 
-    std::string buff;
+      std::string buff;
 
-    file >> std::ws;  // multispace delete
+      file >> std::ws; // multispace delete
 
-    while (getline(file, buff)) stringProcessing(buff);
+      while (getline(file, buff))
+          stringProcessing(buff);
 
-    return _ret_list;
+      return _ret_vector;
 
   } else
     return nullptr;
 }
 
-void TXTReader::writeCombatants(const std::string& path,
-                                std::list<Combatant*>* collection) {
-  if (!isCorrectName(path)) return;
+void TXTReader::writeCombatants(const std::string& path, std::vector<Combatant*>* collection)
+{
+    if (!isCorrectName(path))
+        return;
 
-  std::fstream file(path, std::ios::in | std::ios::out | std::ios::trunc);
+    std::fstream file(path, std::ios::in | std::ios::out | std::ios::trunc);
 
-  if (!file.is_open()) return;
+    if (!file.is_open())
+        return;
 
-  for (auto it : *collection) {
-    file << "combatant:"
-         << "name:" << it->getName() << '/'
-         << "hpmax:" << std::to_string(it->getHPMax()) << '/'
-         << "initiative:" << std::to_string(it->getInitiative()) << '/'
-         << "side:" << Combatant::formattingSide(it->getSide(), false, false)
-         << '/' << "vitality:"
-         << Combatant::formattingVitality(it->getVitality(), false, false)
-         << '/' << std::endl;
-  }
-
-  for (auto it : *collection) {
-    for (auto eff : it->getEffects()) {
-      if (eff && eff->isActive() &&
-          !(dynamic_cast<EffectBase*>(eff->getInvoker())))
-        file << eff->getName() /*starts with "effect:"*/ << '/' << "invoker:"
-             << (eff->getInvoker() ? eff->getInvoker()->getName() : "<user>")
-             << '/' << "reciever:" << it->getName() << '/'
-             << "duration:" << eff->getDuration() << '/'
-             << "value:" << eff->getValue() << '/' << std::endl;
+    for (auto it : *collection) {
+        file << "combatant:"
+             << "name:" << it->getName() << '/' << "hpmax:" << std::to_string(it->getHPMax()) << '/'
+             << "initiative:" << std::to_string(it->getInitiative()) << '/'
+             << "side:" << Combatant::formattingSide(it->getSide(), false, false) << '/'
+             << "vitality:" << Combatant::formattingVitality(it->getVitality(), false, false) << '/'
+             << std::endl;
     }
-  }
+
+    for (auto it : *collection) {
+        for (auto eff : it->getEffects()) {
+            if (eff && eff->isActive() && !(dynamic_cast<EffectBase*>(eff->getInvoker())))
+                file << eff->getName() /*starts with "effect:"*/ << '/'
+                     << "invoker:" << (eff->getInvoker() ? eff->getInvoker()->getName() : "<user>")
+                     << '/' << "reciever:" << it->getName() << '/'
+                     << "duration:" << eff->getDuration() << '/' << "value:" << eff->getValue()
+                     << '/' << std::endl;
+        }
+    }
 }
 
 bool TXTReader::isCorrectName(const std::string& name) {
@@ -122,7 +123,7 @@ void TXTReader::setCombatant(const std::string& buff) {
         buff.begin() + first + 9 /*count of chars in vitality: string*/,
         buff.begin() + last /*substr without '/' char*/));
 
-  _ret_list->push_back(new Combatant(hp_max, initiative, side, name, vitality));
+  _ret_vector->push_back(new Combatant(hp_max, initiative, side, name, vitality));
 }
 
 void TXTReader::setEffect(const std::string& buff) {
@@ -173,19 +174,19 @@ void TXTReader::setEffect(const std::string& buff) {
 
   _director->buildEffectByName(name, duration, value);
 
-  auto from =
-      std::find_if(_ret_list->begin(), _ret_list->end(),
-                   [&](Combatant* body) { return body->getName() == invoker; });
-  if (from == _ret_list->end())
-    _builder->setInvoker(nullptr);
+  auto from = std::find_if(_ret_vector->begin(), _ret_vector->end(), [&](Combatant* body) {
+      return body->getName() == invoker;
+  });
+  if (from == _ret_vector->end())
+      _builder->setInvoker(nullptr);
   else
     _builder->setInvoker(*from);
 
-  auto to = std::find_if(
-      _ret_list->begin(), _ret_list->end(),
-      [&](Combatant* body) { return body->getName() == reciever; });
-  if (to == _ret_list->end())
-    throw std::logic_error("TXTReader: setEffect(): reciever is not found.");
+  auto to = std::find_if(_ret_vector->begin(), _ret_vector->end(), [&](Combatant* body) {
+      return body->getName() == reciever;
+  });
+  if (to == _ret_vector->end())
+      throw std::logic_error("TXTReader: setEffect(): reciever is not found.");
   else
     _builder->setReciever(*to);
 

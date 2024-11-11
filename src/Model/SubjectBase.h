@@ -4,29 +4,52 @@
 #include <iostream>
 #include <string>
 
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/config.hpp>
+
+#include <boost/archive/tmpdir.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+
+#include <boost/serialization/string.hpp>
+#endif
+
 namespace pf2e_manager {
 class SubjectBase {
- public:
-  SubjectBase() = delete;
-  SubjectBase(SubjectBase* subject, SubjectBase* reciever = nullptr)
-      : _subject(subject), _reciever(reciever) {}
+#ifdef _BOOST_SERIALIZATION_XML_
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& ar, const unsigned int version)
+    {
+        ar & _name;
+        ar & _subject;
+        ar & _reciever;
+        ar & _invoker;
+    }
+#endif
+public:
+    SubjectBase() {}
+    SubjectBase(SubjectBase* subject, SubjectBase* reciever = nullptr)
+        : _subject(subject)
+        , _reciever(reciever)
+    {}
 
-  virtual ~SubjectBase() = default;
+    virtual ~SubjectBase() = default;
 
-  const std::string getName() const { return _name; }
-  SubjectBase* getSubject() const { return _subject; }
-  SubjectBase* getReciever() const { return _reciever; }
-  SubjectBase* getInvoker() const { return _invoker; }
+    const std::string getName() const { return _name; }
+    SubjectBase* getSubject() const { return _subject; }
+    SubjectBase* getReciever() const { return _reciever; }
+    SubjectBase* getInvoker() const { return _invoker; }
 
-  void setName(const std::string name) { _name = name; }
-  void setReciever(SubjectBase* reciever) { _reciever = reciever; }
-  void setInvoker(SubjectBase* invoker) { _invoker = invoker; }
+    void setName(const std::string name) { _name = name; }
+    void setReciever(SubjectBase* reciever) { _reciever = reciever; }
+    void setInvoker(SubjectBase* invoker) { _invoker = invoker; }
 
- protected:
-  std::string _name = "";
-  SubjectBase* _subject = nullptr;   // this
-  SubjectBase* _reciever = nullptr;  // direction of exertion
-  SubjectBase* _invoker = nullptr;   // exertion from whom
+protected:
+    std::string _name = "";
+    SubjectBase* _subject = nullptr;  // this
+    SubjectBase* _reciever = nullptr; // direction of exertion
+    SubjectBase* _invoker = nullptr;  // exertion from whom
 };
 }  // namespace pf2e_manager
 

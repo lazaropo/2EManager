@@ -64,7 +64,7 @@ class DragNDropQWidget : public QWidget {
  private:
   QScrollArea* _area = nullptr;
   pf2e_manager::Controller* _controller;
-  std::list<pf2e_manager::Combatant*>* _combatants_list;
+  std::vector<pf2e_manager::Combatant*>* _combatants_list;
 
   std::map<pf2e_manager::Combatant*, CombatantWidget*>* _widgets_collection;
   QVBoxLayout* _combatants_layout;

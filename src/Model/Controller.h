@@ -70,11 +70,9 @@ class Controller {
 
   void nextTurn() { _model->nextTurn(); }
 
-  const std::list<Combatant*>* getCombatants() const {
-    return _model->getCombatants();
-  }
+  const std::vector<Combatant*>* getCombatants() const { return _model->getCombatants(); }
 
-  std::list<Combatant*>* getCombatants() { return _model->getCombatants(); }
+  std::vector<Combatant*>* getCombatants() { return _model->getCombatants(); }
 
   const std::vector<CommandBase*>& getCommands() const {
     return _model->getCommands();

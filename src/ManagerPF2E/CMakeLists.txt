@@ -5,37 +5,6 @@ project(ManagerPF2E VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# set(CMAKE_GENERATOR_PLATFORM "x64")
-# set(VCPKG_TARGET_TRIPLET "x64-windows")
-
-# set(Boost_USE_STATIC_LIBS ON)
-# set(Boost_USE_MULTITHREADED      ON)
-# set(Boost_USE_STATIC_RUNTIME    OFF)
-# set(Boost_NO_SYSTEM_PATHS ON)
-
-
-# set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
-
-# set(Boost_DEBUG ON)
-
-# set(BOOST_LOG_DYN_LINK)
-# set(BOOST_LOG_SETUP_DYN_LINK)
-# include( "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
-
-# set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows-static/include)
-
-
-# find_package(Boost COMPONENTS log log_setup system REQUIRED)
-
-
-#find_package(Boost COMPONENTS log  REQUIRED ) #)OMPONENTS boost_log)
-
-
-# if(WIN32)
-#     include(Windeployqt)
-#     windeployqt(nitroshare-cli ${INSTALL_BIN_PATH})
-# endif()
-
 qt_add_library(ManagerPF2E_static STATIC
     managerwidget.h
     dragndropqwidget.h
@@ -62,10 +31,8 @@ target_link_libraries(ManagerPF2E_static
     commandicon
     EffectDialog
     valueinputdialog
-
-#    fmt::fmt
+# Boost non-header-only libs
     Boost::log
-#    Boost::stacktrace_from_exception
     Boost::log_setup
     Boost::system
     )

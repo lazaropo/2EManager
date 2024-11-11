@@ -53,70 +53,92 @@ ManagerWidget::~ManagerWidget() {
 }
 
 void ManagerWidget::on_pushButton_create_effect_clicked() {
-  auto current_widget = _box_combatants->getCurrentWidget();
-  // UNCOMMENT IT!!!
-  // if (!current_widget) return;
+    try {
+        auto current_widget = _box_combatants->getCurrentWidget();
+        // UNCOMMENT IT!!!
+        // if (!current_widget) return;
 
-  EffectDialog dialog =
-      /*new */ EffectDialog(_controller, current_widget->getCombatant(), this);
-  if (dialog.exec() == QDialog::Rejected) return;
+        EffectDialog dialog =
+            /*new */ EffectDialog(_controller, current_widget->getCombatant(), this);
+        if (dialog.exec() == QDialog::Rejected)
+            return;
 
-  current_widget->updateContent();
+        current_widget->updateContent();
+    } catch (std::exception &ex) {
+        print_log(ex);
+    }
 }
 
 void ManagerWidget::on_pushButton_create_combatant_clicked() {
-  pf2e_manager::Combatant *body;
-  CombatantDialog dialog(&body);
-  if (dialog.exec() == QDialog::Accepted) {
-    _controller->addCombatant(body);
-    _box_combatants->addWidget(body);
-  }
+    try {
+        pf2e_manager::Combatant *body;
+        CombatantDialog dialog(&body);
+        if (dialog.exec() == QDialog::Accepted) {
+            _controller->addCombatant(body);
+            _box_combatants->addWidget(body);
+        }
+    } catch (std::exception &ex) {
+        print_log(ex);
+    }
 }
 
 void ManagerWidget::on_pushButton_create_command_clicked() {
-  pf2e_manager::CommandBase *command;
-  CommandDialog dialog(&command, _controller);
-  // command have to be set in collection from model
-  if (dialog.exec() == QDialog::Rejected) return;
-  _box_combatants->updateContent();
+    try {
+        pf2e_manager::CommandBase *command;
+        CommandDialog dialog(&command, _controller);
+        // command have to be set in collection from model
+        if (dialog.exec() == QDialog::Rejected)
+            return;
+        _box_combatants->updateContent();
 
-  _box_commands->addCommand(command);
+        _box_commands->addCommand(command);
+    } catch (std::exception &ex) {
+        print_log(ex);
+    }
 }
 
 void ManagerWidget::on_pushButton_create_order_clicked() {
-  _controller->sortByInit();
-  _box_combatants->setModelCurrentComatant(_controller->getCurrent());
-  _box_combatants->updateContent();
+    try {
+        _controller->sortByInit();
+        _box_combatants->setModelCurrentComatant(_controller->getCurrent());
+        _box_combatants->updateContent();
+    } catch (std::exception &ex) {
+        print_log(ex);
+    }
 }
 
 void ManagerWidget::on_pushButton_turn_clicked() {
-  //  if (_button_start_flag) {
-  //    _controller->nextTurn();
+    try {
+        //  if (_button_start_flag) {
+        //    _controller->nextTurn();
 
-  //    ui->pushButton_turn->setText("Start of Turn");
-  //    ui->pushButton_turn->setStyleSheet(
-  //        "QPushButton{"
-  //        "font: bold 28px;"
-  //        "color: black; "
-  //        "background-color: rgb(246, 97, 81);"
-  //        "}");
-  //  } else {
-  _controller->nextTurn();
-  _box_combatants->setModelCurrentComatant(_controller->getCurrent());
+        //    ui->pushButton_turn->setText("Start of Turn");
+        //    ui->pushButton_turn->setStyleSheet(
+        //        "QPushButton{"
+        //        "font: bold 28px;"
+        //        "color: black; "
+        //        "background-color: rgb(246, 97, 81);"
+        //        "}");
+        //  } else {
+        _controller->nextTurn();
+        _box_combatants->setModelCurrentComatant(_controller->getCurrent());
 
-  // ui->pushButton_turn->setText("Next Turn");
-  //  ui->pushButton_turn->setStyleSheet(
-  //      "QPushButton {"
-  //      "font: bold 28px; "
-  //      "color: black;"
-  //      "background-color: rgb(143, 240, 164);"
-  //      "}");
-  // }
+        // ui->pushButton_turn->setText("Next Turn");
+        //  ui->pushButton_turn->setStyleSheet(
+        //      "QPushButton {"
+        //      "font: bold 28px; "
+        //      "color: black;"
+        //      "background-color: rgb(143, 240, 164);"
+        //      "}");
+        // }
 
-  _button_start_flag = !_button_start_flag;
+        _button_start_flag = !_button_start_flag;
 
-  _box_combatants->updateContent();
-  _box_commands->updateContent();
+        _box_combatants->updateContent();
+        _box_commands->updateContent();
+    } catch (std::exception &ex) {
+        print_log(ex);
+    }
 }
 
 void make_logger_record()
@@ -176,6 +198,13 @@ void make_logger_record()
     //               << "Stack Trace: " << boost::stacktrace::stacktrace() << std::endl;
 }
 
+void print_log(std::exception &ex)
+{
+    src::logger_mt &lg = my_logger::get();
+    BOOST_LOG(lg) << "Exception description: " << ex.what() << std::endl
+                  << "Stack Trace: " << boost::stacktrace::stacktrace() << std::endl;
+}
+
 void ManagerWidget::on_pushButton_create_remove_clicked() {
     try {
         auto widget = _combatant_list.extract(_box_combatants->getCurrentWidget()->getCombatant());
@@ -185,20 +214,7 @@ void ManagerWidget::on_pushButton_create_remove_clicked() {
             _box_combatants->updateContent();
         }
     } catch (std::exception &ex) {
-        // make_logger_record(ex);
-        src::logger_mt &lg = my_logger::get();
-        // auto record = lg.open_record(std::string() + "Exception description: " + ex.what() + '\n'
-        //                              + "Stack Trace: " + to_string(boost::stacktrace::stacktrace())
-        //                              + '\n');
-        // if (record) {
-        //     logging::record_ostream strm(record);
-        //     strm << "Exception description: " << ex.what() << std::endl
-        //          << "Stack Trace: " << boost::stacktrace::stacktrace() << std::endl;
-        //     strm.flush();
-        //     lg.push_record(boost::move(record));
-        // }
-        BOOST_LOG(lg) << "Exception description: " << ex.what() << std::endl
-                      << "Stack Trace: " << boost::stacktrace::stacktrace() << std::endl;
+        print_log(ex);
     }
 }
 
@@ -206,12 +222,15 @@ int ManagerWidget::getActionConfirmation(pf2e_manager::SubjectBase *sender,
                                          pf2e_manager::SubjectBase *reciever,
                                          const std::string &name) {
   int ret = 0;
-  const std::string sender_name = sender ? sender->getName() : "User";
-  if (!reciever)
-    throw std::logic_error(
-        "ManagerWidget: getActionConfirmation: Reciever is null.");
-  ValueInputDialog dialog(&ret, sender_name, reciever->getName(), name);
-  dialog.exec();
+  try {
+      const std::string sender_name = sender ? sender->getName() : "User";
+      if (!reciever)
+          throw std::logic_error("ManagerWidget: getActionConfirmation: Reciever is null.");
+      ValueInputDialog dialog(&ret, sender_name, reciever->getName(), name);
+      dialog.exec();
+  } catch (std::exception &ex) {
+      print_log(ex);
+  }
 
   // _box_commands->addCommand(_controller->getCommands().back());
 

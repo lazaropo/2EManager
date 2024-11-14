@@ -18,7 +18,7 @@ ManagerWidget::ManagerWidget(QWidget *parent)
       _box_combatants(
           new DragNDropQWidget(_controller, &_combatant_list, this)),
       _box_commands(new DragNDropQWidgetCommands(_controller, this)) {
-    make_logger_record();
+    init_logger();
 
     try {
         ui->setupUi(this);
@@ -44,6 +44,9 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
         _box_combatants->setModelCurrentComatant(_controller->getCurrent());
     } catch (std::exception &ex) {
+        print_log(ex);
+    } catch (boost::exception &ex) {
+        print_log(ex);
     }
 }
 
@@ -66,6 +69,8 @@ void ManagerWidget::on_pushButton_create_effect_clicked() {
         current_widget->updateContent();
     } catch (std::exception &ex) {
         print_log(ex);
+    } catch (boost::exception &ex) {
+        print_log(ex);
     }
 }
 
@@ -78,6 +83,8 @@ void ManagerWidget::on_pushButton_create_combatant_clicked() {
             _box_combatants->addWidget(body);
         }
     } catch (std::exception &ex) {
+        print_log(ex);
+    } catch (boost::exception &ex) {
         print_log(ex);
     }
 }
@@ -94,6 +101,8 @@ void ManagerWidget::on_pushButton_create_command_clicked() {
         _box_commands->addCommand(command);
     } catch (std::exception &ex) {
         print_log(ex);
+    } catch (boost::exception &ex) {
+        print_log(ex);
     }
 }
 
@@ -103,6 +112,8 @@ void ManagerWidget::on_pushButton_create_order_clicked() {
         _box_combatants->setModelCurrentComatant(_controller->getCurrent());
         _box_combatants->updateContent();
     } catch (std::exception &ex) {
+        print_log(ex);
+    } catch (boost::exception &ex) {
         print_log(ex);
     }
 }
@@ -138,10 +149,12 @@ void ManagerWidget::on_pushButton_turn_clicked() {
         _box_commands->updateContent();
     } catch (std::exception &ex) {
         print_log(ex);
+    } catch (boost::exception &ex) {
+        print_log(ex);
     }
 }
 
-void make_logger_record()
+void init_logger()
 {
     // Initialize sinks
     QDir dir("./log/exceptions/");
@@ -205,6 +218,16 @@ void print_log(std::exception &ex)
                   << "Stack Trace: " << boost::stacktrace::stacktrace() << std::endl;
 }
 
+void print_log(boost::exception &ex)
+{
+    src::logger_mt &lg = my_logger::get();
+    typedef boost::error_info<struct tag_my_info, int> my_info;
+    // boost::error_info::value_type *info = boost::get_error_info<my_info>(ex);
+    if (int const *mi = boost::get_error_info<my_info>(ex))
+        BOOST_LOG(lg) << "Boost exception info: " << *mi << std::endl
+                      << "Stack Trace: " << boost::stacktrace::stacktrace() << std::endl;
+}
+
 void ManagerWidget::on_pushButton_create_remove_clicked() {
     try {
         auto widget = _combatant_list.extract(_box_combatants->getCurrentWidget()->getCombatant());
@@ -214,6 +237,8 @@ void ManagerWidget::on_pushButton_create_remove_clicked() {
             _box_combatants->updateContent();
         }
     } catch (std::exception &ex) {
+        print_log(ex);
+    } catch (boost::exception &ex) {
         print_log(ex);
     }
 }
@@ -229,6 +254,8 @@ int ManagerWidget::getActionConfirmation(pf2e_manager::SubjectBase *sender,
       ValueInputDialog dialog(&ret, sender_name, reciever->getName(), name);
       dialog.exec();
   } catch (std::exception &ex) {
+      print_log(ex);
+  } catch (boost::exception &ex) {
       print_log(ex);
   }
 

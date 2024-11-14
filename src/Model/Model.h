@@ -15,6 +15,7 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 
 #include <cstdio> // remove
+#include <fstream>
 
 #include <boost/config.hpp>
 #if defined(BOOST_NO_STDC_NAMESPACE)
@@ -23,11 +24,16 @@ using ::remove;
 }
 #endif
 
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/tmpdir.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
+// #include <boost/archive/xml_iarchive.hpp>
+// #include <boost/archive/xml_oarchive.hpp>
+#include <boost/exception/all.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/utility.hpp>
+#include <boost\serialization\throw_exception.hpp>
 
 #include <boost/serialization/base_object.hpp>
 
@@ -38,7 +44,7 @@ using ::remove;
 namespace pf2e_manager {
 class Model {
 #ifdef _BOOST_SERIALIZATION_XML_
-    friend class boost::serialization::access;
+    friend class ::boost::serialization::access;
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version)
     {

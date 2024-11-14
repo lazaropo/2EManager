@@ -85,5 +85,5 @@ class Controller {
  private:
   Model* _model;
 };
-}  // namespace pf2e_manager
+} // namespace pf2e_manager
 #endif

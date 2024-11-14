@@ -12,6 +12,9 @@
 #include <boost/archive/tmpdir.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/access.hpp>
+
+#include <boost/serialization/split_member.hpp>
 
 #include <boost/serialization/base_object.hpp>
 
@@ -21,11 +24,27 @@
 namespace pf2e_manager {
 class EffectBase : public SubjectBase {
 #ifdef _BOOST_SERIALIZATION_XML_
-    friend class boost::serialization::access;
+    friend std::ostream &operator<<(std::ostream &os, const pf2e_manager::EffectBase *instance);
+
+    friend class ::boost::serialization::access;
+    // template<class Archive>
+    // void serialize(Archive &ar, const unsigned int version)
+    // {
+    //     // serialize base class information
+    //     ar &boost::serialization::base_object<SubjectBase>(*this);
+
+    //     ar & _duration; // per round
+    //     ar & _is_active;
+    //     ar & _type; // bit field
+    //     ar & _value;
+    //     ar & _trigger;
+
+    //     ar & _description;
+    // }
+
     template<class Archive>
-    void serialize(Archive &ar, const unsigned int version)
+    void save(Archive &ar, const unsigned int version) const
     {
-        // serialize base class information
         ar &boost::serialization::base_object<SubjectBase>(*this);
 
         ar & _duration; // per round
@@ -36,6 +55,20 @@ class EffectBase : public SubjectBase {
 
         ar & _description;
     }
+    template<class Archive>
+    void load(Archive &ar, const unsigned int version)
+    {
+        ar &boost::serialization::base_object<SubjectBase>(*this);
+
+        ar & _duration; // per round
+        ar & _is_active;
+        ar & _type; // bit field
+        ar & _value;
+        ar & _trigger;
+
+        ar & _description;
+    }
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 public:
     enum class Trigger { NO_TRIGGER, START_TURN, END_TURN };
@@ -51,6 +84,28 @@ public:
     };
     struct Value
     {
+#ifdef _BOOST_SERIALIZATION_XML_
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive &ar, const unsigned int version)
+        { // per round
+            ar &_is_constant = true;
+            ar &_value = 0;
+            ar &_str = 0;
+            ar &_dex = 0;
+            ar &_con = 0;
+            ar &_mind = 0;
+            ar &_fort = 0;
+            ar &_refl = 0;
+            ar &_will = 0;
+            ar &_skills = 0;
+            ar &_perc = 0; // perception
+            ar &_atk = 0;
+            ar &_ac = 0;
+            ar &_dc = 0; // class DC
+            ar &_init = 0;
+        }
+#endif
         Value() = default;
         explicit Value(bool is_constant, int value)
             : _is_constant(is_constant)
@@ -107,6 +162,15 @@ public:
     int isActive() const { return _is_active; }
     const std::string &getDescription() const { return _description; }
 
+    static std::string formattingValue(Value side);
+    static Value formattingValue(const std::string &string);
+
+    static std::string formattingTrigger(Trigger side);
+    static Trigger formattingTrigger(const std::string &string);
+
+    static std::string formattingType(Type side);
+    static Type formattingType(const std::string &string);
+
 protected:
     int _duration = 0; // per round
     bool _is_active = false;
@@ -116,6 +180,18 @@ protected:
 
     std::string _description = "";
 };
+
+#ifdef _BOOST_SERIALIZATION_XML_
+inline std::ostream &operator<<(std::ostream &os, const pf2e_manager::EffectBase *instance)
+{
+    os << static_cast<const pf2e_manager::SubjectBase *>(instance);
+    os << instance->_duration << ' ' << instance->_is_active << ' ' << instance->_type << ' '
+       << instance->_value._value << ' ' << EffectBase::formattingTrigger(instance->_trigger) << ' '
+       << instance->_description;
+
+    return os;
+}
+#endif
 }  // namespace pf2e_manager
 
 #endif  // EFFECTBASE_H

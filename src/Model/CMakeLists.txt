@@ -1,8 +1,4 @@
-add_compile_definitions(model PRIVATE
-    __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt"
-    _BOOST_SERIALIZATION_XML_
-    _BOOST_SERIALIZATION_XML_FILEPATH_="record.xml"
-)
+
 
 add_library(model STATIC
     Combatant.h
@@ -35,6 +31,7 @@ add_library(model STATIC
     CommandsImplementation/HealCommand.cpp
     CommandsImplementation/MassHarmCommand.cpp
     CommandsImplementation/MassHealCommand.cpp
+    EffectBase.cpp
 )
 
 target_include_directories(model INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

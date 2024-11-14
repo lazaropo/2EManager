@@ -12,10 +12,13 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 #include <boost/config.hpp>
 
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/tmpdir.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
+// #include <boost/archive/xml_iarchive.hpp>
+// #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/split_member.hpp>
 
 #include <boost/serialization/base_object.hpp>
 
@@ -26,23 +29,58 @@ namespace pf2e_manager {
 
 class Combatant : public SubjectBase {
 #ifdef _BOOST_SERIALIZATION_XML_
-    friend class boost::serialization::access;
+
+    friend std::ostream& operator<<(std::ostream& os, const Combatant* gp);
+
+    friend class ::boost::serialization::access;
+
     template<class Archive>
-    void serialize(Archive& ar, const unsigned int version)
+    void save(Archive& ar, const unsigned int version) const
     {
-        // serialize base class information
-        ar& boost::serialization::base_object<SubjectBase>(*this);
+        ar& ::boost::serialization::base_object<SubjectBase>(*this);
+        // note, version is always the latest when saving
 
         ar & _hp_max;
         ar & _hp_tmp;
         ar & _hp_curr;
         ar & _initiative;
         ar & _level;
-        ar & _side;
-        ar & _vitality;
+
+        ar& formattingSide(_side, false, false);
+        ar& formattingVitality(_vitality, false, false);
 
         ar & _effects;
     }
+    template<class Archive>
+    void load(Archive& ar, const unsigned int version)
+    {
+        ar& ::boost::serialization::base_object<SubjectBase>(*this);
+        // note, version is always the latest when saving
+
+        ar & _hp_max;
+        ar & _hp_tmp;
+        ar & _hp_curr;
+        ar & _initiative;
+        ar & _level;
+
+        std::string side, vitality;
+
+        ar & side;
+        ar & vitality;
+
+        _side = formattingSide(side);
+        _vitality = formattingVitality(vitality);
+
+        ar & _effects;
+    }
+
+    template<class Archive>
+    void serialize(Archive& ar, const unsigned int file_version)
+    {
+        ::boost::serialization::split_member(ar, *this, file_version);
+    }
+
+    // BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 
 public:
@@ -157,7 +195,7 @@ private:
     int _level;
     Side _side;
     // std::string _name = "";
-    const Vitality _vitality;
+    Vitality _vitality;
 
     std::vector<EffectBase*> _effects = {};
 };
@@ -165,26 +203,28 @@ private:
 // inline bool operator<(const Combatant& fisrt, const Combatant& second) {
 //   return fisrt._initiative < second._initiative;
 // }
-}  // namespace pf2e_manager
 
 #ifdef _BOOST_SERIALIZATION_XML_
 namespace boost {
 namespace serialization {
 
-template<class Archive>
-void serialize(Archive& ar, pf2e_manager::Combatant::Vitality& g, const unsigned int version)
-{
-    ar & g;
-}
-
-template<class Archive>
-void serialize(Archive& ar, pf2e_manager::Combatant::Side& g, const unsigned int version)
-{
-    ar & g;
-}
 
 } // namespace serialization
 } // namespace boost
-#endif
 
+inline std::ostream& operator<<(std::ostream& os, const pf2e_manager::Combatant* instance)
+{
+    os << static_cast<const pf2e_manager::SubjectBase*>(instance);
+    os << instance->_hp_max << ' ' << instance->_hp_tmp << ' ' << instance->_hp_curr << ' '
+       << instance->_initiative << ' ' << instance->_level << ' '
+       << Combatant::formattingSide(instance->_side, false, false) << ' '
+       << Combatant::formattingVitality(instance->_vitality, false, false);
+
+    for (auto it : instance->_effects)
+        os << it << ' ';
+
+    return os;
+}
+#endif
+} // namespace pf2e_manager
 #endif

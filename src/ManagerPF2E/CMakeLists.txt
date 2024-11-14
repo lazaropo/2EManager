@@ -35,6 +35,7 @@ target_link_libraries(ManagerPF2E_static
     Boost::log
     Boost::log_setup
     Boost::system
+    Boost::serialization
     )
 
 # include(GenerateExportHeader)

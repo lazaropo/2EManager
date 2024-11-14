@@ -12,12 +12,14 @@
 #include <boost/archive/tmpdir.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+
+#include <boost/serialization/access.hpp>
 #endif
 
 namespace pf2e_manager {
 class MediatorInterface {
 #ifdef _BOOST_SERIALIZATION_XML_
-    friend class boost::serialization::access;
+    friend class ::boost::serialization::access;
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version)
     {}
@@ -38,7 +40,7 @@ public:
 
     virtual CommandBase* makeCommand(SubjectBase* sender,
                                      const std::string& name,
-                                     std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info)
+                                     std::vector<std::pair<SubjectBase*, int>>& info)
         = 0;
 
     virtual void undoEffect(SubjectBase* sender, SubjectBase* reciever, const std::string& name) = 0;

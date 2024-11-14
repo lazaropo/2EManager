@@ -26,23 +26,17 @@ namespace pf2e_manager {
 // class Mediator;
 class SimpleEffect : public EffectBase {
 #ifdef _BOOST_SERIALIZATION_XML_
-    friend class boost::serialization::access;
+    friend class ::boost::serialization::access;
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version)
     {
         // serialize base class information
-        ar& boost::serialization::base_object<EffectBase>(*this);
-
-        ar & _duration; // per round
-        ar & _is_active;
+        ar& ::boost::serialization::base_object<EffectBase>(*this);
 
         ar & _is_associated_provided;
 
         ar & _associated_actions;
         ar & _execute_actions;
-
-        ar & _executor;
-        ar & _mediator;
     }
 #endif
 public:

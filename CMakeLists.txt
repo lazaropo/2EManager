@@ -2,12 +2,15 @@ cmake_minimum_required(VERSION 3.16)
 
 project(Manager VERSION 1.0.0 LANGUAGES CXX)
 
+# add_compile_options(/utf-8)
+
+#set(CMAKE_CXX_COMPILER "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.42.34433/bin/Hostx64/x64/cl")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-
-set(CMAKE_GENERATOR_PLATFORM "x64")
+# Set if generator is not Ninja
+# set(CMAKE_GENERATOR_PLATFORM "x64")
 set(VCPKG_TARGET_TRIPLET "x64-windows")
 
 set(Boost_USE_STATIC_LIBS ON)
@@ -16,7 +19,7 @@ set(Boost_USE_STATIC_RUNTIME    OFF)
 #set(Boost_NO_SYSTEM_PATHS ON)
 
 
-set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
 
 set(Boost_DEBUG ON)
 
@@ -29,42 +32,27 @@ set(BOOST_SERIALIZATION_DYN_LINK ON)
 set(BOOST_STACKTRACE_ENABLE_BACKTRACE OFF)
 set(BOOST_STACKTRACE_USE_WINDBG ON)
 set(boost_stacktrace_from_exception  ON)
-
+set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
 include( "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
 set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows-static/include)
 
+#set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+
 #stacktrace
 find_package(Boost COMPONENTS  log log_setup  system serialization REQUIRED)
-
-# add warnings
-# add_compile_options(
-#         -Wall
-#         -Wpedantic
-#         -Wextra
-#         -Wshadow
-#         -Wformat=2
-#         -Wstrict-overflow
-#         -fvisibility=hidden
-#         -fno-strict-aliasing
-#         -Werror
-#         -static
-#         -static-libgcc
-#         -static-libstdc++
-# )
-
-
-# add_compile_options(
-#     /std:clatest
-#     /std:c++17
-# )
-
 
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Gui)
 qt_standard_project_setup()
+
+add_compile_definitions(
+    __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt"
+    _BOOST_SERIALIZATION_XML_
+    _BOOST_SERIALIZATION_XML_FILEPATH_="record.txt"
+)
 
 add_subdirectory(src/Model)
 #add_subdirectory(src/ReversePolishNotation)
@@ -93,13 +81,13 @@ qt_generate_deploy_app_script(
 install(SCRIPT ${deploy_script})
 
 set(deploy_script "${CMAKE_CURRENT_BINARY_DIR}/ManagerPF2E.cmake")
-file(GENERATE OUTPUT ${deploy_script} CONTENT "
-include(\"${QT_DEPLOY_SUPPORT}\")
+# file(GENERATE OUTPUT ${deploy_script} CONTENT "
+# include(/"${QT_DEPLOY_SUPPORT}/")
 
-qt_deploy_runtime_dependencies(
-    EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:ManagerPF2E>\"
-    GENERATE_QT_CONF
-)")
+# qt_deploy_runtime_dependencies(
+#     EXECUTABLE /"/${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:ManagerPF2E>/"
+#     GENERATE_QT_CONF
+# )")
 
 #install(EXPORT ReversePolishNotationTargets DESTINATION src/CommandDialog/)
 

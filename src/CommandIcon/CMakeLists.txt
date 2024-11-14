@@ -2,7 +2,7 @@ qt_add_library(commandicon STATIC
     commandicon.cpp
     commandicon.ui
 )
-target_link_libraries(commandicon PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui)
+target_link_libraries(commandicon PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui Boost::serialization)
 target_include_directories(commandicon INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 

@@ -10,6 +10,11 @@
 #include <boost/archive/tmpdir.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/utility.hpp>
+
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/access.hpp>
 
 #include <boost/serialization/string.hpp>
 #endif
@@ -17,7 +22,9 @@
 namespace pf2e_manager {
 class SubjectBase {
 #ifdef _BOOST_SERIALIZATION_XML_
-    friend class boost::serialization::access;
+    friend std::ostream& operator<<(std::ostream& os, const SubjectBase* instance);
+
+    friend class ::boost::serialization::access;
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version)
     {
@@ -51,6 +58,17 @@ protected:
     SubjectBase* _reciever = nullptr; // direction of exertion
     SubjectBase* _invoker = nullptr;  // exertion from whom
 };
-}  // namespace pf2e_manager
+#ifdef _BOOST_SERIALIZATION_XML_
+inline std::ostream& operator<<(std::ostream& os, const pf2e_manager::SubjectBase* instance)
+{
+    if (!instance)
+        return os;
 
+    os << instance->_name << ' ' << instance->_reciever << ' ' << instance->_invoker << std::endl;
+
+    return os;
+}
+
+#endif
+} // namespace pf2e_manager
 #endif

@@ -19,7 +19,7 @@ qt_add_library(commanddialog STATIC
 
 #target_include_directories(commanddialog PRIVATE ReversePolishNotation)
 
-target_link_libraries(commanddialog PRIVATE Qt6::Core Qt6::Widgets)# ReversePolishNotation)
+target_link_libraries(commanddialog PRIVATE Qt6::Core Qt6::Widgets Boost::serialization)# ReversePolishNotation)
 target_include_directories(commanddialog INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 

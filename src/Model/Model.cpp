@@ -5,14 +5,28 @@ namespace pf2e_manager {
 Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
     : _mediator(new Mediator(_combatants, fp))
 {
-    // open the archive
-    std::ifstream ifs(_path);
-    assert(ifs.good());
-    boost::archive::xml_iarchive ia(ifs);
+    {
+        try {
+            // open the archive
+            std::ifstream ifs(_path);
+            if (ifs.good() && ifs.rdbuf()->in_avail() > 0) {
+                // boost::archive::xml_iarchive ia(ifs);
+                using namespace pf2e_manager;
+                using namespace ::boost;
+                ::boost::archive::text_iarchive ia(ifs);
 
+                ia >> _combatants;
+                ia >> _mediator;
+            }
+        } catch (::boost::exception& ex) {
+            typedef ::boost::error_info<struct tag_my_info, int> my_info;
+            if (int const* mi = ::boost::get_error_info<my_info>(ex))
+                std::cerr << *mi;
+        }
+    }
     // restore the schedule from the archive
-    ia >> BOOST_SERIALIZATION_NVP(_combatants);
-    ia >> BOOST_SERIALIZATION_NVP(_mediator);
+    // ia >> BOOST_SERIALIZATION_NVP(_combatants);
+    // ia >> BOOST_SERIALIZATION_NVP(_mediator);
 
     if (!_combatants)
         _combatants = new std::vector<Combatant*>();
@@ -34,11 +48,16 @@ Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> 
 Model::~Model()
 {
     // make an archive
-    std::ofstream ofs(_path);
-    assert(ofs.good());
-    boost::archive::xml_oarchive oa(ofs);
-    oa << BOOST_SERIALIZATION_NVP(_combatants);
-    oa << BOOST_SERIALIZATION_NVP(_mediator);
+    std::ofstream ofs(_path, std::ios_base::out | std::ios_base::trunc);
+    if (ofs.good()) {
+        // boost::archive::xml_oarchive oa(ofs);
+        ::boost::archive::text_oarchive oa(ofs);
+
+        // oa << BOOST_SERIALIZATION_NVP(_combatants);
+        // oa << BOOST_SERIALIZATION_NVP(_mediator);
+        oa << *_combatants;
+        oa << *_mediator;
+    }
 
     for (auto it : *_combatants)
         delete it;

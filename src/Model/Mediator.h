@@ -26,11 +26,11 @@
 namespace pf2e_manager {
 class Mediator : public MediatorInterface {
 #ifdef _BOOST_SERIALIZATION_XML_
-    friend class boost::serialization::access;
+    friend class ::boost::serialization::access;
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version)
     {
-        ar& boost::serialization::base_object<MediatorInterface>(*this);
+        ar& ::boost::serialization::base_object<MediatorInterface>(*this);
         ar & _commands;
     }
 #endif
@@ -59,7 +59,7 @@ public:
 
     CommandBase* makeCommand(SubjectBase* sender,
                              const std::string& name,
-                             std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) override;
+                             std::vector<std::pair<SubjectBase*, int>>& info) override;
 
     void doCommand(CommandBase* cmd)
     {

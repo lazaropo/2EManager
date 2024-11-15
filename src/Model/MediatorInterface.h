@@ -9,11 +9,12 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 #include <boost/config.hpp>
 
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/tmpdir.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
 
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/assume_abstract.hpp>
 #endif
 
 namespace pf2e_manager {
@@ -50,6 +51,7 @@ public:
     virtual const std::vector<CommandBase*>& getCommands() const = 0;
     virtual std::vector<CommandBase*>& getCommands() = 0;
 };
-}  // namespace pf2e_manager
 
+} // namespace pf2e_manager
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(pf2e_manager::MediatorInterface);
 #endif

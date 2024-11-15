@@ -1,5 +1,10 @@
 #include "MassHarmCommand.h"
 
+// #ifdef _BOOST_SERIALIZATION_XML_
+// BOOST_CLASS_EXPORT(pf2e_manager::HarmCommand);
+// BOOST_CLASS_EXPORT(pf2e_manager::MassHarmCommand);
+// #endif
+
 namespace pf2e_manager {
 
 MassHarmCommand::MassHarmCommand(

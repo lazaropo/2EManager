@@ -8,11 +8,13 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 #include <boost/config.hpp>
 
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/tmpdir.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
 
 #include <boost/serialization/base_object.hpp>
+
+#include <boost/serialization/export.hpp>
 #endif
 
 namespace pf2e_manager {
@@ -25,6 +27,7 @@ class HealCommand : public CommandBase {
         // serialize base class information
         ar& ::boost::serialization::base_object<CommandBase>(*this);
     }
+    HealCommand() {}
 #endif
 public:
     HealCommand(MediatorInterface* mediator, SubjectBase* sender, SubjectBase* reciever, int value)
@@ -43,5 +46,5 @@ private:
     MediatorInterface* _mediator;
 };
 }  // namespace pf2e_manager
-
+// BOOST_CLASS_EXPORT(pf2e_manager::HealCommand);
 #endif

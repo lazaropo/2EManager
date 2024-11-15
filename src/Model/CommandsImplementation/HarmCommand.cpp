@@ -1,5 +1,7 @@
 #include "HarmCommand.h"
 
+// BOOST_CLASS_EXPORT(pf2e_manager::HarmCommand);
+
 namespace pf2e_manager {
 
 void HarmCommand::execute() {
@@ -40,4 +42,4 @@ void HarmCommand::undo() {
 
   _is_active = false;
 }
-}  // namespace pf2e_manager
+} // namespace pf2e_manager

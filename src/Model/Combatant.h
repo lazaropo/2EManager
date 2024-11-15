@@ -215,8 +215,8 @@ namespace serialization {
 inline std::ostream& operator<<(std::ostream& os, const pf2e_manager::Combatant* instance)
 {
     os << static_cast<const pf2e_manager::SubjectBase*>(instance);
-    os << instance->_hp_max << ' ' << instance->_hp_tmp << ' ' << instance->_hp_curr << ' '
-       << instance->_initiative << ' ' << instance->_level << ' '
+    os << "PEPPAA " << instance->_hp_max << ' ' << instance->_hp_tmp << ' ' << instance->_hp_curr
+       << ' ' << instance->_initiative << ' ' << instance->_level << ' '
        << Combatant::formattingSide(instance->_side, false, false) << ' '
        << Combatant::formattingVitality(instance->_vitality, false, false);
 

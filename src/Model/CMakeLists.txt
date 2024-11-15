@@ -5,6 +5,10 @@ add_library(model STATIC
     CommandBase.h
     CommandsCreator.h
     CommandsImplementation.h
+    CommandsImplementation/HarmCommand.h
+    CommandsImplementation/HealCommand.h
+    CommandsImplementation/MassHarmCommand.h
+    CommandsImplementation/MassHealCommand.h
     ComplexEffect.h
     ComplexEffectBuilder.h
     EffectBase.h

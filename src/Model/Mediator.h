@@ -14,13 +14,18 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 #include <boost/config.hpp>
 
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/tmpdir.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
 
 #include <boost/serialization/base_object.hpp>
 
 #include <boost/serialization/vector.hpp>
+
+#include <boost/serialization/export.hpp>
+
+// using namespace ::pf2e_manager;
+
 #endif
 
 namespace pf2e_manager {
@@ -121,5 +126,7 @@ public:
      std::function<int(SubjectBase*, SubjectBase*, const std::string&)> _callback;
 };
 }  // namespace pf2e_manager
+
+// BOOST_CLASS_EXPORT(pf2e_manager::Mediator);
 
 #endif

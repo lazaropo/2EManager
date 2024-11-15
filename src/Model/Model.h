@@ -9,8 +9,7 @@
 
 #include "Combatant.h"
 #include "Mediator.h"
-#include "TXTReader.h"
-// #include "SimpleEffectBuilder.h"
+// #include "TXTReader.h"
 
 #ifdef _BOOST_SERIALIZATION_XML_
 
@@ -31,7 +30,7 @@ using ::remove;
 // #include <boost/archive/xml_oarchive.hpp>
 #include <boost/exception/all.hpp>
 #include <boost/serialization/access.hpp>
-#include <boost/serialization/nvp.hpp>
+// #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/utility.hpp>
 #include <boost\serialization\throw_exception.hpp>
 
@@ -39,11 +38,17 @@ using ::remove;
 
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
+
+#include <boost/serialization/export.hpp>
+
+// using namespace ::pf2e_manager;
+
 #endif
 
 namespace pf2e_manager {
 class Model {
 #ifdef _BOOST_SERIALIZATION_XML_
+
     friend class ::boost::serialization::access;
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version)
@@ -53,6 +58,12 @@ class Model {
 
         ar & _curr_pos;
     }
+
+    // template<::boost::archive::text_iarchive>
+    // void serialize<::boost::archive::text_iarchive>(::boost::archive::text_iarchive& ar,
+    //                                                 const unsigned int file_version);
+    // template void serialize<::boost::archive::text_oarchive>(::boost::archive::text_oarchive& ar,
+    //                                                          const unsigned int file_version);
 #endif
 public:
     using t_pos_comb = std::vector<Combatant*>::iterator;

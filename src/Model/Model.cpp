@@ -1,19 +1,39 @@
 #include "Model.h"
 
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT(pf2e_manager::HealCommand);
+BOOST_CLASS_EXPORT(pf2e_manager::HarmCommand);
+BOOST_CLASS_EXPORT(pf2e_manager::MassHealCommand);
+BOOST_CLASS_EXPORT(pf2e_manager::MassHarmCommand);
+BOOST_CLASS_EXPORT(pf2e_manager::Mediator);
+
+#endif
+
 namespace pf2e_manager {
 #ifdef _BOOST_SERIALIZATION_XML_
+
 Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
     : _mediator(new Mediator(_combatants, fp))
 {
     {
         try {
             // open the archive
-            std::ifstream ifs(_path);
-            if (ifs.good() && ifs.rdbuf()->in_avail() > 0) {
+            std::ifstream ifs("record.txt");
+            std::ifstream ifs0("record.txt");
+            int ret_good = ifs.good();
+            int ret_in_avail = !ifs0.eof();
+            // ifs.rdbuf()->in_avail();
+
+            while (ifs0.good() && !ifs0.eof())
+                std::cout << static_cast<char>(ifs0.get());
+
+            if (ret_good && ret_in_avail > 0) {
                 // boost::archive::xml_iarchive ia(ifs);
                 using namespace pf2e_manager;
                 using namespace ::boost;
                 ::boost::archive::text_iarchive ia(ifs);
+
+                _combatants = new std::vector<Combatant*>();
 
                 ia >> _combatants;
                 ia >> _mediator;
@@ -55,6 +75,7 @@ Model::~Model()
 
         // oa << BOOST_SERIALIZATION_NVP(_combatants);
         // oa << BOOST_SERIALIZATION_NVP(_mediator);
+        oa << '\n';
         oa << *_combatants;
         oa << *_mediator;
     }

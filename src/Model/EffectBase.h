@@ -9,9 +9,9 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 #include <boost/config.hpp>
 
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/tmpdir.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/access.hpp>
 
 #include <boost/serialization/split_member.hpp>

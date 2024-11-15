@@ -8,13 +8,17 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 #include <boost/config.hpp>
 
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/tmpdir.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
 
 #include <boost/serialization/base_object.hpp>
 
 #include <boost/serialization/vector.hpp>
+
+#include <boost/serialization/export.hpp>
+
+// using namespace ::pf2e_manager;
 #endif
 
 namespace pf2e_manager {
@@ -29,6 +33,8 @@ class MassHealCommand : public CommandBase {
 
         ar & _info;
     }
+
+    MassHealCommand() {}
 #endif
 public:
     MassHealCommand(MediatorInterface *mediator,
@@ -54,4 +60,5 @@ private:
 };
 }  // namespace pf2e_manager
 
+// BOOST_CLASS_EXPORT(pf2e_manager::MassHealCommand);
 #endif  // MASSHEALCOMMAND_H

@@ -5,6 +5,8 @@
 
 #include "../Model/Combatant.h"
 
+#include <boost/serialization/export.hpp>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class CombatantDialog;

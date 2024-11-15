@@ -5,10 +5,6 @@
 #include <map>
 #include <string>
 
-// #include "ComplexEffect.h"
-// #include "ComplexEffectBuilder.h"
-
-// #include "SimpleEffect.h"
 #include "SimpleEffectBuilder.h"
 namespace {
 using ns_trigger = pf2e_manager::SimpleEffect::Trigger;

@@ -1,5 +1,7 @@
 #include "HealCommand.h"
 
+// BOOST_CLASS_EXPORT(pf2e_manager::HealCommand);
+
 namespace pf2e_manager {
 void HealCommand::execute() {
   if (_value <= 0 || _is_active) return;

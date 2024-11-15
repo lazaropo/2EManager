@@ -1,5 +1,10 @@
 #include "MassHealCommand.h"
 
+// #ifdef _BOOST_SERIALIZATION_XML_
+// BOOST_CLASS_EXPORT(pf2e_manager::HealCommand);
+// BOOST_CLASS_EXPORT(pf2e_manager::MassHealCommand);
+// #endif
+
 namespace pf2e_manager {
 MassHealCommand::MassHealCommand(
     MediatorInterface *mediator, SubjectBase *sender,

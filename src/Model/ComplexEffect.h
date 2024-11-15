@@ -14,11 +14,9 @@ class ComplexEffect : public SimpleEffect {
 
     for (auto it : _commands_and_effects) {
       if (it.find("effect:") == 0)
-        _mediator->makeEffect(this, getObject(),
-                              it /*num of sym in "effect:"*/);
+          _mediator->makeEffect(this, getReciever(), it /*num of sym in "effect:"*/);
       else if (it.find("command:") == 0)
-        _mediator->makeCommand(this, getObject(),
-                               it /*num of sym in "command:"*/);
+          _mediator->makeCommand(this, getReciever(), it /*num of sym in "command:"*/);
     }
   }
 
@@ -27,11 +25,9 @@ class ComplexEffect : public SimpleEffect {
 
     for (auto it : _commands_and_effects) {
       if (it.find("effect:") == 0)
-        _mediator->undoEffect(this, getObject(),
-                              it /*8 - num of sym in "effect:"*/);
+          _mediator->undoEffect(this, getReciever(), it /*8 - num of sym in "effect:"*/);
       else if (it.find("command:") == 0)
-        _mediator->undoCommand(this, getObject(),
-                               it /*9 - num of sym in "command:"*/);
+          _mediator->undoCommand(this, getReciever(), it /*9 - num of sym in "command:"*/);
     }
 
     _is_active = _is_active ? false : true;

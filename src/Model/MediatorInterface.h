@@ -53,5 +53,8 @@ public:
 };
 
 } // namespace pf2e_manager
+#ifdef _BOOST_SERIALIZATION_XML_
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(pf2e_manager::MediatorInterface);
+#endif
+
 #endif

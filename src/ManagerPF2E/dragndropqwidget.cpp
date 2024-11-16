@@ -62,9 +62,11 @@ void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {
   QObject::connect(obj, &CombatantWidget::droped, this,
                    &DragNDropQWidget::dropEvent);
   // obj->setAttribute(Qt::WA_StyledBackground);
-  this->setFixedHeight(_combatants_layout->count() *
-                           (obj->height() + _combatants_layout->spacing()) -
-                       _combatants_layout->spacing());
+  if (_combatants_layout->count() == 1)
+      setFixedHeight(obj->height() + _combatants_layout->spacing());
+  else
+      setFixedHeight(_combatants_layout->count() * (obj->height() + _combatants_layout->spacing())
+                     - _combatants_layout->spacing());
 }
 
 void DragNDropQWidget::mousePressEvent(QMouseEvent *event) {
@@ -117,12 +119,13 @@ void DragNDropQWidget::updateContent() {
     _combatants_layout->insertWidget(count++, widget);
     widget->updateContent();
   }
+  if (count == 1)
+      this->setFixedHeight((widget->height() + _combatants_layout->spacing()));
 
-  if (count > 4 && widget)
-    this->setFixedHeight(
-        _combatants_layout->count() *
-            (widget->height() + _combatants_layout->spacing()) -
-        _combatants_layout->spacing());
+  if (count > 3 && widget)
+      this->setFixedHeight(_combatants_layout->count()
+                               * (widget->height() + _combatants_layout->spacing())
+                           - _combatants_layout->spacing());
 }
 
 void DragNDropQWidget::updateContent(pf2e_manager::SubjectBase *combatant) {

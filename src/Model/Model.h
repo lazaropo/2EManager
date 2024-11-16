@@ -9,7 +9,10 @@
 
 #include "Combatant.h"
 #include "Mediator.h"
-// #include "TXTReader.h"
+
+#ifndef _BOOST_SERIALIZATION_XML_
+#include "TXTReader.h"
+#endif
 
 #ifdef _BOOST_SERIALIZATION_XML_
 

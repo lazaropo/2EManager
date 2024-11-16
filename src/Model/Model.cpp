@@ -20,24 +20,24 @@ Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> 
             // open the archive
             std::ifstream ifs("record.txt");
             std::ifstream ifs0("record.txt");
-            int ret_good = ifs.good();
-            int ret_in_avail = !ifs0.eof();
-            // ifs.rdbuf()->in_avail();
+            // int ret_good = ifs.good();
+            // int ret_in_avail = !ifs0.eof();
+            // // ifs.rdbuf()->in_avail();
 
-            while (ifs0.good() && !ifs0.eof())
-                std::cout << static_cast<char>(ifs0.get());
+            // while (ifs0.good() && !ifs0.eof())
+            //     std::cout << static_cast<char>(ifs0.get());
 
-            if (ret_good && ret_in_avail > 0) {
-                // boost::archive::xml_iarchive ia(ifs);
-                using namespace pf2e_manager;
-                using namespace ::boost;
-                ::boost::archive::text_iarchive ia(ifs);
+            // if (ret_good && ret_in_avail > 0) {
+            //     // boost::archive::xml_iarchive ia(ifs);
+            //     using namespace pf2e_manager;
+            //     using namespace ::boost;
+            //     ::boost::archive::text_iarchive ia(ifs);
 
-                _combatants = new std::vector<Combatant*>();
+            //     _combatants = new std::vector<Combatant*>();
 
-                ia >> _combatants;
-                ia >> _mediator;
-            }
+            //     ia >> _combatants;
+            //     ia >> _mediator;
+            // }
         } catch (::boost::exception& ex) {
             typedef ::boost::error_info<struct tag_my_info, int> my_info;
             if (int const* mi = ::boost::get_error_info<my_info>(ex))
@@ -52,7 +52,7 @@ Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> 
         _combatants = new std::vector<Combatant*>();
     _curr_pos = _combatants->end();
 }
-#elif
+#else
 Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
     : _mediator(new Mediator(_combatants, fp))
     , _reader(new TXTReader(_mediator))
@@ -85,7 +85,7 @@ Model::~Model()
     delete _combatants;
     delete _mediator;
 }
-#elif
+#else
 Model::~Model()
 {
     _reader->writeCombatants(_path, _combatants);
@@ -105,8 +105,7 @@ void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {
 //   ++_curr_pos;
 // }
 // _combatants->splice(++before, *_combatants, from);
-std:
-    swap(from, before);
+  std::swap(from, before);
 }
 
 void Model::addEffectOnGroup(SimpleEffectBuilder* builder,

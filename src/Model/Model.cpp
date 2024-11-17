@@ -54,7 +54,7 @@ Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> 
 }
 #else
 Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
-    : _mediator(new Mediator(_combatants, fp))
+: _mediator(new Mediator(_combatants, fp))
     , _reader(new TXTReader(_mediator))
 {
     _combatants = _reader->readCombatants(_path);

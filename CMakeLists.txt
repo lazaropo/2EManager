@@ -50,8 +50,8 @@ qt_standard_project_setup()
 
 add_compile_definitions(
     __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt"
-    _BOOST_SERIALIZATION_XML_
-    _BOOST_SERIALIZATION_XML_FILEPATH_="record.txt"
+ #   _BOOST_SERIALIZATION_XML_
+#    _BOOST_SERIALIZATION_XML_FILEPATH_="record.txt"
 )
 
 add_subdirectory(src/Model)

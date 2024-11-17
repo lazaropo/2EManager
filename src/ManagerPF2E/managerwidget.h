@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QListWidget>
 #include <QWidget>
+#include <QSizePolicy>
 
 #include "../CombatantDialog/combatantdialog.h"
 #include "../CombatantWidget/combatantwidget.h"
@@ -132,6 +133,10 @@ class ManagerWidget : public QWidget {
   void on_pushButton_turn_clicked();
 
   void on_pushButton_create_remove_clicked();
+
+  // void resizeEvent(QResizeEvent* event) override;
+
+  static void resizeLayout(QResizeEvent* event, QLayout* layout);
 
  private:
   Ui::ManagerWidget *ui;

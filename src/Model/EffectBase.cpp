@@ -1,56 +1,6 @@
 #include "EffectBase.h"
 
 namespace pf2e_manager {
-// std::string EffectBase::formattingValue(EffectBase::Value side, bool is_first_upper, bool with_colon)
-// {
-//     std::string ret;
-//     if (side == Value::TEAM) {
-//         if (is_first_upper && with_colon)
-//             ret = "Team:";
-//         else if (is_first_upper && !with_colon)
-//             ret = "Team";
-//         else if (with_colon)
-//             ret = "team:";
-//         else
-//             ret = "team";
-//     } else if (side == Value::ENEAMY) {
-//         if (is_first_upper && with_colon)
-//             ret = "Eneamy:";
-//         else if (is_first_upper && !with_colon)
-//             ret = "Eneamy";
-//         else if (with_colon)
-//             ret = "eneamy:";
-//         else
-//             ret = "eneamy";
-//     } else if (side == Value::OTHER) {
-//         if (is_first_upper && with_colon)
-//             ret = "Other:";
-//         else if (is_first_upper && !with_colon)
-//             ret = "Other";
-//         else if (with_colon)
-//             ret = "other:";
-//         else
-//             ret = "other";
-//     }
-
-//     return ret;
-// }
-
-// EffectBase::Value EffectBase::formattingValue(const std::string &string)
-// {
-//     Value ret;
-//     if (string == "Team:" || string == "Team" || string == "team:" || string == "team")
-//         ret = Value::TEAM;
-//     else if (string == "Eneamy:" || string == "Eneamy" || string == "eneamy:" || string == "eneamy")
-//         ret = Value::ENEAMY;
-//     else if (string == "Other:" || string == "Other" || string == "other:" || string == "other")
-//         ret = Value::OTHER;
-//     else
-//         throw std::invalid_argument("Incorrect string for Combatant::Size initialize.");
-
-//     return ret;
-// }
-
 std::string EffectBase::formattingTrigger(EffectBase::Trigger trigger)
 {
     std::string ret;

@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QtMinMax>
 //+++++++++++STL+++++++++++
 #include <map>
 //+++++++++++CUSTOM+++++++++++
@@ -52,6 +53,9 @@ class DragNDropQWidget : public QWidget {
 
   void addWidget(pf2e_manager::Combatant* combatant);
 
+  virtual int heightForWidth( int width ) const override;
+  virtual QSize sizeHint() const override;
+
  public slots:
   void mousePressEvent(QMouseEvent* event) override;
   void mouseMoveEvent(QMouseEvent* event) override;
@@ -60,6 +64,7 @@ class DragNDropQWidget : public QWidget {
   void dragLeaveEvent(QDragLeaveEvent* event) override;
   void dragMoveEvent(QDragMoveEvent* event) override;
   void dropEvent(QDropEvent* event) override;
+  // void resizeEvent(QResizeEvent* event) override;
 
  private:
   QScrollArea* _area = nullptr;

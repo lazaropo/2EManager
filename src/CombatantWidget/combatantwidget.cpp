@@ -37,8 +37,8 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   setAttribute(Qt::WA_StyledBackground);
   setFocusPolicy(Qt::NoFocus);
-  setFixedSize(1110, 155);
-  setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  setMinimumSize(1110, 155);
+  setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
   QObject::connect(_listWidget_effect, &MyMenuWidget::itemChanged, this,
                    &CombatantWidget::itemChanged);

@@ -85,6 +85,7 @@ class CombatantWidget : public QWidget {
     updateContent();
   }
 
+
   //  void enterEvent(QEnterEvent *event) override;
   //  void leaveEvent(QEvent *event) override;
 
@@ -96,8 +97,11 @@ class CombatantWidget : public QWidget {
  private:
   Ui::CombatantWidget *ui;
 
-  MyMenuWidget *_listWidget_effect = new MyMenuWidget(this);
+  MyMenuWidget *_listWidget_effect = nullptr;
   pf2e_manager::Combatant *_combatant = nullptr;
+
+  static constexpr int _init_width = 1150;
+  static constexpr int _init_height = 155;
 
   QString _base_style{
       "QWidget#CombatantWidget {"

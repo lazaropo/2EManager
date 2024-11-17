@@ -60,8 +60,10 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
 void MyMenuWidget::setTextBrowser() {
   if (_item) return;
 
-  _item = new QTextBrowser(this->parentWidget());
-  _item->setGeometry(QRect(600, 10, 400, 140));
+  QWidget* parent = this->parentWidget();
+  _item = new QTextBrowser(parent);
+  QRect my_rect = geometry();
+  _item->setGeometry(QRect(my_rect.x(), my_rect.y(), my_rect.width() + parent->width() - _init_width, my_rect.height() + parent->height() - _init_height));
   _item->setStyleSheet(_item_base_style);
   _item->show();
   _item->setStyleSheet(_text_browser_style);

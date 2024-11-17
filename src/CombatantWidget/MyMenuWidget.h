@@ -19,6 +19,10 @@ class MyMenuWidget : public QListWidget {
 
   void setFrame(QLayout* frame) { _frame = frame; }
 
+  void setInitWidth(int width) { _init_width = width; }
+
+  void setInitHeight(int height) { _init_height = height; }
+
  private slots:
   void keyPressEvent(QKeyEvent* event) override;
 
@@ -31,6 +35,9 @@ class MyMenuWidget : public QListWidget {
   QTextBrowser* _item = nullptr;
   QLayout* _frame = nullptr;
   std::function<void(QLayout*)> addTextBrowser;
+
+  int _init_height = 0;
+  int _init_width = 0;
 
   const QString _item_base_style = "font: 14px;"
                                    "QTextBrowser{"

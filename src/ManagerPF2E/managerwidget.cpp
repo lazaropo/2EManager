@@ -95,8 +95,11 @@ void ManagerWidget::on_pushButton_create_combatant_clicked() {
 }
 
 void ManagerWidget::on_pushButton_create_command_clicked() {
+    if (_controller->getCombatants()->empty())
+        return;
     try {
         pf2e_manager::CommandBase *command;
+
         CommandDialog dialog(&command, _controller);
         // command have to be set in collection from model
         if (dialog.exec() == QDialog::Rejected)
@@ -236,9 +239,12 @@ void print_log(boost::exception &ex)
 void ManagerWidget::on_pushButton_create_remove_clicked() {
     try {
         auto widget = _combatant_list.extract(_box_combatants->getCurrentWidget()->getCombatant());
-        if (widget.mapped() && widget.mapped()->getCombatant()) {
-            _controller->removeCombatant(widget.mapped()->getCombatant());
-            delete widget.mapped();
+        if (!widget)
+            return;
+        CombatantWidget* node = widget.mapped();
+        if (node && node->getCombatant()) {
+            _controller->removeCombatant(node->getCombatant());
+            delete node;
             _box_combatants->updateContent();
         }
     } catch (std::exception &ex) {

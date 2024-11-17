@@ -7,6 +7,10 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
     : QWidget(parent), ui(new Ui::CombatantWidget), _combatant(combatant) {
   ui->setupUi(this);
 
+  _listWidget_effect = ui->tableWidget;
+  _listWidget_effect->setInitWidth(width());
+  _listWidget_effect->setInitHeight(height());
+
   _listWidget_effect->setUI(std::bind(
       &MyMenuWidget::setLayout, _listWidget_effect, std::placeholders::_1));
 
@@ -26,7 +30,7 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   updateContent();
 
-  _listWidget_effect->setGeometry(QRect(480, 7, 610, 140));
+  // _listWidget_effect->setGeometry(QRect(480, 7, 610 + width() - _init_width, 140 + height() - _init_height));
   _listWidget_effect->setStyleSheet(
       "QListWidget{"
       "font: 16px;"
@@ -38,7 +42,7 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   setAttribute(Qt::WA_StyledBackground);
   setFocusPolicy(Qt::NoFocus);
   setMinimumSize(1110, 155);
-  setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+  setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
   QObject::connect(_listWidget_effect, &MyMenuWidget::itemChanged, this,
                    &CombatantWidget::itemChanged);
@@ -51,6 +55,8 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   setAcceptDrops(true);
 
   setBaseStyle();
+
+
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }

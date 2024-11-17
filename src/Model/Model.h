@@ -76,9 +76,24 @@ public:
 
     ~Model();
 
-    void addCombatant(Combatant* new_body) { _combatants->push_back(new_body); }
+    void addCombatant(Combatant* new_body)
+    {
+        // if (_curr_pos == _combatants->end()) {
+        //     _combatants->push_back(new_body);
+        //     _curr_pos = _combatants->end();
+        // } else
+        _combatants->push_back(new_body);
+        if (_combatants->size() == 1)
+            _curr_pos = _combatants->begin();
+    }
 
-    void addCombatant(t_pos_comb pos, Combatant* new_body) { _combatants->insert(pos, new_body); }
+    void addCombatant(t_pos_comb pos, Combatant* new_body) {
+        if (_curr_pos == _combatants->end()) {
+            _combatants->insert(pos, new_body);
+            _curr_pos = _combatants->end();
+        } else
+            _combatants->insert(pos, new_body);
+         }
 
     void moveCombatant(t_pos_comb from, t_pos_comb before);
 
@@ -172,7 +187,7 @@ public:
 
     Combatant* getCurrent()
     {
-        if (_curr_pos == _combatants->end())
+        if (!_combatants || _combatants->empty() || _combatants->end() == _curr_pos)
             return nullptr;
         else
             return *_curr_pos;
@@ -180,7 +195,7 @@ public:
 
 private:
     std::vector<Combatant*>* _combatants = nullptr;
-    MediatorInterface* _mediator;
+    MediatorInterface* _mediator = nullptr;
 
     t_pos_comb _curr_pos;
 

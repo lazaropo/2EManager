@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1170</width>
+    <width>1182</width>
     <height>770</height>
    </rect>
   </property>
@@ -48,6 +48,18 @@ background-color: rgb(230, 230, 250);
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
      <property name="spacing">
@@ -316,8 +328,8 @@ height: 0px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1150</width>
-          <height>552</height>
+          <width>1162</width>
+          <height>564</height>
          </rect>
         </property>
         <property name="autoFillBackground">
@@ -348,8 +360,8 @@ height: 0px;
        </property>
        <property name="sizeIncrement">
         <size>
-         <width>1</width>
-         <height>1</height>
+         <width>0</width>
+         <height>0</height>
         </size>
        </property>
        <property name="autoFillBackground">
@@ -384,7 +396,7 @@ wigth: 0px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1138</width>
+          <width>1162</width>
           <height>130</height>
          </rect>
         </property>

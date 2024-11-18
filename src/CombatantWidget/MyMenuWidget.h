@@ -17,7 +17,7 @@ class MyMenuWidget : public QListWidget {
 
   void setUI(std::function<void(QLayout*)> fp) { addTextBrowser = fp; }
 
-  void setFrame(QLayout* frame) { _frame = frame; }
+  // void setFrame(QLayout* frame) { _frame = frame; }
 
   void setInitWidth(int width) { _init_width = width; }
 
@@ -33,7 +33,7 @@ class MyMenuWidget : public QListWidget {
 
  protected:
   QTextBrowser* _item = nullptr;
-  QLayout* _frame = nullptr;
+  // QLayout* _frame = nullptr;
   std::function<void(QLayout*)> addTextBrowser;
 
   int _init_height = 0;

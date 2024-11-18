@@ -8,8 +8,8 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   ui->setupUi(this);
 
   _listWidget_effect = ui->tableWidget;
-  _listWidget_effect->setInitWidth(width());
-  _listWidget_effect->setInitHeight(height());
+  // _listWidget_effect->setInitWidth(width());
+  // _listWidget_effect->setInitHeight(height());
 
   _listWidget_effect->setUI(std::bind(
       &MyMenuWidget::setLayout, _listWidget_effect, std::placeholders::_1));

@@ -3,11 +3,17 @@
 
 #include "MyMenuWidget.h"
 
-MyMenuWidget::MyMenuWidget(QWidget* item) : QListWidget(item) { setSpacing(1); }
+MyMenuWidget::MyMenuWidget(QWidget* item) : QListWidget(item) {
+    setSpacing(1);
+    _init_width = width();
+    _init_height = height();
+
+
+}
 
 MyMenuWidget::~MyMenuWidget() {
   if (_item) delete _item;
-  if (_frame) delete _frame;
+  // if (_frame) delete _frame;
 }
 
 void MyMenuWidget::keyPressEvent(QKeyEvent* event) {
@@ -18,8 +24,9 @@ void MyMenuWidget::keyPressEvent(QKeyEvent* event) {
       return;
 
     _item = nullptr;
-    delete _frame;
-    _frame = nullptr;
+    //delete _frame;
+    // _frame = nullptr;
+    // show();
   }
 }
 
@@ -62,11 +69,29 @@ void MyMenuWidget::setTextBrowser() {
 
   QWidget* parent = this->parentWidget();
   _item = new QTextBrowser(parent);
+  _item->setFocusPolicy(Qt::FocusPolicy::StrongFocus);
+  _item->setFocus();
+
   QRect my_rect = geometry();
-  _item->setGeometry(QRect(my_rect.x(), my_rect.y(), my_rect.width() + parent->width() - _init_width, my_rect.height() + parent->height() - _init_height));
-  _item->setStyleSheet(_item_base_style);
-  _item->show();
+
+  _item->setGeometry(QRect(my_rect.x()+10, my_rect.y()+10, my_rect.width()-20 /*+ parent->width() - _init_width*/, my_rect.height() -20/*+ parent->height() - _init_height*/));
+  // _item->setStyleSheet(_item_base_style);
+
+
   _item->setStyleSheet(_text_browser_style);
+
+  // QWidget::connect(this, QObject::pressed, [=]() {
+  //     if (is_active)
+  //         picked_effect->removeEffect();
+  //     else
+  //         picked_effect->activateEffect();
+  //     emit itemChanged(currentItem());
+  // });
+  // hide();
+  // if (parent)
+  //     parent->layout()->addWidget(_item);
+  // // layout()->addWidget(_item);
+  _item->show();
 }
 
 #endif

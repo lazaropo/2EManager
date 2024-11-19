@@ -58,6 +58,12 @@ class Controller {
     _model->setEffectDurationOnGroup(duration, collection);
   }
 
+  void setCallbackFunctionUserInput(
+      std::function<int(SubjectBase*, SubjectBase*, const std::string&)> callback)
+  {
+      _model->setCallbackFunctionUserInput(callback) ;
+  }
+
   CommandBase* makeCommand(
       SubjectBase* sender, const std::string& name,
       std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) {

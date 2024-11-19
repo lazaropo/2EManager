@@ -25,6 +25,10 @@ ManagerWidget::ManagerWidget(QWidget *parent)
 
         using namespace pf2e_manager;
 
+        _controller->setCallbackFunctionUserInput(std::bind(
+          &ManagerWidget::getActionConfirmation, this, std::placeholders::_1,
+          std::placeholders::_2, std::placeholders::_3));
+
         QSizePolicy policy_combatants(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 QSizePolicy policy_commands(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
         _box_combatants->setSizePolicy(policy_combatants);
@@ -64,7 +68,7 @@ void ManagerWidget::on_pushButton_create_effect_clicked() {
     try {
         auto current_widget = _box_combatants->getCurrentWidget();
         // UNCOMMENT IT!!!
-        // if (!current_widget) return;
+        if (!current_widget) return;
 
         EffectDialog dialog =
             /*new */ EffectDialog(_controller, current_widget->getCombatant(), this);

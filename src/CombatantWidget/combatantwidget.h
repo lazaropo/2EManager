@@ -32,8 +32,8 @@ class CombatantWidget : public QWidget {
 
   pf2e_manager::Combatant *getCombatant()
   {
-      if (!this)
-          throw std::logic_error("CombatantWidget doent exists");
+      // if (!this)
+      //     throw std::logic_error("CombatantWidget doent exists");
       return _combatant;
   }
   void setCombatant(pf2e_manager::Combatant *other) { _combatant = other; }

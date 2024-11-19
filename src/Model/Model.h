@@ -44,7 +44,6 @@ using ::remove;
 
 #include <boost/serialization/export.hpp>
 
-// using namespace ::pf2e_manager;
 
 #endif
 
@@ -54,19 +53,14 @@ class Model {
 
     friend class ::boost::serialization::access;
     template<class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {
-        ar & _combatants;
-        ar & _mediator;
-
-        ar & _curr_pos;
-    }
+    void serialize(Archive& ar, const unsigned int version);
 
     // template<::boost::archive::text_iarchive>
     // void serialize<::boost::archive::text_iarchive>(::boost::archive::text_iarchive& ar,
     //                                                 const unsigned int file_version);
     // template void serialize<::boost::archive::text_oarchive>(::boost::archive::text_oarchive& ar,
-    //                                                          const unsigned int file_version);
+    //
+Model() = default;
 #endif
 public:
     using t_pos_comb = std::vector<Combatant*>::iterator;
@@ -150,6 +144,8 @@ public:
             setEffectDuration(duration, it);
     }
 
+    void setCallbackFunctionUserInput(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> callback) { _mediator->setCallbackFunctionUserInput(callback);}
+
     void sortByInit()
     {
         std::sort(_combatants->begin(),
@@ -194,7 +190,7 @@ public:
     }
 
 private:
-    std::vector<Combatant*>* _combatants = nullptr;
+    std::vector<Combatant*>* _combatants = new std::vector<Combatant*>();
     MediatorInterface* _mediator = nullptr;
 
     t_pos_comb _curr_pos;
@@ -206,5 +202,8 @@ private:
     const std::string _path = (_BOOST_SERIALIZATION_XML_FILEPATH_);
 #endif
 };
+
+
+
 }  // namespace pf2e_manager
 #endif

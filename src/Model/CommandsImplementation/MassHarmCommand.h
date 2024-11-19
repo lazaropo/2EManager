@@ -26,12 +26,7 @@ class MassHarmCommand : public CommandBase {
 #ifdef _BOOST_SERIALIZATION_XML_
     friend class ::boost::serialization::access;
     template<class Archive>
-    void serialize(Archive &ar, const unsigned int version)
-    {
-        // serialize base class information
-        ar & ::boost::serialization::base_object<CommandBase>(*this);
-        ar & _info;
-    }
+    void serialize(Archive &ar, const unsigned int version);
 
     MassHarmCommand() {}
 #endif
@@ -58,5 +53,10 @@ private:
     std::vector<HarmCommand *> _info;
 };
 }  // namespace pf2e_manager
-// BOOST_CLASS_EXPORT(pf2e_manager::MassHarmCommand);
+
+
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::MassHarmCommand);
+#endif
+
 #endif  // MASSHARMCOMMAND_H

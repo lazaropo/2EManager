@@ -16,6 +16,7 @@
 #include <boost/archive/tmpdir.hpp>
 
 #include <boost/serialization/base_object.hpp>
+#include <boost/serialization/export.hpp>
 
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
@@ -28,16 +29,7 @@ class SimpleEffect : public EffectBase {
 #ifdef _BOOST_SERIALIZATION_XML_
     friend class ::boost::serialization::access;
     template<class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {
-        // serialize base class information
-        ar& ::boost::serialization::base_object<EffectBase>(*this);
-
-        ar & _is_associated_provided;
-
-        ar & _associated_actions;
-        ar & _execute_actions;
-    }
+    void serialize(Archive& ar, const unsigned int version);
 #endif
 public:
     SimpleEffect()
@@ -105,4 +97,8 @@ protected:
     MediatorInterface* _mediator = nullptr;
 };
 }  // namespace pf2e_manager
+
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::SimpleEffect);
+#endif
 #endif

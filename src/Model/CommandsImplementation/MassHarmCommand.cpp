@@ -1,9 +1,28 @@
 #include "MassHarmCommand.h"
 
-// #ifdef _BOOST_SERIALIZATION_XML_
-// BOOST_CLASS_EXPORT(pf2e_manager::HarmCommand);
-// BOOST_CLASS_EXPORT(pf2e_manager::MassHarmCommand);
-// #endif
+#ifdef _BOOST_SERIALIZATION_XML_
+template<class Archive>
+void pf2e_manager::MassHarmCommand::serialize(Archive &ar, const unsigned int version)
+{
+    // serialize base class information
+    // ar.template register_type<::pf2e_manager::SubjectBase>();
+    // ar.template register_type<::pf2e_manager::CommandBase>();
+    // ar.template register_type<::pf2e_manager::HarmCommand>();
+
+    // ar.template register_type<::pf2e_manager::SubjectBase*>();
+    // ar.template register_type<::pf2e_manager::CommandBase*>();
+    // ar.template register_type<::pf2e_manager::HarmCommand*>();
+
+    ar & ::boost::serialization::base_object<CommandBase>(*this);
+    ar &boost::serialization::make_nvp("_info", _info);
+    ar & _info;
+}
+template void pf2e_manager::MassHarmCommand::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version);
+template void pf2e_manager::MassHarmCommand::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::MassHarmCommand);
+//BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::HarmCommand);
+#endif
 
 namespace pf2e_manager {
 

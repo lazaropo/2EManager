@@ -24,7 +24,11 @@ add_library(model STATIC
     SubjectBase.h
     TXTReader.h
 
+    SubjectBase.cpp
     Combatant.cpp
+    CommandBase.cpp
+    EffectBase.cpp
+    MediatorInterface.cpp
     CommandsCreator.cpp
     EffectDirector.cpp
     Mediator.cpp
@@ -35,7 +39,8 @@ add_library(model STATIC
     CommandsImplementation/HealCommand.cpp
     CommandsImplementation/MassHarmCommand.cpp
     CommandsImplementation/MassHealCommand.cpp
-    EffectBase.cpp
+    SimpleEffectBuilder.cpp
+    EffectExecutor.cpp
 )
 
 target_include_directories(model INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

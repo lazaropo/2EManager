@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+#set(BOOST_DISABLE_ASSERTS ON)
+
 # Set if generator is not Ninja
 # set(CMAKE_GENERATOR_PLATFORM "x64")
 set(VCPKG_TARGET_TRIPLET "x64-windows")
@@ -50,8 +52,8 @@ qt_standard_project_setup()
 
 add_compile_definitions(
     __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt"
- #   _BOOST_SERIALIZATION_XML_
-#    _BOOST_SERIALIZATION_XML_FILEPATH_="record.txt"
+   _BOOST_SERIALIZATION_XML_
+    _BOOST_SERIALIZATION_XML_FILEPATH_="record.txt"
 )
 
 add_subdirectory(src/Model)

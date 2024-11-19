@@ -1,6 +1,81 @@
 #include "Combatant.h"
 
+#ifdef _BOOST_SERIALIZATION_XML_
+
+template<class Archive>
+void pf2e_manager::Combatant::save(Archive& ar, const unsigned int version) const
+{
+    // ar.register_type<SubjectBase>();
+    // ar.register_type<EffectBase>();
+
+    ar& ::boost::serialization::base_object<SubjectBase>(*this);
+    // note, version is always the latest when saving
+    ar& boost::serialization::make_nvp("_hp_max", _hp_max);
+    ar& boost::serialization::make_nvp("_hp_tmp", _hp_tmp);
+    ar& boost::serialization::make_nvp("_hp_curr", _hp_curr);
+    ar& boost::serialization::make_nvp("_initiative", _initiative);
+    ar& boost::serialization::make_nvp("_level", _level);
+    ar& boost::serialization::make_nvp("_side", _side);
+    ar& boost::serialization::make_nvp("_vitality", _vitality);
+    ar& boost::serialization::make_nvp("_effects", _effects);
+
+    ar & _hp_max;
+    ar & _hp_tmp;
+    ar & _hp_curr;
+    ar & _initiative;
+    ar & _level;
+
+    ar& formattingSide(_side, false, false);
+    ar& formattingVitality(_vitality, false, false);
+
+    ar & _effects;
+}
+
+template<class Archive>
+void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version)
+{
+    // ar.template  register_type<SubjectBase>();
+    // ar.template register_type<EffectBase>();
+
+    // ar.template  register_type<SubjectBase*>();
+    // ar.template register_type<EffectBase*>();
+
+    ar& ::boost::serialization::base_object<SubjectBase>(*this);
+    // note, version is always the latest when saving
+    ar& boost::serialization::make_nvp("_hp_max", _hp_max);
+    ar& boost::serialization::make_nvp("_hp_tmp", _hp_tmp);
+    ar& boost::serialization::make_nvp("_hp_curr", _hp_curr);
+    ar& boost::serialization::make_nvp("_initiative", _initiative);
+    ar& boost::serialization::make_nvp("_level", _level);
+    ar& boost::serialization::make_nvp("_side", _side);
+    ar& boost::serialization::make_nvp("_vitality", _vitality);
+    ar& boost::serialization::make_nvp("_effects", _effects);
+
+    ar & _hp_max;
+    ar & _hp_tmp;
+    ar & _hp_curr;
+    ar & _initiative;
+    ar & _level;
+
+    std::string side, vitality;
+
+    ar & side;
+    ar & vitality;
+
+    _side = formattingSide(side);
+    _vitality = formattingVitality(vitality);
+
+
+    ar & _effects;
+}
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
+template void pf2e_manager::Combatant::save<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version) const;
+template void  pf2e_manager::Combatant::load<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+#endif
+
 namespace pf2e_manager {
+
 // void Combatant::setEffectDuration(t_pos_eff pos, int duration) {
 //   if (duration < 0) return;
 

@@ -50,6 +50,10 @@ public:
 
     virtual const std::vector<CommandBase*>& getCommands() const = 0;
     virtual std::vector<CommandBase*>& getCommands() = 0;
+
+    virtual void setCallbackFunctionUserInput(
+        std::function<int(SubjectBase*, SubjectBase*, const std::string&)> callback)
+        = 0;
 };
 
 } // namespace pf2e_manager

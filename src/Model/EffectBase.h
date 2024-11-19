@@ -17,6 +17,7 @@
 #include <boost/serialization/split_member.hpp>
 
 #include <boost/serialization/base_object.hpp>
+#include <boost/serialization/export.hpp>
 
 #include <boost/serialization/string.hpp>
 #endif
@@ -27,49 +28,10 @@ class EffectBase : public SubjectBase {
     friend std::ostream &operator<<(std::ostream &os, const pf2e_manager::EffectBase *instance);
 
     friend class ::boost::serialization::access;
-    // template<class Archive>
-    // void serialize(Archive &ar, const unsigned int version)
-    // {
-    //     // serialize base class information
-    //     ar &boost::serialization::base_object<SubjectBase>(*this);
-
-    //     ar & _duration; // per round
-    //     ar & _is_active;
-    //     ar & _type; // bit field
-    //     ar & _value;
-    //     ar & _trigger;
-
-    //     ar & _description;
-    // }
-
     template<class Archive>
-    void save(Archive &ar, const unsigned int version) const
-    {
-        ar &boost::serialization::base_object<SubjectBase>(*this);
-
-        ar & _duration; // per round
-        ar & _is_active;
-        ar & _type; // bit field
-        ar & _value;
-        ar & _trigger;
-
-        ar & _description;
-    }
-    template<class Archive>
-    void load(Archive &ar, const unsigned int version)
-    {
-        ar &boost::serialization::base_object<SubjectBase>(*this);
-
-        ar & _duration; // per round
-        ar & _is_active;
-        ar & _type; // bit field
-        ar & _value;
-        ar & _trigger;
-
-        ar & _description;
-    }
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void serialize(Archive &ar, const unsigned int version);
 #endif
+
 public:
     enum class Trigger { NO_TRIGGER, START_TURN, END_TURN };
     enum Type {
@@ -89,21 +51,21 @@ public:
         template<class Archive>
         void serialize(Archive &ar, const unsigned int version)
         { // per round
-            ar &_is_constant = true;
-            ar &_value = 0;
-            ar &_str = 0;
-            ar &_dex = 0;
-            ar &_con = 0;
-            ar &_mind = 0;
-            ar &_fort = 0;
-            ar &_refl = 0;
-            ar &_will = 0;
-            ar &_skills = 0;
-            ar &_perc = 0; // perception
-            ar &_atk = 0;
-            ar &_ac = 0;
-            ar &_dc = 0; // class DC
-            ar &_init = 0;
+            ar &_is_constant;
+            ar &_value;
+            ar &_str;
+            ar &_dex;
+            ar &_con;
+            ar &_mind;
+            ar &_fort;
+            ar &_refl;
+            ar &_will;
+            ar &_skills;
+            ar &_perc; // perception
+            ar &_atk;
+            ar &_ac;
+            ar &_dc; // class DC
+            ar &_init;
         }
 #endif
         Value() = default;
@@ -193,5 +155,9 @@ inline std::ostream &operator<<(std::ostream &os, const pf2e_manager::EffectBase
 }
 #endif
 }  // namespace pf2e_manager
+
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::EffectBase);
+#endif
 
 #endif  // EFFECTBASE_H

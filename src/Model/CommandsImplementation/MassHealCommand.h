@@ -26,13 +26,7 @@ class MassHealCommand : public CommandBase {
 #ifdef _BOOST_SERIALIZATION_XML_
     friend class ::boost::serialization::access;
     template<class Archive>
-    void serialize(Archive &ar, const unsigned int version)
-    {
-        // serialize base class information
-        ar & ::boost::serialization::base_object<CommandBase>(*this);
-
-        ar & _info;
-    }
+    void serialize(Archive &ar, const unsigned int version);
 
     MassHealCommand() {}
 #endif
@@ -60,5 +54,8 @@ private:
 };
 }  // namespace pf2e_manager
 
-// BOOST_CLASS_EXPORT(pf2e_manager::MassHealCommand);
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::MassHealCommand);
+#endif
+
 #endif  // MASSHEALCOMMAND_H

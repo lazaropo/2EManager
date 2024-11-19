@@ -19,6 +19,7 @@
 #include <boost/archive/tmpdir.hpp>
 
 #include <boost/serialization/base_object.hpp>
+#include <boost/serialization/export.hpp>
 
 #include <boost/serialization/vector.hpp>
 
@@ -33,11 +34,7 @@ class Mediator : public MediatorInterface {
 #ifdef _BOOST_SERIALIZATION_XML_
     friend class ::boost::serialization::access;
     template<class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {
-        ar& ::boost::serialization::base_object<MediatorInterface>(*this);
-        ar & _commands;
-    }
+    void serialize(Archive& ar, const unsigned int version);
 #endif
 public:
     using t_pos_cmd = std::vector<CommandBase*>::iterator;
@@ -114,19 +111,24 @@ public:
 
   std::vector<CommandBase*>& getCommands() override { return _commands; }
 
+  void setCallbackFunctionUserInput(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> callback) { _callback = callback;}
+
  private:
      std::vector<Combatant*>* _combatants;
      std::vector<CommandBase*> _commands;
 
-     SimpleEffectBuilder* _builder;
-     EffectDirector* _director;
+     SimpleEffectBuilder* _builder = new SimpleEffectBuilder(this);
+     EffectDirector* _director = new EffectDirector(_builder);
 
-     CommandsCreator* _commands_creator;
+     CommandsCreator* _commands_creator = new CommandsCreator(this);
 
      std::function<int(SubjectBase*, SubjectBase*, const std::string&)> _callback;
 };
 }  // namespace pf2e_manager
 
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::Mediator);
+#endif
 // BOOST_CLASS_EXPORT(pf2e_manager::Mediator);
 
 #endif

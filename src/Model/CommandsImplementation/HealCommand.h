@@ -13,6 +13,7 @@
 #include <boost/archive/tmpdir.hpp>
 
 #include <boost/serialization/base_object.hpp>
+#include <boost/serialization/export.hpp>
 
 #include <boost/serialization/export.hpp>
 #endif
@@ -22,12 +23,8 @@ class HealCommand : public CommandBase {
 #ifdef _BOOST_SERIALIZATION_XML_
     friend class ::boost::serialization::access;
     template<class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {
-        // serialize base class information
-        ar& ::boost::serialization::base_object<CommandBase>(*this);
-    }
-    HealCommand() {}
+    void serialize(Archive& ar, const unsigned int version);
+    HealCommand() = default;
 #endif
 public:
     HealCommand(MediatorInterface* mediator, SubjectBase* sender, SubjectBase* reciever, int value)
@@ -43,8 +40,12 @@ public:
     void undo() override;
 
 private:
-    MediatorInterface* _mediator;
+    MediatorInterface* _mediator = nullptr;
 };
 }  // namespace pf2e_manager
-// BOOST_CLASS_EXPORT(pf2e_manager::HealCommand);
+
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT_KEY(::pf2e_manager::HealCommand);
+#endif
+
 #endif

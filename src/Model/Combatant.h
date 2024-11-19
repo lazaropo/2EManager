@@ -19,6 +19,7 @@
 // #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/split_member.hpp>
+#include <boost/serialization/export.hpp>
 
 #include <boost/serialization/base_object.hpp>
 
@@ -26,6 +27,7 @@
 #endif
 
 namespace pf2e_manager {
+
 
 class Combatant : public SubjectBase {
 #ifdef _BOOST_SERIALIZATION_XML_
@@ -35,52 +37,17 @@ class Combatant : public SubjectBase {
     friend class ::boost::serialization::access;
 
     template<class Archive>
-    void save(Archive& ar, const unsigned int version) const
-    {
-        ar& ::boost::serialization::base_object<SubjectBase>(*this);
-        // note, version is always the latest when saving
-
-        ar & _hp_max;
-        ar & _hp_tmp;
-        ar & _hp_curr;
-        ar & _initiative;
-        ar & _level;
-
-        ar& formattingSide(_side, false, false);
-        ar& formattingVitality(_vitality, false, false);
-
-        ar & _effects;
-    }
+    void save(Archive& ar, const unsigned int version) const;
     template<class Archive>
-    void load(Archive& ar, const unsigned int version)
-    {
-        ar& ::boost::serialization::base_object<SubjectBase>(*this);
-        // note, version is always the latest when saving
+    void load(Archive& ar, const unsigned int version);
 
-        ar & _hp_max;
-        ar & _hp_tmp;
-        ar & _hp_curr;
-        ar & _initiative;
-        ar & _level;
+    // template<class Archive>
+    // void serialize(Archive& ar, const unsigned int file_version)
+    // {
+    //     ::boost::serialization::split_member(ar, *this, file_version);
+    // }
 
-        std::string side, vitality;
-
-        ar & side;
-        ar & vitality;
-
-        _side = formattingSide(side);
-        _vitality = formattingVitality(vitality);
-
-        ar & _effects;
-    }
-
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int file_version)
-    {
-        ::boost::serialization::split_member(ar, *this, file_version);
-    }
-
-    // BOOST_SERIALIZATION_SPLIT_MEMBER()
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 
 public:
@@ -108,9 +75,7 @@ public:
         , _hp_curr(hp)
         , _initiative(initiative)
         , _side(side)
-        ,
-        // _name(name),
-        _vitality(vit)
+        , _vitality(vit)
     {
         if (hp <= 0)
             throw std::logic_error(
@@ -151,6 +116,17 @@ public:
     {
         _effects.push_back(effect);
         effect->executeAssociated();
+    }
+
+    int removeEffect(EffectBase* effect)
+    {
+        int ret_val = -1;
+        auto it = std::find(_effects.begin(), _effects.end(), effect);
+        if (it != _effects.end()) {
+            ret_val = it - _effects.begin();
+            _effects.erase(it);
+        }
+        return ret_val;
     }
 
     void setEffectDuration(t_pos_eff pos, int duration);
@@ -205,12 +181,7 @@ private:
 // }
 
 #ifdef _BOOST_SERIALIZATION_XML_
-namespace boost {
-namespace serialization {
 
-
-} // namespace serialization
-} // namespace boost
 
 inline std::ostream& operator<<(std::ostream& os, const pf2e_manager::Combatant* instance)
 {
@@ -227,4 +198,9 @@ inline std::ostream& operator<<(std::ostream& os, const pf2e_manager::Combatant*
 }
 #endif
 } // namespace pf2e_manager
+
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant);
+#endif
+
 #endif

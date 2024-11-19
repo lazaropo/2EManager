@@ -47,7 +47,8 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   //   return;
 
   QAction* do_undo_effect =
-      menu.addAction(is_active ? "Remove Effect" : "Activate Effect");
+      menu.addAction(is_active ? "Disactivate Effect" : "Activate Effect");
+  QAction* remove_effect = menu.addAction("Remove Effect");
 
   QAbstractItemDelegate::connect(show_description, &QAction::triggered, [=]() {
     if (!_item) setTextBrowser();
@@ -60,6 +61,20 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
       picked_effect->activateEffect();
     emit itemChanged(currentItem());
   });
+  QAbstractItemDelegate::connect(remove_effect, &QAction::triggered, [=]() {
+      pf2e_manager::Combatant* combatant = dynamic_cast<pf2e_manager::Combatant*>(
+          picked_effect->getReciever());
+      if (!combatant)
+          return;
+
+      int count = combatant->removeEffect(picked_effect);
+      if (count == -1)
+          return;
+      removeItemWidget(item(count));
+      emit itemChanged(nullptr);
+  });
+
+
 
   menu.exec(event->globalPos());
 }
@@ -80,12 +95,11 @@ void MyMenuWidget::setTextBrowser() {
 
   _item->setStyleSheet(_text_browser_style);
 
-  // QWidget::connect(this, QObject::pressed, [=]() {
-  //     if (is_active)
-  //         picked_effect->removeEffect();
-  //     else
-  //         picked_effect->activateEffect();
-  //     emit itemChanged(currentItem());
+  _item->setWindowState(Qt::WindowState::WindowActive);
+
+  // QObject::connect(_item, &QWidget::mouseDoubleClickEvent, [=](QKeyEvent *event) {
+  //     if(event && event->key() == Qt::Key_Escape )
+  //       close();
   // });
   // hide();
   // if (parent)

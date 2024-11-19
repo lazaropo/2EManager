@@ -15,6 +15,7 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/export.hpp>
 
 #include <boost/serialization/string.hpp>
 #endif
@@ -26,13 +27,7 @@ class SubjectBase {
 
     friend class ::boost::serialization::access;
     template<class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {
-        ar & _name;
-        ar & _subject;
-        ar & _reciever;
-        ar & _invoker;
-    }
+    void serialize(Archive& ar, const unsigned int version);
 #endif
 public:
     SubjectBase() {}
@@ -71,4 +66,8 @@ inline std::ostream& operator<<(std::ostream& os, const pf2e_manager::SubjectBas
 
 #endif
 } // namespace pf2e_manager
+
+#ifdef _BOOST_SERIALIZATION_XML_
+BOOST_CLASS_EXPORT_KEY(::pf2e_manager::SubjectBase);
+#endif
 #endif

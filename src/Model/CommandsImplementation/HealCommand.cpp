@@ -1,6 +1,23 @@
 #include "HealCommand.h"
 
-// BOOST_CLASS_EXPORT(pf2e_manager::HealCommand);
+#ifdef _BOOST_SERIALIZATION_XML_
+template<class Archive>
+void pf2e_manager::HealCommand::serialize(Archive& ar, const unsigned int version)
+{
+    // serialize base class information
+    // ar.template register_type<::pf2e_manager::SubjectBase>();
+    // ar.template register_type<::pf2e_manager::CommandBase>();
+
+    // ar.template register_type<::pf2e_manager::SubjectBase*>();
+    // ar.template register_type<::pf2e_manager::CommandBase*>();
+
+    ar& ::boost::serialization::base_object<::pf2e_manager::CommandBase>(*this);
+}
+template void pf2e_manager::HealCommand::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version);
+template void pf2e_manager::HealCommand::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+
+BOOST_CLASS_EXPORT_IMPLEMENT(::pf2e_manager::HealCommand);
+#endif
 
 namespace pf2e_manager {
 void HealCommand::execute() {

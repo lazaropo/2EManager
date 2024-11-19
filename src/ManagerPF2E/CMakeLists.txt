@@ -57,6 +57,7 @@ target_link_libraries(ManagerPF2E
     Boost::log
     Boost::log_setup
     Boost::system
+    Boost::serialization
 )
 
 set_target_properties(ManagerPF2E PROPERTIES

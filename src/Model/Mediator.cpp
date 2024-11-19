@@ -1,10 +1,20 @@
 #include "Mediator.h"
 
 #ifdef _BOOST_SERIALIZATION_XML_
-// BOOST_CLASS_EXPORT(pf2e_manager::HealCommand);
-// BOOST_CLASS_EXPORT(pf2e_manager::HarmCommand);
-// BOOST_CLASS_EXPORT(pf2e_manager::MassHealCommand);
-// BOOST_CLASS_EXPORT(pf2e_manager::MassHarmCommand);
+template<class Archive>
+void pf2e_manager::Mediator::serialize(Archive& ar, const unsigned int version)
+{
+    ar& ::boost::serialization::base_object<MediatorInterface>(*this);
+    ar& boost::serialization::make_nvp("_commands", _commands);
+
+    ar & _combatants;
+    ar & _commands;
+}
+template void pf2e_manager::Mediator::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version);
+template void  pf2e_manager::Mediator::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Mediator);
+// BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
 #endif
 
 namespace pf2e_manager {
@@ -21,8 +31,10 @@ Mediator::Mediator(std::vector<Combatant*>* combatant,
 
 Mediator::~Mediator() {
   for (auto it : _commands) delete it;
+
   delete _builder;
   delete _director;
+  delete _commands_creator;
 }
 
 void Mediator::makeEffect(SubjectBase* sender, SubjectBase* reciever,

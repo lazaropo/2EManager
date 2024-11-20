@@ -5,16 +5,22 @@
 #include "../CommandBase.h"
 #include "../MediatorInterface.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
-#include <boost/config.hpp>
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 
+#ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#endif
+
+#include <boost/config.hpp>
 #include <boost/archive/tmpdir.hpp>
 
 #include <boost/serialization/base_object.hpp>
-#include <boost/serialization/export.hpp>
-
 #include <boost/serialization/export.hpp>
 #endif
 

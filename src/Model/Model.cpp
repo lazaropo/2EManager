@@ -1,12 +1,11 @@
 #include "Model.h"
 
 #ifdef _BOOST_SERIALIZATION_XML_
-// BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
 template<class Archive>
 void pf2e_manager::Model::serialize(Archive& ar, const unsigned int version)
 {
-    // ar& boost::serialization::make_nvp("_combatants", _combatants);
-    // ar& boost::serialization::make_nvp("_mediator", _mediator);
+    ar& boost::serialization::make_nvp("_combatants", _combatants);
+    ar& boost::serialization::make_nvp("_mediator", _mediator);
     // ar& boost::serialization::make_nvp("_curr_pos", _curr_pos);
 
     // ar.register_type<std::vector<Combatant*>();
@@ -23,7 +22,7 @@ template void  pf2e_manager::Model::serialize<boost::archive::text_iarchive>(boo
 #endif
 
 namespace pf2e_manager {
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 
 Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
     : _mediator(new Mediator(_combatants, fp))
@@ -31,20 +30,21 @@ Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> 
     {
         try {
             // open the archive
-            std::ifstream ifs("record.txt");
-            std::ifstream ifs0("record.txt");
+            std::ifstream ifs(_BOOST_SERIALIZATION_XML_FILEPATH_);
+            //std::ifstream ifs0(_BOOST_SERIALIZATION_XML_FILEPATH_);
             int ret_good = ifs.good();
-            int ret_in_avail = !ifs0.eof();
+            int ret_in_avail = !ifs.eof();
             // ifs.rdbuf()->in_avail();
 
-            while (ifs0.good() && !ifs0.eof())
-                std::cout << static_cast<char>(ifs0.get());
+            // while (ifs0.good() && !ifs0.eof())
+            //     std::cout << static_cast<char>(ifs0.get());
 
             if (ret_good && ret_in_avail > 0) {
                 // boost::archive::xml_iarchive ia(ifs);
                 using namespace pf2e_manager;
                 using namespace ::boost;
-                ::boost::archive::text_iarchive ia(ifs);
+                // ::boost::archive::text_iarchive ia(ifs);
+                ::boost::archive::xml_iarchive ia(ifs);
                 this->serialize(ia, 0);
                 // ia.register_type<Combatant>();
                 // ia.register_type<MediatorInterface>();
@@ -87,14 +87,15 @@ Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> 
 }
 #endif
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 Model::~Model()
 {
     // make an archive
-    std::ofstream ofs(_path, std::ios_base::out | std::ios_base::trunc);
+    std::ofstream ofs(_BOOST_SERIALIZATION_XML_FILEPATH_, std::ios_base::out | std::ios_base::trunc);
     if (ofs.good()) {
         // boost::archive::xml_oarchive oa(ofs);
-        ::boost::archive::text_oarchive oa(ofs);
+        // ::boost::archive::text_oarchive oa(ofs);
+        ::boost::archive::xml_oarchive oa(ofs);
 
         // oa << BOOST_SERIALIZATION_NVP(_combatants);
         // oa << BOOST_SERIALIZATION_NVP(_mediator);

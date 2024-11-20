@@ -51,9 +51,16 @@ find_package(Qt6 REQUIRED COMPONENTS Gui)
 qt_standard_project_setup()
 
 add_compile_definitions(
-    __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt"
+    # Choose one from serialization options:
+    # 1) TXTReader custom class - __CMAKE_IS_USED__
+    # 2) Boost txt - _BOOST_SERIALIZATION_TXT_
+    # 3) Boost xml - _BOOST_SERIALIZATION_XML_
+  #  __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt"
+    #
+    # _BOOST_SERIALIZATION_TXT_
+    #_BOOST_SERIALIZATION_TXT_FILEPATH_="record.txt"
    _BOOST_SERIALIZATION_XML_
-    _BOOST_SERIALIZATION_XML_FILEPATH_="record.txt"
+    _BOOST_SERIALIZATION_XML_FILEPATH_="record.xml"
 )
 
 add_subdirectory(src/Model)

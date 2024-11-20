@@ -1,6 +1,6 @@
 #include "SimpleEffect.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#ifdef _BOOST_SERIALIZATION_TXT_
 template<class Archive>
 void pf2e_manager::SimpleEffect::serialize(Archive& ar, const unsigned int version)
 {
@@ -26,6 +26,34 @@ template void  pf2e_manager::SimpleEffect::serialize<boost::archive::text_iarchi
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::SimpleEffect);
 #endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+template<class Archive>
+void pf2e_manager::SimpleEffect::serialize(Archive& ar, const unsigned int version)
+{
+    // serialize base class information
+    // ar.template register_type<::pf2e_manager::SubjectBase>();
+    // ar.template register_type<::pf2e_manager::SubjectBase*>();
+    // ar.template register_type<::pf2e_manager::EffectBase>();
+    // ar.template register_type<::pf2e_manager::EffectBase*>();
+
+    ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(EffectBase);
+
+    // ar& boost::serialization::make_nvp("_is_associated_provided", _is_associated_provided);
+    // ar& boost::serialization::make_nvp("_associated_actions", _associated_actions);
+    // ar& boost::serialization::make_nvp("_execute_actions", _execute_actions);
+
+    ar & BOOST_SERIALIZATION_NVP(_is_associated_provided);
+
+    ar & BOOST_SERIALIZATION_NVP(_associated_actions);
+    ar & BOOST_SERIALIZATION_NVP(_execute_actions);
+}
+template void pf2e_manager::SimpleEffect::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version);
+template void  pf2e_manager::SimpleEffect::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::SimpleEffect);
+#endif
+
 
 namespace pf2e_manager {
 SimpleEffect::SimpleEffect(const SimpleEffect &other)

@@ -1,18 +1,18 @@
 #include "EffectBase.h"
 
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#ifdef _BOOST_SERIALIZATION_TXT_
 template<class Archive>
 void pf2e_manager::EffectBase::serialize(Archive &ar, const unsigned int version)
 {
     // serialize base class information
     ar &boost::serialization::base_object<SubjectBase>(*this);
 
-    ar& boost::serialization::make_nvp("_duration", _duration);
-    ar& boost::serialization::make_nvp("_is_active", _is_active);
-    ar& boost::serialization::make_nvp("_value", _value);
-    ar& boost::serialization::make_nvp("_trigger", _trigger);
-    ar& boost::serialization::make_nvp("_description", _description);
+    // ar& boost::serialization::make_nvp("_duration", _duration);
+    // ar& boost::serialization::make_nvp("_is_active", _is_active);
+    // ar& boost::serialization::make_nvp("_value", _value);
+    // ar& boost::serialization::make_nvp("_trigger", _trigger);
+    // ar& boost::serialization::make_nvp("_description", _description);
 
     ar & _duration; // per round
     ar & _is_active;
@@ -25,6 +25,34 @@ void pf2e_manager::EffectBase::serialize(Archive &ar, const unsigned int version
 
 template void pf2e_manager::EffectBase::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version);
 template void pf2e_manager::EffectBase::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::EffectBase);
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+template<class Archive>
+void pf2e_manager::EffectBase::serialize(Archive &ar, const unsigned int version)
+{
+    // serialize base class information
+    ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+
+    // ar& boost::serialization::make_nvp("_duration", _duration);
+    // ar& boost::serialization::make_nvp("_is_active", _is_active);
+    // ar& boost::serialization::make_nvp("_value", _value);
+    // ar& boost::serialization::make_nvp("_trigger", _trigger);
+    // ar& boost::serialization::make_nvp("_description", _description);
+
+    ar & BOOST_SERIALIZATION_NVP(_duration); // per round
+    ar & BOOST_SERIALIZATION_NVP(_is_active);
+    ar & BOOST_SERIALIZATION_NVP(_type); // bit field
+    ar & BOOST_SERIALIZATION_NVP(_value);
+    ar & BOOST_SERIALIZATION_NVP(_trigger);
+
+    ar & BOOST_SERIALIZATION_NVP(_description);
+}
+
+template void pf2e_manager::EffectBase::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version);
+template void pf2e_manager::EffectBase::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::EffectBase);
 #endif

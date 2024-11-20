@@ -10,30 +10,37 @@
 #include "Combatant.h"
 #include "Mediator.h"
 
-#ifndef _BOOST_SERIALIZATION_XML_
+#if !defined (_BOOST_SERIALIZATION_TXT_)  && !defined (_BOOST_SERIALIZATION_XML_)
 #include "TXTReader.h"
 #endif
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 
 #include <cstdio> // remove
 #include <fstream>
 
-#include <boost/config.hpp>
+
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std {
 using ::remove;
 }
 #endif
 
+#ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+#endif
+
+#include <boost/config.hpp>
 #include <boost/archive/tmpdir.hpp>
-// #include <boost/archive/xml_iarchive.hpp>
-// #include <boost/archive/xml_oarchive.hpp>
 #include <boost/exception/all.hpp>
 #include <boost/serialization/access.hpp>
-// #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/utility.hpp>
 #include <boost\serialization\throw_exception.hpp>
 

@@ -1,11 +1,12 @@
 #include "Mediator.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#ifdef _BOOST_SERIALIZATION_TXT_
 template<class Archive>
 void pf2e_manager::Mediator::serialize(Archive& ar, const unsigned int version)
 {
-    ar& ::boost::serialization::base_object<MediatorInterface>(*this);
-    ar& boost::serialization::make_nvp("_commands", _commands);
+    // ar& ::boost::serialization::base_object<MediatorInterface>(*this);
+    // ar& boost::serialization::make_nvp("_commands", _commands);
+    // ar& boost::serialization::make_nvp("_combatants", _combatants);
 
     ar & _combatants;
     ar & _commands;
@@ -15,6 +16,23 @@ template void  pf2e_manager::Mediator::serialize<boost::archive::text_iarchive>(
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Mediator);
 // BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+template<class Archive>
+void pf2e_manager::Mediator::serialize(Archive& ar, const unsigned int version)
+{
+    ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(MediatorInterface);
+    // ar& boost::serialization::make_nvp("_commands", _commands);
+    // ar& boost::serialization::make_nvp("_combatants", _combatants);
+
+    ar & BOOST_SERIALIZATION_NVP(_combatants);
+    ar & BOOST_SERIALIZATION_NVP(_commands);
+}
+template void pf2e_manager::Mediator::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version);
+template void  pf2e_manager::Mediator::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Mediator);
 #endif
 
 namespace pf2e_manager {

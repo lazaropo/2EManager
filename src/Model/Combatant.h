@@ -9,17 +9,24 @@
 #include "EffectBase.h"
 #include "SubjectBase.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 #include <boost/config.hpp>
-
+#ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+#endif
+
 #include <boost/archive/tmpdir.hpp>
-// #include <boost/archive/xml_iarchive.hpp>
-// #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/export.hpp>
+
 
 #include <boost/serialization/base_object.hpp>
 

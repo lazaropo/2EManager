@@ -1,15 +1,9 @@
 #include "Model.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#ifdef _BOOST_SERIALIZATION_TXT_
 template<class Archive>
 void pf2e_manager::Model::serialize(Archive& ar, const unsigned int version)
 {
-    ar& boost::serialization::make_nvp("_combatants", _combatants);
-    ar& boost::serialization::make_nvp("_mediator", _mediator);
-    // ar& boost::serialization::make_nvp("_curr_pos", _curr_pos);
-
-    // ar.register_type<std::vector<Combatant*>();
-
     ar & _combatants;
     ar & _mediator;
 
@@ -19,6 +13,21 @@ BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Model);
 
 template void pf2e_manager::Model::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version);
 template void  pf2e_manager::Model::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+template<class Archive>
+void pf2e_manager::Model::serialize(Archive& ar, const unsigned int version)
+{
+    ar & BOOST_SERIALIZATION_NVP(_combatants);
+    ar & BOOST_SERIALIZATION_NVP(_mediator);
+
+    // ar & _curr_pos;
+}
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Model);
+
+template void pf2e_manager::Model::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version);
+template void  pf2e_manager::Model::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
 #endif
 
 namespace pf2e_manager {
@@ -46,20 +55,7 @@ Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> 
                 // ::boost::archive::text_iarchive ia(ifs);
                 ::boost::archive::xml_iarchive ia(ifs);
                 this->serialize(ia, 0);
-                // ia.register_type<Combatant>();
-                // ia.register_type<MediatorInterface>();
-                // ia.register_type<Mediator>();
-                // ia.register_type<Combatant*>();
-                // ia.register_type<MediatorInterface*>();
-                // ia.register_type<Mediator*>();
 
-                // ia& boost::serialization::make_nvp("_combatants", _combatants);
-                // ia& boost::serialization::make_nvp("_mediator", _mediator);
-
-// new std::vector<Combatant*>();
-
-                // ia >> *_combatants;
-                //  ia >> _mediator;
             }
         } catch (::boost::exception& ex) {
             typedef ::boost::error_info<struct tag_my_info, int> my_info;
@@ -67,9 +63,6 @@ Model::Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> 
                 std::cerr << *mi;
         }
     }
-    // restore the schedule from the archive
-    // ia >> BOOST_SERIALIZATION_NVP(_combatants);
-    // ia >> BOOST_SERIALIZATION_NVP(_mediator);
 
     if (!_combatants)
         _combatants = new std::vector<Combatant*>();
@@ -97,20 +90,7 @@ Model::~Model()
         // ::boost::archive::text_oarchive oa(ofs);
         ::boost::archive::xml_oarchive oa(ofs);
 
-        // oa << BOOST_SERIALIZATION_NVP(_combatants);
-        // oa << BOOST_SERIALIZATION_NVP(_mediator);
-        // oa << '\n';
-
         this->serialize(oa, 0);
-
-        // oa& boost::serialization::make_nvp("_combatants", _combatants);
-        // oa& boost::serialization::make_nvp("_mediator", _mediator);
-
-        // oa << *_combatants;
-        // //<< '\n';
-        // ;
-
-        // oa << _mediator;
     }
 
     for (auto it : *_combatants)

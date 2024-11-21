@@ -4,23 +4,30 @@
 #include "SimpleEffect.h"
 #include "SubjectBase.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 
-#include <cstdio> // remove
-#include <fstream>
-
-#include <boost/config.hpp>
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std {
 using ::remove;
 }
 #endif
 
+#ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#endif
+
+#include <cstdio> // remove
+#include <fstream>
+
+#include <boost/config.hpp>
 #include <boost/archive/tmpdir.hpp>
-// #include <boost/archive/xml_iarchive.hpp>
-// #include <boost/archive/xml_oarchive.hpp>
+
 #include <boost/exception/all.hpp>
 #include <boost/serialization/access.hpp>
 // #include <boost/serialization/nvp.hpp>
@@ -34,7 +41,7 @@ namespace pf2e_manager {
 // class SimpleEffect;
 class SimpleEffectBuilder {
  public:
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
      friend class ::boost::serialization::access;
      template<class Archive>
      void serialize(Archive& ar, const unsigned int version);

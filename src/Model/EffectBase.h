@@ -8,7 +8,6 @@
 
 #if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 
-
 #ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
@@ -33,7 +32,7 @@
 
 namespace pf2e_manager {
 class EffectBase : public SubjectBase {
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
     friend std::ostream &operator<<(std::ostream &os, const pf2e_manager::EffectBase *instance);
 
     friend class ::boost::serialization::access;
@@ -55,27 +54,10 @@ public:
     };
     struct Value
     {
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
         friend class boost::serialization::access;
         template<class Archive>
-        void serialize(Archive &ar, const unsigned int version)
-        { // per round
-            ar &_is_constant;
-            ar &_value;
-            ar &_str;
-            ar &_dex;
-            ar &_con;
-            ar &_mind;
-            ar &_fort;
-            ar &_refl;
-            ar &_will;
-            ar &_skills;
-            ar &_perc; // perception
-            ar &_atk;
-            ar &_ac;
-            ar &_dc; // class DC
-            ar &_init;
-        }
+        void serialize(Archive &ar, const unsigned int version);
 #endif
         Value() = default;
         explicit Value(bool is_constant, int value)
@@ -165,7 +147,7 @@ inline std::ostream &operator<<(std::ostream &os, const pf2e_manager::EffectBase
 #endif
 }  // namespace pf2e_manager
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 BOOST_CLASS_EXPORT_KEY(pf2e_manager::EffectBase);
 #endif
 

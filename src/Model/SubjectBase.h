@@ -29,7 +29,7 @@
 
 namespace pf2e_manager {
 class SubjectBase {
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
     friend std::ostream& operator<<(std::ostream& os, const SubjectBase* instance);
 
     friend class ::boost::serialization::access;
@@ -74,7 +74,7 @@ inline std::ostream& operator<<(std::ostream& os, const pf2e_manager::SubjectBas
 #endif
 } // namespace pf2e_manager
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 BOOST_CLASS_EXPORT_KEY(::pf2e_manager::SubjectBase);
 #endif
 #endif

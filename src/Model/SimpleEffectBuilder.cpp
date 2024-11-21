@@ -1,13 +1,12 @@
 #include "SimpleEffectBuilder.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
-// BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
+#ifdef _BOOST_SERIALIZATION_TXT_
 template<class Archive>
 void pf2e_manager::SimpleEffectBuilder::serialize(Archive& ar, const unsigned int version)
 {
     // ar& boost::serialization::make_nvp("_combatants", _combatants);
     // ar& boost::serialization::make_nvp("_mediator", _mediator);
-    ar& boost::serialization::make_nvp("_executor", _executor);
+    // ar& ::boost::serialization::make_nvp("_executor", _executor);
 
     // ar.register_type<std::vector<Combatant*>();
 
@@ -17,4 +16,24 @@ BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::SimpleEffectBuilder);
 
 template void pf2e_manager::SimpleEffectBuilder::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version);
 template void  pf2e_manager::SimpleEffectBuilder::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+// BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
+template<class Archive>
+void pf2e_manager::SimpleEffectBuilder::serialize(Archive& ar, const unsigned int version)
+{
+    // ar& boost::serialization::make_nvp("_combatants", _combatants);
+    // ar& boost::serialization::make_nvp("_mediator", _mediator);
+
+
+    // ar.register_type<std::vector<Combatant*>();
+
+    ar & BOOST_SERIALIZATION_NVP(_executor);
+}
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::SimpleEffectBuilder);
+
+template void pf2e_manager::SimpleEffectBuilder::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version);
+template void  pf2e_manager::SimpleEffectBuilder::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
 #endif

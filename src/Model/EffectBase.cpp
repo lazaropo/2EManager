@@ -36,12 +36,6 @@ void pf2e_manager::EffectBase::serialize(Archive &ar, const unsigned int version
     // serialize base class information
     ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
 
-    // ar& boost::serialization::make_nvp("_duration", _duration);
-    // ar& boost::serialization::make_nvp("_is_active", _is_active);
-    // ar& boost::serialization::make_nvp("_value", _value);
-    // ar& boost::serialization::make_nvp("_trigger", _trigger);
-    // ar& boost::serialization::make_nvp("_description", _description);
-
     ar & BOOST_SERIALIZATION_NVP(_duration); // per round
     ar & BOOST_SERIALIZATION_NVP(_is_active);
     ar & BOOST_SERIALIZATION_NVP(_type); // bit field
@@ -55,6 +49,31 @@ template void pf2e_manager::EffectBase::serialize<boost::archive::xml_oarchive>(
 template void pf2e_manager::EffectBase::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::EffectBase);
+
+template<class Archive>
+void pf2e_manager::EffectBase::Value::serialize(Archive &ar, const unsigned int version)
+{ // per round
+    ar & BOOST_SERIALIZATION_NVP(_is_constant);
+    ar & BOOST_SERIALIZATION_NVP(_value);
+    ar & BOOST_SERIALIZATION_NVP(_str);
+    ar & BOOST_SERIALIZATION_NVP(_dex);
+    ar & BOOST_SERIALIZATION_NVP(_con);
+    ar & BOOST_SERIALIZATION_NVP(_mind);
+    ar & BOOST_SERIALIZATION_NVP(_fort);
+    ar & BOOST_SERIALIZATION_NVP(_refl);
+    ar & BOOST_SERIALIZATION_NVP(_will);
+    ar & BOOST_SERIALIZATION_NVP(_skills);
+    ar & BOOST_SERIALIZATION_NVP(_perc); // perception
+    ar & BOOST_SERIALIZATION_NVP(_atk);
+    ar & BOOST_SERIALIZATION_NVP(_ac);
+    ar & BOOST_SERIALIZATION_NVP(_dc); // class DC
+    ar & BOOST_SERIALIZATION_NVP(_init);
+}
+
+template void pf2e_manager::EffectBase::Value::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version);
+template void pf2e_manager::EffectBase::Value::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::EffectBase::Value);
 #endif
 
 namespace pf2e_manager {

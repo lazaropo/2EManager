@@ -6,11 +6,20 @@
 #include "CommandBase.h"
 #include "SubjectBase.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 #include <boost/config.hpp>
 
+#ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+#endif
+
 #include <boost/archive/tmpdir.hpp>
 
 #include <boost/serialization/access.hpp>
@@ -19,11 +28,10 @@
 
 namespace pf2e_manager {
 class MediatorInterface {
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
     friend class ::boost::serialization::access;
     template<class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {}
+    void serialize(Archive& ar, const unsigned int version);
 #endif
 public:
     MediatorInterface() = default;

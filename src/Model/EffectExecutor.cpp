@@ -1,16 +1,28 @@
 #include "EffectExecutor.h"
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#ifdef _BOOST_SERIALIZATION_TXT_
 template<class Archive>
 void pf2e_manager::EffectExecutor::serialize(Archive &ar, const unsigned int version)
 {
-    ar& boost::serialization::make_nvp("_mediator", _mediator);
-
     ar & _mediator;
 }
 
 template void pf2e_manager::EffectExecutor::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version);
 template void pf2e_manager::EffectExecutor::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::EffectExecutor);
+#endif
+
+
+#ifdef _BOOST_SERIALIZATION_XML_
+template<class Archive>
+void pf2e_manager::EffectExecutor::serialize(Archive &ar, const unsigned int version)
+{
+    ar & BOOST_SERIALIZATION_NVP(_mediator);
+}
+
+template void pf2e_manager::EffectExecutor::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version);
+template void pf2e_manager::EffectExecutor::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::EffectExecutor);
 #endif

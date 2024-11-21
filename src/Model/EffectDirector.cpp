@@ -112,7 +112,8 @@ void EffectDirector::buildEffectByName(const std::string& name, int duration,
 
 void EffectDirector::buildBlindedEffect(int duration,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                         __attribute__((unused))
 #endif
                                         int value)
@@ -154,7 +155,8 @@ void EffectDirector::buildClumsyEffect(int duration, int value) {
 
 void EffectDirector::buildConcealedEffect(int duration,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                           __attribute__((unused))
 #endif
                                           int value)
@@ -175,7 +177,8 @@ void EffectDirector::buildConcealedEffect(int duration,
 }
 
 void EffectDirector::buildConfusedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                          __attribute__((unused))
 #endif
                                          int value)
@@ -203,7 +206,8 @@ void EffectDirector::buildConfusedEffect(int duration,
 }
 
 void EffectDirector::buildControlledEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                            __attribute__((unused))
 #endif
                                            int value)
@@ -222,7 +226,8 @@ void EffectDirector::buildControlledEffect(int duration,
 }
 
 void EffectDirector::buildDazzledEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                         __attribute__((unused))
 #endif
                                         int value)
@@ -239,7 +244,8 @@ void EffectDirector::buildDazzledEffect(int duration,
 }
 
 void EffectDirector::buildDeafenedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                          __attribute__((unused))
 #endif
                                          int value)
@@ -263,7 +269,8 @@ void EffectDirector::buildDeafenedEffect(int duration,
 }
 
 void EffectDirector::buildDoomedEffect(
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
     __attribute__((unused))
 #endif
     int duration,
@@ -284,7 +291,8 @@ void EffectDirector::buildDoomedEffect(
 }
 
 void EffectDirector::buildDrainedEffect(
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
     __attribute__((unused))
 #endif
     int duration,
@@ -315,7 +323,8 @@ void EffectDirector::buildDrainedEffect(
 }
 
 void EffectDirector::buildDyingEffect(
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
     __attribute__((unused))
 #endif
     int duration,
@@ -347,12 +356,14 @@ void EffectDirector::buildDyingEffect(
 }
 
 void EffectDirector::buildEncumberedEffect(
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
     __attribute__((unused))
 #endif
     int duration,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
     __attribute__((unused))
 #endif
     int value)
@@ -389,7 +400,8 @@ void EffectDirector::buildEnfeebledEffect(int duration, int value) {
 
 void EffectDirector::buildFascinatedEffect(int duration,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                            __attribute__((unused))
 #endif
                                            int value)
@@ -416,7 +428,8 @@ void EffectDirector::buildFascinatedEffect(int duration,
 
 void EffectDirector::buildFatiguedEffect(int duration,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                          __attribute__((unused))
 #endif
                                          int value)
@@ -438,7 +451,8 @@ void EffectDirector::buildFatiguedEffect(int duration,
 }
 
 void EffectDirector::buildFleeingEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                         __attribute__((unused))
 #endif
                                         int value)
@@ -460,7 +474,8 @@ void EffectDirector::buildFleeingEffect(int duration,
 }
 
 void EffectDirector::buildFrightenedEffect(
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
     __attribute__((unused))
 #endif
     int duration,
@@ -482,7 +497,8 @@ void EffectDirector::buildFrightenedEffect(
 }
 
 void EffectDirector::buildGrabbedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                         __attribute__((unused))
 #endif
                                         int value)
@@ -503,7 +519,8 @@ void EffectDirector::buildGrabbedEffect(int duration,
 // TODO: implement this func and further
 
 void EffectDirector::buildHiddenEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                        __attribute__((unused))
 #endif
                                        int value)
@@ -524,7 +541,8 @@ void EffectDirector::buildHiddenEffect(int duration,
                          "to use the Seek action to try to observe you.");
 }
 void EffectDirector::buildImmobilizedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                             __attribute__((unused))
 #endif
                                             int value)
@@ -542,7 +560,8 @@ void EffectDirector::buildImmobilizedEffect(int duration,
                          "of the monster holding you in place.");
 }
 void EffectDirector::buildIndifferentEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                             __attribute__((unused))
 #endif
                                             int value)
@@ -559,7 +578,8 @@ void EffectDirector::buildIndifferentEffect(int duration,
                          "indifferent unless specified otherwise.");
 }
 void EffectDirector::buildInvisibleEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                           __attribute__((unused))
 #endif
                                           int value)
@@ -578,7 +598,8 @@ void EffectDirector::buildInvisibleEffect(int duration,
 }
 void EffectDirector::buildObservedEffect(int duration,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                          __attribute__((unused))
 #endif
                                          int value)
@@ -598,7 +619,8 @@ void EffectDirector::buildObservedEffect(int duration,
 }
 void EffectDirector::buildOffGuardEffect(int duration,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                          __attribute__((unused))
 #endif
                                          int value)
@@ -620,7 +642,8 @@ void EffectDirector::buildOffGuardEffect(int duration,
                          "of them, such as “The target is off-guard.”");
 }
 void EffectDirector::buildParalyzedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                           __attribute__((unused))
 #endif
                                           int value)
@@ -664,7 +687,8 @@ void EffectDirector::buildPersistentDamageEffect(int duration, int value) {
           "succeed, the condition ends.");
 }
 void EffectDirector::buildPetrifiedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                           __attribute__((unused))
 #endif
                                           int value)
@@ -686,7 +710,8 @@ void EffectDirector::buildPetrifiedEffect(int duration,
                          "don't age or notice the passing of time.");
 }
 void EffectDirector::buildProneEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                       __attribute__((unused))
 #endif
                                       int value)
@@ -710,7 +735,8 @@ void EffectDirector::buildProneEffect(int duration,
                          "You can't be knocked prone when Swimming.");
 }
 void EffectDirector::buildQuickenedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                           __attribute__((unused))
 #endif
                                           int value)
@@ -730,7 +756,8 @@ void EffectDirector::buildQuickenedEffect(int duration,
                          "actions if you become quickened during your turn.");
 }
 void EffectDirector::buildRestrainedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                            __attribute__((unused))
 #endif
                                            int value)
@@ -830,7 +857,8 @@ void EffectDirector::buildStupefiedEffect(int duration, int value) {
 }
 
 void EffectDirector::buildUnconsciousEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                             __attribute__((unused))
 #endif
                                             int value)
@@ -877,7 +905,8 @@ void EffectDirector::buildUnconsciousEffect(int duration,
                          "that rest.");
 }
 void EffectDirector::buildUndetectedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                            __attribute__((unused))
 #endif
                                            int value)
@@ -902,7 +931,8 @@ void EffectDirector::buildUndetectedEffect(int duration,
                          "can Seek to try to find you.");
 }
 void EffectDirector::buildUnnoticedEffect(int duration,
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
                                           __attribute__((unused))
 #endif
                                           int value)

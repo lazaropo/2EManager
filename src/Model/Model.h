@@ -56,7 +56,8 @@ using ::remove;
 
 namespace pf2e_manager {
 class Model {
-#ifdef _BOOST_SERIALIZATION_XML_
+
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 
     friend class ::boost::serialization::access;
     template<class Archive>
@@ -69,7 +70,7 @@ class Model {
     //
 Model() = default;
 #endif
-public:
+    public:
     using t_pos_comb = std::vector<Combatant*>::iterator;
     using t_pair_comb_with_effect = std::pair<t_pos_comb, Combatant::t_pos_eff>;
 

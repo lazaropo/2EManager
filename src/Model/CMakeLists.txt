@@ -1,5 +1,3 @@
-
-
 add_library(model STATIC
     Combatant.h
     CommandBase.h
@@ -39,8 +37,9 @@ add_library(model STATIC
     CommandsImplementation/HealCommand.cpp
     CommandsImplementation/MassHarmCommand.cpp
     CommandsImplementation/MassHealCommand.cpp
-    SimpleEffectBuilder.cpp
+
     EffectExecutor.cpp
+    SimpleEffectBuilder.cpp
 )
 
 target_include_directories(model INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
@@ -49,10 +48,12 @@ target_link_libraries(model PRIVATE
 #    Boost::archieve
     Boost::serialization)
 
-qt_add_resources(model textresources
-    PREFIX "/Saved_info"
-    FILES ../Saved_info/info.txt
-)
+# if(NOT DEFINED _BOOST_SERIALIZATION_TXT_ AND NOT DEFINED _BOOST_SERIALIZATION_XML_)
+# qt_add_resources(model textresources
+#     PREFIX "/Saved_info"
+#     FILES ../Saved_info/info.txt
+# )
+# endif()
 
 
 

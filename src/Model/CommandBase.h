@@ -27,18 +27,19 @@
 
 namespace pf2e_manager {
 class CommandBase : public SubjectBase {
- public:
-#ifdef _BOOST_SERIALIZATION_XML_
+
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
      friend std::ostream& operator<<(std::ostream& os, const pf2e_manager::SubjectBase* instance);
 
      friend class ::boost::serialization::access;
      template<class Archive>
      void serialize(Archive& ar, const unsigned int version);
-     CommandBase() = default;
+
      //     : SubjectBase(this)
      // {}
 #endif
-
+ public:
+     CommandBase() = default;
      CommandBase(int value, CommandBase* p);
      virtual void execute() = 0;
      virtual void undo() = 0;
@@ -50,7 +51,7 @@ class CommandBase : public SubjectBase {
 };
 }  // namespace pf2e_manager
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(pf2e_manager::CommandBase);
 

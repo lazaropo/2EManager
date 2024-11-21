@@ -39,7 +39,7 @@
 
 namespace pf2e_manager {
 class Mediator : public MediatorInterface {
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
     friend class ::boost::serialization::access;
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version);
@@ -78,34 +78,40 @@ public:
     }
 
     void undoEffect(
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
         __attribute__((unused))
 #endif
         SubjectBase* sender,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
         __attribute__((unused))
 #endif
         SubjectBase* reciever,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
         __attribute__((unused))
 #endif
         const std::string& name) override
   {}
 
   void undoCommand(
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
       __attribute__((unused))
 #endif
       SubjectBase* sender,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
       __attribute__((unused))
 #endif
       SubjectBase* reciever,
 
-#ifdef __clang__ || __GNUC__ || __GNUG__
+
+#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
       __attribute__((unused))
 #endif
       const std::string& name) override

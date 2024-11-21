@@ -35,7 +35,7 @@ namespace pf2e_manager {
 // class Combatant;
 // class Mediator;
 class SimpleEffect : public EffectBase {
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
     friend class ::boost::serialization::access;
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version);

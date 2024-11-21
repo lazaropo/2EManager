@@ -1,3 +1,4 @@
+#if !defined (_BOOST_SERIALIZATION_TXT_)  && !defined (_BOOST_SERIALIZATION_XML_)
 #include "TXTReader.h"
 
 namespace pf2e_manager {
@@ -204,3 +205,4 @@ void TXTReader::stringProcessing(const std::string& buff) {
     setEffect(buff);
 }
 }  // namespace pf2e_manager
+#endif

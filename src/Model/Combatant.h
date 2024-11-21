@@ -10,7 +10,7 @@
 #include "SubjectBase.h"
 
 #if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
-#include <boost/config.hpp>
+
 #ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
@@ -22,6 +22,7 @@
 #include <boost/serialization/nvp.hpp>
 #endif
 
+#include <boost/config.hpp>
 #include <boost/archive/tmpdir.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/split_member.hpp>
@@ -37,7 +38,8 @@ namespace pf2e_manager {
 
 
 class Combatant : public SubjectBase {
-#ifdef _BOOST_SERIALIZATION_XML_
+    public:
+#if defined (_BOOST_SERIALIZATION_TXT_) || defined (_BOOST_SERIALIZATION_XML_)
 
     friend std::ostream& operator<<(std::ostream& os, const Combatant* gp);
 
@@ -48,16 +50,10 @@ class Combatant : public SubjectBase {
     template<class Archive>
     void load(Archive& ar, const unsigned int version);
 
-    // template<class Archive>
-    // void serialize(Archive& ar, const unsigned int file_version)
-    // {
-    //     ::boost::serialization::split_member(ar, *this, file_version);
-    // }
-
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 
-public:
+
     using t_pos_eff = std::vector<EffectBase*>::iterator;
 
     enum class Vitality { ALIVE, DEAD, CONSTRUCT };
@@ -175,7 +171,7 @@ private:
     int _hp_tmp;
     int _hp_curr;
     int _initiative;
-    int _level;
+    int _level = 0;
     Side _side;
     // std::string _name = "";
     Vitality _vitality;
@@ -206,7 +202,7 @@ inline std::ostream& operator<<(std::ostream& os, const pf2e_manager::Combatant*
 #endif
 } // namespace pf2e_manager
 
-#ifdef _BOOST_SERIALIZATION_XML_
+#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
 BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant);
 #endif
 

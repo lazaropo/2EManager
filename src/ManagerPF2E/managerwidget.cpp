@@ -50,6 +50,7 @@ QSizePolicy policy_commands(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum)
         ui->scrollArea_commands->setBackgroundRole(QPalette::Window);
 
         _box_combatants->updateContent();
+        _box_commands->updateContent();
 
         _box_combatants->setModelCurrentComatant(_controller->getCurrent());
     } catch (std::exception &ex) {

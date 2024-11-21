@@ -1,3 +1,4 @@
+#if !defined (_BOOST_SERIALIZATION_TXT_)  && !defined (_BOOST_SERIALIZATION_XML_)
 #ifndef _TXT_READER_342C4570_5625_11EF_A550_0800200C9A66_
 #define _TXT_READER_342C4570_5625_11EF_A550_0800200C9A66_
 
@@ -31,4 +32,5 @@ class TXTReader : public FileReaderBase {
 };
 }  // namespace pf2e_manager
 
+#endif
 #endif

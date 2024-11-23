@@ -4,7 +4,7 @@
 #include <functional>  // std::bind, std::function
 #include <map>
 #include <string>
-#include <utility> // std::pair
+#include <utility>  // std::pair
 #include <vector>
 
 #include "CommandBase.h"
@@ -17,18 +17,23 @@ class CommandsCreator {
  public:
   CommandsCreator(MediatorInterface* mediator);
 
-  CommandBase* createCommandByName(SubjectBase* sender,
-                                   const std::string& name,
-                                   std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createCommandByName(
+      SubjectBase* sender, const std::string& name,
+      std::vector<std::pair<SubjectBase*, int>>& info);
 
-  CommandBase* createHarm(SubjectBase* sender, std::vector<std::pair<SubjectBase*, int>>& info);
-  CommandBase* createHeal(SubjectBase* sender, std::vector<std::pair<SubjectBase*, int>>& info);
-  CommandBase* createMassHarm(SubjectBase* sender, std::vector<std::pair<SubjectBase*, int>>& info);
-  CommandBase* createMassHeal(SubjectBase* sender, std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createHarm(SubjectBase* sender,
+                          std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createHeal(SubjectBase* sender,
+                          std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createMassHarm(SubjectBase* sender,
+                              std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createMassHeal(SubjectBase* sender,
+                              std::vector<std::pair<SubjectBase*, int>>& info);
 
-  private:
+ private:
   std::map<const std::string,
-           std::function<CommandBase*(SubjectBase*, std::vector<std::pair<SubjectBase*, int>>& info)>>
+           std::function<CommandBase*(
+               SubjectBase*, std::vector<std::pair<SubjectBase*, int>>& info)>>
       _commands_dictionary;
 
   MediatorInterface* _mediator;

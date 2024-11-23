@@ -73,8 +73,6 @@ void EffectDialog::on_button_set_clicked() {
     effect_name =
         "effect:" + ui->comboBox_effect->currentText().toLower().toStdString();
 
-
-
   _controller->makeEffect(nullptr, _combatant, effect_name, duration, value);
   // _controller = nullptr;
   accept();

@@ -12,7 +12,8 @@ class FileReaderBase {
  public:
   virtual ~FileReaderBase() = default;
   virtual std::vector<Combatant*>* readCombatants(const std::string& path) = 0;
-  virtual void writeCombatants(const std::string& path, std::vector<Combatant*>* list) = 0;
+  virtual void writeCombatants(const std::string& path,
+                               std::vector<Combatant*>* list) = 0;
 };
 }  // namespace pf2e_manager
 

@@ -4,7 +4,7 @@
 #include "SimpleEffect.h"
 #include "SubjectBase.h"
 
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std {
@@ -22,30 +22,27 @@ using ::remove;
 #include <boost/archive/xml_oarchive.hpp>
 #endif
 
-#include <cstdio> // remove
-#include <fstream>
-
-#include <boost/config.hpp>
 #include <boost/archive/tmpdir.hpp>
-
+#include <boost/config.hpp>
 #include <boost/exception/all.hpp>
 #include <boost/serialization/access.hpp>
+#include <cstdio>  // remove
+#include <fstream>
 // #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/export.hpp>
 #include <boost/serialization/utility.hpp>
 #include <boost\serialization\throw_exception.hpp>
-
-#include <boost/serialization/export.hpp>
 #endif
 
 namespace pf2e_manager {
 // class SimpleEffect;
 class SimpleEffectBuilder {
  public:
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
-     friend class ::boost::serialization::access;
-     template<class Archive>
-     void serialize(Archive& ar, const unsigned int version);
-     SimpleEffectBuilder() = default;
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+  friend class ::boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version);
+  SimpleEffectBuilder() = default;
 #endif
   using ns_trigger = pf2e_manager::SimpleEffect::Trigger;
   using ns_type = pf2e_manager::SimpleEffect::Type;
@@ -53,7 +50,9 @@ class SimpleEffectBuilder {
   SimpleEffectBuilder(MediatorInterface* mediator)
       : _effect(new SimpleEffect()), _executor(new EffectExecutor(mediator)) {}
 
-  ~SimpleEffectBuilder() { if(_effect) delete _effect; }
+  ~SimpleEffectBuilder() {
+    if (_effect) delete _effect;
+  }
 
   SimpleEffectBuilder* setNoType() {
     int mask = 0;
@@ -295,7 +294,7 @@ class SimpleEffectBuilder {
 
  private:
   SimpleEffect* _effect = nullptr;
-     EffectExecutor* _executor = nullptr;
+  EffectExecutor* _executor = nullptr;
 };
 }  // namespace pf2e_manager
 

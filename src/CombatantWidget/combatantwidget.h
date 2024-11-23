@@ -8,11 +8,11 @@
 #include <QtWidgets>
 
 // #include "EffectListWidgetItem.h"
+#include <boost/log/trivial.hpp>
+
 #include "../CombatantWidget/MyMenuWidget.h"
 #include "../Model/CommandsImplementation.h"
 #include "../Model/Controller.h"
-
-#include <boost/log/trivial.hpp>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,11 +30,10 @@ class CombatantWidget : public QWidget {
                   QWidget *parent = nullptr);
   ~CombatantWidget();
 
-  pf2e_manager::Combatant *getCombatant()
-  {
-      // if (!this)
-      //     throw std::logic_error("CombatantWidget doent exists");
-      return _combatant;
+  pf2e_manager::Combatant *getCombatant() {
+    // if (!this)
+    //     throw std::logic_error("CombatantWidget doent exists");
+    return _combatant;
   }
   void setCombatant(pf2e_manager::Combatant *other) { _combatant = other; }
 
@@ -84,7 +83,6 @@ class CombatantWidget : public QWidget {
     Q_UNUSED(item);
     updateContent();
   }
-
 
   //  void enterEvent(QEnterEvent *event) override;
   //  void leaveEvent(QEvent *event) override;
@@ -147,10 +145,11 @@ class CombatantWidget : public QWidget {
   QString _model_style{
       "QWidget#CombatantWidget {"
       "border-radius: 30px;"
-    //  "background-color: rgb(8,36,0);"
+      //  "background-color: rgb(8,36,0);"
       " background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
       "stop:0 rgba(242, 204, 143, 1),"
-      "stop:1 rgba(65, 72, 51, 1));"// linear-gradient(90deg, rgba(8,36,0,1), rgba(7,91,25,1), rgba(68,24,14,1));"
+      "stop:1 rgba(65, 72, 51, 1));"  // linear-gradient(90deg, rgba(8,36,0,1),
+                                      // rgba(7,91,25,1), rgba(68,24,14,1));"
       "}"
       "QLabel{"
       "font: bold 20px;"
@@ -163,12 +162,13 @@ class CombatantWidget : public QWidget {
       "background-color: rgb(242, 204, 143);"
       "}"};
 
-  QString _list_widget_style { "QListWidget{"
-                               "font: 16px;"
-                               "color: black;"
-                               "border-radius: 5px;"
-                               "background-color: rgb(182, 173, 144);"
-                               "}"};
+  QString _list_widget_style{
+      "QListWidget{"
+      "font: 16px;"
+      "color: black;"
+      "border-radius: 5px;"
+      "background-color: rgb(182, 173, 144);"
+      "}"};
 
   QString _label_active_style{
       "QLabel{"

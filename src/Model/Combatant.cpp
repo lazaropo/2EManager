@@ -1,95 +1,97 @@
 #include "Combatant.h"
 
 #ifdef _BOOST_SERIALIZATION_TXT_
-template<class Archive>
-void pf2e_manager::Combatant::save(Archive& ar, const unsigned int version) const
-{
-    ar& ::boost::serialization::base_object<SubjectBase>(*this);
+template <class Archive>
+void pf2e_manager::Combatant::save(Archive& ar,
+                                   const unsigned int version) const {
+  ar& ::boost::serialization::base_object<SubjectBase>(*this);
 
-    ar & _hp_max;
-    ar & _hp_tmp;
-    ar & _hp_curr;
-    ar & _initiative;
-    ar & _level;
+  ar & _hp_max;
+  ar & _hp_tmp;
+  ar & _hp_curr;
+  ar & _initiative;
+  ar & _level;
 
-    ar& formattingSide(_side, false, false);
-    ar& formattingVitality(_vitality, false, false);
+  ar& formattingSide(_side, false, false);
+  ar& formattingVitality(_vitality, false, false);
 
-    ar & _effects;
+  ar & _effects;
 }
 
-template<class Archive>
-void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version)
-{
-    ar& ::boost::serialization::base_object<SubjectBase>(*this);
+template <class Archive>
+void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version) {
+  ar& ::boost::serialization::base_object<SubjectBase>(*this);
 
-    ar & _hp_max;
-    ar & _hp_tmp;
-    ar & _hp_curr;
-    ar & _initiative;
-    ar & _level;
+  ar & _hp_max;
+  ar & _hp_tmp;
+  ar & _hp_curr;
+  ar & _initiative;
+  ar & _level;
 
-    std::string side, vitality;
+  std::string side, vitality;
 
-    ar & side;
-    ar & vitality;
+  ar & side;
+  ar & vitality;
 
-    _side = formattingSide(side);
-    _vitality = formattingVitality(vitality);
+  _side = formattingSide(side);
+  _vitality = formattingVitality(vitality);
 
-    ar & _effects;
+  ar & _effects;
 }
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
-template void pf2e_manager::Combatant::save<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version) const;
-template void  pf2e_manager::Combatant::load<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+template void pf2e_manager::Combatant::save<boost::archive::text_oarchive>(
+    boost::archive::text_oarchive& ar, const unsigned int version) const;
+template void pf2e_manager::Combatant::load<boost::archive::text_iarchive>(
+    boost::archive::text_iarchive& ar, const unsigned int version);
 #endif
 
 #ifdef _BOOST_SERIALIZATION_XML_
-template<class Archive>
-void pf2e_manager::Combatant::save(Archive& ar, const unsigned int version) const
-{
-    ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+template <class Archive>
+void pf2e_manager::Combatant::save(Archive& ar,
+                                   const unsigned int version) const {
+  ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
 
-    ar& BOOST_SERIALIZATION_NVP(_hp_max);
-    ar& BOOST_SERIALIZATION_NVP(_hp_tmp);
-    ar& BOOST_SERIALIZATION_NVP(_hp_curr);
-    ar& BOOST_SERIALIZATION_NVP(_initiative);
-    ar& BOOST_SERIALIZATION_NVP(_level);
+  ar& BOOST_SERIALIZATION_NVP(_hp_max);
+  ar& BOOST_SERIALIZATION_NVP(_hp_tmp);
+  ar& BOOST_SERIALIZATION_NVP(_hp_curr);
+  ar& BOOST_SERIALIZATION_NVP(_initiative);
+  ar& BOOST_SERIALIZATION_NVP(_level);
 
-    std::string side = formattingSide(_side, false, false);
-    std::string vitality = formattingVitality(_vitality, false, false);
-    ar & ::boost::make_nvp("_side", side);
-    ar & ::boost::make_nvp("_vitality", vitality);
+  std::string side = formattingSide(_side, false, false);
+  std::string vitality = formattingVitality(_vitality, false, false);
+  ar& ::boost::make_nvp("_side", side);
+  ar& ::boost::make_nvp("_vitality", vitality);
 
-    ar & BOOST_SERIALIZATION_NVP(_effects);
+  ar& BOOST_SERIALIZATION_NVP(_effects);
 }
 
-template<class Archive>
-void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version)
-{
-    ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+template <class Archive>
+void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version) {
+  ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
 
-    ar & BOOST_SERIALIZATION_NVP(_hp_max);
-    ar & BOOST_SERIALIZATION_NVP(_hp_tmp);
-    ar & BOOST_SERIALIZATION_NVP(_hp_curr);
-    ar & BOOST_SERIALIZATION_NVP(_initiative);
-    ar & BOOST_SERIALIZATION_NVP(_level);
+  ar& BOOST_SERIALIZATION_NVP(_hp_max);
+  ar& BOOST_SERIALIZATION_NVP(_hp_tmp);
+  ar& BOOST_SERIALIZATION_NVP(_hp_curr);
+  ar& BOOST_SERIALIZATION_NVP(_initiative);
+  ar& BOOST_SERIALIZATION_NVP(_level);
 
-    std::string side, vitality;
+  std::string side, vitality;
 
-    ar & ::boost::make_nvp("_side", side);
-    ar &::boost::make_nvp("_vitality", vitality);
+  ar& ::boost::make_nvp("_side", side);
+  ar& ::boost::make_nvp("_vitality", vitality);
 
-    _side = formattingSide(side);
-    _vitality = formattingVitality(vitality);
+  _side = formattingSide(side);
+  _vitality = formattingVitality(vitality);
 
-    ar & BOOST_SERIALIZATION_NVP(_effects);
+  ar& BOOST_SERIALIZATION_NVP(_effects);
 }
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
-template void pf2e_manager::Combatant::save<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version) const;
-template void  pf2e_manager::Combatant::load<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
+template void pf2e_manager::Combatant::save<boost::archive::xml_oarchive>(
+    boost::archive::xml_oarchive& ar, const unsigned int version) const;
+template void pf2e_manager::Combatant::load<boost::archive::xml_iarchive>(
+    boost::archive::xml_iarchive& ar, const unsigned int version);
 
 #endif
 

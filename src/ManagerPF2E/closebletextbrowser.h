@@ -4,19 +4,16 @@
 #include <QObject>
 #include <QTextBrowser>
 
-class ClosebleTextBrowser : public QTextBrowser
-{
-    Q_OBJECT
-public:
-    ClosebleTextBrowser();
+class ClosebleTextBrowser : public QTextBrowser {
+  Q_OBJECT
+ public:
+  ClosebleTextBrowser();
 
-signals:
-    void closed(QCloseEvent *event = nullptr);
+ signals:
+  void closed(QCloseEvent *event = nullptr);
 
-protected slots:
-    void closeEvent(QCloseEvent *event = nullptr) override {
-        emit closed(event);
-    }
+ protected slots:
+  void closeEvent(QCloseEvent *event = nullptr) override { emit closed(event); }
 };
 
-#endif // CLOSEBLETEXTBROWSER_H
+#endif  // CLOSEBLETEXTBROWSER_H

@@ -23,8 +23,7 @@ class EffectDirector {
 #ifdef __clang__ || __GNUC__ || __GNUG__
                           __attribute__((unused))
 #endif
-                          int value
-                          = 0);
+                          int value = 0);
 
   void buildClumsyEffect(int duration, int value);
 
@@ -32,36 +31,31 @@ class EffectDirector {
 #ifdef __clang__ || __GNUC__ || __GNUG__
                             __attribute__((unused))
 #endif
-                            int value
-                            = 0);
+                            int value = 0);
 
   void buildConfusedEffect(int duration,
 #ifdef __clang__ || __GNUC__ || __GNUG__
                            __attribute__((unused))
 #endif
-                           int value
-                           = 0);
+                           int value = 0);
 
   void buildControlledEffect(int duration,
 #ifdef __clang__ || __GNUC__ || __GNUG__
                              __attribute__((unused))
 #endif
-                             int value
-                             = 0);
+                             int value = 0);
 
   void buildDazzledEffect(int duration,
 #ifdef __clang__ || __GNUC__ || __GNUG__
                           __attribute__((unused))
 #endif
-                          int value
-                          = 0);
+                          int value = 0);
 
   void buildDeafenedEffect(int duration,
 #ifdef __clang__ || __GNUC__ || __GNUG__
                            __attribute__((unused))
 #endif
-                           int value
-                           = 0);
+                           int value = 0);
 
   void buildDoomedEffect(
 #ifdef __clang__ || __GNUC__ || __GNUG__
@@ -88,8 +82,7 @@ class EffectDirector {
 #ifdef __clang__ || __GNUC__ || __GNUG__
                              __attribute__((unused))
 #endif
-                             int value
-                             = 0);
+                             int value = 0);
 
   void buildEnfeebledEffect(int duration, int value);
 
@@ -98,22 +91,19 @@ class EffectDirector {
 #ifdef __clang__ || __GNUC__ || __GNUG__
                              __attribute__((unused))
 #endif
-                             int value
-                             = 0);
+                             int value = 0);
 
   void buildFatiguedEffect(int duration,
 #ifdef __clang__ || __GNUC__ || __GNUG__
                            __attribute__((unused))
 #endif
-                           int value
-                           = 0);
+                           int value = 0);
 
   void buildFleeingEffect(int duration,
 #ifdef __clang__ || __GNUC__ || __GNUG__
                           __attribute__((unused))
 #endif
-                          int value
-                          = 0);
+                          int value = 0);
 
   void buildFrightenedEffect(
 #ifdef __clang__ || __GNUC__ || __GNUG__
@@ -126,8 +116,7 @@ class EffectDirector {
 #ifdef __clang__ || __GNUC__ || __GNUG__
                           __attribute__((unused))
 #endif
-                          int value
-                          = 0);
+                          int value = 0);
   // TODO: implement this func and further
 
   void buildHiddenEffect(int duration, int value);

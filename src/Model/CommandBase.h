@@ -5,7 +5,7 @@
 
 #include "SubjectBase.h"
 
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 
 #ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
@@ -17,33 +17,32 @@
 #include <boost/archive/xml_oarchive.hpp>
 #endif
 
-#include <boost/config.hpp>
 #include <boost/archive/tmpdir.hpp>
-
+#include <boost/config.hpp>
+#include <boost/serialization/assume_abstract.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/assume_abstract.hpp>
 #endif
 
 namespace pf2e_manager {
 class CommandBase : public SubjectBase {
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+  friend std::ostream& operator<<(std::ostream& os,
+                                  const pf2e_manager::SubjectBase* instance);
 
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
-     friend std::ostream& operator<<(std::ostream& os, const pf2e_manager::SubjectBase* instance);
+  friend class ::boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version);
 
-     friend class ::boost::serialization::access;
-     template<class Archive>
-     void serialize(Archive& ar, const unsigned int version);
-
-     //     : SubjectBase(this)
-     // {}
+  //     : SubjectBase(this)
+  // {}
 #endif
  public:
-     CommandBase() = default;
-     CommandBase(int value, CommandBase* p);
-     virtual void execute() = 0;
-     virtual void undo() = 0;
-     int value() const { return _value; }
+  CommandBase() = default;
+  CommandBase(int value, CommandBase* p);
+  virtual void execute() = 0;
+  virtual void undo() = 0;
+  int value() const { return _value; }
 
  protected:
   int _value = 0;
@@ -51,7 +50,7 @@ class CommandBase : public SubjectBase {
 };
 }  // namespace pf2e_manager
 
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(pf2e_manager::CommandBase);
 

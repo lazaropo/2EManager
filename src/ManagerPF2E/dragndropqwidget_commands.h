@@ -33,8 +33,7 @@ class DragNDropQWidgetCommands : public QWidget {
 
  public slots:
   void mousePressEvent(QMouseEvent* event) override;
-   //  void resizeEvent(QResizeEvent* event) override;
-
+  //  void resizeEvent(QResizeEvent* event) override;
 
  private:
   QScrollArea* _area = nullptr;

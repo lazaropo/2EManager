@@ -1,41 +1,49 @@
 #include "HealCommand.h"
 
 #ifdef _BOOST_SERIALIZATION_TXT_
-template<class Archive>
-void pf2e_manager::HealCommand::serialize(Archive& ar, const unsigned int version)
-{
-    // serialize base class information
-    // ar.template register_type<::pf2e_manager::SubjectBase>();
-    // ar.template register_type<::pf2e_manager::CommandBase>();
+template <class Archive>
+void pf2e_manager::HealCommand::serialize(Archive& ar,
+                                          const unsigned int version) {
+  // serialize base class information
+  // ar.template register_type<::pf2e_manager::SubjectBase>();
+  // ar.template register_type<::pf2e_manager::CommandBase>();
 
-    // ar.template register_type<::pf2e_manager::SubjectBase*>();
-    // ar.template register_type<::pf2e_manager::CommandBase*>();
+  // ar.template register_type<::pf2e_manager::SubjectBase*>();
+  // ar.template register_type<::pf2e_manager::CommandBase*>();
 
-    ar& ::boost::serialization::base_object<::pf2e_manager::CommandBase>(*this);
+  ar& ::boost::serialization::base_object<::pf2e_manager::CommandBase>(*this);
 }
-template void pf2e_manager::HealCommand::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive & ar, const unsigned int version);
-template void pf2e_manager::HealCommand::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive & ar, const unsigned int version);
+template void
+pf2e_manager::HealCommand::serialize<boost::archive::text_oarchive>(
+    boost::archive::text_oarchive& ar, const unsigned int version);
+template void
+pf2e_manager::HealCommand::serialize<boost::archive::text_iarchive>(
+    boost::archive::text_iarchive& ar, const unsigned int version);
 
 BOOST_CLASS_EXPORT_IMPLEMENT(::pf2e_manager::HealCommand);
 #endif
 
 #ifdef _BOOST_SERIALIZATION_XML_
-template<class Archive>
-void pf2e_manager::HealCommand::serialize(Archive& ar, const unsigned int version)
-{
-    // ar.template register_type<::pf2e_manager::SubjectBase>();
-    // ar.template register_type<::pf2e_manager::SubjectBase*>();
+template <class Archive>
+void pf2e_manager::HealCommand::serialize(Archive& ar,
+                                          const unsigned int version) {
+  // ar.template register_type<::pf2e_manager::SubjectBase>();
+  // ar.template register_type<::pf2e_manager::SubjectBase*>();
 
-    ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(CommandBase);
+  ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(CommandBase);
 
-    // ar& boost::serialization::make_nvp("_value", _value);
-    // ar& boost::serialization::make_nvp("_is_active", _is_active);
+  // ar& boost::serialization::make_nvp("_value", _value);
+  // ar& boost::serialization::make_nvp("_is_active", _is_active);
 
-    // ar & BOOST_SERIALIZATION_NVP(_value);
-    // ar & BOOST_SERIALIZATION_NVP(_is_active);
+  // ar & BOOST_SERIALIZATION_NVP(_value);
+  // ar & BOOST_SERIALIZATION_NVP(_is_active);
 }
-template void pf2e_manager::HealCommand::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive & ar, const unsigned int version);
-template void pf2e_manager::HealCommand::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive & ar, const unsigned int version);
+template void
+pf2e_manager::HealCommand::serialize<boost::archive::xml_oarchive>(
+    boost::archive::xml_oarchive& ar, const unsigned int version);
+template void
+pf2e_manager::HealCommand::serialize<boost::archive::xml_iarchive>(
+    boost::archive::xml_iarchive& ar, const unsigned int version);
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::HealCommand);
 #endif

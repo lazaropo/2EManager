@@ -39,23 +39,26 @@ class MyMenuWidget : public QListWidget {
   int _init_height = 0;
   int _init_width = 0;
 
-  const QString _item_base_style = "font: 14px;"
-                                   "QTextBrowser{"
-                                   "border-radius: 5px;"
-                                   "background-color: rgb(166, 138, 100);"
-                                   "}";
-  const QString _text_browser_style = "QTextBrowser {"
-                                      "background-color: rgb(194, 197, 170);"
-                                      "font: 14px 'Arial';"
-                                      "color: black;"
-                                      "border-radius: 8px;"
-                                      "}";
-  const QString _menu_style = "QMenu {"
-                              "background-color: rgb(182, 173, 144);"
-                              "font: 16px 'Arial';"
-                              "color: black;"
-                              //          "border-radius: 8px;"
-                              "}";
+  const QString _item_base_style =
+      "font: 14px;"
+      "QTextBrowser{"
+      "border-radius: 5px;"
+      "background-color: rgb(166, 138, 100);"
+      "}";
+  const QString _text_browser_style =
+      "QTextBrowser {"
+      "background-color: rgb(194, 197, 170);"
+      "font: 14px 'Arial';"
+      "color: black;"
+      "border-radius: 8px;"
+      "}";
+  const QString _menu_style =
+      "QMenu {"
+      "background-color: rgb(182, 173, 144);"
+      "font: 16px 'Arial';"
+      "color: black;"
+      //          "border-radius: 8px;"
+      "}";
 };
 
 #endif  // MYMENUWIDGET_H

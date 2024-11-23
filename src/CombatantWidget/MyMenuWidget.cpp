@@ -4,11 +4,9 @@
 #include "MyMenuWidget.h"
 
 MyMenuWidget::MyMenuWidget(QWidget* item) : QListWidget(item) {
-    setSpacing(1);
-    _init_width = width();
-    _init_height = height();
-
-
+  setSpacing(1);
+  _init_width = width();
+  _init_height = height();
 }
 
 MyMenuWidget::~MyMenuWidget() {
@@ -24,9 +22,6 @@ void MyMenuWidget::keyPressEvent(QKeyEvent* event) {
       return;
 
     _item = nullptr;
-    //delete _frame;
-    // _frame = nullptr;
-    // show();
   }
 }
 
@@ -36,15 +31,16 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   QAction* show_description = menu.addAction("Get Discription");
   QListWidgetItem* instance = currentItem();
   pf2e_manager::EffectBase* picked_effect = nullptr;
-  if(instance)
-      picked_effect = dynamic_cast<EffectListWidgetItem*>(instance)->getEffect();
-  else return;
+  if (instance)
+    picked_effect = dynamic_cast<EffectListWidgetItem*>(instance)->getEffect();
+  else
+    return;
 
   bool is_active = picked_effect->isActive();
-  //if (picked_effect)
-  //  is_active = picked_effect->isActive();
-  // else
-  //   return;
+  // if (picked_effect)
+  //   is_active = picked_effect->isActive();
+  //  else
+  //    return;
 
   QAction* do_undo_effect =
       menu.addAction(is_active ? "Disactivate Effect" : "Activate Effect");
@@ -62,19 +58,15 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
     emit itemChanged(currentItem());
   });
   QAbstractItemDelegate::connect(remove_effect, &QAction::triggered, [=]() {
-      pf2e_manager::Combatant* combatant = dynamic_cast<pf2e_manager::Combatant*>(
-          picked_effect->getReciever());
-      if (!combatant)
-          return;
+    pf2e_manager::Combatant* combatant =
+        dynamic_cast<pf2e_manager::Combatant*>(picked_effect->getReciever());
+    if (!combatant) return;
 
-      int count = combatant->removeEffect(picked_effect);
-      if (count == -1)
-          return;
-      removeItemWidget(item(count));
-      emit itemChanged(nullptr);
+    int count = combatant->removeEffect(picked_effect);
+    if (count == -1) return;
+    removeItemWidget(item(count));
+    emit itemChanged(nullptr);
   });
-
-
 
   menu.exec(event->globalPos());
 }
@@ -89,15 +81,18 @@ void MyMenuWidget::setTextBrowser() {
 
   QRect my_rect = geometry();
 
-  _item->setGeometry(QRect(my_rect.x()+10, my_rect.y()+10, my_rect.width()-20 /*+ parent->width() - _init_width*/, my_rect.height() -20/*+ parent->height() - _init_height*/));
+  _item->setGeometry(
+      QRect(my_rect.x() + 10, my_rect.y() + 10,
+            my_rect.width() - 20 /*+ parent->width() - _init_width*/,
+            my_rect.height() - 20 /*+ parent->height() - _init_height*/));
   // _item->setStyleSheet(_item_base_style);
-
 
   _item->setStyleSheet(_text_browser_style);
 
   _item->setWindowState(Qt::WindowState::WindowActive);
 
-  // QObject::connect(_item, &QWidget::mouseDoubleClickEvent, [=](QKeyEvent *event) {
+  // QObject::connect(_item, &QWidget::mouseDoubleClickEvent, [=](QKeyEvent
+  // *event) {
   //     if(event && event->key() == Qt::Key_Escape )
   //       close();
   // });

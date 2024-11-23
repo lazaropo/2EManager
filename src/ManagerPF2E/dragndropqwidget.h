@@ -43,7 +43,7 @@ class DragNDropQWidget : public QWidget {
 
   void addWidget(pf2e_manager::Combatant* combatant);
 
-  virtual int heightForWidth( int width ) const override;
+  virtual int heightForWidth(int width) const override;
   virtual QSize sizeHint() const override;
 
  public slots:

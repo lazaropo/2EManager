@@ -2,10 +2,9 @@
 #define COMBATANTDIALOG_H
 
 #include <QDialog>
+#include <boost/serialization/export.hpp>
 
 #include "../Model/Combatant.h"
-
-#include <boost/serialization/export.hpp>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

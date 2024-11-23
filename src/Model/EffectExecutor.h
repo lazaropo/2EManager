@@ -6,9 +6,7 @@
 #include "EffectBase.h"
 #include "MediatorInterface.h"
 
-
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
-
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std {
@@ -26,41 +24,39 @@ using ::remove;
 #include <boost/archive/xml_oarchive.hpp>
 #endif
 
-#include <cstdio> // remove
-#include <fstream>
-
-#include <boost/config.hpp>
-
 #include <boost/archive/tmpdir.hpp>
-
+#include <boost/config.hpp>
 #include <boost/exception/all.hpp>
 #include <boost/serialization/access.hpp>
+#include <cstdio>  // remove
+#include <fstream>
 // #include <boost/serialization/nvp.hpp>
-#include <boost/serialization/utility.hpp>
-#include <boost/serialization/throw_exception.hpp>
-
 #include <boost/serialization/export.hpp>
+#include <boost/serialization/throw_exception.hpp>
+#include <boost/serialization/utility.hpp>
 #endif
 
 namespace pf2e_manager {
 class EffectExecutor {
  public:
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
-    friend std::ostream &operator<<(std::ostream &os, const pf2e_manager::EffectBase *instance);
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+  friend std::ostream& operator<<(std::ostream& os,
+                                  const pf2e_manager::EffectBase* instance);
 
-    friend class ::boost::serialization::access;
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned int version);
+  friend class ::boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version);
 
 #endif
-     EffectExecutor() = default;
+  EffectExecutor() = default;
   EffectExecutor(MediatorInterface* mediator) : _mediator(mediator) {}
 
   ~EffectExecutor() = default;
 
   void doNothing() const { ; }
 
-  void execute(SubjectBase* sender, SubjectBase* reciever, const std::vector<std::string>& name);
+  void execute(SubjectBase* sender, SubjectBase* reciever,
+               const std::vector<std::string>& name);
 
   void createEffect(SubjectBase* sender, SubjectBase* reciever,
                     const std::string& name, const int duration = 0,

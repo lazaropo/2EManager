@@ -1,7 +1,7 @@
 #ifndef _INVOKER_H_FB1B5BB7_152F_4BF6_9845_8B4B026A68A9_
 #define _INVOKER_H_FB1B5BB7_152F_4BF6_9845_8B4B026A68A9_
 
-#include <functional> // std::function
+#include <functional>  // std::function
 #include <string>
 #include <vector>
 
@@ -11,7 +11,7 @@
 #include "MediatorInterface.h"
 #include "SubjectBase.h"
 
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 
 #ifdef _BOOST_SERIALIZATION_TXT_
 #include <boost/archive/text_iarchive.hpp>
@@ -23,15 +23,11 @@
 #include <boost/archive/xml_oarchive.hpp>
 #endif
 
-#include <boost/config.hpp>
 #include <boost/archive/tmpdir.hpp>
-
+#include <boost/config.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/export.hpp>
-
 #include <boost/serialization/vector.hpp>
-
-#include <boost/serialization/export.hpp>
 
 // using namespace ::pf2e_manager;
 
@@ -39,83 +35,73 @@
 
 namespace pf2e_manager {
 class Mediator : public MediatorInterface {
-#if defined (_BOOST_SERIALIZATION_TXT_)  || defined (_BOOST_SERIALIZATION_XML_)
-    friend class ::boost::serialization::access;
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int version);
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+  friend class ::boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version);
 #endif
-public:
-    using t_pos_cmd = std::vector<CommandBase*>::iterator;
+ public:
+  using t_pos_cmd = std::vector<CommandBase*>::iterator;
 
-    Mediator()
-        : MediatorInterface()
-    {}
+  Mediator() : MediatorInterface() {}
 
-    explicit Mediator(std::vector<Combatant*>* combatant,
-                      std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp);
+  explicit Mediator(
+      std::vector<Combatant*>* combatant,
+      std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp);
 
-    ~Mediator();
+  ~Mediator();
 
-    int getConfirmation(SubjectBase* sender, SubjectBase* reciever, const std::string& name) override
-    {
-        return _callback(sender, reciever, name);
-    }
+  int getConfirmation(SubjectBase* sender, SubjectBase* reciever,
+                      const std::string& name) override {
+    return _callback(sender, reciever, name);
+  }
 
-    void makeEffect(SubjectBase* sender,
-                    SubjectBase* reciever,
-                    const std::string& name,
-                    const int duration = 0,
-                    const int value = 0) override;
+  void makeEffect(SubjectBase* sender, SubjectBase* reciever,
+                  const std::string& name, const int duration = 0,
+                  const int value = 0) override;
 
-    CommandBase* makeCommand(SubjectBase* sender,
-                             const std::string& name,
-                             std::vector<std::pair<SubjectBase*, int>>& info) override;
+  CommandBase* makeCommand(
+      SubjectBase* sender, const std::string& name,
+      std::vector<std::pair<SubjectBase*, int>>& info) override;
 
-    void doCommand(CommandBase* cmd)
-    {
-        cmd->execute();
-        _commands.push_back(cmd);
-    }
+  void doCommand(CommandBase* cmd) {
+    cmd->execute();
+    _commands.push_back(cmd);
+  }
 
-    void undoEffect(
-
-#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
-        __attribute__((unused))
-#endif
-        SubjectBase* sender,
-
-
-#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
-        __attribute__((unused))
-#endif
-        SubjectBase* reciever,
-
-
-#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
-        __attribute__((unused))
-#endif
-        const std::string& name) override
-  {}
-
-  void undoCommand(
-
-#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
+  void undoEffect(
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
       __attribute__((unused))
 #endif
       SubjectBase* sender,
 
-
-#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
       __attribute__((unused))
 #endif
       SubjectBase* reciever,
 
-
-#if defined (__clang__)  || defined (__GNUC__) || defined (__GNUG__)
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
       __attribute__((unused))
 #endif
-      const std::string& name) override
-  {}
+      const std::string& name) override {
+  }
+
+  void undoCommand(
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+      __attribute__((unused))
+#endif
+      SubjectBase* sender,
+
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+      __attribute__((unused))
+#endif
+      SubjectBase* reciever,
+
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+      __attribute__((unused))
+#endif
+      const std::string& name) override {
+  }
 
   void undoCommand(t_pos_cmd pos) { (*pos)->undo(); }
 
@@ -125,18 +111,22 @@ public:
 
   std::vector<CommandBase*>& getCommands() override { return _commands; }
 
-  void setCallbackFunctionUserInput(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> callback) { _callback = callback;}
+  void setCallbackFunctionUserInput(
+      std::function<int(SubjectBase*, SubjectBase*, const std::string&)>
+          callback) {
+    _callback = callback;
+  }
 
  private:
-     std::vector<Combatant*>* _combatants;
-     std::vector<CommandBase*> _commands;
+  std::vector<Combatant*>* _combatants;
+  std::vector<CommandBase*> _commands;
 
-     SimpleEffectBuilder* _builder = new SimpleEffectBuilder(this);
-     EffectDirector* _director = new EffectDirector(_builder);
+  SimpleEffectBuilder* _builder = new SimpleEffectBuilder(this);
+  EffectDirector* _director = new EffectDirector(_builder);
 
-     CommandsCreator* _commands_creator = new CommandsCreator(this);
+  CommandsCreator* _commands_creator = new CommandsCreator(this);
 
-     std::function<int(SubjectBase*, SubjectBase*, const std::string&)> _callback;
+  std::function<int(SubjectBase*, SubjectBase*, const std::string&)> _callback;
 };
 }  // namespace pf2e_manager
 

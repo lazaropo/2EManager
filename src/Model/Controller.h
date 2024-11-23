@@ -59,9 +59,9 @@ class Controller {
   }
 
   void setCallbackFunctionUserInput(
-      std::function<int(SubjectBase*, SubjectBase*, const std::string&)> callback)
-  {
-      _model->setCallbackFunctionUserInput(callback) ;
+      std::function<int(SubjectBase*, SubjectBase*, const std::string&)>
+          callback) {
+    _model->setCallbackFunctionUserInput(callback);
   }
 
   CommandBase* makeCommand(
@@ -76,7 +76,9 @@ class Controller {
 
   void nextTurn() { _model->nextTurn(); }
 
-  const std::vector<Combatant*>* getCombatants() const { return _model->getCombatants(); }
+  const std::vector<Combatant*>* getCombatants() const {
+    return _model->getCombatants();
+  }
 
   std::vector<Combatant*>* getCombatants() { return _model->getCombatants(); }
 
@@ -91,5 +93,5 @@ class Controller {
  private:
   Model* _model;
 };
-} // namespace pf2e_manager
+}  // namespace pf2e_manager
 #endif

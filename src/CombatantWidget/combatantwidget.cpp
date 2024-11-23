@@ -30,9 +30,9 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   updateContent();
 
-  // _listWidget_effect->setGeometry(QRect(480, 7, 610 + width() - _init_width, 140 + height() - _init_height));
-  _listWidget_effect->setStyleSheet(
-      _list_widget_style);
+  // _listWidget_effect->setGeometry(QRect(480, 7, 610 + width() - _init_width,
+  // 140 + height() - _init_height));
+  _listWidget_effect->setStyleSheet(_list_widget_style);
 
   setAttribute(Qt::WA_StyledBackground);
   setFocusPolicy(Qt::NoFocus);
@@ -50,8 +50,6 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
   setAcceptDrops(true);
 
   setBaseStyle();
-
-
 }
 
 CombatantWidget::~CombatantWidget() { delete ui; }

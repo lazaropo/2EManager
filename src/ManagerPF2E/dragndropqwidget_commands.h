@@ -15,6 +15,7 @@
 //+++++++++++CUSTOM+++++++++++
 #include "../CommandDialog/commanddialog.h"
 #include "../CommandIcon/commandicon.h"
+#include "closebletextbrowser.h"
 
 class DragNDropQWidgetCommands : public QWidget {
  public:
@@ -35,13 +36,6 @@ class DragNDropQWidgetCommands : public QWidget {
    //  void resizeEvent(QResizeEvent* event) override;
 
 
-
-  // void mouseMoveEvent(QMouseEvent* event) override;
-  // void mouseReleaseEvent(QMouseEvent* event) override;
-  //    void dragEnterEvent(QDragEnterEvent* event);
-  //    void dragLeaveEvent(QDragLeaveEvent* event);
-  // void dropEvent(QDropEvent* event);
-
  private:
   QScrollArea* _area = nullptr;
 
@@ -54,7 +48,8 @@ class DragNDropQWidgetCommands : public QWidget {
   QPoint _mouseStartPosition = QPoint();
 
   CommandIcon* _current_icon = nullptr;
-  QTextBrowser* _description = nullptr;
+  CommandIcon* _prev_icon = nullptr;
+  ClosebleTextBrowser* _description = nullptr;
 };
 
 #endif  // DragNDropQWidgetCommands_H

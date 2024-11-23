@@ -112,7 +112,10 @@ Model::~Model()
 
 
 void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {
-  if (--before == from) return;
+    // if (before == _combatants->begin()) {
+    //     _combatants->insert(before, *from);
+    //     _combatants->erase(from);
+  if (before == from + 1) return;
 // if (_curr_pos == from) {
 //   //    (*from)->notifyTrigger(SimpleEffect::Trigger::START_TURN);
 //   //    (*from)->notifyTrigger(SimpleEffect::Trigger::END_TURN);

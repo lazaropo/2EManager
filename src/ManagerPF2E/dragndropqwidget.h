@@ -35,17 +35,7 @@ class DragNDropQWidget : public QWidget {
 
   void setArea(QScrollArea* area) { _area = area; }
 
-  void setModelCurrentComatant(pf2e_manager::Combatant* combatant) {
-    if (_model_current_widget) {
-      _model_current_widget->_fixe_style = false;
-      _model_current_widget->setBaseStyle();
-    }
-    _model_current_widget = (*_widgets_collection)[combatant];
-    if (_model_current_widget) {
-      _model_current_widget->setModelCurrentStyle();
-      _model_current_widget->_fixe_style = true;
-    }
-  }
+  void setModelCurrentComatant(pf2e_manager::Combatant* combatant);
 
   CombatantWidget* getCurrentWidget() { return _current_widget; }
   void updateContent();

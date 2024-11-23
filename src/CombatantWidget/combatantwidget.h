@@ -106,7 +106,7 @@ class CombatantWidget : public QWidget {
   QString _base_style{
       "QWidget#CombatantWidget {"
       "border-radius: 30px;"
-      "background-color: rgb(255,209,220);"
+      "background-color: rgb(242, 204, 143);"
       "}"
       "QLabel{"
       "font: bold 20px;"
@@ -116,13 +116,13 @@ class CombatantWidget : public QWidget {
       "border-radius: 10px;"
       "color: black;"
       "font: bold 16px;"
-      "background-color: rgb(162, 162, 208);"
+      "background-color: rgb(166, 138, 100);"
       "}"};
 
   QString _highlight_style{
       "QWidget#CombatantWidget {"
       "border-radius: 30px;"
-      " background-color: rgb(228, 113, 122); "
+      " background-color: rgb(65, 72, 51); "
       "}"
       "QLabel{"
       "font: bold 20px;"
@@ -132,7 +132,7 @@ class CombatantWidget : public QWidget {
       "border-radius: 10px;"
       "font: bold 16px;"
       "color: black;"
-      "background-color: rgb(162, 162, 208);"
+      "background-color: rgb(164, 172, 134);"
       "}"};
 
   QString _hover_style{
@@ -147,12 +147,10 @@ class CombatantWidget : public QWidget {
   QString _model_style{
       "QWidget#CombatantWidget {"
       "border-radius: 30px;"
-      " background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0 "
-      "rgba(255, 255, 0, 69), stop:0.375 rgba(255, 255, 0, 69), stop:0.423533 "
-      "rgba(251, 255, 0, 145), stop:0.45 rgba(247, 255, 0, 208), stop:0.477581 "
-      "rgba(255, 244, 71, 130), stop:0.518717 rgba(255, 218, 71, 130), "
-      "stop:0.55 rgba(255, 255, 0, 255), stop:0.57754 rgba(255, 203, 0, 130), "
-      "stop:0.625 rgba(255, 255, 0, 69), stop:1 rgba(255, 255, 0, 69));"
+    //  "background-color: rgb(8,36,0);"
+      " background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
+      "stop:0 rgba(242, 204, 143, 1),"
+      "stop:1 rgba(65, 72, 51, 1));"// linear-gradient(90deg, rgba(8,36,0,1), rgba(7,91,25,1), rgba(68,24,14,1));"
       "}"
       "QLabel{"
       "font: bold 20px;"
@@ -162,20 +160,27 @@ class CombatantWidget : public QWidget {
       "border-radius: 10px;"
       "font: bold 16px;"
       "color: black;"
-      "background-color: rgb(162, 162, 208);"
+      "background-color: rgb(242, 204, 143);"
       "}"};
+
+  QString _list_widget_style { "QListWidget{"
+                               "font: 16px;"
+                               "color: black;"
+                               "border-radius: 5px;"
+                               "background-color: rgb(182, 173, 144);"
+                               "}"};
 
   QString _label_active_style{
       "QLabel{"
       "border-radius: 6px;"
       "font: 16px black;"
-      "background-color: rgb(113, 237, 255);"
+      "background-color: rgb(147, 102, 57);"
       "}"};
   QString _label_disable_style{
       "QLabel{"
       "border-radius: 6px;"
       "font: 16px black;"
-      "background-color: rgb(3, 70, 128);"
+      "background-color: rgb(164, 172, 134);"
       "}"};
 };
 #endif  // COMBATANTWIDGET_H

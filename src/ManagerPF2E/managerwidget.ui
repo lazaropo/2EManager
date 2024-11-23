@@ -30,21 +30,21 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#ManagerWidget{
-background-color: rgb(175,218,252);
+background-color: rgb(254, 250, 224);
 }
 
 QScrollArea#scrollArea_combatants {
-background-color: rgb(216,191,216);
+background-color: rgb(233, 237, 201);
 }
 
 QScrollArea#scrollArea_commands {
-background-color: rgb(250, 238, 221);
+background-color: rgb(204, 213, 174);
 }
 
 QPushButton{
 color: black;
 font: 14px;
-background-color: rgb(230, 230, 250);
+background-color: rgb(233, 237, 201);
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -260,7 +260,7 @@ Order</string>
           <string notr="true">QPushButton {
   font: bold 28px; 
   color: black;
-  background-color: rgb(143, 240, 164);
+  background-color: rgb(65, 72, 51);
 }</string>
          </property>
          <property name="text">
@@ -302,12 +302,12 @@ Order</string>
        <property name="styleSheet">
         <string notr="true">QScrollArea#scrollArea_combatants QScrollBar:vertical{
 border-radius: 4px;
-background-color: rgb(250,218, 221);
+background-color: rgb(212, 163, 115 );
 }
 
 QScrollArea#scrollArea_combatants QScrollBar::handle:vertical{
 border-radius: 6px;
-background-color: rgb(162,162, 208);
+background-color: rgb(250, 237, 205);
 }
 
 QScrollArea#scrollArea_combatants QScrollBar::add-line:vertical, QScrollArea#scrollArea_combatants QScrollBar::sub-line:vertical {
@@ -370,12 +370,12 @@ height: 0px;
        <property name="styleSheet">
         <string notr="true">QScrollArea#scrollArea_commands QScrollBar:horizontal{
 border-radius: 4px;
-background-color: rgb(250,218, 221);
+background-color: rgb(204, 213, 174);
 }
 
 QScrollArea#scrollArea_commands QScrollBar::handle:horizontal{
 border-radius: 6px;
-background-color: rgb(162,162, 208);
+background-color: rgb(233, 237, 201);
 }
 
 QScrollArea#scrollArea_commands QScrollBar::add-line:horizontal, QScrollArea#scrollArea_commands QScrollBar::sub-line:horizontal {

@@ -32,12 +32,7 @@ CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
 
   // _listWidget_effect->setGeometry(QRect(480, 7, 610 + width() - _init_width, 140 + height() - _init_height));
   _listWidget_effect->setStyleSheet(
-      "QListWidget{"
-      "font: 16px;"
-      "color: black;"
-      "border-radius: 5px;"
-      "background-color: rgb(162, 162, 208);"
-      "}");
+      _list_widget_style);
 
   setAttribute(Qt::WA_StyledBackground);
   setFocusPolicy(Qt::NoFocus);

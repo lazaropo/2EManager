@@ -25,11 +25,13 @@ DragNDropQWidgetCommands::DragNDropQWidgetCommands(
   }
   setAttribute(Qt::WA_StyledBackground);
   // This widget should be filled by color with code, not with qt designer
-  auto palette = QPalette(QColor(250, 238, 221));
+  auto palette = QPalette(QColor(204, 213, 174));
   setPalette(palette);
 
-  if (_area) {_area->setPalette(palette);
-      _area->setMaximumHeight(120);}
+  // if (_area) {
+  // _area->setPalette(palette);
+  //     _area->setMaximumHeight(120);
+    // }
 }
 
 void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {
@@ -77,15 +79,17 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
       _current_icon = static_cast<CommandIcon *>(sender());
       if (!_current_icon)
           return;
-      else if (_description)
-          _description->hide();
+      else if (_description) {
+          _prev_icon->setBaseStyle();
+          _description->close();
+      }
 
       _current_icon->setBaseStyle();
 
       _current_icon->setHighligthStyle();
 
       if (!_description)
-          _description = new QTextBrowser();
+          _description = new ClosebleTextBrowser();
       auto invoker = _current_icon->getCommand()->getInvoker();
       auto reciever = _current_icon->getCommand()->getReciever();
 
@@ -95,6 +99,11 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
                                   "color: black;"
                                   "}"
                                   "");
+
+      QObject::connect(_description, &ClosebleTextBrowser::closed, [&](QCloseEvent* event){
+          _current_icon->setBaseStyle();
+          QWidget::closeEvent(event);
+      });
 
       QString text;
 
@@ -127,6 +136,8 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
                      .arg(QString::fromStdString(reciever ? reciever->getName() : "nullptr!!!"))
                      .arg(QString::number(_current_icon->getCommand()->value()));
       }
+
+      _prev_icon = _current_icon;
 
     _description->setText(text);
 

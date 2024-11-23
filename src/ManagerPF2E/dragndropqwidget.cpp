@@ -39,7 +39,7 @@ DragNDropQWidget::DragNDropQWidget(
   //               "background-color: rgb(216,191,216);"
   //               "border-radius: 6px;"
   //               "}");
-  auto palette = QPalette(QColor(216, 191, 216));
+  auto palette = QPalette(QColor(212, 163, 115));
   setPalette(palette);
   if (_area) _area->setPalette(palette);
 
@@ -133,6 +133,18 @@ void DragNDropQWidget::mouseReleaseEvent(QMouseEvent *event) {
   }
 }
 
+void DragNDropQWidget::setModelCurrentComatant(pf2e_manager::Combatant* combatant) {
+    if (_model_current_widget) {
+        _model_current_widget->_fixe_style = false;
+        _model_current_widget->setBaseStyle();
+    }
+    _model_current_widget = (*_widgets_collection)[combatant];
+    if (_model_current_widget) {
+        _model_current_widget->setModelCurrentStyle();
+        _model_current_widget->_fixe_style = true;
+    }
+}
+
 void DragNDropQWidget::updateContent() {
   int count = 0;
   CombatantWidget *widget = nullptr;
@@ -170,12 +182,13 @@ void DragNDropQWidget::dragMoveEvent(QDragMoveEvent *event) {
   if (event->buttons() & Qt::LeftButton) {
     QPoint n_coordinates = QPoint(event->position().x(), event->position().y());
     int delta = n_coordinates.y() - _mouseStartPosition.y();
+    int parent_height = parentWidget()->height();
     if (delta < 0)
       _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() -
-                                           2);
+                                             qMax(2000 / parent_height, 2));
     else if (delta > 0)
       _area->verticalScrollBar()->setValue(_area->verticalScrollBar()->value() +
-                                           2);
+                                           qMax(2000 / parent_height, 2));
     _mouseStartPosition = event->position().toPoint();
   }
 

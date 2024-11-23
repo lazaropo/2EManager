@@ -45,7 +45,8 @@ target_include_directories(ManagerPF2E_static
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} )
 
 qt_add_executable(ManagerPF2E
-    main.cpp)
+    main.cpp
+    closebletextbrowser.h closebletextbrowser.cpp)
 
 target_link_libraries(ManagerPF2E
     PRIVATE

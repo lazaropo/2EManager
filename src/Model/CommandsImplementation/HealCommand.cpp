@@ -64,7 +64,7 @@ void HealCommand::execute() {
     // now sender is nullptr. but actually it must work without direction of
     // sender
     _mediator->undoEffect(nullptr, combatant, "effect:dying");
-  } else if (curr_hp < max_hp) {
+  } else {
     int hp = curr_hp + _value;
     if (hp > max_hp) hp = max_hp;
     combatant->setHPCurr(hp);

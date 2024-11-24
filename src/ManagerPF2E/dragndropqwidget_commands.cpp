@@ -56,6 +56,7 @@ void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {
 
 void DragNDropQWidgetCommands::updateContent() {
   int count = 0;
+
   QList<CommandIcon *>::iterator widget = _widgets_collection.end();
   for (auto it : *_commands_list) {
     widget = std::find_if(
@@ -77,7 +78,14 @@ void DragNDropQWidgetCommands::updateContent() {
 }
 
 void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
-  if (event->button() & Qt::LeftButton) {
+  auto button = event->button();
+  if (button & Qt::RightButton) {
+    _current_icon = static_cast<CommandIcon *>(sender());
+    QContextMenuEvent *menu_event = new QContextMenuEvent(
+        QContextMenuEvent::Mouse, event->pos(), event->globalPos());
+    QWidget::contextMenuEvent(menu_event);
+  }
+  if (button & Qt::LeftButton) {
     _current_icon = static_cast<CommandIcon *>(sender());
     if (!_current_icon)
       return;
@@ -175,27 +183,27 @@ void DragNDropQWidgetCommands::contextMenuEvent(QContextMenuEvent *event) {
   //  else
   //    return;
 
-  QAction *do_undo_effect =
+  QAction *do_undo_command =
       menu.addAction(is_active ? "Undo Command" : "Do Command");
-  QAction *remove_effect = menu.addAction("Remove Command");
+  QAction *remove_command = menu.addAction("Remove Command");
 
-  QAbstractItemDelegate::connect(do_undo_effect, &QAction::triggered, [=]() {
+  QAbstractItemDelegate::connect(do_undo_command, &QAction::triggered, [=]() {
     if (is_active)
       picked_command->undo();
     else
       picked_command->execute();
-    // emit itemChanged(currentItem());
+    emit combatantsChanged();
   });
 
-  QAbstractItemDelegate::connect(remove_effect, &QAction::triggered, [=]() {
-    pf2e_manager::Combatant *combatant =
-        dynamic_cast<pf2e_manager::Combatant *>(picked_command->getReciever());
-    if (!combatant) return;
-
+  QAbstractItemDelegate::connect(remove_command, &QAction::triggered, [=]() {
     _controller->removeCommand(picked_command);
-
+    _widgets_collection.removeOne(_current_icon);
     // removeItemWidget(item(count));
-    // emit itemChanged(nullptr);
+    updateContent();
+    delete picked_command;
+    delete _current_icon;
+    _current_icon = nullptr;
+    emit combatantsChanged();
   });
 
   menu.exec(event->globalPos());

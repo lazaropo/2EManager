@@ -14,6 +14,7 @@
 #include "../CombatantWidget/combatantwidget.h"
 
 class DragNDropQWidget : public QWidget {
+  Q_OBJECT
  public:
   DragNDropQWidget(QWidget* parent = nullptr)
       : QWidget(parent), _combatants_layout(new QVBoxLayout(this)) {}
@@ -54,7 +55,7 @@ class DragNDropQWidget : public QWidget {
   void dragLeaveEvent(QDragLeaveEvent* event) override;
   void dragMoveEvent(QDragMoveEvent* event) override;
   void dropEvent(QDropEvent* event) override;
-  // void resizeEvent(QResizeEvent* event) override;
+  void updateContentEvent() { updateContent(); }
 
  private:
   QScrollArea* _area = nullptr;

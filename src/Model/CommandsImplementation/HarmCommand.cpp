@@ -80,11 +80,14 @@ void HarmCommand::undo() {
         "HarmCommand - execute func: reciever is not Combatant class.");
 
   int curr_hp = combatant->getHPCurr();
+  int max_hp = combatant->getHPMax();
   if (curr_hp <= 0) {
     combatant->setHPCurr(_value);
     _mediator->undoEffect(getSubject(), getReciever(), "effect:dying");
   } else {
-    combatant->setHPCurr(curr_hp + _value);
+    int hp = curr_hp + _value;
+    if (hp > max_hp) hp = max_hp;
+    combatant->setHPCurr(hp);
   }
 
   _is_active = false;

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(ReversePolishNotation LANGUAGES C)
+project(ReversePolishNotation LANGUAGES C CXX)
 
 qt_add_library(ReversePolishNotation STATIC
     s21_calc.h

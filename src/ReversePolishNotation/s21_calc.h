@@ -1,5 +1,3 @@
-
-
 #ifndef _S21_SMARTCALC_H_FA68C275_D180_43EB_9AAC_F1C629F79E74_
 #define _S21_SMARTCALC_H_FA68C275_D180_43EB_9AAC_F1C629F79E74_
 #include <math.h>
@@ -11,10 +9,10 @@
 #include <wchar.h>
 #include <wctype.h>
 
-#ifndef _SMART_CALC_ERRORS_
-#define _SMART_CALC_ERRORS_
-typedef enum /*ERRORS_CALC*/ { OK = 0, ERROR = 1 } def_e_code;
-#endif
+// #ifndef _SMART_CALC_EXIT_CODES_
+// #define _SMART_CALC_EXIT_CODES_
+// enum EXIT_CODES  { OK, ERROR };
+// #endif
 
 #define BUFF_SIZE 512
 
@@ -30,7 +28,7 @@ typedef struct queue_t {
   struct queue_t* next;
 } queue_t;
 
-typedef enum {
+typedef enum SET_OF_CHARS {
   NON_OPERATOR_CH,
   EQUALITY_CH = L'=',
   PLUS_OPERATOR = L'+',
@@ -118,11 +116,11 @@ int s21_get_priority(const wchar_t ch);
 int s21_is_func_str(const wchar_t** from);
 
 void s21_parser_from_infix_to_postfix(wchar_t* to, const wchar_t* from);
-int s21_parser_postfix_notation(queue_t* root, const wchar_t* from);
-int s21_is_expression_correct(const wchar_t* from);
+bool s21_parser_postfix_notation(queue_t* root, const wchar_t* from);
+bool s21_is_expression_correct(const wchar_t* from);
 void s21_calculate_by_rule(node_t** head, wchar_t ch);
-int s21_calculate(queue_t* head, double* result, double x_value);
-int s21_main_calc_function(const wchar_t* expression, double* result,
-                           double x_value);
+bool s21_calculate(queue_t* head, double* result, double x_value);
+bool s21_main_calc_function(const wchar_t* expression, double* result,
+                            double x_value);
 
 #endif

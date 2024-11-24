@@ -63,6 +63,11 @@ node_t *s21_func_calc_two_operands(node_t **head,
 void s21_calculate_by_rule(node_t **head, wchar_t ch) {
   int operator_code = s21_is_func(ch);
   operator_code = operator_code ? operator_code : s21_is_operator(ch);
+  if (ch == DICE_MULTIPLYING_d || ch == DICE_MULTIPLYING_D ||
+      ch == DICE_MULTIPLYING_b || ch == DICE_MULTIPLYING_b_UPPER_RUS) {
+    *head = s21_dice_mult(head);
+    return;
+  }
   switch (operator_code) {
     case PLUS_OPERATOR: {
       *head = s21_sum(head);
@@ -95,16 +100,7 @@ void s21_calculate_by_rule(node_t **head, wchar_t ch) {
       *head = s21_func_calc_two_operands(head, fmod);
       break;
     }
-    case DICE_MULTIPLYING_d:
-    case DICE_MULTIPLYING_D:
-    case DICE_MULTIPLYING_b: {
-      *head = s21_dice_mult(head);
-      break;
-    }
-    case DICE_MULTIPLYING_b_UPPER_RUS: {
-        *head = s21_dice_mult(head);
-        break;
-    }
+
     case COS_FUNC_CH: {
       s21_func_calc(head, cos);
       break;
@@ -147,8 +143,8 @@ void s21_calculate_by_rule(node_t **head, wchar_t ch) {
   }
 }
 
-int s21_calculate(queue_t *head, double *result, double x_value) {
-  if (!head) return ERROR;
+bool s21_calculate(queue_t *head, double *result, double x_value) {
+  if (!head) return true;
   node_t *stack = NULL;
   queue_t *ptr = head;
 
@@ -168,5 +164,5 @@ int s21_calculate(queue_t *head, double *result, double x_value) {
   else
     *result = 0.;
   s21_remove_list(&stack);
-  return OK;
+  return false;
 }

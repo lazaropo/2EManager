@@ -1,4 +1,4 @@
-#include <locale.h>
+// #include <locale.h>
 
 #include "s21_calc.h"
 
@@ -28,25 +28,15 @@ int s21_is_func(const wchar_t ch) {
 
 int s21_is_operator(const wchar_t ch) {
   int e_code;
-  switch (ch) {
-    case PLUS_OPERATOR:
-    case MINUS_OPERATOR:
-    case UNARI_MINUS_OPERATOR:
-    case STAR_OPERATOR:
-    case SLASH_OPERATOR:
-    case POW_OPERATOR:
-    case DICE_MULTIPLYING_d:
-    case DICE_MULTIPLYING_D:
-    case DICE_MULTIPLYING_b:
-    case DICE_MULTIPLYING_b_UPPER_RUS: {
-      e_code = ch;
-      break;
-    }
-    default: {
-      e_code = NON_OPERATOR_CH;
-      break;
-    }
-  }
+  if (ch == PLUS_OPERATOR || ch == MINUS_OPERATOR ||
+      ch == UNARI_MINUS_OPERATOR || ch == STAR_OPERATOR ||
+      ch == SLASH_OPERATOR || ch == POW_OPERATOR || ch == DICE_MULTIPLYING_d ||
+      ch == DICE_MULTIPLYING_D || ch == DICE_MULTIPLYING_b ||
+      ch == DICE_MULTIPLYING_b_UPPER_RUS)
+    e_code = ch;
+  else
+    e_code = NON_OPERATOR_CH;
+
   return e_code;
 }
 
@@ -67,6 +57,10 @@ int s21_what_is_token(const wchar_t ch) {
 
 int s21_get_priority(const wchar_t ch) {
   int e_code;
+  if (ch == DICE_MULTIPLYING_d || ch == DICE_MULTIPLYING_D ||
+      ch == DICE_MULTIPLYING_b || ch == DICE_MULTIPLYING_b_UPPER_RUS)
+    return DICE_MULTIPLYING_PR;
+
   switch (ch) {
     case PLUS_OPERATOR: {
       e_code = SUM_PR;
@@ -88,13 +82,7 @@ int s21_get_priority(const wchar_t ch) {
       e_code = POW_PR;
       break;
     }
-    case DICE_MULTIPLYING_d:
-    case DICE_MULTIPLYING_D:
-    case DICE_MULTIPLYING_b:
-    case DICE_MULTIPLYING_b_UPPER_RUS: {
-      e_code = DICE_MULTIPLYING_PR;
-      break;
-    }
+
     case UNARI_MINUS_OPERATOR: {
       e_code = UMINUS_PR;
       break;
@@ -147,17 +135,17 @@ int s21_get_priority(const wchar_t ch) {
   return e_code;
 }
 
-int s21_parser_postfix_notation(queue_t *root, const wchar_t *from) {
-  if (!from || !root) return ERROR;
+bool s21_parser_postfix_notation(queue_t *root, const wchar_t *from) {
+  if (!from || !root) return false;
 
   // setlocale(LC_ALL, "en_US.UTF-8");
 
-  int e_code = OK;
+  bool e_code = false;
   bool is_unary = true;
   queue_t *head = root;
   node_t *stack = NULL;
   double tmp_num = 0;
-  while (*from && *from != EQUALITY_CH && e_code == OK) {
+  while (*from && *from != EQUALITY_CH && e_code == false) {
     switch (s21_what_is_token(*from)) {
       case NUMBER_CASE: {
         if (*from == VARIABLE_CH)
@@ -183,7 +171,7 @@ int s21_parser_postfix_notation(queue_t *root, const wchar_t *from) {
           tmp = s21_pop(&stack, &tmp_num);
           if (tmp) head = s21_enqueue(head, tmp, tmp_num);
         } while (tmp != KET_CH && tmp);
-        if (tmp != KET_CH) e_code = ERROR;
+        if (tmp != KET_CH) e_code = true;
         is_unary = false;
         break;
       }
@@ -207,7 +195,7 @@ int s21_parser_postfix_notation(queue_t *root, const wchar_t *from) {
         while (stack && stack->ch != BRA_CH)
           head = s21_enqueue(head, s21_pop(&stack, &tmp_num), tmp_num);
         if (!stack)
-          e_code = ERROR;
+          e_code = true;
         else {
           s21_pop(&stack, &tmp_num);
           if (stack && s21_is_func(stack->ch))
@@ -223,7 +211,7 @@ int s21_parser_postfix_notation(queue_t *root, const wchar_t *from) {
   }
   if (!(*from)) {
     if (stack && (stack->ch == BRA_CH || stack->ch == KET_CH))
-      e_code = ERROR;
+      e_code = true;
     else {
       wchar_t ch = 0;
       while (s21_what_is_token(ch = s21_pop(&stack, NULL)) == OPERATOR_CASE ||
@@ -251,7 +239,8 @@ void s21_parser_from_infix_to_postfix(wchar_t *to, const wchar_t *from) {
         *from == UPPER_EXP_CH) {
       *to++ = *from++;
     } else if (*from == DICE_MULTIPLYING_d || *from == DICE_MULTIPLYING_D ||
-               *from == DICE_MULTIPLYING_b || *from == DICE_MULTIPLYING_b_UPPER_RUS) {
+               *from == DICE_MULTIPLYING_b ||
+               *from == DICE_MULTIPLYING_b_UPPER_RUS) {
       *to++ = *from++;
     } else if (iswalpha(*from)) {
       int ch = s21_is_func_str(&from);
@@ -281,12 +270,12 @@ void s21_parser_from_infix_to_postfix(wchar_t *to, const wchar_t *from) {
   }
 }
 
-int s21_is_expression_correct(const wchar_t *from) {
+bool s21_is_expression_correct(const wchar_t *from) {
   wchar_t proccessed_expression[BUFF_SIZE];
   memset(proccessed_expression, '\0', BUFF_SIZE * sizeof(wchar_t));
   s21_parser_from_infix_to_postfix(proccessed_expression, from);
   queue_t *queue = s21_enqueue(NULL, '0', 0.);
-  int e_code = s21_parser_postfix_notation(queue, from);
+  bool e_code = s21_parser_postfix_notation(queue, from);
   s21_remove_list_q(&queue);
   return e_code;
 }

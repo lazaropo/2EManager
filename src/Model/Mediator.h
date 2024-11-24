@@ -112,7 +112,8 @@ class Mediator : public MediatorInterface {
   void removeCommand(CommandBase* command) override {
     if (!command) return;
     if (command->isActive()) command->undo();
-    _commands.erase(std::find(_commands.begin(), _commands.end(), command));
+    auto it = std::find(_commands.begin(), _commands.end(), command);
+    if (it != _commands.end()) _commands.erase(it);
   }
 
   std::vector<CommandBase*>& getCommands() override { return _commands; }

@@ -54,6 +54,10 @@ ManagerWidget::ManagerWidget(QWidget *parent)
     _box_combatants->updateContent();
     _box_commands->updateContent();
 
+    QObject::connect(_box_commands,
+                     &DragNDropQWidgetCommands::combatantsChanged,
+                     _box_combatants, &DragNDropQWidget::updateContentEvent);
+
     _box_combatants->setModelCurrentComatant(_controller->getCurrent());
   } catch (std::exception &ex) {
     print_log(ex);

@@ -59,12 +59,13 @@ add_compile_definitions(
     #
     # _BOOST_SERIALIZATION_TXT_
     #_BOOST_SERIALIZATION_TXT_FILEPATH_="record.txt"
+    /utf-8
    _BOOST_SERIALIZATION_XML_
     _BOOST_SERIALIZATION_XML_FILEPATH_="record.xml"
 )
 
 add_subdirectory(src/Model)
-add_subdirectory(src/ReversePolishNotation)
+#add_subdirectory(src/ReversePolishNotation)
 add_subdirectory(src/CombatantDialog)
 add_subdirectory(src/CombatantWidget)
 add_subdirectory(src/CommandDialog)

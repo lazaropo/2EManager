@@ -19,6 +19,8 @@
 #include "closebletextbrowser.h"
 
 class DragNDropQWidgetCommands : public QWidget {
+  Q_OBJECT
+
  public:
   DragNDropQWidgetCommands(pf2e_manager::Controller* controller,
                            QWidget* parent = nullptr);
@@ -31,6 +33,8 @@ class DragNDropQWidgetCommands : public QWidget {
   void setArea(QScrollArea* area) { _area = area; }
 
   // void updateContent();
+ signals:
+  void combatantsChanged();
 
  public slots:
   void mousePressEvent(QMouseEvent* event) override;

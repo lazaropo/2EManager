@@ -1,6 +1,10 @@
+// #include <fcntl.h>
+// #include <io.h>
+
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+// #include <iostream>
 
 #include "managerwidget.h"
 
@@ -8,6 +12,9 @@ int main(int argc, char *argv[]) {
   int ret = 0;
   try {
     std::set_terminate(&my_terminate_handler);
+    // _setmode(_fileno(stdout), _O_U16TEXT);
+    // _setmode(_fileno(stdin), _O_U16TEXT);
+    // _setmode(_fileno(stderr), _O_U16TEXT);
     // make_logger_record();
     QApplication a(argc, argv);
     QTranslator translator;

@@ -57,7 +57,6 @@ class MyMenuWidget : public QListWidget {
       "background-color: rgb(182, 173, 144);"
       "font: 16px 'Arial';"
       "color: black;"
-      //          "border-radius: 8px;"
       "}";
 };
 

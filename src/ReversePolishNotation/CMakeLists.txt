@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(ReversePolishNotation LANGUAGES C)
+
+qt_add_library(ReversePolishNotation STATIC
+    s21_calc.h
+    s21_calc.c
+    s21_list_funcs.c
+    s21_main_calc_function.c
+    s21_parsers_definisions.c
+)
+
+#target_link_libraries(commanddialog PRIVATE Qt6::Core Qt6::Widgets Boost::serialization)# ReversePolishNotation)
+target_include_directories(ReversePolishNotation INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

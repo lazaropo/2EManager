@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Manager VERSION 1.0.0 LANGUAGES CXX)
+project(Manager VERSION 1.0.0 LANGUAGES C CXX)
 
 # add_compile_options(/utf-8)
 
@@ -64,7 +64,7 @@ add_compile_definitions(
 )
 
 add_subdirectory(src/Model)
-#add_subdirectory(src/ReversePolishNotation)
+add_subdirectory(src/ReversePolishNotation)
 add_subdirectory(src/CombatantDialog)
 add_subdirectory(src/CombatantWidget)
 add_subdirectory(src/CommandDialog)

@@ -38,7 +38,7 @@ int s21_is_operator(const wchar_t ch) {
     case DICE_MULTIPLYING_d:
     case DICE_MULTIPLYING_D:
     case DICE_MULTIPLYING_b:
-    case DICE_MULTIPLYING_B: {
+    case DICE_MULTIPLYING_b_UPPER_RUS: {
       e_code = ch;
       break;
     }
@@ -91,7 +91,7 @@ int s21_get_priority(const wchar_t ch) {
     case DICE_MULTIPLYING_d:
     case DICE_MULTIPLYING_D:
     case DICE_MULTIPLYING_b:
-    case DICE_MULTIPLYING_B: {
+    case DICE_MULTIPLYING_b_UPPER_RUS: {
       e_code = DICE_MULTIPLYING_PR;
       break;
     }
@@ -150,7 +150,7 @@ int s21_get_priority(const wchar_t ch) {
 int s21_parser_postfix_notation(queue_t *root, const wchar_t *from) {
   if (!from || !root) return ERROR;
 
-  setlocale(LC_ALL, "en_US.UTF-8");
+  // setlocale(LC_ALL, "en_US.UTF-8");
 
   int e_code = OK;
   bool is_unary = true;
@@ -251,11 +251,11 @@ void s21_parser_from_infix_to_postfix(wchar_t *to, const wchar_t *from) {
         *from == UPPER_EXP_CH) {
       *to++ = *from++;
     } else if (*from == DICE_MULTIPLYING_d || *from == DICE_MULTIPLYING_D ||
-               *from == DICE_MULTIPLYING_b || *from == DICE_MULTIPLYING_B) {
+               *from == DICE_MULTIPLYING_b || *from == DICE_MULTIPLYING_b_UPPER_RUS) {
       *to++ = *from++;
     } else if (iswalpha(*from)) {
       int ch = s21_is_func_str(&from);
-      // printf("%d   .....  %c <<<<<<<\n", ch, ch);
+
       switch (ch) {
         case MOD_FUNC_CH:
         case COS_FUNC_CH:

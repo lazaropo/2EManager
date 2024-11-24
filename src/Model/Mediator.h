@@ -109,11 +109,17 @@ class Mediator : public MediatorInterface {
     return _commands;
   }
 
+  void removeCommand(CommandBase* command) override {
+    if (!command) return;
+    if (command->isActive()) command->undo();
+    _commands.erase(std::find(_commands.begin(), _commands.end(), command));
+  }
+
   std::vector<CommandBase*>& getCommands() override { return _commands; }
 
   void setCallbackFunctionUserInput(
       std::function<int(SubjectBase*, SubjectBase*, const std::string&)>
-          callback) {
+          callback) override {
     _callback = callback;
   }
 

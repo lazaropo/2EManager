@@ -57,16 +57,6 @@ class Model {
   template <class Archive>
   void serialize(Archive& ar, const unsigned int version);
 
-  // template<::boost::archive::text_iarchive>
-  // void
-  // serialize<::boost::archive::text_iarchive>(::boost::archive::text_iarchive&
-  // ar,
-  //                                                 const unsigned int
-  //                                                 file_version);
-  // template void
-  // serialize<::boost::archive::text_oarchive>(::boost::archive::text_oarchive&
-  // ar,
-  //
   Model() = default;
 #endif
  public:
@@ -104,6 +94,10 @@ class Model {
   void removeCombatant(Combatant* ptr) {
     _combatants->erase(
         std::find(_combatants->begin(), _combatants->end(), ptr));
+  }
+
+  void removeCommand(CommandBase* command) {
+    _mediator->removeCommand(command);
   }
 
   void removeCombatantGroup(std::vector<t_pos_comb>& collection) {

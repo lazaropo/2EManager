@@ -58,6 +58,8 @@ class Controller {
     _model->setEffectDurationOnGroup(duration, collection);
   }
 
+  void removeCommand(CommandBase* command) { _model->removeCommand(command); }
+
   void setCallbackFunctionUserInput(
       std::function<int(SubjectBase*, SubjectBase*, const std::string&)>
           callback) {

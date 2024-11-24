@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QBoxLayout>
 #include <QDrag>
+#include <QMenu>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QScrollArea>
@@ -35,6 +36,9 @@ class DragNDropQWidgetCommands : public QWidget {
   void mousePressEvent(QMouseEvent* event) override;
   //  void resizeEvent(QResizeEvent* event) override;
 
+ protected:
+  void contextMenuEvent(QContextMenuEvent* event) override;
+
  private:
   QScrollArea* _area = nullptr;
 
@@ -49,6 +53,12 @@ class DragNDropQWidgetCommands : public QWidget {
   CommandIcon* _current_icon = nullptr;
   CommandIcon* _prev_icon = nullptr;
   ClosebleTextBrowser* _description = nullptr;
+  const QString _menu_style =
+      "QMenu {"
+      "background-color: rgb(182, 173, 144);"
+      "font: 16px 'Arial';"
+      "color: black;"
+      "}";
 };
 
 #endif  // DragNDropQWidgetCommands_H

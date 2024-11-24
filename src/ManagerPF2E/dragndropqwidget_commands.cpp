@@ -109,96 +109,94 @@ void DragNDropQWidgetCommands::mousePressEvent(QMouseEvent *event) {
 
     QString text;
 
-      pf2e_manager::MassHarmCommand *mass_harm_cmd = dynamic_cast<pf2e_manager::MassHarmCommand *>
-          _current_icon->getCommand());
-      pf2e_manager::MassHealCommand *mass_heal_cmd =
-          dynamic_cast<pf2e_manager::MassHealCommand *>(
-              _current_icon->getCommand());
+    pf2e_manager::MassHarmCommand *mass_harm_cmd =
+        dynamic_cast<pf2e_manager::MassHarmCommand *>(
+            _current_icon->getCommand());
+    pf2e_manager::MassHealCommand *mass_heal_cmd =
+        dynamic_cast<pf2e_manager::MassHealCommand *>(
+            _current_icon->getCommand());
 
-      if (mass_harm_cmd) {
-        for (auto cmd : mass_harm_cmd->getInfo()) {
-          invoker = cmd->getInvoker();
-          reciever = cmd->getReciever();
-          text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
-                      .arg(QString::fromStdString(invoker ? invoker->getName()
-                                                          : "User"))
-                      .arg(QString::fromStdString(reciever ? reciever->getName()
-                                                           : "nullptr!!!"))
-                      .arg(QString::number(cmd->value()));
-        }
-      } else if (mass_heal_cmd) {
-        for (auto cmd : mass_heal_cmd->getInfo()) {
-          invoker = cmd->getInvoker();
-          reciever = cmd->getReciever();
-          text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
-                      .arg(QString::fromStdString(invoker ? invoker->getName()
-                                                          : "User"))
-                      .arg(QString::fromStdString(reciever ? reciever->getName()
-                                                           : "nullptr!!!"))
-                      .arg(QString::number(cmd->value()));
-        }
-      } else {
-        text = QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
-                   .arg(QString::fromStdString(invoker ? invoker->getName()
-                                                       : "User"))
-                   .arg(QString::fromStdString(reciever ? reciever->getName()
-                                                        : "nullptr!!!"))
-                   .arg(QString::number(_current_icon->getCommand()->value()));
+    if (mass_harm_cmd) {
+      for (auto cmd : mass_harm_cmd->getInfo()) {
+        invoker = cmd->getInvoker();
+        reciever = cmd->getReciever();
+        text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                    .arg(QString::fromStdString(invoker ? invoker->getName()
+                                                        : "User"))
+                    .arg(QString::fromStdString(reciever ? reciever->getName()
+                                                         : "nullptr!!!"))
+                    .arg(QString::number(cmd->value()));
       }
+    } else if (mass_heal_cmd) {
+      for (auto cmd : mass_heal_cmd->getInfo()) {
+        invoker = cmd->getInvoker();
+        reciever = cmd->getReciever();
+        text += QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                    .arg(QString::fromStdString(invoker ? invoker->getName()
+                                                        : "User"))
+                    .arg(QString::fromStdString(reciever ? reciever->getName()
+                                                         : "nullptr!!!"))
+                    .arg(QString::number(cmd->value()));
+      }
+    } else {
+      text = QString("Invoker:\t%1\tReciever:\t%2\tValue:%3\n")
+                 .arg(QString::fromStdString(invoker ? invoker->getName()
+                                                     : "User"))
+                 .arg(QString::fromStdString(reciever ? reciever->getName()
+                                                      : "nullptr!!!"))
+                 .arg(QString::number(_current_icon->getCommand()->value()));
+    }
 
-      _prev_icon = _current_icon;
+    _prev_icon = _current_icon;
 
-      _description->setText(text);
+    _description->setText(text);
 
-      _description->setMinimumWidth(500);
-      _description->setWindowFlag(Qt::WindowStaysOnTopHint);
-      _description->show();
-      _description->raise();
+    _description->setMinimumWidth(500);
+    _description->setWindowFlag(Qt::WindowStaysOnTopHint);
+    _description->show();
+    _description->raise();
   }
 }
 
-// void DragNDropQWidgetCommands::resizeEvent(QResizeEvent* event) {
-//     //if(hasHeightForWidth()){
-//     // setFixedHeight(heightForWidth(event->()));
-//     // setFixedSize(event->size());
-//     QSize area_size = _area->size();
-//     double width_coeff = static_cast<double>(event->size().width()) /
-//     qMax(event->oldSize().width(), 1);
-//     //int height_coeff = static_cast<double>(event->size().height()) /
-//     qMax(event->oldSize().height(), 1); if(width_coeff > 1.03 || width_coeff
-//     < 0.97 /*|| height_coeff > 1.03 || height_coeff < 0.97*/){
-//         int width = width_coeff * area_size.width();
-//         int height = 120;/*height_coeff **/ area_size.height();
+void DragNDropQWidgetCommands::contextMenuEvent(QContextMenuEvent *event) {
+  QMenu menu(this->parentWidget());
+  menu.setStyleSheet(_menu_style);
 
-//         QSize new_size(width, height);
+  CommandIcon *instance = _current_icon;
+  pf2e_manager::CommandBase *picked_command = nullptr;
+  if (instance)
+    picked_command = instance->getCommandBase();
+  else
+    return;
 
-//         QWidget* parent = static_cast<QWidget*>(this);
+  bool is_active = picked_command->isActive();
+  // if (picked_effect)
+  //   is_active = picked_effect->isActive();
+  //  else
+  //    return;
 
-//         if(parent == nullptr)
-//             throw
-//             std::runtime_error("DragNDropQWidgetCommands::resizeEvent():
-//             parent is null.");
+  QAction *do_undo_effect =
+      menu.addAction(is_active ? "Undo Command" : "Do Command");
+  QAction *remove_effect = menu.addAction("Remove Command");
 
-//         QSize parent_size = parent->size();
+  QAbstractItemDelegate::connect(do_undo_effect, &QAction::triggered, [=]() {
+    if (is_active)
+      picked_command->undo();
+    else
+      picked_command->execute();
+    // emit itemChanged(currentItem());
+  });
 
-//         if(parent_size.width() > new_size.width())
-//             new_size.setWidth(parent_size.width());
-//         // if(parent_size.height() > new_size.height())
-//         //     new_size.setHeight(parent_size.height());
+  QAbstractItemDelegate::connect(remove_effect, &QAction::triggered, [=]() {
+    pf2e_manager::Combatant *combatant =
+        dynamic_cast<pf2e_manager::Combatant *>(picked_command->getReciever());
+    if (!combatant) return;
 
-//         _area->setFixedSize(new_size);
-//         _area->setMaximumHeight(120);
-//         //_combatants_layout->resize(event->size());
-//         update();
-//         // updateGeometry();
-//     //}
-//     // QWidget::resizeEvent(event);
+    _controller->removeCommand(picked_command);
 
-// }
-// }
+    // removeItemWidget(item(count));
+    // emit itemChanged(nullptr);
+  });
 
-// void DragNDropQWidgetCommands::mouseReleaseEvent(QMouseEvent *event) {
-//   Q_UNUSED(event);
-
-//  setCursor(Qt::ArrowCursor);
-//}
+  menu.exec(event->globalPos());
+}

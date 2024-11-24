@@ -34,12 +34,6 @@ node_t *s21_div(node_t **head) {
 
 node_t *s21_dice_mult(node_t **head) {
   if (!(*head)->prev) return *head;
-  // node_t *tmp = *head;
-
-  // while (tmp) {
-  //   printf("+++++++ %c %f ", tmp->ch, tmp->num);
-  //   tmp = tmp->prev;
-  // }
 
   double num1 = 0;
   s21_pop(head, &num1);
@@ -103,10 +97,13 @@ void s21_calculate_by_rule(node_t **head, wchar_t ch) {
     }
     case DICE_MULTIPLYING_d:
     case DICE_MULTIPLYING_D:
-    case DICE_MULTIPLYING_b:
-    case DICE_MULTIPLYING_B: {
+    case DICE_MULTIPLYING_b: {
       *head = s21_dice_mult(head);
       break;
+    }
+    case DICE_MULTIPLYING_b_UPPER_RUS: {
+        *head = s21_dice_mult(head);
+        break;
     }
     case COS_FUNC_CH: {
       s21_func_calc(head, cos);

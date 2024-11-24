@@ -52,6 +52,7 @@ class MediatorInterface {
 
   virtual void undoCommand(SubjectBase* sender, SubjectBase* reciever,
                            const std::string& name) = 0;
+  virtual void removeCommand(CommandBase* command) = 0;
 
   virtual const std::vector<CommandBase*>& getCommands() const = 0;
   virtual std::vector<CommandBase*>& getCommands() = 0;

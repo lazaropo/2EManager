@@ -43,6 +43,7 @@ class CommandBase : public SubjectBase {
   virtual void execute() = 0;
   virtual void undo() = 0;
   int value() const { return _value; }
+  bool isActive() const { return _is_active; }
 
  protected:
   int _value = 0;

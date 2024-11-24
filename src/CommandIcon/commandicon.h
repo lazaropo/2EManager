@@ -35,6 +35,7 @@ class CommandIcon : public QWidget {
     setFixedSize(0.85 * width(), 0.85 * height());
     setStyleSheet(highligth_style);
   }
+  pf2e_manager::CommandBase* getCommandBase() { return _command; }
 
  signals:
   void mousePressed(QMouseEvent* event = nullptr);

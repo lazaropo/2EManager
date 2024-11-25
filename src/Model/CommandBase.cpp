@@ -29,9 +29,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::CommandBase);
 template <class Archive>
 void pf2e_manager::CommandBase::serialize(Archive& ar,
                                           const unsigned int version) {
-  // ar.template register_type<::pf2e_manager::SubjectBase>();
-  // ar.template register_type<::pf2e_manager::SubjectBase*>();
-
   ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
 
   // ar& boost::serialization::make_nvp("_value", _value);
@@ -39,6 +36,12 @@ void pf2e_manager::CommandBase::serialize(Archive& ar,
 
   ar& BOOST_SERIALIZATION_NVP(_value);
   ar& BOOST_SERIALIZATION_NVP(_is_active);
+
+  if (_value < 0)
+    throw std::logic_error(
+        "CommandBase::serialize(Archive& ar, const unsigned int version): "
+        "Value is not correct. Name: " +
+        _name + " Value: " + std::to_string(_value));
 }
 template void
 pf2e_manager::CommandBase::serialize<boost::archive::xml_oarchive>(

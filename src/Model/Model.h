@@ -68,20 +68,35 @@ class Model {
   ~Model();
 
   void addCombatant(Combatant* new_body) {
-    // if (_curr_pos == _combatants->end()) {
-    //     _combatants->push_back(new_body);
-    //     _curr_pos = _combatants->end();
-    // } else
+    bool is_it_end = false;
+    size_t i = -1;
+    if (_curr_pos == _combatants->end())
+      is_it_end = true;
+    else
+      i = _curr_pos - _combatants->begin();
+
     _combatants->push_back(new_body);
-    if (_combatants->size() == 1) _curr_pos = _combatants->begin();
+
+    if (is_it_end)
+      _curr_pos = _combatants->end();
+    else if (i != -1)
+      _curr_pos = _combatants->begin() + i;
   }
 
   void addCombatant(t_pos_comb pos, Combatant* new_body) {
-    if (_curr_pos == _combatants->end()) {
-      _combatants->insert(pos, new_body);
+    bool is_it_end = false;
+    size_t i = -1;
+    if (_curr_pos == _combatants->end())
+      is_it_end = true;
+    else
+      i = _curr_pos - _combatants->begin();
+
+    _combatants->insert(pos, new_body);
+
+    if (is_it_end)
       _curr_pos = _combatants->end();
-    } else
-      _combatants->insert(pos, new_body);
+    else if (i != -1)
+      _curr_pos = _combatants->begin() + i;
   }
 
   void moveCombatant(t_pos_comb from, t_pos_comb before);

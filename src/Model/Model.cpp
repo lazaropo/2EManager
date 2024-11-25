@@ -21,8 +21,6 @@ template <class Archive>
 void pf2e_manager::Model::serialize(Archive& ar, const unsigned int version) {
   ar& BOOST_SERIALIZATION_NVP(_combatants);
   ar& BOOST_SERIALIZATION_NVP(_mediator);
-
-  // ar & _curr_pos;
 }
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Model);
 
@@ -144,12 +142,13 @@ void Model::nextTurn() {
 
   if (_curr_pos == _combatants->end())
     _curr_pos = _combatants->begin();
-  else
-    (*_curr_pos++)->notifyTrigger(SimpleEffect::Trigger::END_TURN);
+  else {
+    (*_curr_pos)->notifyTrigger(SimpleEffect::Trigger::END_TURN);
+    (*_curr_pos++)->notifyTrigger(SimpleEffect::Trigger::START_TURN);
+  }
 
   // if (++_curr_pos == _combatants->end()) _curr_pos = _combatants->begin();
   if (_curr_pos == _combatants->end()) _curr_pos = _combatants->begin();
-  (*_curr_pos)->notifyTrigger(SimpleEffect::Trigger::START_TURN);
 }
 
 }  // namespace pf2e_manager

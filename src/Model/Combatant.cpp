@@ -50,6 +50,7 @@ template void pf2e_manager::Combatant::load<boost::archive::text_iarchive>(
 template <class Archive>
 void pf2e_manager::Combatant::save(Archive& ar,
                                    const unsigned int version) const {
+  if (_hp_max <= 0 || _hp_curr < 0 || _initiative < 1) return;
   ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
 
   ar& BOOST_SERIALIZATION_NVP(_hp_max);
@@ -85,6 +86,14 @@ void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version) {
   _vitality = formattingVitality(vitality);
 
   ar& BOOST_SERIALIZATION_NVP(_effects);
+
+  if (_hp_max <= 0 || _hp_curr < 0 || _initiative < 1)
+    throw std::logic_error(
+        "Combatant::save(Archive& ar, const unsigned int version): HP is not "
+        "correct. Name: " +
+        _name + " HP max: " + std::to_string(_hp_max) +
+        " HP curr: " + std::to_string(_hp_curr) +
+        " Initiative: " + std::to_string(_initiative));
 }
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);

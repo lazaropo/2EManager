@@ -7,7 +7,7 @@ Build system: **CMake**
 > **Boost provided by vcpkg packege manager! (the path should be set 
 in CMakeLists.txt)**
 
-## ![screenshot](.\misc\images\screenshot.png)
+## ![screenshot](misc/images/screenshot.png)
 
 The app allows to manage combatant turns, the caused effects and 
 commands like heal, harm and their mass analogues. 
@@ -51,7 +51,7 @@ At RMB click command menu with some options shoud arise:
 2. **Remove command** - remove command from log
 
 ### Commands icons:
-+ ![harm](.\misc\images\harm.png) - harm command at signle foe
-+ ![heal](.\misc\images\heal.png) - heal command at single foe
-+ ![massharm](.\misc\images\massharm.png) - mass harm command
-+ ![massheal](.\misc\images\massheal.png) - mass heal command
++ ![harm](misc/images/harm.png) - harm command at signle foe
++ ![heal](misc/images/heal.png) - heal command at single foe
++ ![massharm](misc/images/massharm.png) - mass harm command
++ ![massheal](misc/images/massheal.png) - mass heal command

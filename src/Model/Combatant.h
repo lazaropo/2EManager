@@ -32,15 +32,24 @@
 #endif
 
 namespace pf2e_manager {
-
+/**
+ * @brief Combatant is entity with some properties like hp max, hp curr, initiative, etc. 
+ * It is a child class of @class SubjectBase that means the ability to set combatant as effect/command initiator.
+ * That class holds the effects, so, the last one can be activated/disactivated/removed by according combatant methods.
+ * Boost.serialization is used for data save/load mechanic with txt or xml file creation (defined at project cmake file).
+ * 
+ */
 class Combatant : public SubjectBase {
  public:
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-
-  friend std::ostream& operator<<(std::ostream& os, const Combatant* gp);
-
   friend class ::boost::serialization::access;
-
+/**
+ * @brief Template boost functions declaration. They are requiring of boost::serializatoin library.
+ * 
+ * @tparam Archive 
+ * @param ar 
+ * @param version 
+ */
   template <class Archive>
   void save(Archive& ar, const unsigned int version) const;
   template <class Archive>
@@ -53,7 +62,10 @@ class Combatant : public SubjectBase {
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
-
+/**
+ * @brief Construct a new Combatant object.
+ * Default constructor is boost::serializatoin library requiring.
+ */
   Combatant()
       : SubjectBase(this),
         _hp_max(-1),
@@ -63,7 +75,16 @@ class Combatant : public SubjectBase {
         _side(Side::OTHER),
         // _name(name),
         _vitality(Vitality::CONSTRUCT) {}
-
+/**
+ * @brief Construct a new Combatant object. Other model classes have to initialize cobmatant by this constructor.
+ * Throws the exception with incorrect data.
+ * 
+ * @param hp 
+ * @param initiative 
+ * @param side 
+ * @param name 
+ * @param vit 
+ */
   Combatant(int hp, int initiative, Side side, std::string name,
             Vitality vit = Vitality::ALIVE)
       : SubjectBase(this),
@@ -84,10 +105,20 @@ class Combatant : public SubjectBase {
     setName(name);
     //_effects.clear();
   }
-
+/**
+ * @brief Destroy the effects at current Combatant instance.
+ * 
+ */
   ~Combatant() {
     for (auto it : _effects) delete it;
   }
+  /**
+   * @brief Useful overload. Provides combatants comparing by their names in @class SubjectBase.
+   * 
+   * @param other 
+   * @return true Names equality.
+   * @return false Names are differ from each other.
+   */
 
   bool operator==(const Combatant& other) {
     return getName() == other.getName();
@@ -95,26 +126,35 @@ class Combatant : public SubjectBase {
 
   bool operator==(const std::string& name) { return getName() == name; }
 
-  /**
-   * @brief Definition of less < overload
-   * which is condition for std::sort in @class Model class.
-   *
-   * @param other
-   * @return true
-   * @return false
-   */
-  //  friend bool operator<(const Combatant& fisrt, const Combatant& second);
-  //  bool operator==(const Combatant& other) {
-  //    return getName() == other.getName();
-  //  }
+  // /**
+  //  * @brief Definition of less < overload
+  //  * which is condition for std::sort in @class Model class.
+  //  *
+  //  * @param other
+  //  * @return true
+  //  * @return false
+  //  */
+  // //  friend bool operator<(const Combatant& fisrt, const Combatant& second);
+  // //  bool operator==(const Combatant& other) {
+  // //    return getName() == other.getName();
+  // //  }
 
   std::vector<EffectBase*>& getEffects() { return _effects; }
-
+/**
+ * @brief Acception the effect by its pointer. Now combatant owns this effect instance.
+ * 
+ * @param effect 
+ */
   void addEffect(EffectBase* effect) {
     _effects.push_back(effect);
     effect->executeAssociated();
   }
-
+/**
+ * @brief Remove the effect at Combatant instance. Not disable, but remove.
+ * 
+ * @param effect 
+ * @return int 
+ */
   int removeEffect(EffectBase* effect) {
     int ret_val = -1;
     auto it = std::find(_effects.begin(), _effects.end(), effect);
@@ -125,12 +165,23 @@ class Combatant : public SubjectBase {
     return ret_val;
   }
 
-  void setEffectDuration(t_pos_eff pos, int duration);
-
+  // void setEffectDuration(t_pos_eff pos, int duration);
+/**
+ * @brief Notify every effect by trigger. Effects may do something after this.
+ * 
+ * @param trigger 
+ */
   void notifyTrigger(EffectBase::Trigger trigger) {
     for (auto it : _effects) it->notifyTrigger(trigger);
   }
-
+/**
+ * @brief Static functoins provide side and vitality convetion to string and revers operation.
+ * 
+ * @param side 
+ * @param is_first_upper 
+ * @param with_colon 
+ * @return std::string 
+ */
   static std::string formattingSide(Side side, bool is_first_upper,
                                     bool with_colon);
   static Side formattingSide(const std::string& string);
@@ -166,7 +217,6 @@ class Combatant : public SubjectBase {
   int _initiative;
   int _level = 0;
   Side _side;
-  // std::string _name = "";
   Vitality _vitality;
 
   std::vector<EffectBase*> _effects = {};
@@ -178,19 +228,19 @@ class Combatant : public SubjectBase {
 
 #ifdef _BOOST_SERIALIZATION_XML_
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const pf2e_manager::Combatant* instance) {
-  os << static_cast<const pf2e_manager::SubjectBase*>(instance);
-  os << "PEPPAA " << instance->_hp_max << ' ' << instance->_hp_tmp << ' '
-     << instance->_hp_curr << ' ' << instance->_initiative << ' '
-     << instance->_level << ' '
-     << Combatant::formattingSide(instance->_side, false, false) << ' '
-     << Combatant::formattingVitality(instance->_vitality, false, false);
+// inline std::ostream& operator<<(std::ostream& os,
+//                                 const pf2e_manager::Combatant* instance) {
+//   os << static_cast<const pf2e_manager::SubjectBase*>(instance);
+//   os << "PEPPAA " << instance->_hp_max << ' ' << instance->_hp_tmp << ' '
+//      << instance->_hp_curr << ' ' << instance->_initiative << ' '
+//      << instance->_level << ' '
+//      << Combatant::formattingSide(instance->_side, false, false) << ' '
+//      << Combatant::formattingVitality(instance->_vitality, false, false);
 
-  for (auto it : instance->_effects) os << it << ' ';
+//   for (auto it : instance->_effects) os << it << ' ';
 
-  return os;
-}
+//   return os;
+// }
 #endif
 }  // namespace pf2e_manager
 

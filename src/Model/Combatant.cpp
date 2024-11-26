@@ -1,5 +1,9 @@
 #include "Combatant.h"
 
+/**
+ * @brief Template boost funtions definition. Allow to save/load into txt file. Macro have to be defined in cmake file.
+ * 
+ */
 #ifdef _BOOST_SERIALIZATION_TXT_
 template <class Archive>
 void pf2e_manager::Combatant::save(Archive& ar,
@@ -45,7 +49,10 @@ template void pf2e_manager::Combatant::save<boost::archive::text_oarchive>(
 template void pf2e_manager::Combatant::load<boost::archive::text_iarchive>(
     boost::archive::text_iarchive& ar, const unsigned int version);
 #endif
-
+/**
+ * @brief Template boost funtions definition. Allow to save/load into xml file. Macro have to be defined in cmake file.
+ * 
+ */
 #ifdef _BOOST_SERIALIZATION_XML_
 template <class Archive>
 void pf2e_manager::Combatant::save(Archive& ar,

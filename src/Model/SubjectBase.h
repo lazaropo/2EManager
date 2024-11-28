@@ -50,6 +50,10 @@ class SubjectBase {
   void setReciever(SubjectBase* reciever) { _reciever = reciever; }
   void setInvoker(SubjectBase* invoker) { _invoker = invoker; }
 
+  bool operator==(SubjectBase* other) {
+      return _name == other->_name && _subject == other->_subject && _reciever == other->_reciever && _invoker == other->_invoker;
+  }
+
  protected:
   std::string _name = "";
   SubjectBase* _subject = nullptr;   // this

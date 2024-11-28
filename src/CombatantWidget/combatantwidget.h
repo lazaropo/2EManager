@@ -174,7 +174,7 @@ class CombatantWidget : public QWidget {
       "QLabel{"
       "border-radius: 6px;"
       "font: 16px black;"
-      "background-color: rgb(147, 102, 57);"
+      "background-color: rgb(138, 175, 189);"
       "}"};
   QString _label_disable_style{
       "QLabel{"

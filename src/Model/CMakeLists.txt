@@ -7,8 +7,9 @@ add_library(model STATIC
     CommandsImplementation/HealCommand.h
     CommandsImplementation/MassHarmCommand.h
     CommandsImplementation/MassHealCommand.h
-    ComplexEffect.h
-    ComplexEffectBuilder.h
+    CommandsImplementation/DecreaseMaxHpCommand.h
+
+
     EffectBase.h
     EffectDirector.h
     EffectExecutor.h
@@ -37,16 +38,20 @@ add_library(model STATIC
     CommandsImplementation/HealCommand.cpp
     CommandsImplementation/MassHarmCommand.cpp
     CommandsImplementation/MassHealCommand.cpp
+    CommandsImplementation/DecreaseMaxHpCommand.cpp
 
     EffectExecutor.cpp
     SimpleEffectBuilder.cpp
+
 )
 
 target_include_directories(model INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(model PRIVATE
 #    Boost::archieve
-    Boost::serialization)
+    Boost::serialization
+   Boost::container
+)
 
 # if(NOT DEFINED _BOOST_SERIALIZATION_TXT_ AND NOT DEFINED _BOOST_SERIALIZATION_XML_)
 # qt_add_resources(model textresources

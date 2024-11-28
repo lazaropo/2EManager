@@ -43,7 +43,7 @@ class MyMenuWidget : public QListWidget {
       "font: 14px;"
       "QTextBrowser{"
       "border-radius: 5px;"
-      "background-color: rgb(166, 138, 100);"
+      "background-color: rgb(138, 175, 189);"
       "}";
   const QString _text_browser_style =
       "QTextBrowser {"

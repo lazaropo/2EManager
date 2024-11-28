@@ -1,5 +1,5 @@
-#ifndef _HARM_COMMAND_H_B682292B_D042_4EEB_A771_67735725CE78_
-#define _HARM_COMMAND_H_B682292B_D042_4EEB_A771_67735725CE78_
+#ifndef DECREASEMAXHPCOMMAND_H
+#define DECREASEMAXHPCOMMAND_H
 
 #include "../Combatant.h"
 #include "../CommandBase.h"
@@ -24,40 +24,42 @@
 #endif
 
 namespace pf2e_manager {
-class HarmCommand : public CommandBase {
+class DecreaseMaxHpCommand : public CommandBase
+{
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-  friend class ::boost::serialization::access;
-  template <class Archive>
-  void serialize(Archive& ar, const unsigned int version);
+    friend class ::boost::serialization::access;
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version);
 
-  HarmCommand() {}
+    DecreaseMaxHpCommand() {}
 #endif
- public:
-  HarmCommand(MediatorInterface* mediator, SubjectBase* sender,
-              SubjectBase* reciever, int value)
-      : CommandBase(value, this), _mediator(mediator) {
-    setName("command:harm");
-    setInvoker(sender);
-    setReciever(reciever);
-  }
-  /**
+public:
+    DecreaseMaxHpCommand(MediatorInterface* mediator, SubjectBase* sender,
+                SubjectBase* reciever, int value)
+        : CommandBase(value, this), _mediator(mediator) {
+        setName("command:decreasemaxhp");
+        setInvoker(sender);
+        setReciever(reciever);
+    }
+    /**
    * @brief Do from do/undo. _is_active == true accords currect exertion of this
-   * effect. So, if it's true the damage is  caused. If not (command was undone)
+   * effect. So, if it's true the damage is caused. If not (command was undone)
    * the damage is saved, but doesn't caused rigth now.
    *
    * @param value damage value
    */
-  void execute() override;
+    void execute() override;
 
-  void undo() override;
+    void undo() override;
 
- private:
-  MediatorInterface* _mediator;
+private:
+    int _prev_hp_max = 1;
+    MediatorInterface* _mediator;
 };
-}  // namespace pf2e_manager
+}
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-BOOST_CLASS_EXPORT_KEY(::pf2e_manager::HarmCommand)
+BOOST_CLASS_EXPORT_KEY(::pf2e_manager::DecreaseMaxHpCommand)
 #endif
 
-#endif
+#endif // DECREASEMAXHPCOMMAND_H

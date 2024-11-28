@@ -108,6 +108,14 @@ background-color: rgb(233, 237, 201);
            <height>90</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Open Sans</family>
+           <pointsize>-1</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -135,6 +143,14 @@ background-color: rgb(233, 237, 201);
            <width>16777215</width>
            <height>90</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Open Sans</family>
+           <pointsize>-1</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -164,6 +180,14 @@ background-color: rgb(233, 237, 201);
            <height>90</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Open Sans</family>
+           <pointsize>-1</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -191,6 +215,14 @@ background-color: rgb(233, 237, 201);
            <width>16777215</width>
            <height>90</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Open Sans</family>
+           <pointsize>-1</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -223,6 +255,7 @@ Order</string>
          </property>
          <property name="font">
           <font>
+           <family>Open Sans</family>
            <pointsize>-1</pointsize>
            <italic>false</italic>
            <bold>false</bold>
@@ -256,11 +289,19 @@ Order</string>
            <height>90</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Open Sans</family>
+           <pointsize>-1</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">QPushButton {
   font: bold 28px; 
   color: black;
-  background-color: rgb(65, 72, 51);
+  background-color: rgb(121, 152, 59);
 }</string>
          </property>
          <property name="text">
@@ -289,6 +330,11 @@ Order</string>
          <width>1</width>
          <height>1</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Open Sans</family>
+        </font>
        </property>
        <property name="mouseTracking">
         <bool>false</bool>
@@ -329,7 +375,7 @@ height: 0px;
           <x>0</x>
           <y>0</y>
           <width>1162</width>
-          <height>564</height>
+          <height>562</height>
          </rect>
         </property>
         <property name="autoFillBackground">
@@ -363,6 +409,11 @@ height: 0px;
          <width>0</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Open Sans</family>
+        </font>
        </property>
        <property name="autoFillBackground">
         <bool>true</bool>

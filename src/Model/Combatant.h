@@ -2,6 +2,7 @@
 #define _COMBATANT_H_E1381FAB_5D83_4BD1_AFB3_CE0C044AF33E_
 
 #include <algorithm>  //provides std::includes for effect instantiation in collection
+#include <boost/container/stable_vector.hpp>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -31,25 +32,31 @@
 #include <boost/serialization/vector.hpp>
 #endif
 
-namespace pf2e_manager {
-/**
- * @brief Combatant is entity with some properties like hp max, hp curr, initiative, etc. 
- * It is a child class of @class SubjectBase that means the ability to set combatant as effect/command initiator.
- * That class holds the effects, so, the last one can be activated/disactivated/removed by according combatant methods.
- * Boost.serialization is used for data save/load mechanic with txt or xml file creation (defined at project cmake file).
- * 
- */
+namespace pf2e_manager { /**
+                          * @brief Combatant is entity with some properties like
+                          * hp max, hp curr, initiative, etc. It is a child
+                          * class of @class SubjectBase that means the ability
+                          * to set combatant as effect/command initiator. That
+                          * class holds the effects, so, the last one can be
+                          * activated/disactivated/removed by according
+                          * combatant methods. Boost.serialization is used for
+                          * data save/load mechanic with txt or xml file
+                          * creation (defined at project cmake file).
+                          *
+                          */
+class DecreaseMaxHpCommand;
 class Combatant : public SubjectBase {
  public:
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
   friend class ::boost::serialization::access;
-/**
- * @brief Template boost functions declaration. They are requiring of boost::serializatoin library.
- * 
- * @tparam Archive 
- * @param ar 
- * @param version 
- */
+  /**
+   * @brief Template boost functions declaration. They are requiring of
+   * boost::serializatoin library.
+   *
+   * @tparam Archive
+   * @param ar
+   * @param version
+   */
   template <class Archive>
   void save(Archive& ar, const unsigned int version) const;
   template <class Archive>
@@ -58,14 +65,14 @@ class Combatant : public SubjectBase {
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 
-  using t_pos_eff = std::vector<EffectBase*>::iterator;
+  using t_pos_eff = boost::container::stable_vector<EffectBase*>::iterator;
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
-/**
- * @brief Construct a new Combatant object.
- * Default constructor is boost::serializatoin library requiring.
- */
+  /**
+   * @brief Construct a new Combatant object.
+   * Default constructor is boost::serializatoin library requiring.
+   */
   Combatant()
       : SubjectBase(this),
         _hp_max(-1),
@@ -75,16 +82,17 @@ class Combatant : public SubjectBase {
         _side(Side::OTHER),
         // _name(name),
         _vitality(Vitality::CONSTRUCT) {}
-/**
- * @brief Construct a new Combatant object. Other model classes have to initialize cobmatant by this constructor.
- * Throws the exception with incorrect data.
- * 
- * @param hp 
- * @param initiative 
- * @param side 
- * @param name 
- * @param vit 
- */
+  /**
+   * @brief Construct a new Combatant object. Other model classes have to
+   * initialize cobmatant by this constructor. Throws the exception with
+   * incorrect data.
+   *
+   * @param hp
+   * @param initiative
+   * @param side
+   * @param name
+   * @param vit
+   */
   Combatant(int hp, int initiative, Side side, std::string name,
             Vitality vit = Vitality::ALIVE)
       : SubjectBase(this),
@@ -100,22 +108,23 @@ class Combatant : public SubjectBase {
           "correct.");
     if (initiative <= 0)
       throw std::logic_error(
-          "Combatant(int, int, Side, std::string, Vitality): HP is not "
+          "Combatant(int, int, Side, std::string, Vitality): Initiavite is not "
           "correct.");
     setName(name);
     //_effects.clear();
   }
-/**
- * @brief Destroy the effects at current Combatant instance.
- * 
- */
+  /**
+   * @brief Destroy the effects at current Combatant instance.
+   *
+   */
   ~Combatant() {
     for (auto it : _effects) delete it;
   }
   /**
-   * @brief Useful overload. Provides combatants comparing by their names in @class SubjectBase.
-   * 
-   * @param other 
+   * @brief Useful overload. Provides combatants comparing by their names in
+   * @class SubjectBase.
+   *
+   * @param other
    * @return true Names equality.
    * @return false Names are differ from each other.
    */
@@ -138,50 +147,55 @@ class Combatant : public SubjectBase {
   // //  bool operator==(const Combatant& other) {
   // //    return getName() == other.getName();
   // //  }
+  /**
+   * @brief Acception the effect by its pointer. Now combatant owns this effect
+   * instance.
+   *
+   * @param effect
+   */
+  boost::container::stable_vector<EffectBase*>& getEffects() {
+    return _effects;
+  }
 
-  std::vector<EffectBase*>& getEffects() { return _effects; }
-/**
- * @brief Acception the effect by its pointer. Now combatant owns this effect instance.
- * 
- * @param effect 
- */
   void addEffect(EffectBase* effect) {
     _effects.push_back(effect);
     effect->executeAssociated();
   }
-/**
- * @brief Remove the effect at Combatant instance. Not disable, but remove.
- * 
- * @param effect 
- * @return int 
- */
+  /**
+   * @brief Remove the effect at Combatant instance. Not disable, but remove.
+   *
+   * @param effect
+   * @return int
+   */
   int removeEffect(EffectBase* effect) {
     int ret_val = -1;
     auto it = std::find(_effects.begin(), _effects.end(), effect);
     if (it != _effects.end()) {
       ret_val = it - _effects.begin();
+      (*it)->removeEffect();
       _effects.erase(it);
     }
     return ret_val;
   }
 
   // void setEffectDuration(t_pos_eff pos, int duration);
-/**
- * @brief Notify every effect by trigger. Effects may do something after this.
- * 
- * @param trigger 
- */
+  /**
+   * @brief Notify every effect by trigger. Effects may do something after this.
+   *
+   * @param trigger
+   */
   void notifyTrigger(EffectBase::Trigger trigger) {
     for (auto it : _effects) it->notifyTrigger(trigger);
   }
-/**
- * @brief Static functoins provide side and vitality convetion to string and revers operation.
- * 
- * @param side 
- * @param is_first_upper 
- * @param with_colon 
- * @return std::string 
- */
+  /**
+   * @brief Static functoins provide side and vitality convetion to string and
+   * revers operation.
+   *
+   * @param side
+   * @param is_first_upper
+   * @param with_colon
+   * @return std::string
+   */
   static std::string formattingSide(Side side, bool is_first_upper,
                                     bool with_colon);
   static Side formattingSide(const std::string& string);
@@ -208,7 +222,7 @@ class Combatant : public SubjectBase {
 
   void setInitiative(int initiavite) { _initiative = initiavite; }
 
-  // friend class SimpleEffect;
+  friend class DecreaseMaxHpCommand;
 
  private:
   int _hp_max;
@@ -219,7 +233,7 @@ class Combatant : public SubjectBase {
   Side _side;
   Vitality _vitality;
 
-  std::vector<EffectBase*> _effects = {};
+  ::boost::container::stable_vector<EffectBase*> _effects = {};
 };
 
 // inline bool operator<(const Combatant& fisrt, const Combatant& second) {
@@ -245,7 +259,9 @@ class Combatant : public SubjectBase {
 }  // namespace pf2e_manager
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant);
+
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant)
+
 #endif
 
 #endif

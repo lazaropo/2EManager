@@ -53,7 +53,7 @@ template void pf2e_manager::EffectBase::serialize<boost::archive::xml_oarchive>(
 template void pf2e_manager::EffectBase::serialize<boost::archive::xml_iarchive>(
     boost::archive::xml_iarchive &ar, const unsigned int version);
 
-BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::EffectBase);
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::EffectBase)
 
 template <class Archive>
 void pf2e_manager::EffectBase::Value::serialize(
@@ -90,20 +90,25 @@ std::string EffectBase::formattingTrigger(EffectBase::Trigger trigger) {
   std::string ret;
 
   if (trigger == Trigger::NO_TRIGGER)
-    ret = "No trigger.";
+    ret = "No trigger";
+  else if(trigger == Trigger::AT_CREATION)
+      ret = "At creation";
   else if (trigger == Trigger::START_TURN)
-    ret = "Start turn.";
+    ret = "Start turn";
   else if (trigger == Trigger::END_TURN)
-    ret = "End of turn.";
+    ret = "End of turn";
 
   return ret;
 }
 
 EffectBase::Trigger EffectBase::formattingTrigger(const std::string &string) {
   Trigger ret;
-  if (string == "No trigge:" || string == "No trigge" ||
-      string == "no trigge:" || string == "no trigge")
+  if (string == "No trigger:" || string == "No trigger" ||
+      string == "no trigger:" || string == "no trigger")
     ret = Trigger::NO_TRIGGER;
+  else if(string == "At creation:" || string == "At creation" ||
+           string == "at creation:" || string == "at creation")
+      ret = Trigger::AT_CREATION;
   else if (string == "Start turn:" || string == "Start turn" ||
            string == "start turn:" || string == "start turn")
     ret = Trigger::START_TURN;

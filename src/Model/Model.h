@@ -111,6 +111,9 @@ class Model {
         std::find(_combatants->begin(), _combatants->end(), ptr));
   }
 
+  void undoCommand(CommandBase* command) {
+      _mediator->undoCommand(command);
+  }
   void removeCommand(CommandBase* command) {
     _mediator->removeCommand(command);
   }
@@ -148,6 +151,17 @@ class Model {
   void setEffectDurationOnGroup(
       int duration, std::vector<t_pair_comb_with_effect>& collection) {
     for (auto it : collection) setEffectDuration(duration, it);
+  }
+
+  void activateffect(EffectBase* effect) {
+      if(!effect->isActive())
+            effect->activateEffect();
+
+  }
+
+  void disableEffect(EffectBase* effect) {
+      if(effect->isActive())
+        _mediator->undoEffect(effect);
   }
 
   void setCallbackFunctionUserInput(

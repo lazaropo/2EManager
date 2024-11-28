@@ -83,7 +83,7 @@ void HarmCommand::undo() {
   int max_hp = combatant->getHPMax();
   if (curr_hp <= 0) {
     combatant->setHPCurr(_value);
-    _mediator->undoEffect(getSubject(), getReciever(), "effect:dying");
+    // _mediator->undoEffect(getSubject(), getReciever());
   } else {
     int hp = curr_hp + _value;
     if (hp > max_hp) hp = max_hp;

@@ -50,24 +50,37 @@ class SimpleEffect : public EffectBase {
 
   void undo() override;
 
-  void removeEffect() override {
+  void activateEffect() override {
+      if (_duration) _is_active = true;
+      Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
+      if (combatant) {
+          auto eff_container = &combatant->getEffects();
+          for (auto it : *eff_container)
+              if (getSubject() == it->getInvoker()) it->activateEffect();
+      }
+  }
+
+  void disactivateEffect() override {
     _is_active = false;
     Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
     if (combatant) {
       auto eff_container = &combatant->getEffects();
       for (auto it : *eff_container)
-        if (getSubject() == it->getInvoker()) it->removeEffect();
+        if (getSubject() == it->getInvoker()) it->disactivateEffect();
     }
   }
 
-  void activateEffect() override {
-    if (_duration) _is_active = true;
-    Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
-    if (combatant) {
-      auto eff_container = &combatant->getEffects();
-      for (auto it : *eff_container)
-        if (getSubject() == it->getInvoker()) it->activateEffect();
-    }
+  void removeEffect() override {
+      Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
+      if (combatant) {
+          using namespace ::boost;
+          auto eff_container = &combatant->getEffects();
+          for (auto it = eff_container->begin(), it_end = eff_container->end(); it != it_end; ++it)
+              if (getSubject() == (*it)->getInvoker()) {
+                  (*it)->removeEffect();
+                  eff_container->erase(it);
+      }
+  }
   }
 
   void executeAssociated() override {
@@ -95,6 +108,6 @@ class SimpleEffect : public EffectBase {
 }  // namespace pf2e_manager
 
 #ifdef _BOOST_SERIALIZATION_XML_
-BOOST_CLASS_EXPORT_KEY(pf2e_manager::SimpleEffect);
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::SimpleEffect)
 #endif
 #endif

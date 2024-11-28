@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
+
 project(Manager VERSION 1.0.0 LANGUAGES C CXX)
 
 # add_compile_options(/utf-8)
@@ -20,29 +21,27 @@ set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 #set(Boost_NO_SYSTEM_PATHS ON)
 
-
-
-
 set(Boost_DEBUG ON)
 
 set(BOOST_LOG_DYN_LINK ON)
 set(BOOST_LOG_SETUP_DYN_LINK ON)
 set(BOOST_STACKTRACE_DYN_LINK ON)
 set(BOOST_SERIALIZATION_DYN_LINK ON)
+set(BOOST_CONTAINER_DYN_LINK OFF)
 
 
 set(BOOST_STACKTRACE_ENABLE_BACKTRACE OFF)
 set(BOOST_STACKTRACE_USE_WINDBG ON)
 set(boost_stacktrace_from_exception  ON)
-set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
-include( "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake")
+set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
+include( "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
 set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows-static/include)
 
 #set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 #stacktrace
-find_package(Boost COMPONENTS  log log_setup  system serialization REQUIRED)
+find_package(Boost COMPONENTS container log log_setup system serialization REQUIRED)
 
 
 find_package(Qt6 REQUIRED COMPONENTS Core)

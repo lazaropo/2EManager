@@ -36,6 +36,8 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   else
     return;
 
+  pf2e_manager::Combatant* combatant =
+      dynamic_cast<pf2e_manager::Combatant*>(picked_effect->getReciever());
   bool is_active = picked_effect->isActive();
   // if (picked_effect)
   //   is_active = picked_effect->isActive();
@@ -52,14 +54,12 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
   });
   QAbstractItemDelegate::connect(do_undo_effect, &QAction::triggered, [=]() {
     if (is_active)
-      picked_effect->removeEffect();
+      _controller->disableEffect(picked_effect, combatant);
     else
-      picked_effect->activateEffect();
+       _controller->activateEffect(picked_effect, combatant);
     emit itemChanged(currentItem());
   });
   QAbstractItemDelegate::connect(remove_effect, &QAction::triggered, [=]() {
-    pf2e_manager::Combatant* combatant =
-        dynamic_cast<pf2e_manager::Combatant*>(picked_effect->getReciever());
     if (!combatant) return;
 
     int count = combatant->removeEffect(picked_effect);

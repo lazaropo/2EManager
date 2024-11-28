@@ -57,7 +57,7 @@ class MassHealCommand : public CommandBase {
 }  // namespace pf2e_manager
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-BOOST_CLASS_EXPORT_KEY(::pf2e_manager::MassHealCommand);
+BOOST_CLASS_EXPORT_KEY(::pf2e_manager::MassHealCommand)
 #endif
 
 #endif  // MASSHEALCOMMAND_H

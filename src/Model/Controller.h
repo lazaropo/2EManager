@@ -58,6 +58,14 @@ class Controller {
     _model->setEffectDurationOnGroup(duration, collection);
   }
 
+  void activateffect(EffectBase* effect, Combatant* combatant) {
+      _model->activateEffect(effect, combatant);
+  }
+
+  void disableEffect(EffectBase* effect, Combatant* combatant) {
+      _model->disactivateEffect(effect, combatant);
+  }
+
   void removeCommand(CommandBase* command) { _model->removeCommand(command); }
 
   void setCallbackFunctionUserInput(

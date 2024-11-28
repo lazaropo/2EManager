@@ -64,44 +64,22 @@ class Mediator : public MediatorInterface {
       SubjectBase* sender, const std::string& name,
       std::vector<std::pair<SubjectBase*, int>>& info) override;
 
-  void doCommand(CommandBase* cmd) {
+  void doCommand(CommandBase* cmd) override {
     cmd->execute();
     _commands.push_back(cmd);
   }
+// TO DO!!!
+  void doEffect(
+      EffectBase* sender) override {}
+// TO DO!!!
+  // void doCommand(
+  //     CommandBase* command) override{}
 
   void undoEffect(
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-      __attribute__((unused))
-#endif
-      SubjectBase* sender,
-
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-      __attribute__((unused))
-#endif
-      SubjectBase* reciever,
-
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-      __attribute__((unused))
-#endif
-      const std::string& name) override {
-  }
+      EffectBase* sender) override ;
 
   void undoCommand(
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-      __attribute__((unused))
-#endif
-      SubjectBase* sender,
-
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-      __attribute__((unused))
-#endif
-      SubjectBase* reciever,
-
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-      __attribute__((unused))
-#endif
-      const std::string& name) override {
-  }
+      CommandBase* command) override;
 
   void undoCommand(t_pos_cmd pos) { (*pos)->undo(); }
 

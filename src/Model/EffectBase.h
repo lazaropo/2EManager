@@ -39,7 +39,7 @@ class EffectBase : public SubjectBase {
 #endif
 
  public:
-  enum class Trigger { NO_TRIGGER, START_TURN, END_TURN };
+  enum class Trigger { NO_TRIGGER, AT_CREATION, START_TURN, END_TURN };
   enum Type {
     NO_VALUE_TYPE = 0,
     COMMON_TYPE = 1 << 0,
@@ -91,6 +91,7 @@ class EffectBase : public SubjectBase {
   virtual void execute() = 0;
   virtual void undo() = 0;
   virtual void activateEffect() = 0;
+  virtual void disactivateEffect() = 0;
   virtual void removeEffect() = 0;
   virtual void executeAssociated() = 0;
 
@@ -137,7 +138,7 @@ inline std::ostream &operator<<(std::ostream &os,
 }  // namespace pf2e_manager
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-BOOST_CLASS_EXPORT_KEY(pf2e_manager::EffectBase);
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::EffectBase)
 #endif
 
 #endif  // EFFECTBASE_H

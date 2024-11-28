@@ -324,7 +324,8 @@ void EffectDirector::buildDrainedEffect(
       ->setEndTrigger()
       ->setDuration(10 /*rounds per minute*/ * 60 /*minutes*/ * 24 /*hours*/ *
                     value)
-      ->setAssociatedActions({{"command:harm\ncommand:decreasemaxhp"}})
+      // ->setAssociatedActions({{"command:harm\ncommand:decreasemaxhp"}})
+      ->setAssociatedActions({{"command:decreasemaxhp"}})
       ->setDescription(
           "Your health and vitality have been depleted as you've lost blood, "
           "life force, or some other essence. Drained always includes a "

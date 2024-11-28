@@ -9,6 +9,8 @@
 #include "EffectBase.h"
 #include "SubjectBase.h"
 
+#include <boost/container/stable_vector.hpp>
+
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 
 #ifdef _BOOST_SERIALIZATION_TXT_
@@ -32,13 +34,10 @@
 #endif
 
 namespace pf2e_manager {
-
+class DecreaseMaxHpCommand;
 class Combatant : public SubjectBase {
  public:
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-
-  friend std::ostream& operator<<(std::ostream& os, const Combatant* gp);
-
   friend class ::boost::serialization::access;
 
   template <class Archive>
@@ -49,7 +48,7 @@ class Combatant : public SubjectBase {
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 
-  using t_pos_eff = std::vector<EffectBase*>::iterator;
+  using t_pos_eff = boost::container::stable_vector<EffectBase*>::iterator;
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };
@@ -79,7 +78,7 @@ class Combatant : public SubjectBase {
           "correct.");
     if (initiative <= 0)
       throw std::logic_error(
-          "Combatant(int, int, Side, std::string, Vitality): HP is not "
+          "Combatant(int, int, Side, std::string, Vitality): Initiavite is not "
           "correct.");
     setName(name);
     //_effects.clear();
@@ -108,7 +107,7 @@ class Combatant : public SubjectBase {
   //    return getName() == other.getName();
   //  }
 
-  std::vector<EffectBase*>& getEffects() { return _effects; }
+  boost::container::stable_vector<EffectBase*>& getEffects() { return _effects; }
 
   void addEffect(EffectBase* effect) {
     _effects.push_back(effect);
@@ -120,6 +119,7 @@ class Combatant : public SubjectBase {
     auto it = std::find(_effects.begin(), _effects.end(), effect);
     if (it != _effects.end()) {
       ret_val = it - _effects.begin();
+        (*it)->removeEffect();
       _effects.erase(it);
     }
     return ret_val;
@@ -157,7 +157,7 @@ class Combatant : public SubjectBase {
 
   void setInitiative(int initiavite) { _initiative = initiavite; }
 
-  // friend class SimpleEffect;
+ friend class DecreaseMaxHpCommand;
 
  private:
   int _hp_max;
@@ -169,7 +169,7 @@ class Combatant : public SubjectBase {
   // std::string _name = "";
   Vitality _vitality;
 
-  std::vector<EffectBase*> _effects = {};
+  ::boost::container::stable_vector<EffectBase*> _effects = {};
 };
 
 // inline bool operator<(const Combatant& fisrt, const Combatant& second) {
@@ -178,24 +178,26 @@ class Combatant : public SubjectBase {
 
 #ifdef _BOOST_SERIALIZATION_XML_
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const pf2e_manager::Combatant* instance) {
-  os << static_cast<const pf2e_manager::SubjectBase*>(instance);
-  os << "PEPPAA " << instance->_hp_max << ' ' << instance->_hp_tmp << ' '
-     << instance->_hp_curr << ' ' << instance->_initiative << ' '
-     << instance->_level << ' '
-     << Combatant::formattingSide(instance->_side, false, false) << ' '
-     << Combatant::formattingVitality(instance->_vitality, false, false);
+// inline std::ostream& operator<<(std::ostream& os,
+//                                 const pf2e_manager::Combatant* instance) {
+//   os << static_cast<const pf2e_manager::SubjectBase*>(instance);
+//   os << "PEPPAA " << instance->_hp_max << ' ' << instance->_hp_tmp << ' '
+//      << instance->_hp_curr << ' ' << instance->_initiative << ' '
+//      << instance->_level << ' '
+//      << Combatant::formattingSide(instance->_side, false, false) << ' '
+//      << Combatant::formattingVitality(instance->_vitality, false, false);
 
-  for (auto it : instance->_effects) os << it << ' ';
+//   for (auto it : instance->_effects) os << it << ' ';
 
-  return os;
-}
+//   return os;
+// }
 #endif
 }  // namespace pf2e_manager
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant);
+
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant)
+
 #endif
 
 #endif

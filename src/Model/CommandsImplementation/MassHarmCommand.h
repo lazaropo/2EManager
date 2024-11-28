@@ -57,7 +57,7 @@ class MassHarmCommand : public CommandBase {
 }  // namespace pf2e_manager
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
-BOOST_CLASS_EXPORT_KEY(::pf2e_manager::MassHarmCommand);
+BOOST_CLASS_EXPORT_KEY(::pf2e_manager::MassHarmCommand)
 #endif
 
 #endif  // MASSHARMCOMMAND_H

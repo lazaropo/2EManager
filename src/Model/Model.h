@@ -111,9 +111,7 @@ class Model {
         std::find(_combatants->begin(), _combatants->end(), ptr));
   }
 
-  void undoCommand(CommandBase* command) {
-      _mediator->undoCommand(command);
-  }
+  void undoCommand(CommandBase* command) { _mediator->undoCommand(command); }
   void removeCommand(CommandBase* command) {
     _mediator->removeCommand(command);
   }
@@ -144,24 +142,21 @@ class Model {
   void addEffectOnGroup(SimpleEffectBuilder* builder,
                         std::vector<t_pos_comb>& collection);
 
-  void setEffectDuration(int duration, t_pair_comb_with_effect pair) {
-    (*pair.first)->setEffectDuration(pair.second, duration);
-  }
+  // void setEffectDuration(int duration, t_pair_comb_with_effect pair) {
+  //   (*pair.first)->setEffectDuration(pair.second, duration);
+  // }
 
-  void setEffectDurationOnGroup(
-      int duration, std::vector<t_pair_comb_with_effect>& collection) {
-    for (auto it : collection) setEffectDuration(duration, it);
-  }
+  // void setEffectDurationOnGroup(
+  //     int duration, std::vector<t_pair_comb_with_effect>& collection) {
+  //   for (auto it : collection) setEffectDuration(duration, it);
+  // }
 
   void activateffect(EffectBase* effect) {
-      if(!effect->isActive())
-            effect->activateEffect();
-
+    if (!effect->isActive()) effect->activateEffect();
   }
 
-  void disableEffect(EffectBase* effect) {
-      if(effect->isActive())
-        _mediator->undoEffect(effect);
+  void disactivateffect(EffectBase* effect) {
+    if (effect->isActive()) _mediator->undoEffect(effect);
   }
 
   void setCallbackFunctionUserInput(

@@ -13,5 +13,7 @@
         <file>images/massheal.png</file>
         <file>images/massheal_small.png</file>
         <file>images/massharm.png</file>
+	<file>images/decreasemaxhp_small.png</file>
+	<file>images/decreasemaxhp.png</file>
     </qresource>
 </RCC>

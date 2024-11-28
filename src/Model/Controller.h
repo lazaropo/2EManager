@@ -49,21 +49,22 @@ class Controller {
     _model->addEffectOnGroup(builder, collection);
   }
 
-  void setEffectDuration(int duration, Model::t_pair_comb_with_effect pair) {
-    _model->setEffectDuration(duration, pair);
-  }
+  // void setEffectDuration(int duration, Model::t_pair_comb_with_effect pair) {
+  //   _model->setEffectDuration(duration, pair);
+  // }
 
-  void setEffectDurationOnGroup(
-      int duration, std::vector<Model::t_pair_comb_with_effect>& collection) {
-    _model->setEffectDurationOnGroup(duration, collection);
-  }
+  // void setEffectDurationOnGroup(
+  //     int duration, std::vector<Model::t_pair_comb_with_effect>& collection)
+  //     {
+  //   _model->setEffectDurationOnGroup(duration, collection);
+  // }
 
   void activateffect(EffectBase* effect, Combatant* combatant) {
-      _model->activateEffect(effect, combatant);
+    _model->activateEffect(effect, combatant);
   }
 
   void disableEffect(EffectBase* effect, Combatant* combatant) {
-      _model->disactivateEffect(effect, combatant);
+    _model->disactivateEffect(effect, combatant);
   }
 
   void removeCommand(CommandBase* command) { _model->removeCommand(command); }

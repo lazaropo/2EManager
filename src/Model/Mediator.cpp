@@ -88,56 +88,62 @@ CommandBase* Mediator::makeCommand(
     std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) {
   CommandBase* command =
       _commands_creator->createCommandByName(sender, name, info);
-    if(!command)
-      throw std::logic_error("Mediator::makeCommand(SubjectBase*, const std::string&, "
-                               "std::vector<std::pair<pf2e_manager::SubjectBase*, int>>&): "
-                               "Command from createCommandByName(sender, name, info) is nullptr.");
+  if (!command)
+    throw std::logic_error(
+        "Mediator::makeCommand(SubjectBase*, const std::string&, "
+        "std::vector<std::pair<pf2e_manager::SubjectBase*, int>>&): "
+        "Command from createCommandByName(sender, name, info) is nullptr.");
   doCommand(command);
   return command;
 }
 
-void Mediator::undoEffect(
-    EffectBase* effect)  {
-    if(!effect)
-        throw std::logic_error("Mediator::undoEffect(SubjectBase*, SubjectBase*,"
-                               "const std::string&): Effect is nullptr.");
+void Mediator::undoEffect(EffectBase* effect) {
+  if (!effect)
+    throw std::logic_error(
+        "Mediator::undoEffect(SubjectBase*, SubjectBase*,"
+        "const std::string&): Effect is nullptr.");
 
-    if(effect->isActive()){
-        effect->disactivateEffect();
-        SubjectBase* effect_base = static_cast<SubjectBase*>(effect);
-        for(auto it = _commands.begin(), it_end = _commands.end(); it != it_end; ++it){
-            if(effect_base == (*it)->getInvoker())
-                (*it)->undo();
-        }
+  if (effect->isActive()) {
+    effect->disactivateEffect();
+    effect->undo();
+    SubjectBase* effect_base = static_cast<SubjectBase*>(effect);
+    for (auto it = _commands.begin(), it_end = _commands.end(); it != it_end;
+         ++it) {
+      if (effect_base == (*it)->getInvoker()) (*it)->undo();
     }
+  }
 }
 
-void Mediator::undoCommand(
-    CommandBase* command) {
-    if(!command)
-        throw std::logic_error("Mediator::undoEffect(SubjectBase*, SubjectBase*,"
-                               "const std::string&): Command is nullptr.");
+void Mediator::undoCommand(CommandBase* command) {
+  if (!command)
+    throw std::logic_error(
+        "Mediator::undoEffect(SubjectBase*, SubjectBase*,"
+        "const std::string&): Command is nullptr.");
 
-    if(command->isActive()){
-        command->undo();
-        Combatant* combatant_casted = dynamic_cast<Combatant*>(command->getReciever());
-        if(!combatant_casted)
-            throw std::logic_error("Mediator::undoEffect(SubjectBase*, SubjectBase*,"
-                                   "const std::string&): Command reciver is not combatant.");
+  if (command->isActive()) {
+    command->undo();
+    Combatant* combatant_casted =
+        dynamic_cast<Combatant*>(command->getReciever());
+    if (!combatant_casted)
+      throw std::logic_error(
+          "Mediator::undoEffect(SubjectBase*, SubjectBase*,"
+          "const std::string&): Command reciver is not combatant.");
 
-        SubjectBase* command_base = static_cast<SubjectBase*>(command);
-        for(auto it = combatant_casted->getEffects().begin(), it_end = combatant_casted->getEffects().end(); it != it_end; ++it){
-            if(command_base == (*it)->getInvoker())
-                (*it)->disactivateEffect();
-        }
+    SubjectBase* command_base = static_cast<SubjectBase*>(command);
+    for (auto it = combatant_casted->getEffects().begin(),
+              it_end = combatant_casted->getEffects().end();
+         it != it_end; ++it) {
+      if (command_base == (*it)->getInvoker()) (*it)->disactivateEffect();
     }
+  }
 }
 
 // void Mediator::undoEffect(
 //     EffectBase* effect
 //     ) override {
 //     if(!effect)
-//         throw std::logic_error("Mediator::undoEffect(SubjectBase*, SubjectBase*,"
+//         throw std::logic_error("Mediator::undoEffect(SubjectBase*,
+//         SubjectBase*,"
 //                                "const std::string&): Effect is nullptr.");
 
 //     effect->undo();
@@ -146,7 +152,8 @@ void Mediator::undoCommand(
 // void Mediator::undoCommand(
 //     CommandBase* command)  {
 //     if(!command)
-//     throw std::logic_error("Mediator::undoCommand(SubjectBase*, SubjectBase*,"
+//     throw std::logic_error("Mediator::undoCommand(SubjectBase*,
+//     SubjectBase*,"
 //                            "const std::string&): Command is nullptr.");
 //     command->undo();
 // }

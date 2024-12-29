@@ -83,6 +83,7 @@ void ManagerWidget::on_pushButton_create_effect_clicked() {
     if (dialog.exec() == QDialog::Rejected) return;
 
     current_widget->updateContent();
+    _box_commands->updateContent();
   } catch (std::exception &ex) {
     print_log(ex);
   } catch (boost::exception &ex) {
@@ -209,23 +210,9 @@ void init_logger() {
 
   sink->set_formatter(formatter);
 
-  // logging::add_file_log(sink->locked_backend()->get_current_file_name())->set_formatter(formatter);
-  // boost::filesystem::path filename =
-  // sink->locked_backend()->get_current_file_name();
-  // sink->locked_backend()->add_file(boost::make_shared<std::ofstream>(filename));
-
   logging::core::get()->add_sink(sink);
 
-  // core->add_sink(sink);
-
   logging::add_common_attributes();
-
-  // // Here we go, we can write logs
-  // src::logger lg;
-
-  // BOOST_LOG(lg) << "Exception description: " << ex.what() << std::endl
-  //               << "Stack Trace: " << boost::stacktrace::stacktrace() <<
-  //               std::endl;
 }
 
 void print_log(std::exception &ex) {
@@ -284,79 +271,3 @@ int ManagerWidget::getActionConfirmation(pf2e_manager::SubjectBase *sender,
 
   return ret;
 }
-
-void ManagerWidget::resizeLayout(QResizeEvent *event, QLayout *layout) {
-  QRect layout_rect = layout->geometry();
-  // QSize buttons_layout_size = ui->buttons_layout->size();
-  double width_coeff = static_cast<double>(event->size().width()) /
-                       qMax(event->oldSize().width(), 1);
-  double height_coeff = static_cast<double>(event->size().height()) /
-                        qMax(event->oldSize().height(), 1);
-  if (width_coeff > 1.03 || width_coeff < 0.97 || height_coeff > 1.03 ||
-      height_coeff < 0.97) {
-    int width = width_coeff * layout_rect.width();
-    int height = height_coeff * layout_rect.height();
-
-    int x = layout_rect.x();
-    int y = layout_rect.y();
-    ;
-    if (x + width > event->size().width()) width = event->size().width() - x;
-    if (y + height > event->size().height())
-      height = event->size().height() - y;
-
-    QRect new_rect(x, y, width, height);
-
-    layout->setGeometry(new_rect);
-    layout->update();
-  }
-}
-
-// void ManagerWidget::resizeEvent(QResizeEvent *event)
-// {
-//     //if(hasHeightForWidth()){
-//     // setFixedHeight(heightForWidth(event->()));
-//     // setFixedSize(event->size());
-//     resizeLayout(event, ui->buttons_layout);
-//     // resizeLayout(event, ui->verticalLayout);
-
-//     QRect new_combatants_rect = ui->scrollArea_combatants->geometry();
-//     QRect new_commmands_rect = ui->scrollArea_commands->geometry();
-//     double width_coeff = static_cast<double>(event->size().width())
-//                          / qMax(event->oldSize().width(), 1);
-//     int height_coeff = static_cast<double>(event->size().height())
-//                        / qMax(event->oldSize().height(), 1);
-
-//     if (width_coeff > 1.03 || width_coeff < 0.97 || height_coeff > 1.03 ||
-//     height_coeff < 0.97) {
-//         new_combatants_rect.setWidth(width_coeff *
-//         new_combatants_rect.width());
-//         new_combatants_rect.setHeight(height_coeff *
-//         new_combatants_rect.height());
-
-//         ui->scrollArea_combatants->setGeometry(new_combatants_rect);
-//         // _box_commands->setMaximumHeight(120);
-
-//         // int height_box_commmands = ui->scrollArea_commands->rect()
-//         //                                .height(); // -
-//         _box_commands->rect().y();
-//         // int heigth_button =
-//         ui->pushButton_create_combatant->geometry().height();
-
-//         // ui->scrollArea_commands->setFixedSize(
-//         //     event->size() - QSize(0, 10 + heigth_button +
-//         height_box_commmands));
-//     }
-//     if (width_coeff > 1.03 || width_coeff < 0.97 || height_coeff > 1.03 ||
-//     height_coeff < 0.97) {
-//         new_commmands_rect.setWidth(width_coeff * new_commmands_rect.width()
-//         - 10); new_commmands_rect.setHeight(height_coeff *
-//         new_commmands_rect.height() - 10);
-
-//         ui->scrollArea_commands->setGeometry(new_commmands_rect);
-//     }
-//     _box_combatants->updateGeometry();
-//     _box_commands->updateGeometry();
-//     //}
-//      QWidget::resizeEvent(event);
-
-// }

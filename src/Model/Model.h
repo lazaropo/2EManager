@@ -9,6 +9,7 @@
 
 #include "Combatant.h"
 #include "Mediator.h"
+#include "utility.h"
 
 #if !defined(_BOOST_SERIALIZATION_TXT_) && !defined(_BOOST_SERIALIZATION_XML_)
 #include "TXTReader.h"
@@ -60,7 +61,9 @@ class Model {
   Model() = default;
 #endif
  public:
-  using t_pos_comb = std::vector<Combatant*>::iterator;
+  // using t_pos_comb = std::vector<Combatant*>::iterator;
+  using t_container_comb = utility::t_cobatant_container;
+  using t_pos_comb = t_container_comb::iterator;
   using t_pair_comb_with_effect = std::pair<t_pos_comb, Combatant::t_pos_eff>;
 
   Model(std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp);
@@ -151,12 +154,12 @@ class Model {
   //   for (auto it : collection) setEffectDuration(duration, it);
   // }
 
-  void activateffect(EffectBase* effect) {
+  void activateEffect(EffectBase* effect) {
     if (!effect->isActive()) effect->activateEffect();
   }
 
-  void disactivateffect(EffectBase* effect) {
-    if (effect->isActive()) _mediator->undoEffect(effect);
+  void disactivateEffect(EffectBase* effect) {
+    if (effect->isActive()) effect->disactivateEffect();
   }
 
   void setCallbackFunctionUserInput(
@@ -190,9 +193,9 @@ class Model {
 
   void nextTurn();
 
-  const std::vector<Combatant*>* getCombatants() const { return _combatants; }
+  const t_container_comb* getCombatants() const { return _combatants; }
 
-  std::vector<Combatant*>* getCombatants() { return _combatants; }
+  t_container_comb* getCombatants() { return _combatants; }
 
   const std::vector<CommandBase*>& getCommands() const {
     return _mediator->getCommands();
@@ -208,7 +211,8 @@ class Model {
   }
 
  private:
-  std::vector<Combatant*>* _combatants = new std::vector<Combatant*>();
+  // std::vector<Combatant*>* _combatants = new std::vector<Combatant*>();
+  t_container_comb* _combatants = new t_container_comb();
   MediatorInterface* _mediator = nullptr;
 
   t_pos_comb _curr_pos;

@@ -113,19 +113,7 @@ class ManagerWidget : public QWidget {
  private slots:
   void on_pushButton_create_effect_clicked();
 
-  // void setCurrent(QMouseEvent *event);
-
   void on_pushButton_create_combatant_clicked();
-
-  //   void mousePressEvent(QMouseEvent* event);
-  // void mouseMoveEvent(QMouseEvent *event);
-  //  void mouseReleaseEvent(QMouseEvent *event);
-
-  //  void dragEnterEvent(QDragEnterEvent *event);
-  //  void dragMoveEvent(QDragMoveEvent *event);
-  // void dropEvent(QDropEvent *event) override;
-
-  // void on_widget_drag(QMouseEvent *event);
 
   void on_pushButton_create_command_clicked();
 
@@ -135,15 +123,10 @@ class ManagerWidget : public QWidget {
 
   void on_pushButton_create_remove_clicked();
 
-  // void resizeEvent(QResizeEvent* event) override;
-
-  static void resizeLayout(QResizeEvent *event, QLayout *layout);
-
  private:
   Ui::ManagerWidget *ui;
   pf2e_manager::Controller *_controller;
 
-  // QStandardItemModel _combatant_model;
   std::map<pf2e_manager::Combatant *, CombatantWidget *> _combatant_list;
 
   DragNDropQWidget *_box_combatants;

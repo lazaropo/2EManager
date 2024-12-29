@@ -31,6 +31,7 @@ void pf2e_manager::Mediator::serialize(Archive& ar,
   ar& BOOST_SERIALIZATION_NVP(_combatants);
   ar& BOOST_SERIALIZATION_NVP(_commands);
 }
+
 template void pf2e_manager::Mediator::serialize<boost::archive::xml_oarchive>(
     boost::archive::xml_oarchive& ar, const unsigned int version);
 template void pf2e_manager::Mediator::serialize<boost::archive::xml_iarchive>(
@@ -41,7 +42,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Mediator);
 
 namespace pf2e_manager {
 Mediator::Mediator(
-    std::vector<Combatant*>* combatant,
+    t_container_comb* combatant,
     std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp)
     : _combatants(combatant),
       _builder(new SimpleEffectBuilder(this)),

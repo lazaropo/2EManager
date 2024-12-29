@@ -16,6 +16,7 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
 #endif
 
 #include <boost/archive/tmpdir.hpp>
@@ -139,6 +140,7 @@ inline std::ostream &operator<<(std::ostream &os,
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 BOOST_CLASS_EXPORT_KEY(pf2e_manager::EffectBase)
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(pf2e_manager::EffectBase);
 #endif
 
 #endif  // EFFECTBASE_H

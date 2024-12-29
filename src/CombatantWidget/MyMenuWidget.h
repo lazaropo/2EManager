@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QtWidgets>
 
+#include "../Model/Controller.h"
 #include "EffectListWidgetItem.h"
 
 class MyMenuWidget : public QListWidget {
@@ -23,6 +24,10 @@ class MyMenuWidget : public QListWidget {
 
   void setInitHeight(int height) { _init_height = height; }
 
+  void setController(pf2e_manager::Controller* controller) {
+    _controller = controller;
+  }
+
  private slots:
   void keyPressEvent(QKeyEvent* event) override;
 
@@ -35,6 +40,8 @@ class MyMenuWidget : public QListWidget {
   QTextBrowser* _item = nullptr;
   // QLayout* _frame = nullptr;
   std::function<void(QLayout*)> addTextBrowser;
+
+  pf2e_manager::Controller* _controller = nullptr;
 
   int _init_height = 0;
   int _init_width = 0;

@@ -1,8 +1,9 @@
 #include "Combatant.h"
 
 /**
- * @brief Template boost funtions definition. Allow to save/load into txt file. Macro have to be defined in cmake file.
- * 
+ * @brief Template boost funtions definition. Allow to save/load into txt file.
+ * Macro have to be defined in cmake file.
+ *
  */
 #ifdef _BOOST_SERIALIZATION_TXT_
 template <class Archive>
@@ -50,16 +51,24 @@ template void pf2e_manager::Combatant::load<boost::archive::text_iarchive>(
     boost::archive::text_iarchive& ar, const unsigned int version);
 #endif
 /**
- * @brief Template boost funtions definition. Allow to save/load into xml file. Macro have to be defined in cmake file.
- * 
+ * @brief Template boost funtions definition. Allow to save/load into xml file.
+ * Macro have to be defined in cmake file.
+ *
  */
 #ifdef _BOOST_SERIALIZATION_XML_
+
+// template class
+// ::boost::container::stable_vector<::pf2e_manager::EffectBase*>;
+
 template <class Archive>
 void pf2e_manager::Combatant::save(Archive& ar,
                                    const unsigned int version) const {
-  if (_hp_max <= 0 || _hp_curr < 0 || _initiative < 1) return;
+  if (_hp_max < 1 || _hp_curr < 1 || _hp_curr > _hp_max || _initiative < 1)
+    return;
   // using namespace ::boost;
-  using namespace ::boost::container;
+  // using namespace ::boost::serialization;
+  // // using namespace ::boost::serialization::nvp;
+  // using namespace ::boost::container;
   ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
 
   ar& BOOST_SERIALIZATION_NVP(_hp_max);
@@ -73,7 +82,8 @@ void pf2e_manager::Combatant::save(Archive& ar,
   ar& ::boost::make_nvp("_side", side);
   ar& ::boost::make_nvp("_vitality", vitality);
 
-  ar& BOOST_SERIALIZATION_NVP(_effects);
+  ar& boost::serialization::make_nvp("_effects", _effects);
+  // ar& BOOST_SERIALIZATION_NVP(_effects);
 }
 
 template <class Archive>
@@ -98,14 +108,22 @@ void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version) {
 
   if (_hp_max <= 0 || _hp_curr < 0 || _initiative < 1)
     throw std::logic_error(
-        "Combatant::save(Archive& ar, const unsigned int version): Input is not "
+        "Combatant::save(Archive& ar, const unsigned int version): Input is "
+        "not "
         "correct. Name: " +
         _name + " HP max: " + std::to_string(_hp_max) +
         " HP curr: " + std::to_string(_hp_curr) +
         " Initiative: " + std::to_string(_initiative));
 }
 
-BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant)
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
+
+// template void ::boost::serialization::access::serialize<
+//     boost::archive::xml_oarchive,
+//     boost::container::stable_vector<pf2e_manager::EffectBase*>>(
+//     boost::archive::xml_oarchive& ar,
+//     boost::container::stable_vector<pf2e_manager::EffectBase*>&,
+//     const unsigned int version);
 
 template void pf2e_manager::Combatant::save<boost::archive::xml_oarchive>(
     boost::archive::xml_oarchive& ar, const unsigned int version) const;

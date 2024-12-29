@@ -26,7 +26,8 @@ class CombatantWidget : public QWidget {
   Q_OBJECT
 
  public:
-  CombatantWidget(pf2e_manager::Combatant *_combatant,
+  CombatantWidget(pf2e_manager::Controller *controller,
+                  pf2e_manager::Combatant *_combatant,
                   QWidget *parent = nullptr);
   ~CombatantWidget();
 
@@ -97,6 +98,7 @@ class CombatantWidget : public QWidget {
 
   MyMenuWidget *_listWidget_effect = nullptr;
   pf2e_manager::Combatant *_combatant = nullptr;
+  pf2e_manager::Controller *_controller = nullptr;
 
   static constexpr int _init_width = 1150;
   static constexpr int _init_height = 155;

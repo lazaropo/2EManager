@@ -53,10 +53,14 @@ void MyMenuWidget::contextMenuEvent(QContextMenuEvent* event) {
     _item->setText(QString::fromStdString((picked_effect->getDescription())));
   });
   QAbstractItemDelegate::connect(do_undo_effect, &QAction::triggered, [=]() {
+    if (!_controller)
+      throw std::logic_error(
+          "MyMenuWidget::contextMenuEvent(QContextMenuEvent*): do_undo_effect: "
+          "Controller is nullptr.");
     if (is_active)
-      _controller->disableEffect(picked_effect, combatant);
+      _controller->disactivateEffect(picked_effect);
     else
-       _controller->activateEffect(picked_effect, combatant);
+      _controller->activateEffect(picked_effect);
     emit itemChanged(currentItem());
   });
   QAbstractItemDelegate::connect(remove_effect, &QAction::triggered, [=]() {

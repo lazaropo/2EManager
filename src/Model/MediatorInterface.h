@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "CommandBase.h"
-#include "SubjectBase.h"
 #include "EffectBase.h"
+#include "SubjectBase.h"
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 #include <boost/config.hpp>
@@ -48,11 +48,9 @@ class MediatorInterface {
       SubjectBase* sender, const std::string& name,
       std::vector<std::pair<SubjectBase*, int>>& info) = 0;
 
-  virtual void doEffect(
-      EffectBase* sender) = 0;
+  virtual void doEffect(EffectBase* sender) = 0;
 
-  virtual void doCommand(
-      CommandBase* command) =0;
+  virtual void doCommand(CommandBase* command) = 0;
 
   virtual void undoEffect(EffectBase* effect) = 0;
   virtual void undoCommand(CommandBase* command) = 0;

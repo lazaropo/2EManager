@@ -14,6 +14,7 @@
 #ifdef _BOOST_SERIALIZATION_XML_
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
 #endif
 
 #include <boost/archive/tmpdir.hpp>
@@ -51,7 +52,8 @@ class SubjectBase {
   void setInvoker(SubjectBase* invoker) { _invoker = invoker; }
 
   bool operator==(SubjectBase* other) {
-      return _name == other->_name && _subject == other->_subject && _reciever == other->_reciever && _invoker == other->_invoker;
+    return _name == other->_name && _subject == other->_subject &&
+           _reciever == other->_reciever && _invoker == other->_invoker;
   }
 
  protected:

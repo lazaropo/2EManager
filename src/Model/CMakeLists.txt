@@ -22,6 +22,7 @@ add_library(model STATIC
     SimpleEffectBuilder.h
     SubjectBase.h
     TXTReader.h
+    utility.h
 
     SubjectBase.cpp
     Combatant.cpp
@@ -34,6 +35,7 @@ add_library(model STATIC
     Model.cpp
     SimpleEffect.cpp
     TXTReader.cpp
+    utility.cpp
     CommandsImplementation/HarmCommand.cpp
     CommandsImplementation/HealCommand.cpp
     CommandsImplementation/MassHarmCommand.cpp

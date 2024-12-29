@@ -10,6 +10,7 @@
 #include "EffectDirector.h"
 #include "MediatorInterface.h"
 #include "SubjectBase.h"
+#include "utility.h"
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 
@@ -27,7 +28,6 @@
 #include <boost/config.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/vector.hpp>
 
 // using namespace ::pf2e_manager;
 
@@ -35,18 +35,23 @@
 
 namespace pf2e_manager {
 class Mediator : public MediatorInterface {
+ public:
+  using t_container_comb = utility::t_cobatant_container;
+  using t_pos_cmd = std::vector<CommandBase*>::iterator;
+
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
   friend class ::boost::serialization::access;
   template <class Archive>
   void serialize(Archive& ar, const unsigned int version);
+
+  template <class Archive>
+  void serialize(Archive& ar, t_container_comb& g, const unsigned int version);
 #endif
  public:
-  using t_pos_cmd = std::vector<CommandBase*>::iterator;
-
   Mediator() : MediatorInterface() {}
 
   explicit Mediator(
-      std::vector<Combatant*>* combatant,
+      t_container_comb* combatant,
       std::function<int(SubjectBase*, SubjectBase*, const std::string&)> fp);
 
   ~Mediator();
@@ -68,18 +73,15 @@ class Mediator : public MediatorInterface {
     cmd->execute();
     _commands.push_back(cmd);
   }
-// TO DO!!!
-  void doEffect(
-      EffectBase* sender) override {}
-// TO DO!!!
+  // TO DO!!!
+  void doEffect(EffectBase* sender) override {}
+  // TO DO!!!
   // void doCommand(
   //     CommandBase* command) override{}
 
-  void undoEffect(
-      EffectBase* sender) override ;
+  void undoEffect(EffectBase* sender) override;
 
-  void undoCommand(
-      CommandBase* command) override;
+  void undoCommand(CommandBase* command) override;
 
   void undoCommand(t_pos_cmd pos) { (*pos)->undo(); }
 
@@ -103,7 +105,7 @@ class Mediator : public MediatorInterface {
   }
 
  private:
-  std::vector<Combatant*>* _combatants;
+  t_container_comb* _combatants;
   std::vector<CommandBase*> _commands;
 
   SimpleEffectBuilder* _builder = new SimpleEffectBuilder(this);

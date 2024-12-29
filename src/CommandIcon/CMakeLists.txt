@@ -10,4 +10,5 @@ qt_add_resources(commandicon "images"
     PREFIX "/"
     FILES images/harm.png images/harm_small.png images/heal.png images/heal_small.png
     images/massharm.png images/massharm_small.png images/massheal.png images/massheal_small.png
+    images/decreasemaxhp.png images/decreasemaxhp_small.png
 )

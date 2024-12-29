@@ -5,7 +5,7 @@
 #include <boost/container/stable_vector.hpp>
 #include <stdexcept>
 #include <string>
-#include <vector>
+// #include <vector>
 
 #include "EffectBase.h"
 #include "SubjectBase.h"
@@ -65,7 +65,7 @@ class Combatant : public SubjectBase {
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 
-  using t_pos_eff = boost::container::stable_vector<EffectBase*>::iterator;
+  using t_pos_eff = ::boost::container::stable_vector<EffectBase*>::iterator;
 
   enum class Vitality { ALIVE, DEAD, CONSTRUCT };
   enum class Side { TEAM, ENEAMY, OTHER };

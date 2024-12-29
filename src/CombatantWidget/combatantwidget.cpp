@@ -2,12 +2,17 @@
 
 #include "ui_combatantwidget.h"
 
-CombatantWidget::CombatantWidget(pf2e_manager::Combatant* combatant,
+CombatantWidget::CombatantWidget(pf2e_manager::Controller* controller,
+                                 pf2e_manager::Combatant* combatant,
                                  QWidget* parent)
-    : QWidget(parent), ui(new Ui::CombatantWidget), _combatant(combatant) {
+    : QWidget(parent),
+      ui(new Ui::CombatantWidget),
+      _controller(controller),
+      _combatant(combatant) {
   ui->setupUi(this);
 
   _listWidget_effect = ui->tableWidget;
+  _listWidget_effect->setController(_controller);
   // _listWidget_effect->setInitWidth(width());
   // _listWidget_effect->setInitHeight(height());
 

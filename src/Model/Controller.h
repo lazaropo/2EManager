@@ -59,12 +59,10 @@ class Controller {
   //   _model->setEffectDurationOnGroup(duration, collection);
   // }
 
-  void activateffect(EffectBase* effect, Combatant* combatant) {
-    _model->activateEffect(effect, combatant);
-  }
+  void activateEffect(EffectBase* effect) { _model->activateEffect(effect); }
 
-  void disableEffect(EffectBase* effect, Combatant* combatant) {
-    _model->disactivateEffect(effect, combatant);
+  void disactivateEffect(EffectBase* effect) {
+    _model->disactivateEffect(effect);
   }
 
   void removeCommand(CommandBase* command) { _model->removeCommand(command); }
@@ -87,11 +85,13 @@ class Controller {
 
   void nextTurn() { _model->nextTurn(); }
 
-  const std::vector<Combatant*>* getCombatants() const {
+  const utility::t_cobatant_container* getCombatants() const {
     return _model->getCombatants();
   }
 
-  std::vector<Combatant*>* getCombatants() { return _model->getCombatants(); }
+  utility::t_cobatant_container* getCombatants() {
+    return _model->getCombatants();
+  }
 
   const std::vector<CommandBase*>& getCommands() const {
     return _model->getCommands();

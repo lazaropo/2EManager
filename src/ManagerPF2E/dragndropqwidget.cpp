@@ -51,7 +51,7 @@ DragNDropQWidget::DragNDropQWidget(
 }
 
 void DragNDropQWidget::addWidget(pf2e_manager::Combatant *combatant) {
-  CombatantWidget *obj = new CombatantWidget(combatant);
+  CombatantWidget *obj = new CombatantWidget(_controller, combatant);
   _widgets_collection->insert(std::pair(obj->getCombatant(), obj));
 
   _combatants_layout->addWidget(/*_widgets_collection->size() - 1,*/ obj);

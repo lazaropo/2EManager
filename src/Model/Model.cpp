@@ -17,9 +17,11 @@ template void pf2e_manager::Model::serialize<boost::archive::text_iarchive>(
 #endif
 
 #ifdef _BOOST_SERIALIZATION_XML_
+
 template <class Archive>
 void pf2e_manager::Model::serialize(Archive& ar, const unsigned int version) {
-  ar& BOOST_SERIALIZATION_NVP(_combatants);
+  ar& ::boost::make_nvp("_combatants", _combatants);
+  // ar& BOOST_SERIALIZATION_NVP(_combatants);
   ar& BOOST_SERIALIZATION_NVP(_mediator);
 }
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Model);
@@ -28,6 +30,7 @@ template void pf2e_manager::Model::serialize<boost::archive::xml_oarchive>(
     boost::archive::xml_oarchive& ar, const unsigned int version);
 template void pf2e_manager::Model::serialize<boost::archive::xml_iarchive>(
     boost::archive::xml_iarchive& ar, const unsigned int version);
+
 #endif
 
 namespace pf2e_manager {
@@ -63,7 +66,7 @@ Model::Model(
     }
   }
 
-  if (!_combatants) _combatants = new std::vector<Combatant*>();
+  if (!_combatants) _combatants = new t_container_comb();
   _curr_pos = _combatants->end();
 }
 #else
@@ -108,14 +111,21 @@ void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {
   // if (before == _combatants->begin()) {
   //     _combatants->insert(before, *from);
   //     _combatants->erase(from);
-  if (before == from + 1) return;
-  // if (_curr_pos == from) {
-  //   //    (*from)->notifyTrigger(SimpleEffect::Trigger::START_TURN);
-  //   //    (*from)->notifyTrigger(SimpleEffect::Trigger::END_TURN);
-  //   ++_curr_pos;
-  // }
-  // _combatants->splice(++before, *_combatants, from);
-  std::swap(from, before);
+  if (before == from + 1 || from == _combatants->end() ||
+      before == _combatants->end())
+    return;
+  // // if (_curr_pos == from) {
+  // //   //    (*from)->notifyTrigger(SimpleEffect::Trigger::START_TURN);
+  // //   //    (*from)->notifyTrigger(SimpleEffect::Trigger::END_TURN);
+  // //   ++_curr_pos;
+  // // }
+  // // _combatants->splice(++before, *_combatants, from);
+
+  // std::swap(*from, *before);
+
+  Combatant* tmp = *from;
+  _combatants->erase(from);
+  _combatants->insert(before, tmp);
 }
 
 void Model::addEffectOnGroup(SimpleEffectBuilder* builder,

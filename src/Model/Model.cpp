@@ -21,7 +21,7 @@ template void pf2e_manager::Model::serialize<boost::archive::text_iarchive>(
 template <class Archive>
 void pf2e_manager::Model::serialize(Archive& ar, const unsigned int version) {
   ar& ::boost::make_nvp("_combatants", _combatants);
-  // ar& BOOST_SERIALIZATION_NVP(_combatants);
+
   ar& BOOST_SERIALIZATION_NVP(_mediator);
 }
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Model);

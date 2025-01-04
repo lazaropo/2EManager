@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QtWidgets>
 
+#include "../Model/Controller.h"
 #include "EffectListWidgetItem.h"
 
 class MyMenuWidget : public QListWidget {
@@ -17,7 +18,15 @@ class MyMenuWidget : public QListWidget {
 
   void setUI(std::function<void(QLayout*)> fp) { addTextBrowser = fp; }
 
-  void setFrame(QLayout* frame) { _frame = frame; }
+  // void setFrame(QLayout* frame) { _frame = frame; }
+
+  void setInitWidth(int width) { _init_width = width; }
+
+  void setInitHeight(int height) { _init_height = height; }
+
+  void setController(pf2e_manager::Controller* controller) {
+    _controller = controller;
+  }
 
  private slots:
   void keyPressEvent(QKeyEvent* event) override;
@@ -29,26 +38,33 @@ class MyMenuWidget : public QListWidget {
 
  protected:
   QTextBrowser* _item = nullptr;
-  QLayout* _frame = nullptr;
+  // QLayout* _frame = nullptr;
   std::function<void(QLayout*)> addTextBrowser;
 
-  const QString _item_base_style = "font: 14px;"
-                                   "QTextBrowser{"
-                                   "border-radius: 5px;"
-                                   "background-color: rgb(250, 218, 221);"
-                                   "}";
-  const QString _text_browser_style = "QTextBrowser {"
-                                      "background-color: rgb(250, 238, 221);"
-                                      "font: 14px 'Arial';"
-                                      "color: black;"
-                                      "border-radius: 8px;"
-                                      "}";
-  const QString _menu_style = "QMenu {"
-                              "background-color: rgb(161,133,148);"
-                              "font: 16px 'Arial';"
-                              "color: black;"
-                              //          "border-radius: 8px;"
-                              "}";
+  pf2e_manager::Controller* _controller = nullptr;
+
+  int _init_height = 0;
+  int _init_width = 0;
+
+  const QString _item_base_style =
+      "font: 14px;"
+      "QTextBrowser{"
+      "border-radius: 5px;"
+      "background-color: rgb(138, 175, 189);"
+      "}";
+  const QString _text_browser_style =
+      "QTextBrowser {"
+      "background-color: rgb(194, 197, 170);"
+      "font: 14px 'Arial';"
+      "color: black;"
+      "border-radius: 8px;"
+      "}";
+  const QString _menu_style =
+      "QMenu {"
+      "background-color: rgb(182, 173, 144);"
+      "font: 16px 'Arial';"
+      "color: black;"
+      "}";
 };
 
 #endif  // MYMENUWIDGET_H

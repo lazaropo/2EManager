@@ -1,24 +1,15 @@
-add_compile_definitions(model PRIVATE __CMAKE_IS_USED__="${PROJECT_SOURCE_DIR}/src/Saved_info/info.txt")
-
 add_library(model STATIC
-    Combatant.cpp
-    CommandsCreator.cpp
-    EffectDirector.cpp
-    Mediator.cpp
-    Model.cpp
-    SimpleEffect.cpp
-    TXTReader.cpp
-    CommandsImplementation/HarmCommand.cpp
-    CommandsImplementation/HealCommand.cpp
-    CommandsImplementation/MassHarmCommand.cpp
-    CommandsImplementation/MassHealCommand.cpp
     Combatant.h
     CommandBase.h
     CommandsCreator.h
     CommandsImplementation.h
-    ComplexEffect.h
-    ComplexEffectBuilder.h
-    Controller.h
+    CommandsImplementation/HarmCommand.h
+    CommandsImplementation/HealCommand.h
+    CommandsImplementation/MassHarmCommand.h
+    CommandsImplementation/MassHealCommand.h
+    CommandsImplementation/DecreaseMaxHpCommand.h
+
+
     EffectBase.h
     EffectDirector.h
     EffectExecutor.h
@@ -26,19 +17,50 @@ add_library(model STATIC
     Mediator.h
     MediatorInterface.h
     Model.h
+    Controller.h
     SimpleEffect.h
     SimpleEffectBuilder.h
     SubjectBase.h
     TXTReader.h
+    utility.h
+
+    SubjectBase.cpp
+    Combatant.cpp
+    CommandBase.cpp
+    EffectBase.cpp
+    MediatorInterface.cpp
+    CommandsCreator.cpp
+    EffectDirector.cpp
+    Mediator.cpp
+    Model.cpp
+    SimpleEffect.cpp
+    TXTReader.cpp
+    utility.cpp
+    CommandsImplementation/HarmCommand.cpp
+    CommandsImplementation/HealCommand.cpp
+    CommandsImplementation/MassHarmCommand.cpp
+    CommandsImplementation/MassHealCommand.cpp
+    CommandsImplementation/DecreaseMaxHpCommand.cpp
+
+    EffectExecutor.cpp
+    SimpleEffectBuilder.cpp
 
 )
 
 target_include_directories(model INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
-qt_add_resources(model textresources
-    PREFIX "/Saved_info"
-    FILES ../Saved_info/info.txt
+target_link_libraries(model PRIVATE
+#    Boost::archieve
+    Boost::serialization
+   Boost::container
 )
+
+# if(NOT DEFINED _BOOST_SERIALIZATION_TXT_ AND NOT DEFINED _BOOST_SERIALIZATION_XML_)
+# qt_add_resources(model textresources
+#     PREFIX "/Saved_info"
+#     FILES ../Saved_info/info.txt
+# )
+# endif()
 
 
 

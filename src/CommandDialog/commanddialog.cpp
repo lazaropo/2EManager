@@ -12,7 +12,7 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
       _command(command) {
   ui->setupUi(this);
 
-  std::list<pf2e_manager::Combatant *> *combatants =
+  pf2e_manager::utility::t_cobatant_container *combatants =
       _controller->getCombatants();
   ui->comboBox_from->addItem(QIcon(), "<user>");
 
@@ -30,8 +30,7 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
     QString name = QString::fromStdString(it->getName());
 
     ui->comboBox_from->addItem(QIcon(), name);
-    if (it == current_combatant)
-        ui->comboBox_from->setCurrentIndex(count);
+    if (it == current_combatant) ui->comboBox_from->setCurrentIndex(count);
 
     QHBoxLayout *h_layout = new QHBoxLayout();
     h_layout->setSpacing(5);
@@ -54,7 +53,7 @@ CommandDialog::CommandDialog(pf2e_manager::CommandBase **command,
     button = new QRadioButton();
     button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     // button->setText("2x");
-    h_layout->addWidget(button); // 2x damage
+    h_layout->addWidget(button);  // 2x damage
 
     button_group->setLayout(h_layout);
     layout_to->addWidget(button_group, count, 0);
@@ -73,7 +72,7 @@ CommandDialog::~CommandDialog() { delete ui; }
 void CommandDialog::on_pushButton_accept_clicked() {
   double value = 0;
   std::wstring w_arr = ui->lineEdit_value->text().toStdWString();
-  if (s21_is_expression_correct(w_arr.c_str()) == OK)
+  if (s21_is_expression_correct(w_arr.c_str()) == false)
     s21_main_calc_function(w_arr.c_str(), &value, 0);
   else
     return;
@@ -84,28 +83,29 @@ void CommandDialog::on_pushButton_accept_clicked() {
   if (ind_sender == -1 || ind_sender >= max_count)
     sender = nullptr;
   else
-      sender = _list[ind_sender];
+    sender = _list[ind_sender];
 
   std::vector<std::pair<pf2e_manager::SubjectBase *, int>> info;
   /*QGridLayout*/                   // QLayout *scroll_layout =
   /*qobject_cast<QGridLayout *>(*/  // ui->scrollArea->widget()->layout();
   for (auto i = 1, i_end = max_count; i < i_end; ++i) {
-      auto box = layout_to->itemAtPosition(i, 0)->widget();
-      auto h_layout = box->layout();
-      // if (!h_layout) continue;
-      for (int j = 1, j_end = h_layout->count(); j < j_end; ++j) {
-          auto check_button = qobject_cast<QRadioButton *>(h_layout->itemAt(j)->widget());
-          if (check_button->isChecked()) {
-              double coeff = 1.;
-              if (j == 1)
-                  coeff = 0.5;
-              else if (j == 3)
-                  coeff = 2.;
-              info.push_back(
-                  std::pair(_list[i - 1], static_cast<int>(static_cast<int>(value) * coeff)));
-              break;
-          }
+    auto box = layout_to->itemAtPosition(i, 0)->widget();
+    auto h_layout = box->layout();
+    // if (!h_layout) continue;
+    for (int j = 1, j_end = h_layout->count(); j < j_end; ++j) {
+      auto check_button =
+          qobject_cast<QRadioButton *>(h_layout->itemAt(j)->widget());
+      if (check_button->isChecked()) {
+        double coeff = 1.;
+        if (j == 1)
+          coeff = 0.5;
+        else if (j == 3)
+          coeff = 2.;
+        info.push_back(std::pair(
+            _list[i - 1], static_cast<int>(static_cast<int>(value) * coeff)));
+        break;
       }
+    }
   }
   std::string command_name = "command:";
   if (info.size() > 1) command_name += "mass";
@@ -113,6 +113,8 @@ void CommandDialog::on_pushButton_accept_clicked() {
   command_name += ui->comboBox_command->currentText().toStdString();
   if (info.size())
     *_command = _controller->makeCommand(sender, command_name, info);
+  else
+    *_command = nullptr;
 
   accept();
 }

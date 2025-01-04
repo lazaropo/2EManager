@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="20">
+<_combatants class_id="0" tracking_level="1" version="0" object_id="_0">
+	<count>5</count>
+	<item_version>0</item_version>
+	<item class_id="1" tracking_level="1" version="0" object_id="_1">
+		<SubjectBase class_id="2" tracking_level="1" version="0" object_id="_2">
+			<_name>vulphi</_name>
+			<_subject class_id_reference="1" object_id_reference="_1"></_subject>
+			<_reciever class_id="-1"></_reciever>
+			<_invoker class_id="-1"></_invoker>
+		</SubjectBase>
+		<_hp_max>248</_hp_max>
+		<_hp_tmp>0</_hp_tmp>
+		<_hp_curr>248</_hp_curr>
+		<_initiative>43</_initiative>
+		<_level>0</_level>
+		<_side>team</_side>
+		<_vitality>alive</_vitality>
+		<_effects class_id="3" tracking_level="0" version="0"></_effects>
+	</item>
+	<item class_id_reference="1" object_id="_3">
+		<SubjectBase object_id="_4">
+			<_name>Zalayla</_name>
+			<_subject class_id_reference="1" object_id_reference="_3"></_subject>
+			<_reciever class_id="-1"></_reciever>
+			<_invoker class_id="-1"></_invoker>
+		</SubjectBase>
+		<_hp_max>210</_hp_max>
+		<_hp_tmp>0</_hp_tmp>
+		<_hp_curr>210</_hp_curr>
+		<_initiative>34</_initiative>
+		<_level>0</_level>
+		<_side>team</_side>
+		<_vitality>alive</_vitality>
+		<_effects></_effects>
+	</item>
+	<item class_id_reference="1" object_id="_5">
+		<SubjectBase object_id="_6">
+			<_name>Shell</_name>
+			<_subject class_id_reference="1" object_id_reference="_5"></_subject>
+			<_reciever class_id="-1"></_reciever>
+			<_invoker class_id="-1"></_invoker>
+		</SubjectBase>
+		<_hp_max>251</_hp_max>
+		<_hp_tmp>0</_hp_tmp>
+		<_hp_curr>251</_hp_curr>
+		<_initiative>34</_initiative>
+		<_level>0</_level>
+		<_side>team</_side>
+		<_vitality>alive</_vitality>
+		<_effects></_effects>
+	</item>
+	<item class_id_reference="1" object_id="_7">
+		<SubjectBase object_id="_8">
+			<_name>Kernikel</_name>
+			<_subject class_id_reference="1" object_id_reference="_7"></_subject>
+			<_reciever class_id="-1"></_reciever>
+			<_invoker class_id="-1"></_invoker>
+		</SubjectBase>
+		<_hp_max>280</_hp_max>
+		<_hp_tmp>0</_hp_tmp>
+		<_hp_curr>280</_hp_curr>
+		<_initiative>34</_initiative>
+		<_level>0</_level>
+		<_side>team</_side>
+		<_vitality>alive</_vitality>
+		<_effects></_effects>
+	</item>
+	<item class_id_reference="1" object_id="_9">
+		<SubjectBase object_id="_10">
+			<_name>Augi</_name>
+			<_subject class_id_reference="1" object_id_reference="_9"></_subject>
+			<_reciever class_id="-1"></_reciever>
+			<_invoker class_id="-1"></_invoker>
+		</SubjectBase>
+		<_hp_max>190</_hp_max>
+		<_hp_tmp>0</_hp_tmp>
+		<_hp_curr>190</_hp_curr>
+		<_initiative>34</_initiative>
+		<_level>0</_level>
+		<_side>team</_side>
+		<_vitality>alive</_vitality>
+		<_effects></_effects>
+	</item>
+</_combatants>
+<_mediator class_id="4" class_name="pf2e_manager::Mediator" tracking_level="1" version="0" object_id="_11">
+	<MediatorInterface class_id="5" tracking_level="0" version="0"></MediatorInterface>
+	<_combatants class_id_reference="0" object_id_reference="_0"></_combatants>
+	<_commands class_id="6" tracking_level="0" version="0">
+		<count>0</count>
+		<item_version>0</item_version>
+	</_commands>
+</_mediator>
+</boost_serialization>
+

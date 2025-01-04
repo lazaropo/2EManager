@@ -1,0 +1,9 @@
+{
+  "dependencies": [
+    "boost-container",
+    "boost-log",
+    "boost-system",
+    "boost-serialization",
+    "boost-stacktrace"
+  ]
+}

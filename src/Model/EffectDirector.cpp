@@ -8,93 +8,120 @@ EffectDirector::EffectDirector(SimpleEffectBuilder* builder)
   using std::pair;
 
   _effects_dictionary.insert(
-      std::pair("effect:blinded", std::bind(&EffectDirector::buildBlindedEffect, this, _1, _2)));
+      std::pair("effect:blinded",
+                std::bind(&EffectDirector::buildBlindedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:clumsy", std::bind(&EffectDirector::buildClumsyEffect, this, _1, _2)));
+      std::pair("effect:clumsy",
+                std::bind(&EffectDirector::buildClumsyEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:concealed",
+      std::bind(&EffectDirector::buildConcealedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:concealed", std::bind(&EffectDirector::buildConcealedEffect, this, _1, _2)));
+      std::pair("effect:confused",
+                std::bind(&EffectDirector::buildConfusedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:cotrolled",
+      std::bind(&EffectDirector::buildControlledEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:confused", std::bind(&EffectDirector::buildConfusedEffect, this, _1, _2)));
+      std::pair("effect:dazzled",
+                std::bind(&EffectDirector::buildDazzledEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:cotrolled",
-                std::bind(&EffectDirector::buildControlledEffect, this, _1, _2)));
+      std::pair("effect:deafened",
+                std::bind(&EffectDirector::buildDeafenedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:dazzled", std::bind(&EffectDirector::buildDazzledEffect, this, _1, _2)));
+      std::pair("effect:doomed",
+                std::bind(&EffectDirector::buildDoomedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:deafened", std::bind(&EffectDirector::buildDeafenedEffect, this, _1, _2)));
+      std::pair("effect:drained",
+                std::bind(&EffectDirector::buildDrainedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:doomed", std::bind(&EffectDirector::buildDoomedEffect, this, _1, _2)));
+      std::pair("effect:dying",
+                std::bind(&EffectDirector::buildDyingEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:encumbered",
+      std::bind(&EffectDirector::buildEncumberedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:enfeebled",
+      std::bind(&EffectDirector::buildEnfeebledEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:fascinated",
+      std::bind(&EffectDirector::buildFascinatedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:drained", std::bind(&EffectDirector::buildDrainedEffect, this, _1, _2)));
+      std::pair("effect:fatigued",
+                std::bind(&EffectDirector::buildFatiguedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:dying", std::bind(&EffectDirector::buildDyingEffect, this, _1, _2)));
+      std::pair("effect:fleeing",
+                std::bind(&EffectDirector::buildFleeingEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:frightened",
+      std::bind(&EffectDirector::buildFrightenedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:encumbered",
-                std::bind(&EffectDirector::buildEncumberedEffect, this, _1, _2)));
+      std::pair("effect:grabbed",
+                std::bind(&EffectDirector::buildGrabbedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:enfeebled", std::bind(&EffectDirector::buildEnfeebledEffect, this, _1, _2)));
+      std::pair("effect:hidden",
+                std::bind(&EffectDirector::buildHiddenEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:immobilized",
+      std::bind(&EffectDirector::buildImmobilizedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:indifferent",
+      std::bind(&EffectDirector::buildIndifferentEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:invisible",
+      std::bind(&EffectDirector::buildInvisibleEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:fascinated",
-                std::bind(&EffectDirector::buildFascinatedEffect, this, _1, _2)));
+      std::pair("effect:observed",
+                std::bind(&EffectDirector::buildObservedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:fatigued", std::bind(&EffectDirector::buildFatiguedEffect, this, _1, _2)));
+      std::pair("effect:off-guard",
+                std::bind(&EffectDirector::buildOffGuardEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:paralyzed",
+      std::bind(&EffectDirector::buildParalyzedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:persistentdamage",
+      std::bind(&EffectDirector::buildPersistentDamageEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:petrified",
+      std::bind(&EffectDirector::buildPetrifiedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:fleeing", std::bind(&EffectDirector::buildFleeingEffect, this, _1, _2)));
+      std::pair("effect:prone",
+                std::bind(&EffectDirector::buildProneEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:quickened",
+      std::bind(&EffectDirector::buildQuickenedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:restrained",
+      std::bind(&EffectDirector::buildRestrainedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:frightened",
-                std::bind(&EffectDirector::buildFrightenedEffect, this, _1, _2)));
+      std::pair("effect:sickened",
+                std::bind(&EffectDirector::buildSickenedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:grabbed", std::bind(&EffectDirector::buildGrabbedEffect, this, _1, _2)));
+      std::pair("effect:slowed",
+                std::bind(&EffectDirector::buildSlowedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:hidden", std::bind(&EffectDirector::buildHiddenEffect, this, _1, _2)));
+      std::pair("effect:stunned",
+                std::bind(&EffectDirector::buildStunnedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:stupified",
+      std::bind(&EffectDirector::buildStupefiedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:unconscious",
+      std::bind(&EffectDirector::buildUnconsciousEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:undetected",
+      std::bind(&EffectDirector::buildUndetectedEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:unnoticed",
+      std::bind(&EffectDirector::buildUnnoticedEffect, this, _1, _2)));
   _effects_dictionary.insert(
-      std::pair("effect:immobilized",
-                std::bind(&EffectDirector::buildImmobilizedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:indifferent",
-                std::bind(&EffectDirector::buildIndifferentEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:invisible", std::bind(&EffectDirector::buildInvisibleEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:observed", std::bind(&EffectDirector::buildObservedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:off-guard", std::bind(&EffectDirector::buildOffGuardEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:paralyzed", std::bind(&EffectDirector::buildParalyzedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:persistentdamage",
-                std::bind(&EffectDirector::buildPersistentDamageEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:petrified", std::bind(&EffectDirector::buildPetrifiedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:prone", std::bind(&EffectDirector::buildProneEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:quickened", std::bind(&EffectDirector::buildQuickenedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:restrained",
-                std::bind(&EffectDirector::buildRestrainedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:sickened", std::bind(&EffectDirector::buildSickenedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:slowed", std::bind(&EffectDirector::buildSlowedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:stunned", std::bind(&EffectDirector::buildStunnedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:stupified", std::bind(&EffectDirector::buildStupefiedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:unconscious",
-                std::bind(&EffectDirector::buildUnconsciousEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:undetected",
-                std::bind(&EffectDirector::buildUndetectedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:unnoticed", std::bind(&EffectDirector::buildUnnoticedEffect, this, _1, _2)));
-  _effects_dictionary.insert(
-      std::pair("effect:wounded", std::bind(&EffectDirector::buildWoundedEffect, this, _1, _2)));
+      std::pair("effect:wounded",
+                std::bind(&EffectDirector::buildWoundedEffect, this, _1, _2)));
 
-  _effects_dictionary.insert(
-      std::pair("effect:malevolence",
-                std::bind(&EffectDirector::buildMalevolenceEffect, this, _1, _2)));
+  _effects_dictionary.insert(std::pair(
+      "effect:malevolence",
+      std::bind(&EffectDirector::buildMalevolenceEffect, this, _1, _2)));
 }
 
 void EffectDirector::buildEffectByName(const std::string& name, int duration,
@@ -111,7 +138,10 @@ void EffectDirector::buildEffectByName(const std::string& name, int duration,
 }
 
 void EffectDirector::buildBlindedEffect(int duration,
-                                        __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                        __attribute__((unused))
+#endif
+                                        int value) {
   _builder->reset();
   _builder->setName("effect:blinded")
       ->setPenaltyType()
@@ -149,7 +179,10 @@ void EffectDirector::buildClumsyEffect(int duration, int value) {
 }
 
 void EffectDirector::buildConcealedEffect(int duration,
-                                          __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                          __attribute__((unused))
+#endif
+                                          int value) {
   _builder->reset();
   _builder->setName("effect:concealed")
       ->setNoType()
@@ -167,7 +200,10 @@ void EffectDirector::buildConcealedEffect(int duration,
 }
 
 void EffectDirector::buildConfusedEffect(int duration,
-                                         __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                         __attribute__((unused))
+#endif
+                                         int value) {
   _builder->reset();
   _builder->setName("effect:confused")
       ->setPenaltyType()
@@ -192,7 +228,10 @@ void EffectDirector::buildConfusedEffect(int duration,
 }
 
 void EffectDirector::buildControlledEffect(int duration,
-                                           __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                           __attribute__((unused))
+#endif
+                                           int value) {
   _builder->reset();
   _builder->setName("effect:cotrolled")
       ->setPenaltyType()
@@ -208,7 +247,10 @@ void EffectDirector::buildControlledEffect(int duration,
 }
 
 void EffectDirector::buildDazzledEffect(int duration,
-                                        __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                        __attribute__((unused))
+#endif
+                                        int value) {
   _builder->reset();
   _builder->setName("effect:dazzled")
       ->setPenaltyType()
@@ -222,7 +264,10 @@ void EffectDirector::buildDazzledEffect(int duration,
 }
 
 void EffectDirector::buildDeafenedEffect(int duration,
-                                         __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                         __attribute__((unused))
+#endif
+                                         int value) {
   _builder->reset();
   _builder->setName("effect:deafened")
       ->setPenaltyType()
@@ -242,8 +287,12 @@ void EffectDirector::buildDeafenedEffect(int duration,
           "immune to auditory effects while deafened.");
 }
 
-void EffectDirector::buildDoomedEffect(__attribute__((unused)) int duration,
-                                       int value) {
+void EffectDirector::buildDoomedEffect(
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+    __attribute__((unused))
+#endif
+    int duration,
+    int value) {
   _builder->reset();
   _builder->setName("effect:doomed")
       ->setPenaltyType()
@@ -259,8 +308,12 @@ void EffectDirector::buildDoomedEffect(__attribute__((unused)) int duration,
           "time you get a full night's rest.");
 }
 
-void EffectDirector::buildDrainedEffect(__attribute__((unused)) int duration,
-                                        int value) {
+void EffectDirector::buildDrainedEffect(
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+    __attribute__((unused))
+#endif
+    int duration,
+    int value) {
   _builder->reset();
   _builder->setName("effect:drained")
       ->setPenaltyType()
@@ -271,7 +324,8 @@ void EffectDirector::buildDrainedEffect(__attribute__((unused)) int duration,
       ->setEndTrigger()
       ->setDuration(10 /*rounds per minute*/ * 60 /*minutes*/ * 24 /*hours*/ *
                     value)
-      ->setAssociatedActions({{"command:harm\ncommand:decreasemaxhp"}})
+      // ->setAssociatedActions({{"command:harm\ncommand:decreasemaxhp"}})
+      ->setAssociatedActions({{"command:decreasemaxhp"}})
       ->setDescription(
           "Your health and vitality have been depleted as you've lost blood, "
           "life force, or some other essence. Drained always includes a "
@@ -287,8 +341,12 @@ void EffectDirector::buildDrainedEffect(__attribute__((unused)) int duration,
           "Points, but you don't immediately recover the lost Hit Points.");
 }
 
-void EffectDirector::buildDyingEffect(__attribute__((unused)) int duration,
-                                      int value) {
+void EffectDirector::buildDyingEffect(
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+    __attribute__((unused))
+#endif
+    int duration,
+    int value) {
   _builder->reset();
   _builder->setName("effect:dying")
       ->setPenaltyType()
@@ -315,8 +373,16 @@ void EffectDirector::buildDyingEffect(__attribute__((unused)) int duration,
           "wounded condition value by 1 if you already have that condition.");
 }
 
-void EffectDirector::buildEncumberedEffect(__attribute__((unused)) int duration,
-                                           __attribute__((unused)) int value) {
+void EffectDirector::buildEncumberedEffect(
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+    __attribute__((unused))
+#endif
+    int duration,
+
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+    __attribute__((unused))
+#endif
+    int value) {
   _builder->reset();
   _builder->setName("effect:encumbered")
       ->setPenaltyType()
@@ -349,7 +415,10 @@ void EffectDirector::buildEnfeebledEffect(int duration, int value) {
 }
 
 void EffectDirector::buildFascinatedEffect(int duration,
-                                           __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                           __attribute__((unused))
+#endif
+                                           int value) {
   _builder->reset();
   _builder->setName("effect:fascinated")
       ->setPenaltyType()
@@ -372,7 +441,10 @@ void EffectDirector::buildFascinatedEffect(int duration,
 }
 
 void EffectDirector::buildFatiguedEffect(int duration,
-                                         __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                         __attribute__((unused))
+#endif
+                                         int value) {
   _builder->reset();
   _builder->setName("effect:fatigue")
       ->setPenaltyType()
@@ -391,7 +463,10 @@ void EffectDirector::buildFatiguedEffect(int duration,
 }
 
 void EffectDirector::buildFleeingEffect(int duration,
-                                        __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                        __attribute__((unused))
+#endif
+                                        int value) {
   _builder->reset();
   _builder->setName("effect:fleeing")
       ->setPenaltyType()
@@ -409,8 +484,12 @@ void EffectDirector::buildFleeingEffect(int duration,
           "while fleeing.");
 }
 
-void EffectDirector::buildFrightenedEffect(__attribute__((unused)) int duration,
-                                           int value) {
+void EffectDirector::buildFrightenedEffect(
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+    __attribute__((unused))
+#endif
+    int duration,
+    int value) {
   _builder->reset();
   _builder->setName("effect:frightened")
       ->setPenaltyType()
@@ -428,7 +507,10 @@ void EffectDirector::buildFrightenedEffect(__attribute__((unused)) int duration,
 }
 
 void EffectDirector::buildGrabbedEffect(int duration,
-                                        __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                        __attribute__((unused))
+#endif
+                                        int value) {
   _builder->reset();
   _builder->setName("effect:grabbed")
       ->setPenaltyType()
@@ -446,7 +528,10 @@ void EffectDirector::buildGrabbedEffect(int duration,
 // TODO: implement this func and further
 
 void EffectDirector::buildHiddenEffect(int duration,
-                                       __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                       __attribute__((unused))
+#endif
+                                       int value) {
   _builder->reset();
   _builder->setName("effect:fatigue")
       ->setBonusType()
@@ -464,7 +549,10 @@ void EffectDirector::buildHiddenEffect(int duration,
           "to use the Seek action to try to observe you.");
 }
 void EffectDirector::buildImmobilizedEffect(int duration,
-                                            __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                            __attribute__((unused))
+#endif
+                                            int value) {
   _builder->reset();
   _builder->setName("effect:immobilized")
       ->setPenaltyType()
@@ -479,7 +567,10 @@ void EffectDirector::buildImmobilizedEffect(int duration,
           "of the monster holding you in place.");
 }
 void EffectDirector::buildIndifferentEffect(int duration,
-                                            __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                            __attribute__((unused))
+#endif
+                                            int value) {
   _builder->reset();
   _builder->setName("effect:indifferent")
       ->setNoType()
@@ -493,7 +584,10 @@ void EffectDirector::buildIndifferentEffect(int duration,
           "indifferent unless specified otherwise.");
 }
 void EffectDirector::buildInvisibleEffect(int duration,
-                                          __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                          __attribute__((unused))
+#endif
+                                          int value) {
   _builder->reset();
   _builder->setName("effect:invisible")
       ->setBonusType()
@@ -508,7 +602,10 @@ void EffectDirector::buildInvisibleEffect(int duration,
           "observed while invisible except via special abilities or magic.");
 }
 void EffectDirector::buildObservedEffect(int duration,
-                                         __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                         __attribute__((unused))
+#endif
+                                         int value) {
   _builder->reset();
   _builder->setName("effect:observed")
       ->setNoType()
@@ -524,7 +621,10 @@ void EffectDirector::buildObservedEffect(int duration,
           "observed.");
 }
 void EffectDirector::buildOffGuardEffect(int duration,
-                                         __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                         __attribute__((unused))
+#endif
+                                         int value) {
   _builder->reset();
   _builder->setName("effect:off-guard")
       ->setPenaltyType()
@@ -543,7 +643,10 @@ void EffectDirector::buildOffGuardEffect(int duration,
           "of them, such as “The target is off-guard.”");
 }
 void EffectDirector::buildParalyzedEffect(int duration,
-                                          __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                          __attribute__((unused))
+#endif
+                                          int value) {
   _builder->reset();
   _builder->setName("effect:paralyzed")
       ->setPenaltyType()
@@ -584,7 +687,10 @@ void EffectDirector::buildPersistentDamageEffect(int duration, int value) {
           "succeed, the condition ends.");
 }
 void EffectDirector::buildPetrifiedEffect(int duration,
-                                          __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                          __attribute__((unused))
+#endif
+                                          int value) {
   _builder->reset();
   _builder->setName("effect:petrified")
       ->setPenaltyType()
@@ -603,7 +709,10 @@ void EffectDirector::buildPetrifiedEffect(int duration,
           "don't age or notice the passing of time.");
 }
 void EffectDirector::buildProneEffect(int duration,
-                                      __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                      __attribute__((unused))
+#endif
+                                      int value) {
   _builder->reset();
   _builder->setName("effect:prone")
       ->setPenaltyType()
@@ -624,7 +733,10 @@ void EffectDirector::buildProneEffect(int duration,
           "You can't be knocked prone when Swimming.");
 }
 void EffectDirector::buildQuickenedEffect(int duration,
-                                          __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                          __attribute__((unused))
+#endif
+                                          int value) {
   _builder->reset();
   _builder->setName("effect:quickened")
       ->setBonusType()
@@ -641,7 +753,10 @@ void EffectDirector::buildQuickenedEffect(int duration,
           "actions if you become quickened during your turn.");
 }
 void EffectDirector::buildRestrainedEffect(int duration,
-                                           __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                           __attribute__((unused))
+#endif
+                                           int value) {
   _builder->reset();
   _builder->setName("effect:restrained")
       ->setPenaltyType()
@@ -738,7 +853,10 @@ void EffectDirector::buildStupefiedEffect(int duration, int value) {
 }
 
 void EffectDirector::buildUnconsciousEffect(int duration,
-                                            __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                            __attribute__((unused))
+#endif
+                                            int value) {
   _builder->reset();
   _builder->setName("effect:unconscious")
       ->setPenaltyType()
@@ -782,7 +900,10 @@ void EffectDirector::buildUnconsciousEffect(int duration,
           "that rest.");
 }
 void EffectDirector::buildUndetectedEffect(int duration,
-                                           __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                           __attribute__((unused))
+#endif
+                                           int value) {
   _builder->reset();
   _builder->setName("effect:undetected")
       ->setBonusType()
@@ -804,7 +925,10 @@ void EffectDirector::buildUndetectedEffect(int duration,
           "can Seek to try to find you.");
 }
 void EffectDirector::buildUnnoticedEffect(int duration,
-                                          __attribute__((unused)) int value) {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+                                          __attribute__((unused))
+#endif
+                                          int value) {
   _builder->reset();
   _builder->setName("effect:unnoticed")
       ->setBonusType()

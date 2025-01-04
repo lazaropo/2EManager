@@ -7,12 +7,14 @@
 #include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QtMinMax>
 //+++++++++++STL+++++++++++
 #include <map>
 //+++++++++++CUSTOM+++++++++++
 #include "../CombatantWidget/combatantwidget.h"
 
 class DragNDropQWidget : public QWidget {
+  Q_OBJECT
  public:
   DragNDropQWidget(QWidget* parent = nullptr)
       : QWidget(parent), _combatants_layout(new QVBoxLayout(this)) {}
@@ -34,23 +36,16 @@ class DragNDropQWidget : public QWidget {
 
   void setArea(QScrollArea* area) { _area = area; }
 
-  void setModelCurrentComatant(pf2e_manager::Combatant* combatant) {
-    if (_model_current_widget) {
-      _model_current_widget->_fixe_style = false;
-      _model_current_widget->setBaseStyle();
-    }
-    _model_current_widget = (*_widgets_collection)[combatant];
-    if (_model_current_widget) {
-      _model_current_widget->setModelCurrentStyle();
-      _model_current_widget->_fixe_style = true;
-    }
-  }
+  void setModelCurrentComatant(pf2e_manager::Combatant* combatant);
 
   CombatantWidget* getCurrentWidget() { return _current_widget; }
   void updateContent();
   void updateContent(pf2e_manager::SubjectBase* combatant);
 
   void addWidget(pf2e_manager::Combatant* combatant);
+
+  virtual int heightForWidth(int width) const override;
+  virtual QSize sizeHint() const override;
 
  public slots:
   void mousePressEvent(QMouseEvent* event) override;
@@ -60,11 +55,12 @@ class DragNDropQWidget : public QWidget {
   void dragLeaveEvent(QDragLeaveEvent* event) override;
   void dragMoveEvent(QDragMoveEvent* event) override;
   void dropEvent(QDropEvent* event) override;
+  void updateContentEvent() { updateContent(); }
 
  private:
   QScrollArea* _area = nullptr;
   pf2e_manager::Controller* _controller;
-  std::list<pf2e_manager::Combatant*>* _combatants_list;
+  pf2e_manager::utility::t_cobatant_container* _combatants_list;
 
   std::map<pf2e_manager::Combatant*, CombatantWidget*>* _widgets_collection;
   QVBoxLayout* _combatants_layout;

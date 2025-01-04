@@ -4,6 +4,8 @@
 #include <functional>  // std::bind, std::function
 #include <map>
 #include <string>
+#include <utility>  // std::pair
+#include <vector>
 
 #include "CommandBase.h"
 #include "CommandsImplementation.h"
@@ -17,26 +19,23 @@ class CommandsCreator {
 
   CommandBase* createCommandByName(
       SubjectBase* sender, const std::string& name,
-      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
+      std::vector<std::pair<SubjectBase*, int>>& info);
 
-  CommandBase* createHarm(
-      SubjectBase* sender,
-      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
-  CommandBase* createHeal(
-      SubjectBase* sender,
-      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
-  CommandBase* createMassHarm(
-      SubjectBase* sender,
-      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
-  CommandBase* createMassHeal(
-      SubjectBase* sender,
-      std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info);
+  CommandBase* createHarm(SubjectBase* sender,
+                          std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createHeal(SubjectBase* sender,
+                          std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createMassHarm(SubjectBase* sender,
+                              std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createMassHeal(SubjectBase* sender,
+                              std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createDecreaseMaxHp(SubjectBase* sender,
+                              std::vector<std::pair<SubjectBase*, int>>& info);
 
  private:
   std::map<const std::string,
            std::function<CommandBase*(
-               SubjectBase*,
-               std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info)>>
+               SubjectBase*, std::vector<std::pair<SubjectBase*, int>>& info)>>
       _commands_dictionary;
 
   MediatorInterface* _mediator;

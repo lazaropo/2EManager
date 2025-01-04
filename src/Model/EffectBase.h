@@ -6,10 +6,41 @@
 
 #include "SubjectBase.h"
 
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+
+#ifdef _BOOST_SERIALIZATION_TXT_
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+#endif
+
+#include <boost/archive/tmpdir.hpp>
+#include <boost/config.hpp>
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/split_member.hpp>
+#include <boost/serialization/string.hpp>
+#endif
+
 namespace pf2e_manager {
 class EffectBase : public SubjectBase {
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+  friend std::ostream &operator<<(std::ostream &os,
+                                  const pf2e_manager::EffectBase *instance);
+
+  friend class ::boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive &ar, const unsigned int version);
+#endif
+
  public:
-  enum class Trigger { NO_TRIGGER, START_TURN, END_TURN };
+  enum class Trigger { NO_TRIGGER, AT_CREATION, START_TURN, END_TURN };
   enum Type {
     NO_VALUE_TYPE = 0,
     COMMON_TYPE = 1 << 0,
@@ -21,6 +52,11 @@ class EffectBase : public SubjectBase {
     BONUS = 1 << 6
   };
   struct Value {
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+    friend class boost::serialization::access;
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int version);
+#endif
     Value() = default;
     explicit Value(bool is_constant, int value)
         : _is_constant(is_constant), _value(value) {}
@@ -47,6 +83,8 @@ class EffectBase : public SubjectBase {
     int _dc = 0;  // class DC
     int _init = 0;
   };
+
+  EffectBase() : SubjectBase(this) {}
   EffectBase(EffectBase *child) : SubjectBase(child) {}
   EffectBase(EffectBase *child, SubjectBase *reciever)
       : SubjectBase(child, reciever) {}
@@ -54,6 +92,7 @@ class EffectBase : public SubjectBase {
   virtual void execute() = 0;
   virtual void undo() = 0;
   virtual void activateEffect() = 0;
+  virtual void disactivateEffect() = 0;
   virtual void removeEffect() = 0;
   virtual void executeAssociated() = 0;
 
@@ -66,6 +105,15 @@ class EffectBase : public SubjectBase {
   int isActive() const { return _is_active; }
   const std::string &getDescription() const { return _description; }
 
+  static std::string formattingValue(Value side);
+  static Value formattingValue(const std::string &string);
+
+  static std::string formattingTrigger(Trigger side);
+  static Trigger formattingTrigger(const std::string &string);
+
+  static std::string formattingType(Type side);
+  static Type formattingType(const std::string &string);
+
  protected:
   int _duration = 0;  // per round
   bool _is_active = false;
@@ -75,6 +123,24 @@ class EffectBase : public SubjectBase {
 
   std::string _description = "";
 };
+
+#ifdef _BOOST_SERIALIZATION_XML_
+inline std::ostream &operator<<(std::ostream &os,
+                                const pf2e_manager::EffectBase *instance) {
+  os << static_cast<const pf2e_manager::SubjectBase *>(instance);
+  os << instance->_duration << ' ' << instance->_is_active << ' '
+     << instance->_type << ' ' << instance->_value._value << ' '
+     << EffectBase::formattingTrigger(instance->_trigger) << ' '
+     << instance->_description;
+
+  return os;
+}
+#endif
 }  // namespace pf2e_manager
+
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::EffectBase)
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(pf2e_manager::EffectBase);
+#endif
 
 #endif  // EFFECTBASE_H

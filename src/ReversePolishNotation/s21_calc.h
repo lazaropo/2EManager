@@ -1,8 +1,3 @@
-#ifndef _SMART_CALC_ERRORS_
-#define _SMART_CALC_ERRORS_
-typedef enum { OK, ERROR } def_e_code;
-#endif
-
 #ifndef _S21_SMARTCALC_H_FA68C275_D180_43EB_9AAC_F1C629F79E74_
 #define _S21_SMARTCALC_H_FA68C275_D180_43EB_9AAC_F1C629F79E74_
 #include <math.h>
@@ -13,6 +8,11 @@ typedef enum { OK, ERROR } def_e_code;
 #include <time.h>  // time as sedd for rand()
 #include <wchar.h>
 #include <wctype.h>
+
+// #ifndef _SMART_CALC_EXIT_CODES_
+// #define _SMART_CALC_EXIT_CODES_
+// enum EXIT_CODES  { OK, ERROR };
+// #endif
 
 #define BUFF_SIZE 512
 
@@ -28,7 +28,7 @@ typedef struct queue_t {
   struct queue_t* next;
 } queue_t;
 
-typedef enum {
+typedef enum SET_OF_CHARS {
   NON_OPERATOR_CH,
   EQUALITY_CH = L'=',
   PLUS_OPERATOR = L'+',
@@ -48,7 +48,7 @@ typedef enum {
   DICE_MULTIPLYING_d = L'd',
   DICE_MULTIPLYING_D = L'D',
   DICE_MULTIPLYING_b = L'в',
-  DICE_MULTIPLYING_B = L'В',
+  DICE_MULTIPLYING_b_UPPER_RUS = L'В'
 } set_of_chars;
 
 typedef enum {
@@ -70,7 +70,7 @@ typedef enum {
   ATAN_FUNC_CH = L'n',
   SQRT_FUNC_CH = L'r',
   LN_FUNC_CH = L'l',
-  LOG_FUNC_CH = L'o',
+  LOG_FUNC_CH = L'o'
 } set_of_funcs_for_calc;
 
 static const wchar_t map_with_strings[][5] = {
@@ -98,7 +98,7 @@ typedef enum {
   ATNG_PR = 4,
   SQRT_PR = 4,
   LN_PR = 4,
-  LOG_PR = 4,
+  LOG_PR = 4
 } operation_priority;
 
 node_t* s21_push(node_t* prev, wchar_t ch, double num);
@@ -116,10 +116,11 @@ int s21_get_priority(const wchar_t ch);
 int s21_is_func_str(const wchar_t** from);
 
 void s21_parser_from_infix_to_postfix(wchar_t* to, const wchar_t* from);
-int s21_parser_postfix_notation(queue_t* root, const wchar_t* from);
-int s21_is_expression_correct(const wchar_t* from);
+bool s21_parser_postfix_notation(queue_t* root, const wchar_t* from);
+bool s21_is_expression_correct(const wchar_t* from);
 void s21_calculate_by_rule(node_t** head, wchar_t ch);
-int s21_calculate(queue_t* head, double* result, double x_value);
-int s21_main_calc_function(const wchar_t* expression, double* result,
-                           double x_value);
+bool s21_calculate(queue_t* head, double* result, double x_value);
+bool s21_main_calc_function(const wchar_t* expression, double* result,
+                            double x_value);
+
 #endif

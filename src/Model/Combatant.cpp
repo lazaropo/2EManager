@@ -1,6 +1,188 @@
 #include "Combatant.h"
 
+/**
+ * @brief Template boost funtions definition. Allow to save/load into txt file.
+ * Macro have to be defined in cmake file.
+ *
+ */
+#ifdef _BOOST_SERIALIZATION_TXT_
+template <class Archive>
+void pf2e_manager::Combatant::save(Archive& ar,
+                                   const unsigned int version) const {
+  ar& ::boost::serialization::base_object<SubjectBase>(*this);
+
+  ar & _hp_max;
+  ar & _hp_tmp;
+  ar & _hp_curr;
+  ar & _initiative;
+  ar & _level;
+
+  ar& formattingSide(_side, false, false);
+  ar& formattingVitality(_vitality, false, false);
+
+  ar & _effects;
+}
+
+template <class Archive>
+void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version) {
+  ar& ::boost::serialization::base_object<SubjectBase>(*this);
+
+  ar & _hp_max;
+  ar & _hp_tmp;
+  ar & _hp_curr;
+  ar & _initiative;
+  ar & _level;
+
+  std::string side, vitality;
+
+  ar & side;
+  ar & vitality;
+
+  _side = formattingSide(side);
+  _vitality = formattingVitality(vitality);
+
+  ar & _effects;
+}
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
+template void pf2e_manager::Combatant::save<boost::archive::text_oarchive>(
+    boost::archive::text_oarchive& ar, const unsigned int version) const;
+template void pf2e_manager::Combatant::load<boost::archive::text_iarchive>(
+    boost::archive::text_iarchive& ar, const unsigned int version);
+#endif
+/**
+ * @brief Template boost funtions definition. Allow to save/load into xml file.
+ * Macro have to be defined in cmake file.
+ *
+ */
+#ifdef _BOOST_SERIALIZATION_XML_
+
+namespace boost {
+namespace serialization {
+// template <class Archive>
+// inline void save(Archive& ar, pf2e_manager::Combatant::t_eff_container& g,
+//                  const unsigned int version) {
+//   for (auto it = g.begin(), it_end = g.end(); it != it_end; ++it)
+//     ar& BOOST_SERIALIZATION_NVP(*it);
+// }
+
+// template <class Archive>
+// inline void load(Archive& ar, pf2e_manager::Combatant::t_eff_container& g,
+//                  const unsigned int version) {
+//   for (auto it = g.begin(), it_end = g.end(); it != it_end; ++it)
+//     ar& BOOST_SERIALIZATION_NVP(*it);
+//   // for (auto it : g) ar& BOOST_SERIALIZATION_NVP(it);
+// }
+
+// template void save<boost::archive::xml_oarchive>(
+//     boost::archive::xml_oarchive& ar,
+//     pf2e_manager::Combatant::t_eff_container& g, const unsigned int version);
+// template void load<boost::archive::xml_iarchive>(
+//     boost::archive::xml_iarchive& ar,
+//     pf2e_manager::Combatant::t_eff_container& g, const unsigned int version);
+template <class Archive, class T>
+void serialize(Archive& ar, boost::container::stable_vector<T>& vec,
+               const unsigned int version) {
+  // Сохраняем или загружаем размер контейнера
+  std::size_t size = vec.size();
+  ar& BOOST_SERIALIZATION_NVP(size);
+
+  if (Archive::is_loading::value) {
+    vec.clear();  // Очищаем вектор перед загрузкой
+    vec.resize(size);  // Резервируем память для элементов
+  }
+
+  // Проходим по всем элементам и сериализуем их
+  for (std::size_t i = 0; i < size; ++i) {
+    ar& BOOST_SERIALIZATION_NVP(vec[i]);
+  }
+}
+
+template void serialize<boost::archive::xml_oarchive>(
+    boost::archive::xml_oarchive& ar,
+    pf2e_manager::Combatant::t_eff_container& g, const unsigned int version);
+template void serialize<boost::archive::xml_iarchive>(
+    boost::archive::xml_iarchive& ar,
+    pf2e_manager::Combatant::t_eff_container& g, const unsigned int version);
+}  // namespace serialization
+}  // namespace boost
+
+// BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant::t_eff_container);
+
+template <class Archive>
+void pf2e_manager::Combatant::save(Archive& ar,
+                                   const unsigned int version) const {
+  if (_hp_max < 1 || _hp_curr < 1 || _hp_curr > _hp_max || _initiative < 1)
+    return;
+  // using namespace ::boost;
+  // using namespace ::boost::serialization;
+  // // using namespace ::boost::serialization::nvp;
+  // using namespace ::boost::container;
+  ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+
+  ar& BOOST_SERIALIZATION_NVP(_hp_max);
+  ar& BOOST_SERIALIZATION_NVP(_hp_tmp);
+  ar& BOOST_SERIALIZATION_NVP(_hp_curr);
+  ar& BOOST_SERIALIZATION_NVP(_initiative);
+  ar& BOOST_SERIALIZATION_NVP(_level);
+
+  std::string side = formattingSide(_side, false, false);
+  std::string vitality = formattingVitality(_vitality, false, false);
+  ar& ::boost::make_nvp("_side", side);
+  ar& ::boost::make_nvp("_vitality", vitality);
+
+  // ar& boost::serialization::make_nvp("_effects", _effects);
+  ar& BOOST_SERIALIZATION_NVP(_effects);
+}
+
+template <class Archive>
+void pf2e_manager::Combatant::load(Archive& ar, const unsigned int version) {
+  ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(SubjectBase);
+
+  ar& BOOST_SERIALIZATION_NVP(_hp_max);
+  ar& BOOST_SERIALIZATION_NVP(_hp_tmp);
+  ar& BOOST_SERIALIZATION_NVP(_hp_curr);
+  ar& BOOST_SERIALIZATION_NVP(_initiative);
+  ar& BOOST_SERIALIZATION_NVP(_level);
+
+  std::string side, vitality;
+
+  ar& ::boost::make_nvp("_side", side);
+  ar& ::boost::make_nvp("_vitality", vitality);
+
+  _side = formattingSide(side);
+  _vitality = formattingVitality(vitality);
+
+  ar& BOOST_SERIALIZATION_NVP(_effects);
+
+  if (_hp_max <= 0 || _hp_curr < 0 || _initiative < 1)
+    throw std::logic_error(
+        "Combatant::save(Archive& ar, const unsigned int version): Input is "
+        "not "
+        "correct. Name: " +
+        _name + " HP max: " + std::to_string(_hp_max) +
+        " HP curr: " + std::to_string(_hp_curr) +
+        " Initiative: " + std::to_string(_initiative));
+}
+
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
+
+// template void ::boost::serialization::access::serialize<
+//     boost::archive::xml_oarchive,
+//     boost::container::stable_vector<pf2e_manager::EffectBase*>>(
+//     boost::archive::xml_oarchive& ar,
+//     boost::container::stable_vector<pf2e_manager::EffectBase*>&,
+//     const unsigned int version);
+
+// template void pf2e_manager::Combatant::save<boost::archive::xml_oarchive>(
+//     boost::archive::xml_oarchive& ar, const unsigned int version) const;
+// template void pf2e_manager::Combatant::load<boost::archive::xml_iarchive>(
+//     boost::archive::xml_iarchive& ar, const unsigned int version);
+
+#endif
+
 namespace pf2e_manager {
+
 // void Combatant::setEffectDuration(t_pos_eff pos, int duration) {
 //   if (duration < 0) return;
 

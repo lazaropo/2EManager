@@ -2,6 +2,7 @@
 #define COMBATANTDIALOG_H
 
 #include <QDialog>
+#include <boost/serialization/export.hpp>
 
 #include "../Model/Combatant.h"
 

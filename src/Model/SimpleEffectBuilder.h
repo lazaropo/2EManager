@@ -4,19 +4,55 @@
 #include "SimpleEffect.h"
 #include "SubjectBase.h"
 
-namespace {}  // namespace
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+
+#if defined(BOOST_NO_STDC_NAMESPACE)
+namespace std {
+using ::remove;
+}
+#endif
+
+#ifdef _BOOST_SERIALIZATION_TXT_
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#endif
+
+#include <boost/archive/tmpdir.hpp>
+#include <boost/config.hpp>
+#include <boost/exception/all.hpp>
+#include <boost/serialization/access.hpp>
+#include <cstdio>  // remove
+#include <fstream>
+// #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/utility.hpp>
+#include <boost\serialization\throw_exception.hpp>
+#endif
 
 namespace pf2e_manager {
 // class SimpleEffect;
 class SimpleEffectBuilder {
  public:
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+  friend class ::boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version);
+  SimpleEffectBuilder() = default;
+#endif
   using ns_trigger = pf2e_manager::SimpleEffect::Trigger;
   using ns_type = pf2e_manager::SimpleEffect::Type;
 
   SimpleEffectBuilder(MediatorInterface* mediator)
       : _effect(new SimpleEffect()), _executor(new EffectExecutor(mediator)) {}
 
-  ~SimpleEffectBuilder() { delete _effect; }
+  ~SimpleEffectBuilder() {
+    if (_effect) delete _effect;
+  }
 
   SimpleEffectBuilder* setNoType() {
     int mask = 0;
@@ -211,6 +247,7 @@ class SimpleEffectBuilder {
   SimpleEffectBuilder* setAssociatedActions(
       const std::vector<std::string>& actions) {
     _effect->_associated_actions = actions;
+    _effect->_is_associated_provided = false;
     return this;
   }
 

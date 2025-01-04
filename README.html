@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Pathfinder Second Edition Combatant Manager v1&period;0&period;0</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="pathfinder-second-edition-combatant-manager-v100">Pathfinder Second Edition Combatant Manager v1.0.0</h1>
+<p>Stack: <strong>QT</strong>, <strong>STL</strong>, <strong>boost</strong></p>
+<p>Build system: <strong>CMake</strong></p>
+<blockquote>
+<p><strong>Boost provided by vcpkg packege manager! (the path should be set
+in CMakeLists.txt)</strong></p>
+</blockquote>
+<h2 id=""><img src="file:///c:\Users\roman\Desktop\2EManager\misc\images\screenshot.png" alt="screenshot"></h2>
+<p>The app allows to manage combatant turns, the caused effects and
+commands like heal, harm and their mass analogues.</p>
+<h2 id="buttons">Buttons</h2>
+<p>There are six buttons: create combatant (1), create effect (2), create command (3), create combatants order (4), remove combatant (5) and next turn (6).</p>
+<ol>
+<li><strong>Create combatant</strong> rise combatant creation dialog which includes its name, initiative, maximum hit points, command and livingness. The incorrect input just reject creation.</li>
+<li><strong>Create effect</strong> should be pressed with combatant picked by user (see <a href="#combatant-widget-color">dark green</a>, <a href="#screenshot">7</a>). Then effect menu shows we can set predefined effect name, it's duration and value. Cthere are some effects that don't need duration and/or value. So, they can be set without it's input.</li>
+<li><strong>Create command</strong> allows user to exert <a href="#commands">commands</a> on combatants. Commands dialog provides command subject (invoker), objects (recievers), command type (heal/harm), coefficient for everyone combatant and it's value that suppors Reverse Polish Notaion with random operation addition. Examples, <em>3d6 = sum of three random numbers from 1 to 6</em>, <em>10В3 - 10 = residual of ten random numbers (1-3) sum and 10</em>. Cyrillic <strong>в</strong> and <strong>В</strong> are also supported.</li>
+<li><strong>Create combatants order</strong> button sorts combatants by their initiative in acsedental order.</li>
+<li><strong>Remove combatant</strong> delete <a href="#combatant-widget-color">user picked</a> combatant.</li>
+<li><strong>Next turn</strong> button takes next combatant which effects are executing - dealing damage or just duration decrease. The current combatant paints it's widget into <a href="#combatant-widget-color">gradient</a>, <a href="#screenshot">9</a>.</li>
+</ol>
+<h2 id="combatants">Combatants</h2>
+<p>Combatants <a href="#screenshot">(7-9)</a> have maximum, current hit point (HP) and initiative values that can't be negative. Each combatant have type like team, eneamy or other and alive, dead and contruct. Also at the rigth widget path we can see effects panel <a href="#screenshot">(10-11)</a> with <strong>active (dark green)</strong> and <strong>disabled (brown)</strong> effects. Another feature is drag&amp;drop mechanic between combatant widget which allows us to change the order by ourselves.</p>
+<h3 id="combatant-widget-color">Combatant widget color:</h3>
+<ul>
+<li><strong><a href="#screenshot">Beige</a></strong> - unselected combatant</li>
+<li><strong><a href="#screenshot">Dark green</a></strong> - combatant selected by user (target for effect exertion)</li>
+<li><strong><a href="#screenshot">Gradient from beige to dark green</a></strong> - current combatant in initiative queue</li>
+</ul>
+<h2 id="effects">Effects</h2>
+<p>Effects show their names, source, duration (in turns!) and values. Combatants, commands and other effect can be a source for current effect. Effects can be picked by Rigth Mouse Button (RMB) with menu appearence. There are three options:</p>
+<ul>
+<li><strong>Get Desciption</strong> - get effects standart descriprion (to close pick
+effects field <a href="#screenshot">(10-11)</a> and press ESC)</li>
+<li><strong>Activate Effect / Disable Effect</strong> - activate or turn off the effect</li>
+<li><strong>Remove Effect</strong> - remove efffect from combatant with
+its deactivation</li>
+</ul>
+<p>Peculiar effect feature is &quot;complex effect&quot; that can produce other effects or commands. So, the creation, activation/diactivation and removing of base effect also expanding on child effects.</p>
+<h2 id="commands">Commands</h2>
+<p>There are two base command - <strong>harm</strong> and <strong>heal</strong> - and two derivatives - <strong>mass harm</strong> and <strong>mass heal</strong>. Every command have name, value and description (subject, object and real value).
+At LMB click we can select command and recieve description with it's information.
+At RMB click command menu with some options shoud arise:</p>
+<ol>
+<li><strong>Do command / undo command</strong> - do disabled command or undo active one</li>
+<li><strong>Remove command</strong> - remove command from log</li>
+</ol>
+<h3 id="commands-icons">Commands icons:</h3>
+<ul>
+<li><img src="file:///c:\Users\roman\Desktop\2EManager\misc\images\harm.png" alt="harm"> - harm command at signle foe</li>
+<li><img src="file:///c:\Users\roman\Desktop\2EManager\misc\images\heal.png" alt="heal"> - heal command at single foe</li>
+<li><img src="file:///c:\Users\roman\Desktop\2EManager\misc\images\massharm.png" alt="massharm"> - mass harm command</li>
+<li><img src="file:///c:\Users\roman\Desktop\2EManager\misc\images\massheal.png" alt="massheal"> - mass heal command</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

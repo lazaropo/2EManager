@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QBoxLayout>
 #include <QDrag>
+#include <QMenu>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QScrollArea>
@@ -15,8 +16,11 @@
 //+++++++++++CUSTOM+++++++++++
 #include "../CommandDialog/commanddialog.h"
 #include "../CommandIcon/commandicon.h"
+#include "closebletextbrowser.h"
 
 class DragNDropQWidgetCommands : public QWidget {
+  Q_OBJECT
+
  public:
   DragNDropQWidgetCommands(pf2e_manager::Controller* controller,
                            QWidget* parent = nullptr);
@@ -29,14 +33,15 @@ class DragNDropQWidgetCommands : public QWidget {
   void setArea(QScrollArea* area) { _area = area; }
 
   // void updateContent();
+ signals:
+  void combatantsChanged();
 
  public slots:
   void mousePressEvent(QMouseEvent* event) override;
-  // void mouseMoveEvent(QMouseEvent* event) override;
-  // void mouseReleaseEvent(QMouseEvent* event) override;
-  //    void dragEnterEvent(QDragEnterEvent* event);
-  //    void dragLeaveEvent(QDragLeaveEvent* event);
-  // void dropEvent(QDropEvent* event);
+  //  void resizeEvent(QResizeEvent* event) override;
+
+ protected:
+  void contextMenuEvent(QContextMenuEvent* event) override;
 
  private:
   QScrollArea* _area = nullptr;
@@ -50,7 +55,14 @@ class DragNDropQWidgetCommands : public QWidget {
   QPoint _mouseStartPosition = QPoint();
 
   CommandIcon* _current_icon = nullptr;
-  QTextBrowser* _description = nullptr;
+  CommandIcon* _prev_icon = nullptr;
+  ClosebleTextBrowser* _description = nullptr;
+  const QString _menu_style =
+      "QMenu {"
+      "background-color: rgb(182, 173, 144);"
+      "font: 16px 'Arial';"
+      "color: black;"
+      "}";
 };
 
 #endif  // DragNDropQWidgetCommands_H

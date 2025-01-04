@@ -73,23 +73,27 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
         // "border-image: solid 10px red;"
         "margin-top: 3px; "
         "}";
+  } else if (dynamic_cast<DecreaseMaxHpCommand *>(_command)) {
+    base_style =
+        "QWidget#CommandIcon {"
+        "background: url(:/images/decreasemaxhpcommand.png) center;"
+        "border-radius: 10px; "
+        " }";
+    highligth_style =
+        "QWidget#CommandIcon {"
+        "background: url(:/images/decreasemaxhpcommand_small.png) center;"
+        "background-clip: content;"
+        "border: none;"
+        "border-radius: 9px; "
+        // "border-image: solid 10px red;"
+        "margin-top: 3px; "
+        "}";
   }
 
   setStyleSheet(base_style);
-
-  // setAttribute(Qt::WA_OpaquePaintEvent);
-  //  this->setStyleSheet(
-  //        "background-image: url(:/path/images/images/sword.jpg);"
-  //        "border: solid 10px rgb(0,0,0);"
-  //        "border-radius: 10px;");
-
-  // setToolTip(QString::fromStdString(_command->getName()));
 }
 
-CommandIcon::~CommandIcon() { delete ui; }
-
-// void CommandIcon::paintEvent(QPaintEvent *event) {
-//   Q_UNUSED(event);
-//   QPainter painter(this);
-//   painter.drawImage(0, 0, QImage(":/images/sword.png"));
-// }
+CommandIcon::~CommandIcon() {
+  // close();
+  delete ui;
+}

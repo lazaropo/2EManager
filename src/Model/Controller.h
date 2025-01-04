@@ -49,13 +49,28 @@ class Controller {
     _model->addEffectOnGroup(builder, collection);
   }
 
-  void setEffectDuration(int duration, Model::t_pair_comb_with_effect pair) {
-    _model->setEffectDuration(duration, pair);
+  // void setEffectDuration(int duration, Model::t_pair_comb_with_effect pair) {
+  //   _model->setEffectDuration(duration, pair);
+  // }
+
+  // void setEffectDurationOnGroup(
+  //     int duration, std::vector<Model::t_pair_comb_with_effect>& collection)
+  //     {
+  //   _model->setEffectDurationOnGroup(duration, collection);
+  // }
+
+  void activateEffect(EffectBase* effect) { _model->activateEffect(effect); }
+
+  void disactivateEffect(EffectBase* effect) {
+    _model->disactivateEffect(effect);
   }
 
-  void setEffectDurationOnGroup(
-      int duration, std::vector<Model::t_pair_comb_with_effect>& collection) {
-    _model->setEffectDurationOnGroup(duration, collection);
+  void removeCommand(CommandBase* command) { _model->removeCommand(command); }
+
+  void setCallbackFunctionUserInput(
+      std::function<int(SubjectBase*, SubjectBase*, const std::string&)>
+          callback) {
+    _model->setCallbackFunctionUserInput(callback);
   }
 
   CommandBase* makeCommand(
@@ -70,11 +85,13 @@ class Controller {
 
   void nextTurn() { _model->nextTurn(); }
 
-  const std::list<Combatant*>* getCombatants() const {
+  const utility::t_cobatant_container* getCombatants() const {
     return _model->getCombatants();
   }
 
-  std::list<Combatant*>* getCombatants() { return _model->getCombatants(); }
+  utility::t_cobatant_container* getCombatants() {
+    return _model->getCombatants();
+  }
 
   const std::vector<CommandBase*>& getCommands() const {
     return _model->getCommands();

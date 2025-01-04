@@ -64,14 +64,14 @@ void EffectDialog::on_button_set_clicked() {
   if (!_controller || !_combatant) return;
   int duration = ui->lineEdit_duration->text().toInt();
   int value = ui->lineEdit_value->text().toInt();
+  if ((!duration && !value) || duration < 0 || value < 0) return;
+
   std::string effect_name;
   if (ui->comboBox_effect->currentText() == "Persistent Damage")
     effect_name = "effect:persistentdamage";
   else
     effect_name =
         "effect:" + ui->comboBox_effect->currentText().toLower().toStdString();
-
-  if (!duration && !value) return;
 
   _controller->makeEffect(nullptr, _combatant, effect_name, duration, value);
   // _controller = nullptr;

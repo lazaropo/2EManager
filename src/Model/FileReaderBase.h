@@ -11,9 +11,9 @@ namespace pf2e_manager {
 class FileReaderBase {
  public:
   virtual ~FileReaderBase() = default;
-  virtual std::list<Combatant*>* readCombatants(const std::string& path) = 0;
+  virtual std::vector<Combatant*>* readCombatants(const std::string& path) = 0;
   virtual void writeCombatants(const std::string& path,
-                               std::list<Combatant*>* list) = 0;
+                               std::vector<Combatant*>* list) = 0;
 };
 }  // namespace pf2e_manager
 

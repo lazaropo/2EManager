@@ -5,5 +5,7 @@
 #include "CommandsImplementation/HealCommand.h"
 #include "CommandsImplementation/MassHarmCommand.h"
 #include "CommandsImplementation/MassHealCommand.h"
+#include "CommandsImplementation/DecreaseMaxHpCommand.h"
+
 
 #endif

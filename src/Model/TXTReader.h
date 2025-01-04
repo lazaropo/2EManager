@@ -1,3 +1,4 @@
+#if !defined(_BOOST_SERIALIZATION_TXT_) && !defined(_BOOST_SERIALIZATION_XML_)
 #ifndef _TXT_READER_342C4570_5625_11EF_A550_0800200C9A66_
 #define _TXT_READER_342C4570_5625_11EF_A550_0800200C9A66_
 
@@ -15,9 +16,9 @@ class TXTReader : public FileReaderBase {
     delete _director;
   }
 
-  std::list<Combatant*>* readCombatants(const std::string& path);
+  std::vector<Combatant*>* readCombatants(const std::string& path);
   void writeCombatants(const std::string& path,
-                       std::list<Combatant*>* collection);
+                       std::vector<Combatant*>* collection);
 
  private:
   bool isCorrectName(const std::string& name);
@@ -26,10 +27,11 @@ class TXTReader : public FileReaderBase {
   void stringProcessing(const std::string& buff);
 
  private:
-  std::list<Combatant*>* _ret_list = nullptr;
+  std::vector<Combatant*>* _ret_vector = nullptr;
   SimpleEffectBuilder* _builder;
   EffectDirector* _director;
 };
 }  // namespace pf2e_manager
 
+#endif
 #endif

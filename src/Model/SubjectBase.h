@@ -4,10 +4,39 @@
 #include <iostream>
 #include <string>
 
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+
+#ifdef _BOOST_SERIALIZATION_TXT_
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#endif
+
+#ifdef _BOOST_SERIALIZATION_XML_
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+#endif
+
+#include <boost/archive/tmpdir.hpp>
+#include <boost/config.hpp>
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/utility.hpp>
+#endif
+
 namespace pf2e_manager {
 class SubjectBase {
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+  friend std::ostream& operator<<(std::ostream& os,
+                                  const SubjectBase* instance);
+
+  friend class ::boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version);
+#endif
  public:
-  SubjectBase() = delete;
+  SubjectBase() {}
   SubjectBase(SubjectBase* subject, SubjectBase* reciever = nullptr)
       : _subject(subject), _reciever(reciever) {}
 
@@ -22,12 +51,32 @@ class SubjectBase {
   void setReciever(SubjectBase* reciever) { _reciever = reciever; }
   void setInvoker(SubjectBase* invoker) { _invoker = invoker; }
 
+  bool operator==(SubjectBase* other) {
+    return _name == other->_name && _subject == other->_subject &&
+           _reciever == other->_reciever && _invoker == other->_invoker;
+  }
+
  protected:
   std::string _name = "";
   SubjectBase* _subject = nullptr;   // this
   SubjectBase* _reciever = nullptr;  // direction of exertion
   SubjectBase* _invoker = nullptr;   // exertion from whom
 };
+#ifdef _BOOST_SERIALIZATION_XML_
+inline std::ostream& operator<<(std::ostream& os,
+                                const pf2e_manager::SubjectBase* instance) {
+  if (!instance) return os;
+
+  os << instance->_name << ' ' << instance->_reciever << ' '
+     << instance->_invoker << std::endl;
+
+  return os;
+}
+
+#endif
 }  // namespace pf2e_manager
 
+#if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+BOOST_CLASS_EXPORT_KEY(::pf2e_manager::SubjectBase);
+#endif
 #endif

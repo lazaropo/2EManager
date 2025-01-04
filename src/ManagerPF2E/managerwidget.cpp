@@ -74,12 +74,10 @@ ManagerWidget::~ManagerWidget() {
 void ManagerWidget::on_pushButton_create_effect_clicked() {
   try {
     auto current_widget = _box_combatants->getCurrentWidget();
-    // UNCOMMENT IT!!!
     if (!current_widget) return;
 
     EffectDialog dialog =
-        /*new */ EffectDialog(_controller, current_widget->getCombatant(),
-                              this);
+        EffectDialog(_controller, current_widget->getCombatant(), this);
     if (dialog.exec() == QDialog::Rejected) return;
 
     current_widget->updateContent();

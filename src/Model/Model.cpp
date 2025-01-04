@@ -59,10 +59,9 @@ Model::Model(
         ::boost::archive::xml_iarchive ia(ifs);
         this->serialize(ia, 0);
       }
-    } catch (::boost::exception& ex) {
-      typedef ::boost::error_info<struct tag_my_info, int> my_info;
-      if (int const* mi = ::boost::get_error_info<my_info>(ex))
-        std::cerr << *mi;
+    } catch (boost::exception& ex) {
+      typedef boost::error_info<struct tag_my_info, int> my_info;
+      if (int const* mi = boost::get_error_info<my_info>(ex)) std::cerr << *mi;
     }
   }
 

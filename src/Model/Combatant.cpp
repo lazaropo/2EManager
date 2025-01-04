@@ -57,8 +57,57 @@ template void pf2e_manager::Combatant::load<boost::archive::text_iarchive>(
  */
 #ifdef _BOOST_SERIALIZATION_XML_
 
-// template class
-// ::boost::container::stable_vector<::pf2e_manager::EffectBase*>;
+namespace boost {
+namespace serialization {
+// template <class Archive>
+// inline void save(Archive& ar, pf2e_manager::Combatant::t_eff_container& g,
+//                  const unsigned int version) {
+//   for (auto it = g.begin(), it_end = g.end(); it != it_end; ++it)
+//     ar& BOOST_SERIALIZATION_NVP(*it);
+// }
+
+// template <class Archive>
+// inline void load(Archive& ar, pf2e_manager::Combatant::t_eff_container& g,
+//                  const unsigned int version) {
+//   for (auto it = g.begin(), it_end = g.end(); it != it_end; ++it)
+//     ar& BOOST_SERIALIZATION_NVP(*it);
+//   // for (auto it : g) ar& BOOST_SERIALIZATION_NVP(it);
+// }
+
+// template void save<boost::archive::xml_oarchive>(
+//     boost::archive::xml_oarchive& ar,
+//     pf2e_manager::Combatant::t_eff_container& g, const unsigned int version);
+// template void load<boost::archive::xml_iarchive>(
+//     boost::archive::xml_iarchive& ar,
+//     pf2e_manager::Combatant::t_eff_container& g, const unsigned int version);
+template <class Archive, class T>
+void serialize(Archive& ar, boost::container::stable_vector<T>& vec,
+               const unsigned int version) {
+  // Сохраняем или загружаем размер контейнера
+  std::size_t size = vec.size();
+  ar& BOOST_SERIALIZATION_NVP(size);
+
+  if (Archive::is_loading::value) {
+    vec.clear();  // Очищаем вектор перед загрузкой
+    vec.resize(size);  // Резервируем память для элементов
+  }
+
+  // Проходим по всем элементам и сериализуем их
+  for (std::size_t i = 0; i < size; ++i) {
+    ar& BOOST_SERIALIZATION_NVP(vec[i]);
+  }
+}
+
+template void serialize<boost::archive::xml_oarchive>(
+    boost::archive::xml_oarchive& ar,
+    pf2e_manager::Combatant::t_eff_container& g, const unsigned int version);
+template void serialize<boost::archive::xml_iarchive>(
+    boost::archive::xml_iarchive& ar,
+    pf2e_manager::Combatant::t_eff_container& g, const unsigned int version);
+}  // namespace serialization
+}  // namespace boost
+
+// BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant::t_eff_container);
 
 template <class Archive>
 void pf2e_manager::Combatant::save(Archive& ar,
@@ -82,8 +131,8 @@ void pf2e_manager::Combatant::save(Archive& ar,
   ar& ::boost::make_nvp("_side", side);
   ar& ::boost::make_nvp("_vitality", vitality);
 
-  ar& boost::serialization::make_nvp("_effects", _effects);
-  // ar& BOOST_SERIALIZATION_NVP(_effects);
+  // ar& boost::serialization::make_nvp("_effects", _effects);
+  ar& BOOST_SERIALIZATION_NVP(_effects);
 }
 
 template <class Archive>
@@ -125,10 +174,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Combatant);
 //     boost::container::stable_vector<pf2e_manager::EffectBase*>&,
 //     const unsigned int version);
 
-template void pf2e_manager::Combatant::save<boost::archive::xml_oarchive>(
-    boost::archive::xml_oarchive& ar, const unsigned int version) const;
-template void pf2e_manager::Combatant::load<boost::archive::xml_iarchive>(
-    boost::archive::xml_iarchive& ar, const unsigned int version);
+// template void pf2e_manager::Combatant::save<boost::archive::xml_oarchive>(
+//     boost::archive::xml_oarchive& ar, const unsigned int version) const;
+// template void pf2e_manager::Combatant::load<boost::archive::xml_iarchive>(
+//     boost::archive::xml_iarchive& ar, const unsigned int version);
 
 #endif
 

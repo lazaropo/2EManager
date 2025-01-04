@@ -9,6 +9,7 @@
 
 #include "EffectBase.h"
 #include "SubjectBase.h"
+#include "utility.h"
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 
@@ -47,6 +48,7 @@ namespace pf2e_manager { /**
 class DecreaseMaxHpCommand;
 class Combatant : public SubjectBase {
  public:
+  using t_eff_container = utility::t_effect_container;
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
   friend class ::boost::serialization::access;
   /**
@@ -153,9 +155,7 @@ class Combatant : public SubjectBase {
    *
    * @param effect
    */
-  boost::container::stable_vector<EffectBase*>& getEffects() {
-    return _effects;
-  }
+  t_eff_container& getEffects() { return _effects; }
 
   void addEffect(EffectBase* effect) {
     _effects.push_back(effect);
@@ -233,7 +233,7 @@ class Combatant : public SubjectBase {
   Side _side;
   Vitality _vitality;
 
-  ::boost::container::stable_vector<EffectBase*> _effects = {};
+  t_eff_container _effects = {};
 };
 
 // inline bool operator<(const Combatant& fisrt, const Combatant& second) {
@@ -259,8 +259,17 @@ class Combatant : public SubjectBase {
 }  // namespace pf2e_manager
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
+namespace boost {
+namespace serialization {
+template <class Archive, class T>
+void serialize(Archive& ar, boost::container::stable_vector<T>& vec,
+               const unsigned int version);
+}  // namespace serialization
+}  // namespace boost
+// BOOST_SERIALIZATION_SPLIT_FREE(pf2e_manager::Combatant::t_eff_container)
 
-BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant)
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant);
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::Combatant::t_eff_container);
 
 #endif
 

@@ -6,8 +6,6 @@ DragNDropQWidgetCommands::DragNDropQWidgetCommands(
       _controller(controller),
       _commands_list(&_controller->getCommands()),
       _commands_layout(new QBoxLayout(QBoxLayout::LeftToRight, this)) {
-  // setFixedHeight(110);
-
   _commands_layout->setAlignment(Qt::AlignLeft);
   _commands_layout->setAlignment(Qt::AlignVCenter);
 
@@ -27,31 +25,18 @@ DragNDropQWidgetCommands::DragNDropQWidgetCommands(
   // This widget should be filled by color with code, not with qt designer
   auto palette = QPalette(QColor(204, 213, 174));
   setPalette(palette);
-
-  // if (_area) {
-  // _area->setPalette(palette);
-  //     _area->setMaximumHeight(120);
-  // }
 }
 
 void DragNDropQWidgetCommands::addCommand(pf2e_manager::CommandBase *command) {
+  if (!command) return;
+
   CommandIcon *obj = new CommandIcon(command);
   _widgets_collection.push_back(obj);
 
-  _commands_layout->addWidget(/*_commands_layout->count(),*/ obj);
+  _commands_layout->addWidget(obj);
   QObject::connect(obj, &CommandIcon::mousePressed, this,
                    &DragNDropQWidgetCommands::mousePressEvent);
   obj->setAttribute(Qt::WA_StyledBackground);
-  if (_commands_layout->count() * (_commands_layout->spacing() + obj->width()) >
-      width())
-    // this->setFixedWidth(width() + _commands_layout->spacing() +
-    // obj->width());
-    _area->setMinimumWidth(width() + _commands_layout->spacing() +
-                           obj->width());
-  // setSizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
-  // QSizePolicy policy( QSizePolicy::Minimum, QSizePolicy::Maximum);
-  // policy.setHeightForWidth(true);
-  // setSizePolicy(policy);
 }
 
 void DragNDropQWidgetCommands::updateContent() {
@@ -68,12 +53,6 @@ void DragNDropQWidgetCommands::updateContent() {
       _commands_layout->insertWidget(count++, *widget);
     } else
       addCommand(it);
-
-    //    if (count >  && widget != _widgets_collection.end())
-    //      this->setFixedWidth();
-    //          _commands_layout->count() *
-    //              ((*widget)->height() + _commands_layout->spacing()) -
-    //          _commands_layout->spacing());
   }
 }
 
@@ -178,10 +157,6 @@ void DragNDropQWidgetCommands::contextMenuEvent(QContextMenuEvent *event) {
     return;
 
   bool is_active = picked_command->isActive();
-  // if (picked_effect)
-  //   is_active = picked_effect->isActive();
-  //  else
-  //    return;
 
   QAction *do_undo_command =
       menu.addAction(is_active ? "Undo Command" : "Do Command");

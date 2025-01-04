@@ -91,20 +91,9 @@ CommandIcon::CommandIcon(pf2e_manager::CommandBase *command, QWidget *parent)
   }
 
   setStyleSheet(base_style);
-
-  // setAttribute(Qt::WA_OpaquePaintEvent);
-  //  this->setStyleSheet(
-  //        "background-image: url(:/path/images/images/sword.jpg);"
-  //        "border: solid 10px rgb(0,0,0);"
-  //        "border-radius: 10px;");
-
-  // setToolTip(QString::fromStdString(_command->getName()));
 }
 
-CommandIcon::~CommandIcon() { delete ui; }
-
-// void CommandIcon::paintEvent(QPaintEvent *event) {
-//   Q_UNUSED(event);
-//   QPainter painter(this);
-//   painter.drawImage(0, 0, QImage(":/images/sword.png"));
-// }
+CommandIcon::~CommandIcon() {
+  // close();
+  delete ui;
+}

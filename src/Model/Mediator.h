@@ -118,7 +118,25 @@ class Mediator : public MediatorInterface {
 }  // namespace pf2e_manager
 
 #ifdef _BOOST_SERIALIZATION_XML_
+namespace boost {
+namespace serialization {
+template <class Archive, class T>
+void serialize(Archive& ar, boost::container::stable_vector<T>& vec,
+               const unsigned int version);
+// template <class Archive>
+// inline void save(Archive& ar, pf2e_manager::Mediator::t_container_comb& g,
+//                  const unsigned int version);
+
+// template <class Archive>
+// inline void load(Archive& ar, pf2e_manager::Mediator::t_container_comb& g,
+//                  const unsigned int version);
+}  // namespace serialization
+}  // namespace boost
+
+// BOOST_SERIALIZATION_SPLIT_FREE(pf2e_manager::Mediator::t_container_comb);
+
 BOOST_CLASS_EXPORT_KEY(pf2e_manager::Mediator);
+BOOST_CLASS_EXPORT_KEY(pf2e_manager::Mediator::t_container_comb);
 #endif
 // BOOST_CLASS_EXPORT(pf2e_manager::Mediator);
 

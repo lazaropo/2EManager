@@ -21,6 +21,36 @@ BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Mediator);
 #endif
 
 #ifdef _BOOST_SERIALIZATION_XML_
+namespace boost {
+namespace serialization {
+
+template <class Archive, class T>
+void serialize(Archive& ar, boost::container::stable_vector<T>& vec,
+               const unsigned int version) {
+  // Сохраняем или загружаем размер контейнера
+  std::size_t size = vec.size();
+  ar& BOOST_SERIALIZATION_NVP(size);
+
+  if (Archive::is_loading::value) {
+    vec.clear();  // Очищаем вектор перед загрузкой
+    vec.resize(size);  // Резервируем память для элементов
+  }
+
+  // Проходим по всем элементам и сериализуем их
+  for (std::size_t i = 0; i < size; ++i) {
+    ar& boost::serialization::make_nvp("_item", vec[i]);
+  }
+}
+
+template void serialize<boost::archive::xml_oarchive>(
+    boost::archive::xml_oarchive& ar,
+    pf2e_manager::Mediator::t_container_comb& g, const unsigned int version);
+template void serialize<boost::archive::xml_iarchive>(
+    boost::archive::xml_iarchive& ar,
+    pf2e_manager::Mediator::t_container_comb& g, const unsigned int version);
+}  // namespace serialization
+}  // namespace boost
+
 template <class Archive>
 void pf2e_manager::Mediator::serialize(Archive& ar,
                                        const unsigned int version) {
@@ -29,7 +59,7 @@ void pf2e_manager::Mediator::serialize(Archive& ar,
   // ar& boost::serialization::make_nvp("_combatants", _combatants);
 
   ar& BOOST_SERIALIZATION_NVP(_combatants);
-  ar& BOOST_SERIALIZATION_NVP(_commands);
+  // ar& BOOST_SERIALIZATION_NVP(_commands);
 }
 
 template void pf2e_manager::Mediator::serialize<boost::archive::xml_oarchive>(
@@ -38,6 +68,7 @@ template void pf2e_manager::Mediator::serialize<boost::archive::xml_iarchive>(
     boost::archive::xml_iarchive& ar, const unsigned int version);
 
 BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Mediator);
+BOOST_CLASS_EXPORT_IMPLEMENT(pf2e_manager::Mediator::t_container_comb);
 #endif
 
 namespace pf2e_manager {

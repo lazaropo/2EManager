@@ -113,6 +113,8 @@ void CommandDialog::on_pushButton_accept_clicked() {
   command_name += ui->comboBox_command->currentText().toStdString();
   if (info.size())
     *_command = _controller->makeCommand(sender, command_name, info);
+  else
+    *_command = nullptr;
 
   accept();
 }

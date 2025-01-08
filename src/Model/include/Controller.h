@@ -101,7 +101,9 @@ class Controller {
 
   Combatant* getCurrent() { return _model->getCurrent(); }
 
-  void addFromFile(std::string path) { _model->addFromFile(path); }
+  size_t addFromFile(const std::string& path) {
+    return _model->addFromFile(path);
+  }
 
  private:
   Model* _model;

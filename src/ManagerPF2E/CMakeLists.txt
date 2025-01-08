@@ -37,7 +37,7 @@ add_library(ManagerPF2E_static STATIC ${LIB_SOURCES} ${LIB_HEADERS})
 # )
 
 target_link_libraries(ManagerPF2E_static
-    PRIVATE
+    PUBLIC
     # Boost non-header-only libs
     Boost::log
     Boost::log_setup
@@ -71,17 +71,17 @@ qt_add_executable(ManagerPF2E
 
 target_link_libraries(ManagerPF2E
 PUBLIC
-Boost::log
-Boost::log_setup
-Boost::system
-Boost::serialization
-Boost::container
-Boost::filesystem
+# Boost::log
+# Boost::log_setup
+# Boost::system
+# Boost::serialization
+# Boost::container
+# Boost::filesystem
 
-     Qt6::Core
+    Qt6::Core
     Qt6::Widgets
     Qt6::Gui
-    Model_lib
+#   Model_lib
     ManagerPF2E_static
 )
 

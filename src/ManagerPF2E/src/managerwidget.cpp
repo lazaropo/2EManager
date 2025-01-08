@@ -210,7 +210,9 @@ void ManagerWidget::dragEnterEvent(QDragEnterEvent *event) {
     if (!urls.isEmpty() &&
         urls.first().toLocalFile().endsWith(".xml", Qt::CaseInsensitive))
       event->acceptProposedAction();
-  }
+    qDebug() << "dragEnterEvent triggered";
+  } else
+    qDebug() << "dragEnterEvent Bad Url";
 }
 
 void ManagerWidget::dropEvent(QDropEvent *event) {
@@ -218,8 +220,34 @@ void ManagerWidget::dropEvent(QDropEvent *event) {
     const auto urls = event->mimeData()->urls();
     if (!urls.isEmpty()) {
       QString filePath = urls.first().toLocalFile();
-      if (filePath.endsWith(".xml", Qt::CaseInsensitive))
-        _controller->addFromFile(filePath.toStdString());
+      if (filePath.endsWith(".xml", Qt::CaseInsensitive) && _box_combatants) {
+        auto combatants = _controller->getCombatants();
+        size_t comb_count = combatants->size();
+        size_t count = _controller->addFromFile(filePath.toStdString());
+        // auto it_end = _controller->getCombatants()->end();
+        // if()
+
+        // if (_controller->getCombatants()->size()) {
+        //   qDebug() << "1st combatant "
+        //            << _controller->getCombatants()->front()->getName();
+        // }
+        // if (it != it_end) {
+        //   qDebug() << "it != it_end combatant it: " << (*it)->getName();
+        //   qDebug() << "it != it_end combatant it_end - 1: "
+        //            << (*(it_end - 1))->getName();
+        // } else {
+        //   qDebug() << "it == it_end combatant it_end - 1: "
+        //            << (*(it_end - 1))->getName();
+        // }
+
+        for (int i = comb_count, i_end = combatants->size(); i < i_end; ++i)
+          _box_combatants->addWidget((*combatants)[i]);
+
+        _box_combatants->updateContent();
+      }
+      qDebug() << "dropEvent triggered";
     }
+    qDebug() << "dropEvent Empty";
   }
+  qDebug() << "dropEvent Bad Url";
 }

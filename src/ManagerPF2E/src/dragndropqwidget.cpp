@@ -153,6 +153,7 @@ void DragNDropQWidget::updateContent() {
   CombatantWidget *widget = nullptr;
   for (auto it : *_combatants_list) {
     widget = (*_widgets_collection)[it];
+    if (!widget) continue;
     _combatants_layout->removeWidget(widget);
     _combatants_layout->insertWidget(count++, widget);
     widget->updateContent();

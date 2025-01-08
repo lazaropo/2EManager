@@ -1,4 +1,4 @@
-#include "utility.h"
+#include "Utility.h"
 
 #include "Combatant.h"
 
@@ -6,8 +6,13 @@ namespace pf2e_manager {
 namespace utility {
 void init_logger() {
   // Initialize sinks
-  boost::filesystem::path dir("./log/exceptions/");
-  if (!boost::filesystem::exists(dir)) boost::filesystem::create_directory(dir);
+  try {
+    boost::filesystem::path dir("./log/exceptions/");
+    if (!boost::filesystem::exists(dir))
+      boost::filesystem::create_directory(dir);
+  } catch (boost::filesystem::filesystem_error &ex) {
+    std::cerr << ex.what() << std::endl;
+  }
 
   logging::add_console_log()->set_filter(expr::attr<int>("Severity") >= 4);
 

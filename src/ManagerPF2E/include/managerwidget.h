@@ -14,7 +14,7 @@
 #include "combatantwidget.h"
 #include "dragndropqwidget.h"
 #include "dragndropqwidget_commands.h"
-#include "utility.h"
+#include "Utility.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

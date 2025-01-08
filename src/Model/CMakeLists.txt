@@ -13,7 +13,7 @@ set(LIB_SOURCES
     src/Model.cpp
     src/SimpleEffect.cpp
     src/TXTReader.cpp
-    src/utility.cpp
+    src/Utility.cpp
     src/CommandsImplementation/HarmCommand.cpp
     src/CommandsImplementation/HealCommand.cpp
     src/CommandsImplementation/MassHarmCommand.cpp
@@ -46,7 +46,7 @@ set(LIB_HEADERS
     include/SimpleEffectBuilder.h
     include/SubjectBase.h
     include/TXTReader.h
-    include/utility.h
+    include/Utility.h
 )
 
 
@@ -54,13 +54,14 @@ set(LIB_HEADERS
 add_library(Model_lib STATIC ${LIB_SOURCES} ${LIB_HEADERS})
 
 # Указываем include-директорию
-target_link_libraries(Model_lib PRIVATE
+target_link_libraries(Model_lib PUBLIC
+
+    Boost::filesystem
     Boost::log
     Boost::log_setup
     Boost::system
     Boost::serialization
     Boost::container
-    Boost::filesystem
 )
 target_include_directories(Model_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 

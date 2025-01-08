@@ -9,7 +9,7 @@
 
 #include "EffectBase.h"
 #include "SubjectBase.h"
-#include "utility.h"
+#include "Utility.h"
 
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
 

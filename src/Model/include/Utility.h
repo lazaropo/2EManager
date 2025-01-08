@@ -1,5 +1,5 @@
-#ifndef UTILITY_H
-#define UTILITY_H
+#ifndef _UTILITY_H
+#define _UTILITY_H
 
 #include <boost/container/stable_vector.hpp>
 #include <boost/serialization/vector.hpp>
@@ -79,10 +79,10 @@ using t_combatant_container =
 using t_effect_container =
     ::boost::container::stable_vector<pf2e_manager::EffectBase *>;
 // Logger functions
-inline void init_logger();
-inline void print_log(std::exception &ex);
-inline void print_log(boost::exception &ex);
-inline void my_terminate_handler();
+extern void init_logger();
+extern void print_log(std::exception &ex);
+extern void print_log(boost::exception &ex);
+extern void my_terminate_handler();
 }  // namespace utility
 }  // namespace pf2e_manager
 

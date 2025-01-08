@@ -9,7 +9,7 @@
 
 #include "Combatant.h"
 #include "Mediator.h"
-#include "utility.h"
+#include "Utility.h"
 
 #if !defined(_BOOST_SERIALIZATION_TXT_) && !defined(_BOOST_SERIALIZATION_XML_)
 #include "TXTReader.h"
@@ -209,7 +209,7 @@ class Model {
       return *_curr_pos;
   }
 
-  void addFromFile(std::string path);
+  size_t addFromFile(const std::string& path);
 
  private:
   // std::vector<Combatant*>* _combatants = new std::vector<Combatant*>();

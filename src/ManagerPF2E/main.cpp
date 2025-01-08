@@ -3,7 +3,7 @@
 #include <QTranslator>
 
 #include "managerwidget.h"
-#include "utility.h"
+#include "Utility.h"
 
 int main(int argc, char *argv[]) {
   int ret = 0;

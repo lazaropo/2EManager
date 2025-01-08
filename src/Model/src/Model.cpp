@@ -99,7 +99,8 @@ Model::~Model() {
 }
 #endif
 
-void Model::addFromFile(std::string path) {
+size_t Model::addFromFile(const std::string& path) {
+  size_t ret = 0;
 #ifdef _BOOST_SERIALIZATION_XML_
   try {
     // open the archive
@@ -114,14 +115,19 @@ void Model::addFromFile(std::string path) {
 
       t_container_comb tmp;
       ia >> ::boost::make_nvp("_combatants", tmp);
-      if (tmp.size())
+      size_t tmp_size = tmp.size();
+
+      if (tmp_size) {
+        ret = tmp.size();
         _combatants->insert(_combatants->end(), tmp.begin(), tmp.end());
+      }
     }
   } catch (boost::exception& ex) {
     typedef boost::error_info<struct tag_my_info, int> my_info;
     if (int const* mi = boost::get_error_info<my_info>(ex)) std::cerr << *mi;
   }
 #endif
+  return ret;
 }
 
 void Model::moveCombatant(t_pos_comb from, t_pos_comb before) {

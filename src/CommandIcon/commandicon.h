@@ -10,7 +10,7 @@
 #include <QPixmap>
 #include <QWidget>
 
-#include "../Model/Controller.h"
+#include "Controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

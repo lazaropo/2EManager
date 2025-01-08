@@ -1,19 +1,14 @@
 <RCC>
-    <qresource prefix="/path/images"/>
-    <qresource prefix="/">
-        <file>images/leaf.png</file>
-        <file>images/leaf_small.png</file>
-        <file>images/sword_small.png</file>
-        <file>images/sword.png</file>
-        <file>images/harm.png</file>
-        <file>images/harm_small.png</file>
-        <file>images/heal.png</file>
-        <file>images/heal_small.png</file>
-        <file>images/massharm_small.png</file>
-        <file>images/massheal.png</file>
-        <file>images/massheal_small.png</file>
-        <file>images/massharm.png</file>
-	<file>images/decreasemaxhp_small.png</file>
-	<file>images/decreasemaxhp.png</file>
+    <qresource prefix="/images">
+        <file>../../misc/images/harm.png</file>
+        <file>../../misc/images/harm_small.png</file>
+	<file>../../misc/images/heal.png</file>
+        <file>../../misc/images/heal_small.png</file>
+	<file>../../misc/images/massharm.png</file>
+        <file>../../misc/images/massharm_small.png</file>
+	<file>../../misc/images/massheal.png</file>
+        <file>../../misc/images/massheal_small.png</file>
+	<file>../../misc/images/decreasemaxhp.png</file>
+        <file>../../misc/images/decreasemaxhp_small.png</file>
     </qresource>
 </RCC>

@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(commanddialog LANGUAGES C CXX)
 
+set(INCLUDE_DIR ../Model/include)
+
 qt_add_library(commanddialog STATIC
 
     ../ReversePolishNotation/s21_calc.c
@@ -18,8 +20,8 @@ qt_add_library(commanddialog STATIC
 
 include_directories(../ReversePolishNotation)
 
-target_link_libraries(commanddialog PRIVATE Qt6::Core Qt6::Widgets Boost::serialization )#ReversePolishNotation)
-target_include_directories(commanddialog INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(commanddialog PRIVATE Model_lib Qt6::Core Qt6::Widgets Boost::serialization )
+target_include_directories(commanddialog INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} ${INCLUDE_DIR})
 
 
 

@@ -41,7 +41,7 @@ set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows-static/include)
 #set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 #stacktrace
-find_package(Boost COMPONENTS container log log_setup system serialization REQUIRED)
+find_package(Boost COMPONENTS container filesystem log log_setup system serialization REQUIRED)
 
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
@@ -63,6 +63,8 @@ add_compile_definitions(
     _BOOST_SERIALIZATION_XML_FILEPATH_="record.xml"
 )
 
+
+
 add_subdirectory(src/Model)
 #add_subdirectory(src/ReversePolishNotation)
 add_subdirectory(src/CombatantDialog)
@@ -72,8 +74,6 @@ add_subdirectory(src/EffectDialog)
 add_subdirectory(src/ValueInputDialog)
 add_subdirectory(src/CommandIcon)
 add_subdirectory(src/ManagerPF2E)
-
-#set(CMAKE_STAGING_PREFIX  CMAKE_PREFIX_PATH)
 
 set(CMAKE_INSTALL_PREFIX "C:/Users/roman/Desktop/2EManager/bin")
 

@@ -1,6 +1,7 @@
 {
   "dependencies": [
     "boost-container",
+    "boost-filesystem",
     "boost-log",
     "boost-system",
     "boost-serialization",

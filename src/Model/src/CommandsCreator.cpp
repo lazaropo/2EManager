@@ -14,9 +14,9 @@ CommandsCreator::CommandsCreator(MediatorInterface* mediator)
   _commands_dictionary.insert(
       std::pair("command:massheal",
                 std::bind(&CommandsCreator::createMassHeal, this, _1, _2)));
-  _commands_dictionary.insert(
-      std::pair("command:decreasemaxhp",
-                std::bind(&CommandsCreator::createDecreaseMaxHp, this, _1, _2)));
+  _commands_dictionary.insert(std::pair(
+      "command:decreasemaxhp",
+      std::bind(&CommandsCreator::createDecreaseMaxHp, this, _1, _2)));
 }
 
 CommandBase* CommandsCreator::createCommandByName(
@@ -55,11 +55,11 @@ CommandBase* CommandsCreator::createMassHeal(
   return new MassHealCommand(_mediator, sender, info);
 }
 
-    CommandBase* CommandsCreator::createDecreaseMaxHp(
-        SubjectBase* sender,
-        std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) {
-    return new DecreaseMaxHpCommand(_mediator, sender, info[0].first, info[0].second);
+CommandBase* CommandsCreator::createDecreaseMaxHp(
+    SubjectBase* sender,
+    std::vector<std::pair<pf2e_manager::SubjectBase*, int>>& info) {
+  return new DecreaseMaxHpCommand(_mediator, sender, info[0].first,
+                                  info[0].second);
 }
-
 
 }  // namespace pf2e_manager

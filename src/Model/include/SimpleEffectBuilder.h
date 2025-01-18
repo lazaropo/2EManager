@@ -272,6 +272,7 @@ class SimpleEffectBuilder {
       _effect = new SimpleEffect();
       _effect->_subject = _effect;
       _effect->_executor = _executor;
+      _effect->_is_active = true;
       if (!_executor)
         throw std::logic_error(
             "SimpleEffectBuilder: reset(): Executor is null.");

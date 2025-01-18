@@ -51,13 +51,13 @@ class SimpleEffect : public EffectBase {
   void undo() override;
 
   void activateEffect() override {
-      if (_duration) _is_active = true;
-      Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
-      if (combatant) {
-          auto eff_container = &combatant->getEffects();
-          for (auto it : *eff_container)
-              if (getSubject() == it->getInvoker()) it->activateEffect();
-      }
+    if (_duration) _is_active = true;
+    Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
+    if (combatant) {
+      auto eff_container = &combatant->getEffects();
+      for (auto it : *eff_container)
+        if (getSubject() == it->getInvoker()) it->activateEffect();
+    }
   }
 
   void disactivateEffect() override {
@@ -71,16 +71,18 @@ class SimpleEffect : public EffectBase {
   }
 
   void removeEffect() override {
-      Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
-      if (combatant) {
-          using namespace ::boost;
-          auto eff_container = &combatant->getEffects();
-          for (auto it = eff_container->begin(), it_end = eff_container->end(); it != it_end; ++it)
-              if (getSubject() == (*it)->getInvoker()) {
-                  (*it)->removeEffect();
-                  eff_container->erase(it);
-      }
-  }
+    Combatant* combatant = dynamic_cast<Combatant*>(getReciever());
+    if (combatant) {
+      using namespace ::boost;
+      auto eff_container = &combatant->getEffects();
+      for (auto it = eff_container->begin() /*, it_end = eff_container->end()*/;
+           it != eff_container->end() /*it_end*/; ++it)
+        if (getSubject() == (*it)->getInvoker()) {
+          (*it)->removeEffect();
+          eff_container->erase(it++);
+          --it;
+        }
+    }
   }
 
   void executeAssociated() override {

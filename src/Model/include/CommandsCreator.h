@@ -29,8 +29,8 @@ class CommandsCreator {
                               std::vector<std::pair<SubjectBase*, int>>& info);
   CommandBase* createMassHeal(SubjectBase* sender,
                               std::vector<std::pair<SubjectBase*, int>>& info);
-  CommandBase* createDecreaseMaxHp(SubjectBase* sender,
-                              std::vector<std::pair<SubjectBase*, int>>& info);
+  CommandBase* createDecreaseMaxHp(
+      SubjectBase* sender, std::vector<std::pair<SubjectBase*, int>>& info);
 
  private:
   std::map<const std::string,

@@ -25,12 +25,13 @@
 #endif
 
 namespace pf2e_manager {
-  /**
-   * @brief CommandBase is derived from @class SubjectBase that allow to define the source and direction of command.
-   * Also its an abstract class with some children: HealCommand, HarmCommand, MassHealCommand, MassHarmCommand.
-   * There are do/undo mechanic implemented (command pattern).
-   * Save/load implemented by boost::serialize template function. 
-   */
+/**
+ * @brief CommandBase is derived from @class SubjectBase that allow to define
+ * the source and direction of command. Also its an abstract class with some
+ * children: HealCommand, HarmCommand, MassHealCommand, MassHarmCommand. There
+ * are do/undo mechanic implemented (command pattern). Save/load implemented by
+ * boost::serialize template function.
+ */
 class CommandBase : public SubjectBase {
 #if defined(_BOOST_SERIALIZATION_TXT_) || defined(_BOOST_SERIALIZATION_XML_)
   friend std::ostream& operator<<(std::ostream& os,

@@ -2,8 +2,8 @@
 #include <QLocale>
 #include <QTranslator>
 
-#include "managerwidget.h"
 #include "Utility.h"
+#include "managerwidget.h"
 
 int main(int argc, char *argv[]) {
   int ret = 0;

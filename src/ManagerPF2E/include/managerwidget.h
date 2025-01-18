@@ -10,11 +10,11 @@
 #include "../ValueInputDialog/valueinputdialog.h"
 #include "Controller.h"
 #include "EffectDialog.h"
+#include "Utility.h"
 #include "combatantdialog.h"
 #include "combatantwidget.h"
 #include "dragndropqwidget.h"
 #include "dragndropqwidget_commands.h"
-#include "Utility.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

@@ -91,8 +91,8 @@ std::string EffectBase::formattingTrigger(EffectBase::Trigger trigger) {
 
   if (trigger == Trigger::NO_TRIGGER)
     ret = "No trigger";
-  else if(trigger == Trigger::AT_CREATION)
-      ret = "At creation";
+  else if (trigger == Trigger::AT_CREATION)
+    ret = "At creation";
   else if (trigger == Trigger::START_TURN)
     ret = "Start turn";
   else if (trigger == Trigger::END_TURN)
@@ -106,9 +106,9 @@ EffectBase::Trigger EffectBase::formattingTrigger(const std::string &string) {
   if (string == "No trigger:" || string == "No trigger" ||
       string == "no trigger:" || string == "no trigger")
     ret = Trigger::NO_TRIGGER;
-  else if(string == "At creation:" || string == "At creation" ||
+  else if (string == "At creation:" || string == "At creation" ||
            string == "at creation:" || string == "at creation")
-      ret = Trigger::AT_CREATION;
+    ret = Trigger::AT_CREATION;
   else if (string == "Start turn:" || string == "Start turn" ||
            string == "start turn:" || string == "start turn")
     ret = Trigger::START_TURN;

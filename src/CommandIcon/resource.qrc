@@ -1,19 +1,19 @@
 <RCC>
-    <qresource prefix="/path/images"/>
     <qresource prefix="/">
-        <file>images/leaf.png</file>
-        <file>images/leaf_small.png</file>
-        <file>images/sword_small.png</file>
-        <file>images/sword.png</file>
+        <file>images/decreasemaxhp.png</file>
+        <file>images/decreasemaxhp_small.png</file>
         <file>images/harm.png</file>
         <file>images/harm_small.png</file>
         <file>images/heal.png</file>
         <file>images/heal_small.png</file>
+        <file>images/heal2.png</file>
+        <file>images/heal2_small.png</file>
+        <file>images/massharm.png</file>
         <file>images/massharm_small.png</file>
+        <file>images/massharm2_small.png</file>
         <file>images/massheal.png</file>
         <file>images/massheal_small.png</file>
-        <file>images/massharm.png</file>
-	<file>images/decreasemaxhp_small.png</file>
-	<file>images/decreasemaxhp.png</file>
+        <file>images/massheal2.png</file>
+        <file>images/massheal2_small.png</file>
     </qresource>
 </RCC>

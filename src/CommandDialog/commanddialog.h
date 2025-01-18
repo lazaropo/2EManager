@@ -7,7 +7,7 @@
 #include <QGroupBox>
 #include <QRadioButton>
 
-#include "../Model/Controller.h"
+#include "Controller.h"
 
 extern "C" {
 #include "../ReversePolishNotation/s21_calc.h"
